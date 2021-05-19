@@ -11,7 +11,16 @@
     <asp:PlaceHolder runat="server">
         <%: Scripts.Render("~/bundles/modernizr") %>
     </asp:PlaceHolder>
-
+    <style>
+      
+        #users {
+              margin: auto;
+  width: 50%;
+  border: 3px solid green;
+  padding: 10px;
+        }
+    </style>
+   
     <webopt:bundlereference runat="server" path="~/Content/css" />
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
 
@@ -50,10 +59,11 @@
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                 
                         <li> <asp:Button type="submit" Value="SignOut" runat="server" ID="cmdSignOut" OnClick="cmdSignOut_Click" Text="Odjava" /></li>
+                        <li> <asp:Button type="submit" Value="Admin" runat="server" ID="admin" OnClick="administration_Click" Text="Administracija" /></li>
                     </ul>
                 </div>
+                
             </div>
         </div>
         <div class="container body-content">

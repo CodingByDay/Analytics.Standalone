@@ -27,6 +27,7 @@ namespace peptak
 
 
             ASPxDashboard1.SetConnectionStringsProvider(new DevExpress.DataAccess.Web.ConfigFileConnectionStringsProvider());
+           
             string uname = HttpContext.Current.User.Identity.Name;
             if (uname == "user1")
             {

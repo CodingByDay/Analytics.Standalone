@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Dashboard>
+  <Title Text="DB Prodaja - 1" />
+  <DataSources>
+    <SqlDataSource Name="CustomSqlQuery" ComponentName="sqlDataSource1">
+      <Connection Name="eHolding ERFA" FromAppConfig="true" />
+      <Query Type="CustomSqlQuery" Name="CustomSqlQuery">
+        <Sql>select *,cast(ProdajaLeto as int) AS ProdajaLetoInt from dbo.uTN_DB_ProdajaPoRealizaciji_MES</Sql>
+      </Query>
+      <ConnectionOptions CloseConnection="true" />
+      <CalculatedFields>
+        <CalculatedField Name="RVC" Expression="[ProdajaOsnovaZaDDV]-[ProdajaSkladiščnaVrednost]" DataType="Auto" DataMember="CustomSqlQuery" />
+        <CalculatedField Name="YTDProdajnaVrednost" Expression="filter(sum([ProdajaOsnovaZaDDV]),GetYear(GetDate())=2021)" DataType="Auto" DataMember="CustomSqlQuery" />
+        <CalculatedField Name="YTDSkladiščnaVrednost" Expression="iif([ProdajaLeto]=GetYear(),[ProdajaSkladiščnaVrednost],0.00)" DataType="Auto" DataMember="CustomSqlQuery" />
+      </CalculatedFields>
+    </SqlDataSource>
+  </DataSources>
+  <Items>
+    <BubbleMap ComponentName="bubbleMapDashboardItem1" Name="Bubble Map 1" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" ShapefileArea="Europe">
+      <DataItems>
+        <Dimension DataMember="ProdajaRegijaŠirina" DefaultId="DataItem0" />
+        <Dimension DataMember="ProdjaRegijaDolžina" DefaultId="DataItem1" />
+        <Measure DataMember="RVC" Name="RVC" DefaultId="DataItem2">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="ProdajaOsnovaZaDDV" Name="Prodajna vrednost" DefaultId="DataItem3">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Dimension DataMember="ProdajaRegija" DefaultId="DataItem4" />
+        <Measure DataMember="ProdajaSkladiščnaVrednost" Name="Nabavna vrednost" DefaultId="DataItem5">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+      </DataItems>
+      <ViewArea TopLatitude="47.181546814562672" BottomLatitude="45.235493205283483" LeftLongitude="11.85349337185427" RightLongitude="18.264452275963865" CenterPointLatitude="46.217140054960026" CenterPointLongitude="15.058972823909068" CreateViewerPaddings="false" />
+      <MapLegend />
+      <WeightedLegend />
+      <TooltipMeasures>
+        <TooltipMeasure DefaultId="DataItem5" />
+      </TooltipMeasures>
+      <Latitude DefaultId="DataItem0" />
+      <Longitude DefaultId="DataItem1" />
+      <TooltipDimensions>
+        <TooltipDimension DefaultId="DataItem4" />
+      </TooltipDimensions>
+      <Weight DefaultId="DataItem3" />
+      <Color DefaultId="DataItem2" />
+      <UniformScale />
+    </BubbleMap>
+  </Items>
+  <LayoutTree>
+    <LayoutGroup>
+      <LayoutItem DashboardItem="bubbleMapDashboardItem1" />
+    </LayoutGroup>
+  </LayoutTree>
+</Dashboard>

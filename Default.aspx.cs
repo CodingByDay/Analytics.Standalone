@@ -25,17 +25,15 @@ namespace peptak
 
 
 
-
-              ASPxDashboard1.SetConnectionStringsProvider(new DevExpress.DataAccess.Web.ConfigFileConnectionStringsProvider());
+ 
+                ASPxDashboard1.SetConnectionStringsProvider(new DevExpress.DataAccess.Web.ConfigFileConnectionStringsProvider());
            
        
                 ASPxDashboard1.WorkingMode = WorkingMode.Viewer;
 
-        
-
+            
         }
 
-      
 
         protected void cmdSignOut_Click(object sender, EventArgs e)
         {

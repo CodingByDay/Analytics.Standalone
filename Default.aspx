@@ -16,32 +16,28 @@
           
 
             var extension;
+
             /**
              *  
              * @param sender
              */
             function onBeforeRender(sender) {
 
-
-
               var dashboardControl = sender.GetDashboardControl();
-              extension = new DevExpress.Dashboard.DashboardPanelExtension(dashboardControl);
+              extension = new DevExpress.Dashboard.DashboardPanelExtension(dashboardControl);                
               dashboardControl.surfaceLeft(extension.panelWidth);
               dashboardControl.registerExtension(extension);
-
-
 
             }
 
 
-
-
+          
 
             $(document).keypress(function (e) { if (e.keyCode === 13) { e.preventDefault(); return false; } });
 
             $(function () {
 
-                $(':text').bind('keydown', function (e) { //on keydown for all textboxes  
+                $(':text').bind('keydown', function (e) { // on keydown for all textboxes  
 
                     if (e.keyCode == 13) // if this is enter key  
 
@@ -51,43 +47,35 @@
 
             }); 
 
+            /**
+             * Change the visibility of the collapsable hamburger menu. */
+
+            function toggleVisibilityHide(toHide) {
+
+                var picture = document.getElementById("pic")
+                if (toHide == true) {
+
+                    picture.style.visibility = "hidden"
+                } else {
+                    picture.style.visibility = "visible"
+                }
+            }
 
 
+            /* Jquery function to handle hamburger clicked */
 
-            odd = 0;
             $(document).ready(function () {
-                $("#pic").click(function () {
+                $("#pic").mouseover(function () {
 
-                    odd++;
-                    if (odd % 2 == 0) {
+                 
+                    
                         onExpand();
-                       // show();
-                    } else {
-                        onCollapse();
-                       // hide();
-                    }
+                     
+                 
 
                 });
 
             });
-
-
-
-            /**
-             *  if true than hide, false means unhide it.
-             * @param booleanValue
-             */
-            function changePicStateHideIt(booleanValue) {
-                switch (booleanValue) {
-                    case true:
-                        $('#pic').hide();
-                        break;
-                    case false:
-                        $('#pic').show();
-                        break;
-
-                }
-            }
 
 
 
@@ -107,17 +95,7 @@
                 $(".dx-dashboard-surface").attr('style', 'left: 10px !important');
                 changePicStateHideIt(false);
              
-            }
-
-
-
-            $(".dx-item dx-list-item").click(function () {
-
-
-                console.log("Testi");
-
-
-            });  
+            }       
 
 
 
@@ -125,6 +103,11 @@
                 var control = dashboard.GetDashboardControl();
                 extension.showPanelAsync({}).done(function (e) {
                     control.surfaceLeft(e.surfaceLeft);
+
+                    // Change the visibility
+
+                    toggleVisibilityHide(true);
+
                 });
             }
 
@@ -132,11 +115,14 @@
 
 
             function onCollapse() {
+                
                 var control = dashboard.GetDashboardControl();
                 extension.hidePanelAsync({}).done(function (e) {
                     control.surfaceLeft(e.surfaceLeft);
+                    toggleVisibilityHide(false);
                 });
             }
+
 
         </script>
     
@@ -153,8 +139,12 @@
    
  
 <div style="position: absolute; left: 0; right: 0; top:60px; bottom:0;">
-    <dx:ASPxDashboard ID="ASPxDashboard1" runat="server" AllowCreateNewJsonConnection="True"  ClientInstanceName="dashboard"  AllowExecutingCustomSql="True" AllowInspectAggregatedData="True"    MobileLayoutEnabled="Auto" AllowInspectRawData="True" DashboardStorageFolder="~/App_Data/Dashboards" EnableCustomSql="True" EnableTextBoxItemEditor="True">
-        <ClientSideEvents BeforeRender="onBeforeRender" />
+    <dx:ASPxDashboard ID="ASPxDashboard1" runat="server" AllowCreateNewJsonConnection="True"  ClientInstanceName="dashboard"  AllowExecutingCustomSql="True" AllowInspectAggregatedData="True"    MobileLayoutEnabled="Auto" AllowInspectRawData="True" DashboardStorageFolder="~/App_Data/Dashboards" EnableCustomSql="True" EnableTextBoxItemEditor="True" >
+        <ClientSideEvents BeforeRender="onBeforeRender"
+                          ItemSelectionChanged="onCollapse"
+                          DashboardInitialized="onCollapse"
+                       
+                              />
     </dx:ASPxDashboard>
 </div>
 

@@ -79,7 +79,8 @@
     </SqlDataSource>
   </DataSources>
   <Items>
-    <Pie ComponentName="pieDashboardItem1" Name="Pregled fonda ur po vrstah prisotnosti" DataSource="sqlDataSource1" DataMember="uTN_Analitika_Plače_Skupna" PieType="Donut" ShowPieCaptions="false">
+    <Pie ComponentName="pieDashboardItem1" Name="Pregled fonda ur po vrstah prisotnosti" DataSource="sqlDataSource1" DataMember="uTN_Analitika_Plače_Skupna" IsMasterFilterCrossDataSource="true" PieType="Donut" ShowPieCaptions="false">
+      <InteractivityOptions MasterFilterMode="Multiple" />
       <DataItems>
         <Dimension DataMember="PlačeVrstaDela" Name="Vrste dela" DefaultId="DataItem0" />
         <Measure DataMember="PlačeUreFond" Name="Fond ur" DefaultId="DataItem1">
@@ -93,7 +94,8 @@
         <Value DefaultId="DataItem1" />
       </Values>
     </Pie>
-    <Pie ComponentName="pieDashboardItem2" Name="Pregled fonda ur po vrsta plačila" DataSource="sqlDataSource1" DataMember="uTN_Analitika_Plače_Skupna" PieType="Donut" ShowPieCaptions="false">
+    <Pie ComponentName="pieDashboardItem2" Name="Pregled fonda ur po vrsta plačila" DataSource="sqlDataSource1" DataMember="uTN_Analitika_Plače_Skupna" IsMasterFilterCrossDataSource="true" PieType="Donut" ShowPieCaptions="false">
+      <InteractivityOptions MasterFilterMode="Multiple" />
       <DataItems>
         <Measure DataMember="PlačeUreFond" Name="Fond ur" DefaultId="DataItem1">
           <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
@@ -115,7 +117,7 @@
         <Dimension DefaultId="DataItem0" />
       </FilterDimensions>
     </ListBox>
-    <ListBox ComponentName="listBoxDashboardItem2" Name="List Box 1" DataSource="sqlDataSource1" DataMember="uTN_Analitika_Plače_Skupna" IsMasterFilterCrossDataSource="true">
+    <ListBox ComponentName="listBoxDashboardItem2" Name="Mesec" DataSource="sqlDataSource1" DataMember="uTN_Analitika_Plače_Skupna" IsMasterFilterCrossDataSource="true">
       <DataItems>
         <Dimension DataMember="PlačeMesec" Name="Mesec" DefaultId="DataItem0" />
       </DataItems>
@@ -123,22 +125,32 @@
         <Dimension DefaultId="DataItem0" />
       </FilterDimensions>
     </ListBox>
-    <ListBox ComponentName="listBoxDashboardItem3" Name="Oddelek" DataSource="sqlDataSource1" DataMember="uTN_Analitika_Plače_Skupna" IsMasterFilterCrossDataSource="true" EnableSearch="true">
+    <Pie ComponentName="pieDashboardItem3" Name="Pregled fonda ur po oddelkih" DataSource="sqlDataSource1" DataMember="uTN_Analitika_Plače_Skupna" IsMasterFilterCrossDataSource="true" PieType="Donut" ShowPieCaptions="false">
+      <InteractivityOptions MasterFilterMode="Multiple" />
       <DataItems>
         <Dimension DataMember="PlačeOddelek" Name="Oddelek  " DefaultId="DataItem0" />
+        <Measure DataMember="PlačeUreFond" DefaultId="DataItem1" />
       </DataItems>
-      <FilterDimensions>
-        <Dimension DefaultId="DataItem0" />
-      </FilterDimensions>
-    </ListBox>
-    <ListBox ComponentName="listBoxDashboardItem4" Name="Tip delavca" DataSource="sqlDataSource1" DataMember="uTN_Analitika_Plače_Skupna" IsMasterFilterCrossDataSource="true">
+      <Arguments>
+        <Argument DefaultId="DataItem0" />
+      </Arguments>
+      <Values>
+        <Value DefaultId="DataItem1" />
+      </Values>
+    </Pie>
+    <Pie ComponentName="pieDashboardItem4" Name="Pregeled fonda ur po vrsti zaposlitve" DataSource="sqlDataSource1" DataMember="uTN_Analitika_Plače_Skupna" IsMasterFilterCrossDataSource="true" PieType="Donut" ShowPieCaptions="false">
+      <InteractivityOptions IgnoreMasterFilters="true" MasterFilterMode="Multiple" />
       <DataItems>
         <Dimension DataMember="PlačeTipDelavca" Name="Tip delavca" DefaultId="DataItem0" />
+        <Measure DataMember="PlačeUreFond" DefaultId="DataItem1" />
       </DataItems>
-      <FilterDimensions>
-        <Dimension DefaultId="DataItem0" />
-      </FilterDimensions>
-    </ListBox>
+      <Arguments>
+        <Argument DefaultId="DataItem0" />
+      </Arguments>
+      <Values>
+        <Value DefaultId="DataItem1" />
+      </Values>
+    </Pie>
     <ListBox ComponentName="listBoxDashboardItem5" Name="Delovno mesto" DataSource="sqlDataSource1" DataMember="uTN_Analitika_Plače_Skupna" EnableSearch="true">
       <DataItems>
         <Dimension DataMember="PlačeDelovnoMesto" Name="Delovno mesto" DefaultId="DataItem0" />
@@ -226,20 +238,22 @@
     </Grid>
   </Items>
   <LayoutTree>
-    <LayoutGroup Orientation="Vertical">
-      <LayoutGroup Weight="1.1613002566295978">
-        <LayoutItem DashboardItem="listBoxDashboardItem1" Weight="0.27254544802610353" />
-        <LayoutGroup Orientation="Vertical" Weight="0.63006131449675506">
-          <LayoutItem DashboardItem="listBoxDashboardItem3" Weight="0.43327875562540175" />
-          <LayoutItem DashboardItem="listBoxDashboardItem4" Weight="0.31837609238734271" />
-        </LayoutGroup>
-        <LayoutItem DashboardItem="pieDashboardItem2" Weight="1.9212327440926518" />
-        <LayoutItem DashboardItem="pieDashboardItem1" Weight="1.9989149844024536" />
+    <LayoutGroup>
+      <LayoutGroup Orientation="Vertical" Weight="0.0836211540400849">
+        <LayoutItem DashboardItem="listBoxDashboardItem1" Weight="0.11316072984479553" />
+        <LayoutItem DashboardItem="listBoxDashboardItem2" Weight="0.31817211845103793" />
       </LayoutGroup>
-      <LayoutGroup Weight="1.6614542343883671">
-        <LayoutItem DashboardItem="listBoxDashboardItem2" Weight="0.11919525645971529" />
-        <LayoutItem DashboardItem="listBoxDashboardItem5" Weight="0.27830410375255793" />
-        <LayoutItem DashboardItem="gridDashboardItem1" Weight="1.7201518660317656" />
+      <LayoutGroup Orientation="Vertical" Weight="1.2238287759781161">
+        <LayoutGroup Weight="1.161300256629598">
+          <LayoutItem DashboardItem="pieDashboardItem4" Weight="1.0979923904039293" />
+          <LayoutItem DashboardItem="pieDashboardItem3" Weight="1.2539048065931646" />
+          <LayoutItem DashboardItem="pieDashboardItem2" Weight="1.226051811083374" />
+          <LayoutItem DashboardItem="pieDashboardItem1" Weight="1.3706343085446966" />
+        </LayoutGroup>
+        <LayoutGroup Weight="1.6614542343883669">
+          <LayoutItem DashboardItem="listBoxDashboardItem5" Weight="0.44338928697156582" />
+          <LayoutItem DashboardItem="gridDashboardItem1" Weight="1.5503790209948405" />
+        </LayoutGroup>
       </LayoutGroup>
     </LayoutGroup>
   </LayoutTree>

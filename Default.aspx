@@ -8,28 +8,135 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <div class="row">
+             <webopt:bundlereference runat="server" path="~/css/graphs.css" />
+<link href= "~/css/graphs.css" rel="stylesheet" runat="server" type="text/css" />
+           <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
         <script>
+       
+          
+
+            var extension;
+            /**
+             *  
+             * @param sender
+             */
+            function onBeforeRender(sender) {
 
 
 
-          function onBeforeRender(sender) {
-        var dashboardControl = sender.GetDashboardControl();
-        // ...
-                dashboardControl.registerExtension(new DevExpress.Dashboard.DashboardPanelExtension(dashboardControl));
-    }
+              var dashboardControl = sender.GetDashboardControl();
+              extension = new DevExpress.Dashboard.DashboardPanelExtension(dashboardControl);
+              dashboardControl.surfaceLeft(extension.panelWidth);
+              dashboardControl.registerExtension(extension);
+
+
+
+            }
+
+
+
+
+
             $(document).keypress(function (e) { if (e.keyCode === 13) { e.preventDefault(); return false; } });
 
             $(function () {
 
                 $(':text').bind('keydown', function (e) { //on keydown for all textboxes  
 
-                    if (e.keyCode == 13) //if this is enter key  
+                    if (e.keyCode == 13) // if this is enter key  
 
                         e.preventDefault();
 
                 });
 
+            }); 
+
+
+
+
+            odd = 0;
+            $(document).ready(function () {
+                $("#pic").click(function () {
+
+                    odd++;
+                    if (odd % 2 == 0) {
+                        onExpand();
+                       // show();
+                    } else {
+                        onCollapse();
+                       // hide();
+                    }
+
+                });
+
+            });
+
+
+
+            /**
+             *  if true than hide, false means unhide it.
+             * @param booleanValue
+             */
+            function changePicStateHideIt(booleanValue) {
+                switch (booleanValue) {
+                    case true:
+                        $('#pic').hide();
+                        break;
+                    case false:
+                        $('#pic').show();
+                        break;
+
+                }
+            }
+
+
+
+
+            function show() {
+                $('.dx-overlay-content').show();
+                console.log("Show");
+                $(".dx-dashboard-surface").attr('style', 'left: 250px !important');
+                changePicStateHideIt(true);
+
+            }
+
+
+            function hide() {
+                $('.dx-overlay-content').hide();
+                console.log("hide");
+                $(".dx-dashboard-surface").attr('style', 'left: 10px !important');
+                changePicStateHideIt(false);
+             
+            }
+
+
+
+            $(".dx-item dx-list-item").click(function () {
+
+
+                console.log("Testi");
+
+
             });  
+
+
+
+            function onExpand() {
+                var control = dashboard.GetDashboardControl();
+                extension.showPanelAsync({}).done(function (e) {
+                    control.surfaceLeft(e.surfaceLeft);
+                });
+            }
+
+
+
+
+            function onCollapse() {
+                var control = dashboard.GetDashboardControl();
+                extension.hidePanelAsync({}).done(function (e) {
+                    control.surfaceLeft(e.surfaceLeft);
+                });
+            }
 
         </script>
     
@@ -46,12 +153,10 @@
    
  
 <div style="position: absolute; left: 0; right: 0; top:60px; bottom:0;">
-    <dx:ASPxDashboard ID="ASPxDashboard1" runat="server" AllowCreateNewJsonConnection="True" AllowExecutingCustomSql="True" AllowInspectAggregatedData="True"    MobileLayoutEnabled="Auto" AllowInspectRawData="True" DashboardStorageFolder="~/App_Data/Dashboards" EnableCustomSql="True" EnableTextBoxItemEditor="True">
+    <dx:ASPxDashboard ID="ASPxDashboard1" runat="server" AllowCreateNewJsonConnection="True"  ClientInstanceName="dashboard"  AllowExecutingCustomSql="True" AllowInspectAggregatedData="True"    MobileLayoutEnabled="Auto" AllowInspectRawData="True" DashboardStorageFolder="~/App_Data/Dashboards" EnableCustomSql="True" EnableTextBoxItemEditor="True">
         <ClientSideEvents BeforeRender="onBeforeRender" />
     </dx:ASPxDashboard>
 </div>
 
    
-
-
 </asp:Content>

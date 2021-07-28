@@ -84,7 +84,7 @@ namespace peptak
                 string cookiestr;
                 HttpCookie ck;
                 tkt = new FormsAuthenticationTicket(1, txtUserName.Value, DateTime.Now,
-                DateTime.Now.AddMinutes(30), chkPersistCookie.Checked, "your custom data");
+                DateTime.Now.AddMonths(1), chkPersistCookie.Checked, "your custom data");
                 cookiestr = FormsAuthentication.Encrypt(tkt);
                 ck = new HttpCookie(FormsAuthentication.FormsCookieName, cookiestr);
                 if (chkPersistCookie.Checked)

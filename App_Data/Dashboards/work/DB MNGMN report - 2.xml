@@ -41,10 +41,40 @@ FROM "PA_eHolding_Centralna_baza".dbo."uTN_Analitika_MNGMT_Detalj_1_SUM" ;</Sql>
           <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
         </Measure>
         <Dimension DataMember="MngmtIDNivo2" DefaultId="DataItem0" />
+        <Measure DataMember="MngmtIDNivoBarve" SummaryType="Min" DefaultId="DataItem3" />
       </DataItems>
       <HiddenDimensions>
         <Dimension DefaultId="DataItem0" />
       </HiddenDimensions>
+      <HiddenMeasures>
+        <Measure DefaultId="DataItem3" />
+      </HiddenMeasures>
+      <FormatRules>
+        <GridItemFormatRule Name="Format Rule 1" DataItem="DataItem3" DataItemApplyTo="DataItem1">
+          <FormatConditionValue Condition="ContainsText">
+            <AppearanceSettings AppearanceType="PalePurple" />
+            <Value1 Type="System.String" Value="2" />
+          </FormatConditionValue>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 2" DataItem="DataItem3" DataItemApplyTo="DataItem2">
+          <FormatConditionValue Condition="ContainsText">
+            <AppearanceSettings AppearanceType="PalePurple" />
+            <Value1 Type="System.String" Value="2" />
+          </FormatConditionValue>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 3" DataItem="DataItem3" DataItemApplyTo="DataItem1">
+          <FormatConditionValue Condition="ContainsText">
+            <AppearanceSettings AppearanceType="PaleGreen" />
+            <Value1 Type="System.String" Value="3" />
+          </FormatConditionValue>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 4" DataItem="DataItem3" DataItemApplyTo="DataItem2">
+          <FormatConditionValue Condition="ContainsText">
+            <AppearanceSettings AppearanceType="PaleGreen" />
+            <Value1 Type="System.String" Value="3" />
+          </FormatConditionValue>
+        </GridItemFormatRule>
+      </FormatRules>
       <GridColumns>
         <GridDimensionColumn Name="Opis " Weight="119.4206008583691">
           <Dimension DefaultId="DataItem1" />
@@ -65,17 +95,52 @@ FROM "PA_eHolding_Centralna_baza".dbo."uTN_Analitika_MNGMT_Detalj_1_SUM" ;</Sql>
         <Dimension DataMember="MngmtIDNivo1" DefaultId="DataItem0" />
         <Dimension DataMember="MngmtIDNivo2" DefaultId="DataItem3" />
         <Dimension DataMember="MngmtIDNivo3" DefaultId="DataItem4" />
+        <Measure DataMember="MngmtIDNivoBarve" SummaryType="Min" DefaultId="DataItem5" />
       </DataItems>
       <HiddenDimensions>
         <Dimension DefaultId="DataItem0" />
         <Dimension DefaultId="DataItem3" />
         <Dimension DefaultId="DataItem4" />
       </HiddenDimensions>
+      <HiddenMeasures>
+        <Measure DefaultId="DataItem5" />
+      </HiddenMeasures>
       <FormatRules>
-        <GridItemFormatRule Name="Format Rule 1" DataItem="DataItem1">
-          <FormatConditionExpression>
-            <AppearanceSettings AppearanceType="PaleRed" />
-          </FormatConditionExpression>
+        <GridItemFormatRule Name="Format Rule 1" DataItem="DataItem5" DataItemApplyTo="DataItem1">
+          <FormatConditionValue Condition="ContainsText">
+            <AppearanceSettings AppearanceType="PaleBlue" />
+            <Value1 Type="System.String" Value="1" />
+          </FormatConditionValue>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 2" DataItem="DataItem5" DataItemApplyTo="DataItem2">
+          <FormatConditionValue Condition="ContainsText">
+            <AppearanceSettings AppearanceType="PaleBlue" />
+            <Value1 Type="System.String" Value="1" />
+          </FormatConditionValue>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 3" DataItem="DataItem5" DataItemApplyTo="DataItem1">
+          <FormatConditionValue Condition="ContainsText">
+            <AppearanceSettings AppearanceType="PalePurple" />
+            <Value1 Type="System.String" Value="2" />
+          </FormatConditionValue>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 4" DataItem="DataItem5" DataItemApplyTo="DataItem1">
+          <FormatConditionValue Condition="ContainsText">
+            <AppearanceSettings AppearanceType="PaleGreen" />
+            <Value1 Type="System.String" Value="3" />
+          </FormatConditionValue>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 5" DataItem="DataItem5" DataItemApplyTo="DataItem2">
+          <FormatConditionValue Condition="ContainsText">
+            <AppearanceSettings AppearanceType="PalePurple" />
+            <Value1 Type="System.String" Value="2" />
+          </FormatConditionValue>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 6" DataItem="DataItem5" DataItemApplyTo="DataItem2">
+          <FormatConditionValue Condition="ContainsText">
+            <AppearanceSettings AppearanceType="PaleGreen" />
+            <Value1 Type="System.String" Value="3" />
+          </FormatConditionValue>
         </GridItemFormatRule>
       </FormatRules>
       <GridColumns>
@@ -86,7 +151,7 @@ FROM "PA_eHolding_Centralna_baza".dbo."uTN_Analitika_MNGMT_Detalj_1_SUM" ;</Sql>
           <Measure DefaultId="DataItem2" />
         </GridMeasureColumn>
       </GridColumns>
-      <GridOptions EnableBandedRows="true" ColumnWidthMode="Manual" />
+      <GridOptions EnableBandedRows="true" ShowHorizontalLines="false" ShowVerticalLines="false" ColumnWidthMode="Manual" />
     </Grid>
     <ListBox ComponentName="listBoxDashboardItem1" Name="Leto" DataSource="sqlDataSource1" DataMember="DB MNGMT report">
       <DataItems>
@@ -114,10 +179,28 @@ FROM "PA_eHolding_Centralna_baza".dbo."uTN_Analitika_MNGMT_Detalj_1_SUM" ;</Sql>
         <Measure DataMember="MngmtSaldo" DefaultId="DataItem2">
           <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
         </Measure>
+        <Measure DataMember="MngmtIDNivoBarve" SummaryType="Min" DefaultId="DataItem3" />
       </DataItems>
       <HiddenDimensions>
         <Dimension DefaultId="DataItem0" />
       </HiddenDimensions>
+      <HiddenMeasures>
+        <Measure DefaultId="DataItem3" />
+      </HiddenMeasures>
+      <FormatRules>
+        <GridItemFormatRule Name="Format Rule 1" DataItem="DataItem3" DataItemApplyTo="DataItem1">
+          <FormatConditionValue Condition="ContainsText">
+            <AppearanceSettings AppearanceType="PaleGreen" />
+            <Value1 Type="System.String" Value="3" />
+          </FormatConditionValue>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 2" DataItem="DataItem3" DataItemApplyTo="DataItem2">
+          <FormatConditionValue Condition="ContainsText">
+            <AppearanceSettings AppearanceType="PaleGreen" />
+            <Value1 Type="System.String" Value="3" />
+          </FormatConditionValue>
+        </GridItemFormatRule>
+      </FormatRules>
       <GridColumns>
         <GridDimensionColumn Name="Opis " Weight="115.40755467196819">
           <Dimension DefaultId="DataItem1" />
@@ -128,15 +211,7 @@ FROM "PA_eHolding_Centralna_baza".dbo."uTN_Analitika_MNGMT_Detalj_1_SUM" ;</Sql>
       </GridColumns>
       <GridOptions EnableBandedRows="true" ColumnWidthMode="Manual" />
     </Grid>
-    <ListBox ComponentName="listBoxDashboardItem4" Name="Nivo" DataSource="sqlDataSource1" DataMember="DB MNGMT report">
-      <DataItems>
-        <Dimension DataMember="NivoFilter" Name="Nivo" DefaultId="DataItem0" />
-      </DataItems>
-      <FilterDimensions>
-        <Dimension DefaultId="DataItem0" />
-      </FilterDimensions>
-    </ListBox>
-    <Pie ComponentName="pieDashboardItem3" Name="Priodki" DataSource="sqlDataSource1" DataMember="DB MNGMT report" FilterString="[DataItem3] = 'Prihodek'" IsMasterFilterCrossDataSource="true" ShowPieCaptions="false">
+    <Pie ComponentName="pieDashboardItem3" Name="Prihodki" DataSource="sqlDataSource1" DataMember="DB MNGMT report" FilterString="[DataItem3] = 'Prihodek'" IsMasterFilterCrossDataSource="true" ShowPieCaptions="false">
       <InteractivityOptions MasterFilterMode="Multiple" IsDrillDownEnabled="true" />
       <DataItems>
         <Measure DataMember="MngmtSaldo" Name="Saldo" FilterString="Not IsNullOrEmpty([DataItem4])" DefaultId="DataItem2">
@@ -197,10 +272,7 @@ FROM "PA_eHolding_Centralna_baza".dbo."uTN_Analitika_MNGMT_Detalj_1_SUM" ;</Sql>
   <LayoutTree>
     <LayoutGroup Orientation="Vertical">
       <LayoutGroup Weight="0.921814501908953">
-        <LayoutGroup Orientation="Vertical" Weight="0.2144675517508032">
-          <LayoutItem DashboardItem="listBoxDashboardItem1" Weight="0.2144675517508032" />
-          <LayoutItem DashboardItem="listBoxDashboardItem4" Weight="0.2144675517508032" />
-        </LayoutGroup>
+        <LayoutItem DashboardItem="listBoxDashboardItem1" Weight="0.2144675517508032" />
         <LayoutItem DashboardItem="listBoxDashboardItem3" Weight="0.29453823160307568" />
         <LayoutItem DashboardItem="gridDashboardItem2" Weight="1.0058961082236459" />
         <LayoutItem DashboardItem="gridDashboardItem1" Weight="1.0418140094830433" />

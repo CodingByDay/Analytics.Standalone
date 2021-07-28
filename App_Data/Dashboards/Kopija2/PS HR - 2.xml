@@ -5,9 +5,44 @@
     <SqlDataSource Name="tHE_Analitika_Plače_Skupna" ComponentName="sqlDataSource1">
       <Connection Name="Skaza" FromAppConfig="true" />
       <Query Type="CustomSqlQuery" Name="tHE_Analitika_Plače_Skupna">
-        <Sql>select "uTN_Analitika_Plače_Osnova"."PlačeObdobje","uTN_Analitika_Plače_Osnova"."PlačeLeto","uTN_Analitika_Plače_Osnova"."PlačeMesec","uTN_Analitika_Plače_Osnova"."PlačeOsebnaŠtevilka","uTN_Analitika_Plače_Osnova"."PlačeDelavec","uTN_Analitika_Plače_Osnova"."PlačeDelovnoMesto","uTN_Analitika_Plače_Osnova"."PlačeDatumVstopa","uTN_Analitika_Plače_Osnova"."PlačeOsnovniBruto","uTN_Analitika_Plače_Osnova"."PlačeVrstaPlačila","uTN_Analitika_Plače_Osnova"."PlačeVrstaPlačilaNaziv","uTN_Analitika_Plače_Osnova"."PlačeOsnova","uTN_Analitika_Plače_Osnova"."PlačeFaktor","uTN_Analitika_Plače_Osnova"."PlačeBruto","uTN_Analitika_Plače_Osnova"."PlačeNeto","uTN_Analitika_Plače_Osnova"."PlačeUre","uTN_Analitika_Plače_Osnova"."PlačeKredit","uTN_Analitika_Plače_Osnova"."PlačeOddelek","uTN_Analitika_Plače_Osnova"."PlačeStroškovniNosilec","uTN_Analitika_Plače_Osnova"."PlačeUreOznakaFond","uTN_Analitika_Plače_Osnova"."PlačePrispevkiPodjetje","uTN_Analitika_Plače_Osnova"."PlačePrispevkiDelavec","uTN_Analitika_Plače_Osnova"."PlačeDohodnina","uTN_Analitika_Plače_Osnova"."PlačeTipPlačila","uTN_Analitika_Plače_Osnova"."PlačeVrstaDela","uTN_Analitika_Plače_Osnova"."PlačeZmanjšujeFondUr","uTN_Analitika_Plače_Osnova"."PlačeZmanjšujeRazpoložljivKader","uTN_Analitika_Plače_Osnova"."PlačeStrošekDela","uTN_Analitika_Plače_Osnova"."PlačeUreFond","uTN_Analitika_Plače_Osnova"."PlačeTipDelavca","uTN_Analitika_Plače_Prodaja"."PlačeLeto" as "uTN_Analitika_Plače_Prodaja_PlačeLeto","uTN_Analitika_Plače_Prodaja"."PlačeMesec" as "uTN_Analitika_Plače_Prodaja_PlačeMesec","uTN_Analitika_Plače_Prodaja"."PlačePrihodkiOdProdaje","uTN_Analitika_Plače_RVS_RVC"."PlačeLeto" as "uTN_Analitika_Plače_RVS_RVC_PlačeLeto","uTN_Analitika_Plače_RVS_RVC"."PlačeMesec" as "uTN_Analitika_Plače_RVS_RVC_PlačeMesec","uTN_Analitika_Plače_RVS_RVC"."PlačeProdajnaVrednost","uTN_Analitika_Plače_RVS_RVC"."PlačeNabavnaVrednost","uTN_Analitika_Plače_RVS_RVC"."PlačeVrednostIzSestavnice","uTN_Analitika_Plače_RVS_RVC"."PlačeVrednostKOGS" from (("dbo"."uTN_Analitika_Plače_Osnova" "uTN_Analitika_Plače_Osnova"
- inner join "dbo"."uTN_Analitika_Plače_Prodaja" "uTN_Analitika_Plače_Prodaja" on (("uTN_Analitika_Plače_Prodaja"."PlačeLeto" = "uTN_Analitika_Plače_Osnova"."PlačeLeto") and ("uTN_Analitika_Plače_Prodaja"."PlačeMesec" = "uTN_Analitika_Plače_Osnova"."PlačeMesec")))
- inner join "dbo"."uTN_Analitika_Plače_RVS_RVC" "uTN_Analitika_Plače_RVS_RVC" on (("uTN_Analitika_Plače_RVS_RVC"."PlačeLeto" = "uTN_Analitika_Plače_Osnova"."PlačeLeto") and ("uTN_Analitika_Plače_RVS_RVC"."PlačeMesec" = "uTN_Analitika_Plače_Osnova"."PlačeMesec")))</Sql>
+        <Sql>select	po.PlačeObdobje,
+				po.PlačeLeto,
+				po.PlačeMesec,
+				po.PlačeOsebnaŠtevilka,
+				po.PlačeDelavec,
+				po.PlačeDelovnoMesto,
+				po.PlačeDatumVstopa,
+				po.PlačeOsnovniBruto,
+				po.PlačeVrstaPlačila,
+				po.PlačeVrstaPlačilaNaziv,
+				po.PlačeOsnova,
+				po.PlačeFaktor,
+				po.PlačeBruto,
+				po.PlačeNeto,
+				po.PlačeUre,
+				po.PlačeKredit,
+				po.PlačeOddelek,
+				po.PlačeStroškovniNosilec,
+				po.PlačeUreOznakaFond,
+				po.PlačePrispevkiPodjetje,
+				po.PlačePrispevkiDelavec,
+				po.PlačeDohodnina,
+				po.PlačeTipPlačila,
+				po.PlačeVrstaDela,
+				po.PlačeZmanjšujeFondUr,
+				po.PlačeZmanjšujeRazpoložljivKader,
+				po.PlačeStrošekDela,
+				po.PlačeUreFond,
+				po.PlačeTipDelavca,
+				pp.PlačePrihodkiOdProdaje,
+				pr.PlačeProdajnaVrednost,
+				pr.PlačeNabavnaVrednost,
+				pr.PlačeVrednostIzSestavnice,
+				pr.PlačeVrednostKOGS 
+FROM ((dbo.uTN_Analitika_Plače_Osnova po
+inner join dbo.uTN_Analitika_Plače_Prodaja pp ON ((pp.PlačeLeto = po.PlačeLeto) and (pp.PlačeMesec = po.PlačeMesec)))
+inner join dbo.uTN_Analitika_Plače_RVS_RVC pr ON ((pr.PlačeLeto = po.PlačeLeto) and (pr.PlačeMesec = po.PlačeMesec)))
+ORDER BY PlačeObdobje</Sql>
       </Query>
       <ConnectionOptions CloseConnection="true" />
       <CalculatedFields>

@@ -1,8 +1,11 @@
 ﻿body {
 }
+@media screen and (min-width: 2000px) {
 
-
-
-
-
-
+    .dx-dashboard-widget-container {
+        min-height: 27.5vw !important;
+    }
+}
+#MainContent_ASPxDashboard1 {
+    height: 100% !important;
+}

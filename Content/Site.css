@@ -44,11 +44,62 @@ margin: 0 auto;
 float: right; 
 }
 
+
+
+
+
+.logout {
+    display: inline-block !important;
+    position: relative !important;
+    padding: .3em 1.0em !important;
+    text-decoration: none !important;
+    background: #668ad8 !important; /*Button Color*/
+    color: #FFF !important;
+    border-bottom: solid 5px #36528c !important; /* daker than background */
+    border-right: solid 5px #5375bd !important; /* darker than background */
+}
+
+    .logout:before {
+        content: " " !important;
+        position: absolute !important;
+        bottom: -5px !important;
+        left: -1px !important;
+        width: 0 !important;
+        height: 0 !important;
+        border-width: 0 6px 6px 0px !important;
+        border-style: solid !important;
+        border-color: transparent !important;
+        border-bottom-color: #FFF !important;
+    }
+
+    .logout:after {
+        content: " " !important;
+        position: absolute !important;
+        top: -1px !important;
+        right: -5px !important;
+        width: 0 !important;
+        height: 0 !important;
+        border-width: 0px 6px 6px 0px !important;
+        border-style: solid !important;
+        border-color: #FFF !important;
+        border-bottom-color: transparent !important;
+    }
+
+    .logout:active { /*on click*/
+        border: none !important;
+        -ms-transform: translate(6px,6px) !important;
+        -webkit-transform: translate(6px,6px) !important;
+        transform: translate(6px,6px) !important; /*move LowerRight*/
+    }
+
+        .logout:active:after,
+        .logout:active:before { /*on click*/
+            content: none !important; /*Border disappears*/
+        }
 #cmdSignOut, #admin {
     float: right;
-    background: #000000;
-    color: #ffffff;
-    margin-top: 11px;
+    right: -777px!important;
+    margin-top: 1px !important;
     border: 1px solid;
     border-radius: 13px;
     padding-left: 10px;

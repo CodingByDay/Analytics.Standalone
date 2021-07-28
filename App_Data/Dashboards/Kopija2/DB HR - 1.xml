@@ -1,0 +1,380 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Dashboard>
+  <Title Text="DB HR - 1" />
+  <DataSources>
+    <SqlDataSource Name="Plače_Osnova" ComponentName="sqlDataSource1">
+      <Connection Name="Skaza nova" FromAppConfig="true" />
+      <Query Type="CustomSqlQuery" Name="uTN_Analitika_Plače_Skupna">
+        <Sql>select * from dbo.uTN_DB_HRPlače</Sql>
+      </Query>
+      <ConnectionOptions CloseConnection="true" />
+      <CalculatedFields>
+        <CalculatedField Name="PlačeVrstaPlačilaInNaziv" Expression="[PlačeVrstaPlačila]+'-'+[PlačeVrstaPlačilaNaziv]" DataType="Auto" DataMember="uTN_Analitika_Plače_Skupna" />
+        <CalculatedField Name="PlačeUreOpravljenoDelo" Expression="Iif([PlačeVrstaDela]='OPRAVLJENO DELO',[PlačeUreFond],0 )" DataType="Auto" DataMember="uTN_Analitika_Plače_Skupna" />
+        <CalculatedField Name="PlačeUreDopust" Expression="Iif (PlačeVrstaDela='DOPUST',PlačeUreFond,0)" DataType="Auto" DataMember="uTN_Analitika_Plače_Skupna" />
+        <CalculatedField Name="PlačeUreIzredneOdsotnosti" Expression="Iif(PlačeVrstaDela='IZREDNE ODSOTNOSTI (SELITEV, POROKA)',PlačeUreFond,0)" DataType="Auto" DataMember="uTN_Analitika_Plače_Skupna" />
+        <CalculatedField Name="PlačeUreKratkotrajneOdsotnosti" Expression="Iif(PlačeVrstaDela='KRATKOTRAJNE ODSOTNOSTI',PlačeUreFond,0)" DataType="Auto" DataMember="uTN_Analitika_Plače_Skupna" />
+        <CalculatedField Name="PlačeUreDolgotrajneOdsotnosti" Expression="Iif (PlačeVrstaDela='DOLGOTRAJNE ODSOTNOSTI (BOLNIŠKA)',PlačeUreFond,0)" DataType="Auto" DataMember="uTN_Analitika_Plače_Skupna" />
+        <CalculatedField Name="PlačeUrePoškodbePriDelu" Expression="Iif (PlačeVrstaDela='POŠKODBE PRI DELU',PlačeUreFond,0)" DataType="Auto" DataMember="uTN_Analitika_Plače_Skupna" />
+        <CalculatedField Name="PlačeUrePorodniška" Expression="Iif (PlačeVrstaDela='PORODNIŠKE',PlačeUreFond,0)" DataType="Auto" DataMember="uTN_Analitika_Plače_Skupna" />
+        <CalculatedField Name="PlačeUreOčetovskiDopust" Expression="Iif (PlačeVrstaDela='OČETOVSKI',PlačeUreFond,0)" DataType="Auto" DataMember="uTN_Analitika_Plače_Skupna" />
+        <CalculatedField Name="PlačeUreČakanjeNaDelo" Expression="Iif (PlačeVrstaDela='ČAKANJE NA DELO',PlačeUreFond,0)" DataType="Auto" DataMember="uTN_Analitika_Plače_Skupna" />
+        <CalculatedField Name="PlačeUreŠtudentskoDelo" Expression="Iif (PlačeVrstaDela='ŠTUDENTI',PlačeUreFond,0)" DataType="Auto" DataMember="uTN_Analitika_Plače_Skupna" />
+        <CalculatedField Name="PlačeUreAgencijskoDelo" Expression="Iif (PlačeVrstaDela='AGENCIJA',PlačeUreFond,0)" DataType="Auto" DataMember="uTN_Analitika_Plače_Skupna" />
+        <CalculatedField Name="PlačeUreDeloVajenci" Expression="Iif (PlačeVrstaDela='VAJENCI',PlačeUreFond,0)" DataType="Auto" DataMember="uTN_Analitika_Plače_Skupna" />
+        <CalculatedField Name="PlačeUreNeopredeljeno" Expression="Iif (PlačeVrstaDela='Neopredeljeno' or PlačeVrstaDela='DRUGO',PlačeUreFond,0)" DataType="Auto" DataMember="uTN_Analitika_Plače_Skupna" />
+      </CalculatedFields>
+    </SqlDataSource>
+  </DataSources>
+  <Items>
+    <Pie ComponentName="pieDashboardItem1" Name="Pregled fonda ur po vrsti dela" DataSource="sqlDataSource1" DataMember="uTN_Analitika_Plače_Skupna" IsMasterFilterCrossDataSource="true" PieType="Donut" ShowPieCaptions="false">
+      <InteractivityOptions MasterFilterMode="Multiple" />
+      <DataItems>
+        <Dimension DataMember="PlačeVrstaDela" Name="Vrste dela" DefaultId="DataItem0" />
+        <Measure DataMember="PlačeUreFond" Name="Fond ur" DefaultId="DataItem1">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+      </DataItems>
+      <Arguments>
+        <Argument DefaultId="DataItem0" />
+      </Arguments>
+      <Values>
+        <Value DefaultId="DataItem1" />
+      </Values>
+    </Pie>
+    <Pie ComponentName="pieDashboardItem2" Name="Pregled fonda ur po vrsta plačila" DataSource="sqlDataSource1" DataMember="uTN_Analitika_Plače_Skupna" IsMasterFilterCrossDataSource="true" PieType="Donut" ShowPieCaptions="false">
+      <InteractivityOptions MasterFilterMode="Multiple" />
+      <DataItems>
+        <Measure DataMember="PlačeUreFond" Name="Fond ur" DefaultId="DataItem1">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Dimension DataMember="PlačeVrstaPlačilaNaziv" DefaultId="DataItem0" />
+      </DataItems>
+      <Arguments>
+        <Argument DefaultId="DataItem0" />
+      </Arguments>
+      <Values>
+        <Value DefaultId="DataItem1" />
+      </Values>
+    </Pie>
+    <Pie ComponentName="pieDashboardItem6" Name="Leto" DataSource="sqlDataSource1" DataMember="uTN_Analitika_Plače_Skupna" IsMasterFilterCrossDataSource="true" PieType="Donut" ShowPieCaptions="false">
+      <InteractivityOptions MasterFilterMode="Multiple" />
+      <DataItems>
+        <Dimension DataMember="PlačeLeto" Name="Leto" DefaultId="DataItem0" />
+        <Measure DataMember="PlačeUreFond" DefaultId="DataItem1" />
+      </DataItems>
+      <Arguments>
+        <Argument DefaultId="DataItem0" />
+      </Arguments>
+      <Values>
+        <Value DefaultId="DataItem1" />
+      </Values>
+    </Pie>
+    <Pie ComponentName="pieDashboardItem5" Name="Mesec" DataSource="sqlDataSource1" DataMember="uTN_Analitika_Plače_Skupna" IsMasterFilterCrossDataSource="true" PieType="Donut" ShowPieCaptions="false">
+      <InteractivityOptions MasterFilterMode="Multiple" />
+      <DataItems>
+        <Dimension DataMember="PlačeMesec" Name="Mesec" DefaultId="DataItem0" />
+        <Measure DataMember="PlačeUreFond" Name="Fond ur" DefaultId="DataItem1" />
+      </DataItems>
+      <Arguments>
+        <Argument DefaultId="DataItem0" />
+      </Arguments>
+      <Values>
+        <Value DefaultId="DataItem1" />
+      </Values>
+    </Pie>
+    <Pie ComponentName="pieDashboardItem3" Name="Pregled fonda ur po oddelkih" DataSource="sqlDataSource1" DataMember="uTN_Analitika_Plače_Skupna" IsMasterFilterCrossDataSource="true" PieType="Donut" ShowPieCaptions="false">
+      <InteractivityOptions MasterFilterMode="Multiple" />
+      <DataItems>
+        <Dimension DataMember="PlačeOddelek" Name="Oddelek  " DefaultId="DataItem0" />
+        <Measure DataMember="PlačeUreFond" DefaultId="DataItem1" />
+      </DataItems>
+      <Arguments>
+        <Argument DefaultId="DataItem0" />
+      </Arguments>
+      <Values>
+        <Value DefaultId="DataItem1" />
+      </Values>
+    </Pie>
+    <Pie ComponentName="pieDashboardItem4" Name="Pregeled fonda ur po vrsti zaposlitve" DataSource="sqlDataSource1" DataMember="uTN_Analitika_Plače_Skupna" IsMasterFilterCrossDataSource="true" PieType="Donut" ShowPieCaptions="false">
+      <InteractivityOptions IgnoreMasterFilters="true" MasterFilterMode="Multiple" />
+      <DataItems>
+        <Dimension DataMember="PlačeTipDelavca" Name="Tip delavca" DefaultId="DataItem0" />
+        <Measure DataMember="PlačeUreFond" DefaultId="DataItem1" />
+      </DataItems>
+      <Arguments>
+        <Argument DefaultId="DataItem0" />
+      </Arguments>
+      <Values>
+        <Value DefaultId="DataItem1" />
+      </Values>
+    </Pie>
+    <Grid ComponentName="gridDashboardItem1" Name="Pregled opravljenih ur glede na vrsto dela - po ZAPOSLENIH" ParentContainer="dashboardTabPage2" DataSource="sqlDataSource1" DataMember="uTN_Analitika_Plače_Skupna">
+      <DataItems>
+        <Dimension DataMember="PlačeDelavec" DefaultId="DataItem0" />
+        <Measure DataMember="PlačeUreFond" DefaultId="DataItem1">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="PlačeUreOpravljenoDelo" DefaultId="DataItem2">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="PlačeUreDopust" DefaultId="DataItem3">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="PlačeUreIzredneOdsotnosti" DefaultId="DataItem4">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="PlačeUreKratkotrajneOdsotnosti" DefaultId="DataItem5">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="PlačeUreDolgotrajneOdsotnosti" DefaultId="DataItem6">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="PlačeUrePorodniška" DefaultId="DataItem7">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="PlačeUreOčetovskiDopust" DefaultId="DataItem8">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="PlačeUreČakanjeNaDelo" DefaultId="DataItem9">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="PlačeUreŠtudentskoDelo" DefaultId="DataItem10">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="PlačeUreNeopredeljeno" DefaultId="DataItem11">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+      </DataItems>
+      <GridColumns>
+        <GridDimensionColumn Name="Delavec">
+          <Dimension DefaultId="DataItem0" />
+        </GridDimensionColumn>
+        <GridMeasureColumn Name="Št.ur">
+          <Measure DefaultId="DataItem1" />
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Ooravljeno delo">
+          <Measure DefaultId="DataItem2" />
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Dopust">
+          <Measure DefaultId="DataItem3" />
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Izredne odstotnosti">
+          <Measure DefaultId="DataItem4" />
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Kratkotrajne odsotnosti">
+          <Measure DefaultId="DataItem5" />
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Dolgotrajne odsotnosti">
+          <Measure DefaultId="DataItem6" />
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Porodniška">
+          <Measure DefaultId="DataItem7" />
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Očetovski dopust">
+          <Measure DefaultId="DataItem8" />
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Čakanje na delo">
+          <Measure DefaultId="DataItem9" />
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Študentsko delo">
+          <Measure DefaultId="DataItem10" />
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Neopredeljeno">
+          <Measure DefaultId="DataItem11" />
+        </GridMeasureColumn>
+      </GridColumns>
+      <GridOptions EnableBandedRows="true" WordWrap="true" />
+    </Grid>
+    <TabContainer ComponentName="tabContainerDashboardItem1" Name="Tab Container 1">
+      <Pages>
+        <Page ComponentName="dashboardTabPage1" Name="Page 1" />
+        <Page ComponentName="dashboardTabPage2" Name="Page 2" />
+        <Page ComponentName="dashboardTabPage3" Name="Page 3" />
+      </Pages>
+    </TabContainer>
+    <Grid ComponentName="gridDashboardItem2" Name="Pregled opravljenih ur glede na vrsto dela - po VRSTI ZAPOSLITVE" ParentContainer="dashboardTabPage3" DataSource="sqlDataSource1" DataMember="uTN_Analitika_Plače_Skupna">
+      <DataItems>
+        <Dimension DataMember="PlačeTipDelavca" DefaultId="DataItem0" />
+        <Measure DataMember="PlačeUreFond" DefaultId="DataItem1">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="PlačeUreOpravljenoDelo" DefaultId="DataItem2">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="PlačeUreDopust" DefaultId="DataItem3">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="PlačeUreIzredneOdsotnosti" DefaultId="DataItem4">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="PlačeUreKratkotrajneOdsotnosti" DefaultId="DataItem5">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="PlačeUreDolgotrajneOdsotnosti" DefaultId="DataItem6">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="PlačeUrePorodniška" DefaultId="DataItem7">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="PlačeUreOčetovskiDopust" DefaultId="DataItem8">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="PlačeUreČakanjeNaDelo" DefaultId="DataItem9">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="PlačeUreŠtudentskoDelo" DefaultId="DataItem10">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="PlačeUreNeopredeljeno" DefaultId="DataItem11">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+      </DataItems>
+      <GridColumns>
+        <GridDimensionColumn Name="Tip delavca">
+          <Dimension DefaultId="DataItem0" />
+        </GridDimensionColumn>
+        <GridMeasureColumn Name="Št.ur">
+          <Measure DefaultId="DataItem1" />
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Ooravljeno delo">
+          <Measure DefaultId="DataItem2" />
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Dopust">
+          <Measure DefaultId="DataItem3" />
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Izredne odstotnosti">
+          <Measure DefaultId="DataItem4" />
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Kratkotrajne odsotnosti">
+          <Measure DefaultId="DataItem5" />
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Dolgotrajne odsotnosti">
+          <Measure DefaultId="DataItem6" />
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Porodniška">
+          <Measure DefaultId="DataItem7" />
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Očetovski dopust">
+          <Measure DefaultId="DataItem8" />
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Čakanje na delo">
+          <Measure DefaultId="DataItem9" />
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Študentsko delo">
+          <Measure DefaultId="DataItem10" />
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Neopredeljeno">
+          <Measure DefaultId="DataItem11" />
+        </GridMeasureColumn>
+      </GridColumns>
+      <GridOptions EnableBandedRows="true" WordWrap="true" />
+    </Grid>
+    <Grid ComponentName="gridDashboardItem3" Name="Pregled opravljenih ur glede na vrsto dela - po ODDELKIH" ParentContainer="dashboardTabPage1" DataSource="sqlDataSource1" DataMember="uTN_Analitika_Plače_Skupna">
+      <DataItems>
+        <Dimension DataMember="PlačeOddelek" DefaultId="DataItem0" />
+        <Measure DataMember="PlačeUreFond" DefaultId="DataItem1">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="PlačeUreOpravljenoDelo" DefaultId="DataItem2">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="PlačeUreDopust" DefaultId="DataItem3">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="PlačeUreIzredneOdsotnosti" DefaultId="DataItem4">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="PlačeUreKratkotrajneOdsotnosti" DefaultId="DataItem5">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="PlačeUreDolgotrajneOdsotnosti" DefaultId="DataItem6">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="PlačeUrePorodniška" DefaultId="DataItem7">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="PlačeUreOčetovskiDopust" DefaultId="DataItem8">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="PlačeUreČakanjeNaDelo" DefaultId="DataItem9">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="PlačeUreŠtudentskoDelo" DefaultId="DataItem10">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="PlačeUreNeopredeljeno" DefaultId="DataItem11">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+      </DataItems>
+      <GridColumns>
+        <GridDimensionColumn Name="Oddelek">
+          <Dimension DefaultId="DataItem0" />
+        </GridDimensionColumn>
+        <GridMeasureColumn Name="Št.ur">
+          <Measure DefaultId="DataItem1" />
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Ooravljeno delo">
+          <Measure DefaultId="DataItem2" />
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Dopust">
+          <Measure DefaultId="DataItem3" />
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Izredne odstotnosti">
+          <Measure DefaultId="DataItem4" />
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Kratkotrajne odsotnosti">
+          <Measure DefaultId="DataItem5" />
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Dolgotrajne odsotnosti">
+          <Measure DefaultId="DataItem6" />
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Porodniška">
+          <Measure DefaultId="DataItem7" />
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Očetovski dopust">
+          <Measure DefaultId="DataItem8" />
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Čakanje na delo">
+          <Measure DefaultId="DataItem9" />
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Študentsko delo">
+          <Measure DefaultId="DataItem10" />
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Neopredeljeno">
+          <Measure DefaultId="DataItem11" />
+        </GridMeasureColumn>
+      </GridColumns>
+      <GridOptions EnableBandedRows="true" WordWrap="true" />
+    </Grid>
+  </Items>
+  <LayoutTree>
+    <LayoutGroup>
+      <LayoutGroup Orientation="Vertical" Weight="1.2238287759781161">
+        <LayoutGroup Weight="1.2982623088565053">
+          <LayoutItem DashboardItem="pieDashboardItem4" Weight="1.0979923904039293" />
+          <LayoutItem DashboardItem="pieDashboardItem3" Weight="1.2539048065931646" />
+          <LayoutItem DashboardItem="pieDashboardItem2" Weight="1.226051811083374" />
+          <LayoutItem DashboardItem="pieDashboardItem1" Weight="1.3706343085446966" />
+        </LayoutGroup>
+        <LayoutGroup Weight="1.5244921821614597">
+          <LayoutGroup Orientation="Vertical" Weight="0.31817211845103793">
+            <LayoutItem DashboardItem="pieDashboardItem6" Weight="0.20071808112579997" />
+            <LayoutItem DashboardItem="pieDashboardItem5" Weight="0.20107519136532287" />
+          </LayoutGroup>
+          <LayoutTabContainer DashboardItem="tabContainerDashboardItem1" Weight="1.6614542343883669">
+            <LayoutTabPage DashboardItem="dashboardTabPage1">
+              <LayoutItem DashboardItem="gridDashboardItem3" Weight="1.6614542343883669" />
+            </LayoutTabPage>
+            <LayoutTabPage DashboardItem="dashboardTabPage3">
+              <LayoutItem DashboardItem="gridDashboardItem2" Weight="1.6614542343883669" />
+            </LayoutTabPage>
+            <LayoutTabPage DashboardItem="dashboardTabPage2">
+              <LayoutItem DashboardItem="gridDashboardItem1" Weight="1.6614542343883669" />
+            </LayoutTabPage>
+          </LayoutTabContainer>
+        </LayoutGroup>
+      </LayoutGroup>
+    </LayoutGroup>
+  </LayoutTree>
+</Dashboard>

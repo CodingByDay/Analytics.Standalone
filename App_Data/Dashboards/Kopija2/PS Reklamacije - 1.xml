@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Dashboard>
+<Dashboard CurrencyCulture="ast-ES">
   <Title Text="PS Reklamacije - 1" />
   <DataSources>
     <SqlDataSource Name="uTN_Analitika_Reklamacije_Osnova" ComponentName="sqlDataSource1">

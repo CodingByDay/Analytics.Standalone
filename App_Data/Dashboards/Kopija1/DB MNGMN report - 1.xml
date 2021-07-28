@@ -6,7 +6,7 @@
       <Connection Name="eHolding Centralna Baza" FromAppConfig="true" />
       <Query Type="CustomSqlQuery" Name="DB MNGMT report">
         <Sql>select *
-FROM "PA_eHolding_Centralna_baza".dbo."uTN_Analitika_MNGMT_Detalj_1" ;</Sql>
+FROM PA_eHolding_Efra.dbo.uTN_DB_MNGMTDetalj;</Sql>
       </Query>
       <ConnectionOptions CloseConnection="true" />
       <CalculatedFields>

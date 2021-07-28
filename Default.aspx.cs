@@ -26,17 +26,12 @@ namespace peptak
 
 
 
-            ASPxDashboard1.SetConnectionStringsProvider(new DevExpress.DataAccess.Web.ConfigFileConnectionStringsProvider());
+              ASPxDashboard1.SetConnectionStringsProvider(new DevExpress.DataAccess.Web.ConfigFileConnectionStringsProvider());
            
-            string uname = HttpContext.Current.User.Identity.Name;
-            if (uname == "user1")
-            {
-                ASPxDashboard1.WorkingMode = WorkingMode.Designer;
-
-            }
-            else {
+       
                 ASPxDashboard1.WorkingMode = WorkingMode.Viewer;
-            }
+
+        
 
         }
 

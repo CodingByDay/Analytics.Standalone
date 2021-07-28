@@ -5,7 +5,7 @@
     <SqlDataSource Name="DB_PS_Prodaja" ComponentName="sqlDataSource1">
       <Connection Name="Skaza" FromAppConfig="true" />
       <Query Type="CustomSqlQuery" Name="DB_PS_Prodaja">
-        <Sql>select * from utn_DB_PS_Prodaja;</Sql>
+        <Sql>select * from dbo.utn_DB_PS_Prodaja;</Sql>
       </Query>
       <ConnectionOptions CloseConnection="true" />
       <CalculatedFields>
@@ -336,8 +336,8 @@
       <LayoutGroup Weight="0.88176919899448891">
         <LayoutItem DashboardItem="listBoxDashboardItem2" Weight="0.31132202660547181" />
         <LayoutItem DashboardItem="listBoxDashboardItem3" Weight="0.50270515256911341" />
-        <LayoutItem DashboardItem="chartDashboardItem2" Weight="2.5722921302584969" />
-        <LayoutItem DashboardItem="chartDashboardItem1" Weight="1.8095808383233534" />
+        <LayoutItem DashboardItem="chartDashboardItem2" Weight="2.2392216079664173" />
+        <LayoutItem DashboardItem="chartDashboardItem1" Weight="2.1426513606154329" />
       </LayoutGroup>
       <LayoutGroup Weight="2.3255315242343779">
         <LayoutGroup Orientation="Vertical" Weight="0.54482634078603831">

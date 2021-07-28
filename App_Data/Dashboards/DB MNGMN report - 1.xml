@@ -3,10 +3,11 @@
   <Title Text="DB MNGMT report - 1" />
   <DataSources>
     <SqlDataSource Name="DB MNGMT report" ComponentName="sqlDataSource1">
-      <Connection Name="eHolding Centralna Baza" FromAppConfig="true" />
+      <Connection Name="eHolding ERFA" FromAppConfig="true" />
       <Query Type="CustomSqlQuery" Name="DB MNGMT report">
         <Sql>select *
-FROM "PA_eHolding_Centralna_baza".dbo."uTN_Analitika_MNGMT_Detalj_1" ;</Sql>
+FROM dbo.uTN_DB_MNGMTDetalj
+WHERE DATEPART(YEAR,MNGMTDatumTemeljnice)&gt;=DATEPART(YEAR, GETDATE())-1;</Sql>
       </Query>
       <ConnectionOptions CloseConnection="true" />
       <CalculatedFields>
@@ -16,7 +17,7 @@ FROM "PA_eHolding_Centralna_baza".dbo."uTN_Analitika_MNGMT_Detalj_1" ;</Sql>
         <CalculatedField Name="Nivo1Filter" Expression="iif([MngmtIDNivo1]='T',[MngmtID]+' '+[MngmtIDNaziv],'')" DataType="Auto" DataMember="DB MNGMT report" />
         <CalculatedField Name="Debet" Expression="filter(sum(MngmtDebet) ,MngmtOznaka='T' )" DataType="Auto" DataMember="DB MNGMT report" />
         <CalculatedField Name="Kredit" Expression="filter(sum(MngmtKredit) ,MngmtOznaka='T' )" DataType="Auto" DataMember="DB MNGMT report" />
-        <CalculatedField Name="Saldo" Expression="filter(sum(MngmtSaldo) ,MngmtOznaka='T' )" DataType="Auto" DataMember="DB MNGMT report" />
+        <CalculatedField Name="Saldo" Expression="Iif(MngmtOznaka='T',[MngmtSaldo],0 )" DataType="Auto" DataMember="DB MNGMT report" />
       </CalculatedFields>
     </SqlDataSource>
   </DataSources>
@@ -123,7 +124,7 @@ FROM "PA_eHolding_Centralna_baza".dbo."uTN_Analitika_MNGMT_Detalj_1" ;</Sql>
         <Measure DataMember="Kredit" DefaultId="DataItem9">
           <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
         </Measure>
-        <Measure DataMember="Saldo" DefaultId="DataItem10">
+        <Measure DataMember="MngmtSaldo" DefaultId="DataItem10">
           <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
         </Measure>
         <Dimension DataMember="MngmtPozicijaTemeljnice" DefaultId="DataItem1">

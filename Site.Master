@@ -5,7 +5,171 @@
 <html lang="en">
 <head runat="server">
    
-   
+  <style>.toggle--checkbox {
+    display: none;
+}
+
+    .toggle--checkbox:checked {
+        /** This will all flip from sun to moon **/
+        /** Change the label color **/
+    }
+
+        .toggle--checkbox:checked ~ .background {
+            background: var(--indigo-background);
+        }
+
+        .toggle--checkbox:checked + .toggle--label {
+            background: var(--indigo-color);
+            border-color: var(--indigo-border);
+            /** Change the cloud to stars **/
+            /** Change the sun into the moon **/
+            /** Show the dimples on the moon **/
+        }
+
+            .toggle--checkbox:checked + .toggle--label .toggle--label-background {
+                left: 15px;
+                width: 1.2px;
+            }
+
+                .toggle--checkbox:checked + .toggle--label .toggle--label-background:before {
+                    width: 1.2px;
+                    height: 1.2px;
+                    top: -6.2px;
+                }
+
+                .toggle--checkbox:checked + .toggle--label .toggle--label-background:after {
+                    width: 1.2px;
+                    height: 1.2px;
+                    left: -7.5px;
+                    top: 5px;
+                }
+
+            .toggle--checkbox:checked + .toggle--label:before {
+                background: var(--white);
+                border-color: var(--gray-border);
+                animation-name: switch;
+                animation-duration: 350ms;
+                animation-fill-mode: forwards;
+            }
+
+            .toggle--checkbox:checked + .toggle--label:after {
+                transition-delay: 350ms;
+                opacity: 1;
+            }
+
+.toggle--label {
+    /** Placeholder element, starting at blue **/
+    width: 50px;
+    height: 25px;
+    background: var(--blue-color);
+    border-radius: 25px;
+    border: 1.2px solid var(--blue-border);
+    display: flex;
+    position: relative;
+    transition: all 350ms ease-in;
+    /** The sun cloud and moon stars **/
+    /** Sun/Moon element **/
+    /** Gray dots on the moon **/
+}
+
+.toggle--label-background {
+    width: 2.5px;
+    height: 1.2px;
+    border-radius: 5px;
+    position: relative;
+    background: var(--white);
+    left: 33px;
+    top: 11px;
+    transition: all 150ms ease-in;
+}
+
+    .toggle--label-background:before {
+        content: "";
+        position: absolute;
+        top: -1.2px;
+        width: 2.5px;
+        height: 1.2px;
+        border-radius: 1.2px;
+        background: var(--white);
+        left: -5px;
+        transition: all 150ms ease-in;
+    }
+
+    .toggle--label-background:after {
+        content: "";
+        position: absolute;
+        top: 1.2px;
+        width: 2.5px;
+        height: 1.2px;
+        border-radius: 1.2px;
+        background: var(--white);
+        left: -2.5px;
+        transition: all 150ms ease-in;
+    }
+
+.toggle--label:before {
+    animation-name: reverse;
+    animation-duration: 350ms;
+    animation-fill-mode: forwards;
+    transition: all 350ms ease-in;
+    content: "";
+    width: 20px;
+    height: 20px;
+    border: 5px solid var(--yellow-border);
+    top: 1px;
+    left: 1px;
+    position: absolute;
+    border-radius: 5px;
+    background: var(--yellow-background);
+}
+
+.toggle--label:after {
+    transition-delay: 0ms;
+    transition: all 250ms ease-in;
+    position: absolute;
+    content: "";
+    box-shadow: var(--gray-dots) -13px 0 0 2px, var(--gray-dots) -24px 14px 0 -2px;
+    left: 35px;
+    top: 6px;
+    width: 2.5px;
+    height: 2.5px;
+    background: transparent;
+    border-radius: 50%;
+    opacity: 0;
+}
+
+@keyframes switch {
+    0% {
+        left: 1px;
+    }
+
+    60% {
+        left: 1px;
+        width: 28px;
+    }
+
+    100% {
+        left: 26px;
+        width: 20px;
+    }
+}
+
+@keyframes reverse {
+    0% {
+        left: 26px;
+        width: 20px;
+    }
+
+    60% {
+        left: 18px;
+        width: 33px;
+    }
+
+    100% {
+        left: 1px;
+    }
+}
+</style>
 
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
@@ -64,12 +228,12 @@
                 <%--Site Scripts--%>
             </Scripts>
         </asp:ScriptManager>
- <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top" id="resize">
+ <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
   <div class="container">
     <a class="navbar-brand" href="#">
         </a>
       <img src="show.PNG"  id="pic" style="width:25px;height:25px;"/>
-      <div id="moon">
+        <div id="moon">
    <input type="checkbox" id="Checkbox1" class="toggle--checkbox" runat="server" >
       <label for="toggle" class="toggle--label">
       <button class="toggle--label-background"></button>
@@ -89,7 +253,9 @@
                 <span class="sr-only">(current)</span>
               </a>
         </li>
+
                         <li><asp:Button type="submit" Value="SignOut" runat="server" ID="cmdSignOut" OnClick="cmdSignOut_Click" Text="Odjava" CssClass="logout"/></li>
+
 
       </ul>
     </div>

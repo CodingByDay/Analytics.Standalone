@@ -9,6 +9,8 @@ using DevExpress.DashboardWeb;
 using System.Data.SqlClient;
 using System.Data;
 using static peptak.SiteMaster;
+using System.Web.UI.HtmlControls;
+
 namespace peptak
 {
     public partial class _Default : Page
@@ -17,91 +19,86 @@ namespace peptak
         private SqlCommand cmd;
         private string userRole;
         private object userName;
-
+        private string state;
         protected void Page_Load(object sender, EventArgs e)
         {
 
-            //if (!IsPostBack)
-            //{
-
-
-
+            if (!IsPostBack)
+            {
 
                 ASPxDashboard1.SetConnectionStringsProvider(new DevExpress.DataAccess.Web.ConfigFileConnectionStringsProvider());
-
-
                 ASPxDashboard1.WorkingMode = WorkingMode.Viewer;
-
-            //    Button button = (Button)Master.FindControl("themeButton");
-            //    button.Click += Button_Click;
-            //} else
-            //{
-            //    if(Session["theme"].ToString() == "dark")
-            //    {
-
-            //        ASPxDashboard1.SetConnectionStringsProvider(new DevExpress.DataAccess.Web.ConfigFileConnectionStringsProvider());
+                HtmlInputCheckBox toggle = (HtmlInputCheckBox)Master.FindControl("togglebox");
 
 
-            //        ASPxDashboard1.WorkingMode = WorkingMode.Viewer;
-            //        ASPxDashboard1.ColorScheme = ASPxDashboard.ColorSchemeDark;
+                if (Request.Cookies.Get("state") is null) {
+                    Response.Cookies["state"].Value = "light";
 
-            //        Button button = (Button)Master.FindControl("themeButton");
-            //        button.Click += Button_Click;
-            //    } else
-            //    {
+                }
+                else
+                {
+                    state = Request.Cookies.Get("state").Value;
 
-            //        ASPxDashboard1.SetConnectionStringsProvider(new DevExpress.DataAccess.Web.ConfigFileConnectionStringsProvider());
+                    var test = true;
+                }
 
 
-            //        ASPxDashboard1.WorkingMode = WorkingMode.Viewer;
-            //        ASPxDashboard1.ColorScheme = ASPxDashboard.ColorSchemeLight;
-
-            //        Button button = (Button)Master.FindControl("themeButton");
-            //        button.Click += Button_Click;
-            //    }
-          //  }
+                var debug = true;
+            }
+           
         }
-        //private void ChangeTheme(bool dark)
-        //{
-        //    if (dark == true)
-        //    {
-        //        ASPxDashboard1.ColorScheme = ASPxDashboard.ColorSchemeDark;
-        //        Session["theme"] = "dark";
-        //    }
-        //    else
-        //    {
-        //        ASPxDashboard1.ColorScheme = ASPxDashboard.ColorSchemeLight;
-        //        Session["theme"] = "light";
 
-        //    }
-        //}
+        [System.Web.Services.WebMethod]
+        private void Btn_Click(object sender, EventArgs e)
+        {
+            // Causes validation
+        }
+
+        private void Toggle_CheckedChanged1(object sender, EventArgs e)
+        {
+            var html = sender as CheckBox;
+            var cshecked = html.Checked;
+            Response.Write($"<script>alert('Proof+{cshecked}')</script>");
+
+        }
+
+        private void Toggle_ServerChange(object sender, EventArgs e)
+        {
+            var html = sender as HtmlInputCheckBox;
+            var cshecked=html.Checked;
+            Response.Write($"<script>alert('Proof+{cshecked}')</script>");
+        }
+
+        private void Toggle_CheckedChanged(object sender, EventArgs e)
+        {
+            Response.Write("<script>alert('Proof')</script>");
+        }
+
+        private void ChangeTheme(bool dark)
+        {
+            if (dark == true)
+            {
+                ASPxDashboard1.ColorScheme = ASPxDashboard.ColorSchemeDark;
+                Session["theme"] = "dark";
+            }
+            else
+            {
+                ASPxDashboard1.ColorScheme = ASPxDashboard.ColorSchemeLight;
+                Session["theme"] = "light";
+
+            }
+        }
 
 
-        //private void Button_Click(object sender, EventArgs e)
-        //{
-        //    Button button = sender as Button;
 
-        //    if (button.Text == "Temno")
-        //    {
-        //        button.Text = "Svetlo";
-        //        ChangeTheme(false);
 
-        //    }
-        //    else
-        //    {
-        //        button.Text = "Temno";
-        //        ChangeTheme(true);
 
-        //    }
-        //}
-    
 
-       
 
-        //private void CheckBox_CheckedChanged(object sender, EventArgs e)
-        //{
-        //    Response.Write("<script>testing check</script>");
-        //}
+        private void CheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            Response.Write("<script>testing check</script>");
+        }
 
         protected void cmdSignOut_Click(object sender, EventArgs e)
         {

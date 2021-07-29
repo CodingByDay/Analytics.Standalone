@@ -184,8 +184,81 @@
     </asp:PlaceHolder>
       <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
         <script>
-          
- 
+            
+            function checkCookie() {
+                let username = getCookie("username");
+                if (username != "") {
+                    alert("Welcome again " + username);
+                } else {
+                    username = prompt("Please enter your name:", "");
+                    if (username != "" && username != null) {
+                        setCookie("username", username, 365);
+                    }
+                }
+            }
+
+            function getCookie(cname) {
+                let name = cname + "=";
+                let decodedCookie = decodeURIComponent(document.cookie);
+                let ca = decodedCookie.split(';');
+                for (let i = 0; i < ca.length; i++) {
+                    let c = ca[i];
+                    while (c.charAt(0) == ' ') {
+                        c = c.substring(1);
+                    }
+                    if (c.indexOf(name) == 0) {
+                        return c.substring(name.length, c.length);
+                    }
+                }
+                return "";
+            }
+
+            function setCookie(cname, cvalue, exdays) {
+                const d = new Date();
+                d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+                let expires = "expires=" + d.toUTCString();
+                document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+            }
+
+            function postback() {
+
+
+
+                var state = document.getElementById("toggle");
+
+
+
+
+                if (state.checked==true) {
+                    setCookie("state", "light", 365);
+
+                } else {
+
+                    setCookie("state", "dark", 365);
+                }
+
+               
+
+
+                window.location.reload(true); // Reloads the page causing validation
+
+
+               
+
+                
+            }
+
+
+                
+
+
+
+            
+
+
+
+
+
       $(document).keypress(function (e) { if (e.keyCode === 13) { e.preventDefault(); return false; } });
 
 
@@ -209,7 +282,7 @@
 <body>
     <form runat="server">
 
-        <asp:ScriptManager runat="server">
+        <asp:ScriptManager runat="server" EnablePageMethods="true">
             <Scripts>
                 <%--To learn more about bundling scripts in ScriptManager see https://go.microsoft.com/fwlink/?LinkID=301884 --%>
                 <%--Framework Scripts--%>
@@ -233,17 +306,7 @@
     <a class="navbar-brand" href="#">
         </a>
       <img src="show.PNG"  id="pic" style="width:25px;height:25px;"/>
-        <div id="moon">
-   <input type="checkbox" id="Checkbox1" class="toggle--checkbox" runat="server" >
-      <label for="toggle" class="toggle--label">
-      <button class="toggle--label-background"></button>
-      </label>
-
-
-
-
-      </div>
-  
+      <input id="toggle" type="checkbox" name="checkbox" class="switch" runat="server" onchange="postback();">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -271,5 +334,19 @@
         </div>
 
     </form>
+    <script>    
+        var toggle = document.getElementById("toggle");
+
+        var state = getCookie("state");
+        console.log(state);
+        if (state == "light") {
+
+            toggle.checked = true;
+
+        } else {
+
+            toggle.checked = false;
+
+        }</script>
 </body>
 </html>

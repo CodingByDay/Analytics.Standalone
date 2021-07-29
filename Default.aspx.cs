@@ -15,10 +15,6 @@ namespace peptak
 {
     public partial class _Default : Page
     {
-        private SqlConnection conn;
-        private SqlCommand cmd;
-        private string userRole;
-        private object userName;
         private string state;
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -39,20 +35,25 @@ namespace peptak
                 {
                     state = Request.Cookies.Get("state").Value;
 
-                    var test = true;
+                    switch(state)
+                    {
+                        case "light":
+                            ASPxDashboard1.ColorScheme = ASPxDashboard.ColorSchemeLight; 
+                            break;
+                        case "dark":
+                            ASPxDashboard1.ColorScheme = ASPxDashboard.ColorSchemeDarkMoon;
+                            break;
+
+                    }
                 }
 
 
-                var debug = true;
+               
             }
            
         }
 
-        [System.Web.Services.WebMethod]
-        private void Btn_Click(object sender, EventArgs e)
-        {
-            // Causes validation
-        }
+       
 
         private void Toggle_CheckedChanged1(object sender, EventArgs e)
         {

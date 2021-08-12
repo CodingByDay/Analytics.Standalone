@@ -18,42 +18,87 @@ namespace peptak
         private string state;
         protected void Page_Load(object sender, EventArgs e)
         {
+            ASPxDashboard1.DashboardLoading += ASPxDashboard1_DashboardLoading;
 
             if (!IsPostBack)
             {
 
-                ASPxDashboard1.SetConnectionStringsProvider(new DevExpress.DataAccess.Web.ConfigFileConnectionStringsProvider());
-                ASPxDashboard1.WorkingMode = WorkingMode.Viewer;
-                HtmlInputCheckBox toggle = (HtmlInputCheckBox)Master.FindControl("togglebox");
+                if (Request.Cookies["dashboard"] is null)
+                {
+
+                    ASPxDashboard1.SetConnectionStringsProvider(new DevExpress.DataAccess.Web.ConfigFileConnectionStringsProvider());
+                    ASPxDashboard1.WorkingMode = WorkingMode.Viewer;
+
+                    HtmlInputCheckBox toggle = (HtmlInputCheckBox)Master.FindControl("togglebox");
 
 
-                if (Request.Cookies.Get("state") is null) {
-                    Response.Cookies["state"].Value = "light";
+                    if (Request.Cookies.Get("state") is null)
+                    {
+
+                        Response.Cookies["state"].Value = "light";
+
+                    }
+                    else
+                    {
+                        state = Request.Cookies.Get("state").Value;
+
+                        switch (state)
+                        {
+                            case "light":
+                                ASPxDashboard1.ColorScheme = ASPxDashboard.ColorSchemeLight;
+                                break;
+                            case "dark":
+                                ASPxDashboard1.ColorScheme = ASPxDashboard.ColorSchemeDarkMoon;
+                                break;
+
+                        }
+                    }
+
 
                 }
                 else
                 {
-                    state = Request.Cookies.Get("state").Value;
+                    string id = Request.Cookies["dashboard"].Value;
+                    ASPxDashboard1.InitialDashboardId = id;
+                    ASPxDashboard1.SetConnectionStringsProvider(new DevExpress.DataAccess.Web.ConfigFileConnectionStringsProvider());
+                    ASPxDashboard1.WorkingMode = WorkingMode.Viewer;
 
-                    switch(state)
+                    HtmlInputCheckBox toggle = (HtmlInputCheckBox)Master.FindControl("togglebox");
+
+
+                    if (Request.Cookies.Get("state") is null)
                     {
-                        case "light":
-                            ASPxDashboard1.ColorScheme = ASPxDashboard.ColorSchemeLight; 
-                            break;
-                        case "dark":
-                            ASPxDashboard1.ColorScheme = ASPxDashboard.ColorSchemeDarkMoon;
-                            break;
+
+                        Response.Cookies["state"].Value = "light";
 
                     }
+                    else
+                    {
+                        state = Request.Cookies.Get("state").Value;
+
+                        switch (state)
+                        {
+                            case "light":
+                                ASPxDashboard1.ColorScheme = ASPxDashboard.ColorSchemeLight;
+                                break;
+                            case "dark":
+                                ASPxDashboard1.ColorScheme = ASPxDashboard.ColorSchemeDarkMoon;
+                                break;
+
+                        }
+                    }
+
                 }
-
-
                
             }
            
         }
 
-       
+        private void ASPxDashboard1_DashboardLoading(object sender, DashboardLoadingWebEventArgs e)
+        {
+            Response.Cookies["dashboard"].Value = e.DashboardId;
+ 
+        }
 
         private void Toggle_CheckedChanged1(object sender, EventArgs e)
         {

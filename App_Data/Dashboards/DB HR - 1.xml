@@ -42,7 +42,7 @@
         <Value DefaultId="DataItem1" />
       </Values>
     </Pie>
-    <Pie ComponentName="pieDashboardItem2" Name="Pregled fonda ur po vrsta plačila" DataSource="sqlDataSource1" DataMember="uTN_Analitika_Plače_Skupna" IsMasterFilterCrossDataSource="true" PieType="Donut" ShowPieCaptions="false">
+    <Pie ComponentName="pieDashboardItem2" Name="Pregled fonda ur po vrsti plačila" DataSource="sqlDataSource1" DataMember="uTN_Analitika_Plače_Skupna" IsMasterFilterCrossDataSource="true" PieType="Donut" ShowPieCaptions="false">
       <InteractivityOptions MasterFilterMode="Multiple" />
       <DataItems>
         <Measure DataMember="PlačeUreFond" Name="Fond ur" DefaultId="DataItem1">
@@ -61,7 +61,9 @@
       <InteractivityOptions MasterFilterMode="Multiple" />
       <DataItems>
         <Dimension DataMember="PlačeLeto" Name="Leto" DefaultId="DataItem0" />
-        <Measure DataMember="PlačeUreFond" DefaultId="DataItem1" />
+        <Measure DataMember="PlačeUreFond" DefaultId="DataItem1">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
       </DataItems>
       <Arguments>
         <Argument DefaultId="DataItem0" />

@@ -1,6 +1,6 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="MobileDashboard.aspx.cs" Inherits="peptak.MobileDashboard"  %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Extension.Master" AutoEventWireup="true" CodeBehind="MobileDashboard.aspx.cs" Inherits="peptak.MobileDashboard"  %>
 <%@ Register Assembly="DevExpress.Dashboard.v20.2.Web.WebForms, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Namespace="DevExpress.DashboardWeb" TagPrefix="dx" %>
-<asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
+<asp:Content ContentPlaceHolderID="LayoutContentPlaceHolder" runat="server">
      <script>
         function getDashboardControl() {
             return ASPxDashboard.getDashboardControl();

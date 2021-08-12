@@ -14,7 +14,7 @@
     <Pie ComponentName="pieDashboardItem1" Name="Pies 1" DataSource="sqlDataSource1" DataMember="tHE_SetItem">
       <DataItems>
         <Measure DataMember="anPrice" SummaryType="Average" DefaultId="DataItem0" />
-        <Dimension DataMember="acIdent" DefaultId="DataItem1" />
+        <Dimension DataMember="acClassif" DefaultId="DataItem1" />
       </DataItems>
       <SeriesDimensions>
         <SeriesDimension DefaultId="DataItem1" />
@@ -26,7 +26,7 @@
     <Pie ComponentName="pieDashboardItem2" Name="Pies 2" DataSource="sqlDataSource1" DataMember="tHE_SetItem">
       <DataItems>
         <Measure DataMember="acAcct" SummaryType="Count" DefaultId="DataItem0" />
-        <Dimension DataMember="abIcon" DefaultId="DataItem1" />
+        <Dimension DataMember="acFieldSF" DefaultId="DataItem1" />
       </DataItems>
       <SeriesDimensions>
         <SeriesDimension DefaultId="DataItem1" />

@@ -102,7 +102,11 @@
                     if (expand == "true") {
                         onExpand();
                     } else {
-                        onCollapse();
+                        var control = dashboard.GetDashboardControl();
+                        design = control.isDesignMode();
+                        if (design == false) {
+                            onCollapse();
+                        }
                     }
                  
 
@@ -149,14 +153,18 @@
 
 
 
+
             function onCollapse() {
-                
+
                 var control = dashboard.GetDashboardControl();
-                extension.hidePanelAsync({}).done(function (e) {
-                    control.surfaceLeft(e.surfaceLeft);
-                    toggleVisibilityHide(false);
-                    setCookie("expand", "true", 365);
-                });
+          
+                    extension.hidePanelAsync({}).done(function (e) {
+                        control.surfaceLeft(e.surfaceLeft);
+                        toggleVisibilityHide(false);
+                        setCookie("expand", "true", 365);
+
+                    });
+                
             }
 
 
@@ -177,7 +185,7 @@
 <div style="position: absolute; left: 0; right: 0; top:35px; bottom:0;">
     <dx:ASPxDashboard ID="ASPxDashboard1" runat="server" AllowCreateNewJsonConnection="True"  ClientInstanceName="dashboard"  AllowExecutingCustomSql="True" AllowInspectAggregatedData="True"    MobileLayoutEnabled="Auto" AllowInspectRawData="True" DashboardStorageFolder="~/App_Data/Dashboards" EnableCustomSql="True" EnableTextBoxItemEditor="True" >
         <ClientSideEvents BeforeRender="onBeforeRender" 
-                          ItemSelectionChanged="onCollapse"
+
                           DashboardInitialized="onCollapse"
                        
                               />

@@ -11,10 +11,11 @@
     </SqlDataSource>
   </DataSources>
   <Items>
-    <Pie ComponentName="pieDashboardItem1" Name="Pies 1" DataSource="sqlDataSource1" DataMember="tHE_SetItem">
+    <Pie ComponentName="pieDashboardItem1" Name="Pies 1" DataSource="sqlDataSource1" DataMember="tHE_SetItem" IsMasterFilterCrossDataSource="true">
+      <InteractivityOptions MasterFilterMode="Multiple" TargetDimensions="Series" />
       <DataItems>
         <Measure DataMember="anPrice" SummaryType="Average" DefaultId="DataItem0" />
-        <Dimension DataMember="acClassif" DefaultId="DataItem1" />
+        <Dimension DataMember="acAcctNotTaxDeduct" DefaultId="DataItem1" />
       </DataItems>
       <SeriesDimensions>
         <SeriesDimension DefaultId="DataItem1" />
@@ -23,14 +24,15 @@
         <Value DefaultId="DataItem0" />
       </Values>
     </Pie>
-    <Pie ComponentName="pieDashboardItem2" Name="Pies 2" DataSource="sqlDataSource1" DataMember="tHE_SetItem">
+    <Pie ComponentName="pieDashboardItem2" Name="Pies 2" DataSource="sqlDataSource1" DataMember="tHE_SetItem" IsMasterFilterCrossDataSource="true">
+      <InteractivityOptions MasterFilterMode="Multiple" />
       <DataItems>
         <Measure DataMember="acAcct" SummaryType="Count" DefaultId="DataItem0" />
-        <Dimension DataMember="acFieldSF" DefaultId="DataItem1" />
+        <Dimension DataMember="acFieldSF" DefaultId="DataItem2" />
       </DataItems>
-      <SeriesDimensions>
-        <SeriesDimension DefaultId="DataItem1" />
-      </SeriesDimensions>
+      <Arguments>
+        <Argument DefaultId="DataItem2" />
+      </Arguments>
       <Values>
         <Value DefaultId="DataItem0" />
       </Values>
@@ -40,7 +42,7 @@
     <LayoutGroup>
       <LayoutGroup Orientation="Vertical">
         <LayoutItem DashboardItem="pieDashboardItem1" Weight="1.2685069008782937" />
-        <LayoutItem DashboardItem="pieDashboardItem2" Weight="0.73149309912170635" />
+        <LayoutItem DashboardItem="pieDashboardItem2" />
       </LayoutGroup>
     </LayoutGroup>
   </LayoutTree>

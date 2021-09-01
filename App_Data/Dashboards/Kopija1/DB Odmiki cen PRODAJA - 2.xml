@@ -108,7 +108,7 @@
           </Totals>
         </GridMeasureColumn>
       </GridColumns>
-      <GridOptions EnableBandedRows="true" />
+      <GridOptions EnableBandedRows="true" ColumnWidthMode="Manual" WordWrap="true" />
     </Grid>
     <Chart ComponentName="chartDashboardItem1" Name="Odmiki prdajnih cen po mesecih in letih" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" FilterString="[DataItem2] = 'P'" IsMasterFilterCrossDataSource="true">
       <InteractivityOptions MasterFilterMode="Multiple" />

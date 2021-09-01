@@ -20,7 +20,7 @@ namespace peptak
         protected void Page_Load(object sender, EventArgs e)
         {
             string UserNameForCheckingAdmin = HttpContext.Current.User.Identity.Name; /* For checking admin permission. */
-            conn = new SqlConnection("server=10.100.100.25\\SPLAHOST;Database=petpakDash;Integrated Security=false;User ID=petpakn;Password=net123tnet!;");
+            conn = new SqlConnection("server=10.100.100.25\\SPLAHOST;Database=petpakDash;Integrated Security=false;User ID=petpakn;Password=net123tnet2!;");
             conn.Open();
             CheckBox checkBox = (CheckBox)FindControl("daynight");
 

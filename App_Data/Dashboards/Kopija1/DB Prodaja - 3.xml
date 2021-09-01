@@ -60,7 +60,7 @@
         <Value DefaultId="DataItem5" />
       </Values>
     </PieMap>
-    <Grid ComponentName="gridDashboardItem1" Name="Realizacija po sekundarni klasifikaciji YTD  primerjalno s preteklim letom" ParentContainer="dashboardTabPage2" DataSource="sqlDataSource1" DataMember="CustomSqlQuery">
+    <Grid ComponentName="gridDashboardItem1" Name="Realizacija po sekundarni klasifikaciji YTD  primerjalno s preteklim letom" ParentContainer="dashboardTabPage3" DataSource="sqlDataSource1" DataMember="CustomSqlQuery">
       <DataItems>
         <Dimension DataMember="ProdajaSekundarnaKlasifikacija" DefaultId="DataItem0" />
         <Measure DataMember="YTDProdajnaVrednost" DefaultId="DataItem1">
@@ -204,22 +204,12 @@
         </Pane>
       </Panes>
     </Chart>
-    <Grid ComponentName="gridDashboardItem2" Name="Dobavitelji" ShowCaption="false" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true">
-      <InteractivityOptions MasterFilterMode="Multiple" />
-      <DataItems>
-        <Dimension DataMember="ProdajaDobavitelj" DefaultId="DataItem0" />
-      </DataItems>
-      <GridColumns>
-        <GridDimensionColumn Name="Dobavitelj">
-          <Dimension DefaultId="DataItem0" />
-        </GridDimensionColumn>
-      </GridColumns>
-      <GridOptions EnableBandedRows="true" />
-    </Grid>
     <TabContainer ComponentName="tabContainerDashboardItem1" Name="Tab Container 1">
       <Pages>
-        <Page ComponentName="dashboardTabPage1" Name="Page 1" />
-        <Page ComponentName="dashboardTabPage2" Name="Page 2" />
+        <Page ComponentName="dashboardTabPage1" Name="YTD po primarni klasifikaciji" />
+        <Page ComponentName="dashboardTabPage2" Name="YTD po tipu kupca" />
+        <Page ComponentName="dashboardTabPage3" Name="YTD po sekundarni klasifikaciji" />
+        <Page ComponentName="dashboardTabPage4" Name="YTD po dobaviteljih" />
       </Pages>
     </TabContainer>
     <Grid ComponentName="gridDashboardItem3" Name="Realizacija po primarni klasifikaciji YTD  primerjalno s preteklim letom" ParentContainer="dashboardTabPage1" DataSource="sqlDataSource1" DataMember="CustomSqlQuery">
@@ -292,6 +282,122 @@
         <Dimension DefaultId="DataItem0" />
       </FilterDimensions>
     </ListBox>
+    <Grid ComponentName="gridDashboardItem4" Name="Realizacija po Dobaviteljih YTD  primerjalno s preteklim letom" ParentContainer="dashboardTabPage4" DataSource="sqlDataSource1" DataMember="CustomSqlQuery">
+      <DataItems>
+        <Dimension DataMember="ProdajaDobavitelj" DefaultId="DataItem0" />
+        <Measure DataMember="YTDProdajnaVrednost" DefaultId="DataItem1">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="YTDProdajnaVrednost" DefaultId="DataItem2" />
+        <Measure DataMember="YTD1ProdajnaVrednost" DefaultId="DataItem3" />
+        <Measure DataMember="YTD Količina" DefaultId="DataItem4">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="YTDRVC" DefaultId="DataItem5">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="YTDRVC" DefaultId="DataItem6" />
+        <Measure DataMember="YTD1RVC" DefaultId="DataItem7" />
+        <Dimension DataMember="YTD Količina" DefaultId="DataItem8" />
+        <Dimension DataMember="YTD1Količina" DefaultId="DataItem9" />
+      </DataItems>
+      <HiddenDimensions>
+        <Dimension DefaultId="DataItem8" />
+        <Dimension DefaultId="DataItem9" />
+      </HiddenDimensions>
+      <GridColumns>
+        <GridDimensionColumn Name="Dobavitelj" Weight="32.351608518350751">
+          <Dimension DefaultId="DataItem0" />
+        </GridDimensionColumn>
+        <GridMeasureColumn Name="Količina" Weight="64.227458087902221">
+          <Measure DefaultId="DataItem4" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Prodaja" Weight="71.839601268690629">
+          <Measure DefaultId="DataItem1" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridDeltaColumn Name="Primerjava z LANI" Weight="69.460806524694263">
+          <ActualValue DefaultId="DataItem2" />
+          <TargetValue DefaultId="DataItem3" />
+          <DeltaOptions ResultIndicationThreshold="1" ValueType="PercentVariation" />
+        </GridDeltaColumn>
+        <GridMeasureColumn Name="RVC" Weight="67.082011780697883">
+          <Measure DefaultId="DataItem5" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridDeltaColumn Name="Primerjava z LANI" Weight="74.932034435885939">
+          <ActualValue DefaultId="DataItem6" />
+          <TargetValue DefaultId="DataItem7" />
+          <DeltaOptions ResultIndicationThreshold="1" ValueType="PercentVariation" />
+        </GridDeltaColumn>
+      </GridColumns>
+      <GridOptions EnableBandedRows="true" />
+    </Grid>
+    <Grid ComponentName="gridDashboardItem5" Name="Realizacija po Tipu kupca YTD  primerjalno s preteklim letom" ParentContainer="dashboardTabPage2" DataSource="sqlDataSource1" DataMember="CustomSqlQuery">
+      <DataItems>
+        <Dimension DataMember="ProdajaTipKupca" DefaultId="DataItem0" />
+        <Measure DataMember="YTDProdajnaVrednost" DefaultId="DataItem1">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="YTDProdajnaVrednost" DefaultId="DataItem2" />
+        <Measure DataMember="YTD1ProdajnaVrednost" DefaultId="DataItem3" />
+        <Measure DataMember="YTD Količina" DefaultId="DataItem4">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="YTDRVC" DefaultId="DataItem5">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="YTDRVC" DefaultId="DataItem6" />
+        <Measure DataMember="YTD1RVC" DefaultId="DataItem7" />
+        <Dimension DataMember="YTD Količina" DefaultId="DataItem8" />
+        <Dimension DataMember="YTD1Količina" DefaultId="DataItem9" />
+      </DataItems>
+      <HiddenDimensions>
+        <Dimension DefaultId="DataItem8" />
+        <Dimension DefaultId="DataItem9" />
+      </HiddenDimensions>
+      <GridColumns>
+        <GridDimensionColumn Name="Tip kupca" Weight="32.351608518350751">
+          <Dimension DefaultId="DataItem0" />
+        </GridDimensionColumn>
+        <GridMeasureColumn Name="Količina" Weight="64.227458087902221">
+          <Measure DefaultId="DataItem4" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Prodaja" Weight="71.839601268690629">
+          <Measure DefaultId="DataItem1" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridDeltaColumn Name="Primerjava z LANI" Weight="69.460806524694263">
+          <ActualValue DefaultId="DataItem2" />
+          <TargetValue DefaultId="DataItem3" />
+          <DeltaOptions ResultIndicationThreshold="1" ValueType="PercentVariation" />
+        </GridDeltaColumn>
+        <GridMeasureColumn Name="RVC" Weight="67.082011780697883">
+          <Measure DefaultId="DataItem5" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridDeltaColumn Name="Primerjava z LANI" Weight="74.932034435885939">
+          <ActualValue DefaultId="DataItem6" />
+          <TargetValue DefaultId="DataItem7" />
+          <DeltaOptions ResultIndicationThreshold="1" ValueType="PercentVariation" />
+        </GridDeltaColumn>
+      </GridColumns>
+      <GridOptions EnableBandedRows="true" />
+    </Grid>
   </Items>
   <LayoutTree>
     <LayoutGroup>
@@ -301,12 +407,17 @@
             <LayoutItem DashboardItem="gridDashboardItem3" Weight="1.0372404573843421" />
           </LayoutTabPage>
           <LayoutTabPage DashboardItem="dashboardTabPage2">
+            <LayoutItem DashboardItem="gridDashboardItem5" Weight="1.4576545756401871" />
+          </LayoutTabPage>
+          <LayoutTabPage DashboardItem="dashboardTabPage3">
             <LayoutItem DashboardItem="gridDashboardItem1" Weight="1.4576545756401871" />
+          </LayoutTabPage>
+          <LayoutTabPage DashboardItem="dashboardTabPage4">
+            <LayoutItem DashboardItem="gridDashboardItem4" Weight="1.4576545756401871" />
           </LayoutTabPage>
         </LayoutTabContainer>
         <LayoutGroup Weight="0.99834985158726153">
           <LayoutItem DashboardItem="chartDashboardItem1" Weight="2.0293155607689015" />
-          <LayoutItem DashboardItem="gridDashboardItem2" Weight="0.79126634747238767" />
           <LayoutItem DashboardItem="listBoxDashboardItem1" Weight="0.39687745724592405" />
         </LayoutGroup>
       </LayoutGroup>

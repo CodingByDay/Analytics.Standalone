@@ -5,7 +5,7 @@
     <SqlDataSource Name="PS Prodaja - 1" ComponentName="sqlDataSource1">
       <Connection Name="Skaza" FromAppConfig="true" />
       <Query Type="CustomSqlQuery" Name="CustomSqlQuery">
-        <Sql>select * from utn_DB_PS_Prodaja;</Sql>
+        <Sql>select * from dbo.utn_DB_PS_Prodaja;</Sql>
       </Query>
       <ConnectionOptions CloseConnection="true" />
       <CalculatedFields>

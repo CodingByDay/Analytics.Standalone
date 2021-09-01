@@ -206,10 +206,10 @@
     </Chart>
     <TabContainer ComponentName="tabContainerDashboardItem1" Name="Tab Container 1">
       <Pages>
-        <Page ComponentName="dashboardTabPage1" Name="Page 1" />
-        <Page ComponentName="dashboardTabPage2" Name="Page 2" />
-        <Page ComponentName="dashboardTabPage3" Name="Page 3" />
-        <Page ComponentName="dashboardTabPage4" Name="Page 4" />
+        <Page ComponentName="dashboardTabPage1" Name="YTD po primarni klasifikaciji" />
+        <Page ComponentName="dashboardTabPage2" Name="YTD po tipu kupca" />
+        <Page ComponentName="dashboardTabPage3" Name="YTD po sekundarni klasifikaciji" />
+        <Page ComponentName="dashboardTabPage4" Name="YTD po dobaviteljih" />
       </Pages>
     </TabContainer>
     <Grid ComponentName="gridDashboardItem3" Name="Realizacija po primarni klasifikaciji YTD  primerjalno s preteklim letom" ParentContainer="dashboardTabPage1" DataSource="sqlDataSource1" DataMember="CustomSqlQuery">

@@ -26,7 +26,7 @@
     </SqlDataSource>
   </DataSources>
   <Items>
-    <PieMap ComponentName="pieMapDashboardItem1" Name="Map 1" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" ShapefileArea="Europe" EnableClustering="true">
+    <PieMap ComponentName="pieMapDashboardItem1" Name="Prodaja po regijah v Sloveniji" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" ShapefileArea="Europe" EnableClustering="true">
       <InteractivityOptions MasterFilterMode="Multiple" />
       <DataItems>
         <Dimension DataMember="YTDProdajnaVrednost" DefaultId="DataItem0" />
@@ -116,9 +116,9 @@
           <DeltaOptions ResultIndicationThreshold="1" ValueType="PercentVariation" />
         </GridDeltaColumn>
       </GridColumns>
-      <GridOptions EnableBandedRows="true" ColumnWidthMode="Manual" />
+      <GridOptions EnableBandedRows="true" ColumnWidthMode="Manual" WordWrap="true" />
     </Grid>
-    <Pie ComponentName="pieDashboardItem1" Name="RVC" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" PieType="Donut" ShowPieCaptions="false">
+    <Pie ComponentName="pieDashboardItem1" Name="RVC po tipu kupca" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" PieType="Donut" ShowPieCaptions="false">
       <InteractivityOptions IgnoreMasterFilters="true" />
       <DataItems>
         <Dimension DataMember="ProdajaTipKupca" DefaultId="DataItem0" />
@@ -133,8 +133,8 @@
         <Value DefaultId="DataItem2" />
       </Values>
     </Pie>
-    <Pie ComponentName="pieDashboardItem2" Name="Prodaja" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" PieType="Donut" ShowPieCaptions="false">
-      <InteractivityOptions IgnoreMasterFilters="true" MasterFilterMode="Multiple" />
+    <Pie ComponentName="pieDashboardItem2" Name="Prodaja po tipu kupca" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" PieType="Donut" ShowPieCaptions="false">
+      <InteractivityOptions MasterFilterMode="Multiple" TargetDimensions="Points" />
       <DataItems>
         <Dimension DataMember="ProdajaTipKupca" DefaultId="DataItem0" />
         <Measure DataMember="YTDProdajnaVrednost" Name="Prodajna vrednost" DefaultId="DataItem1">
@@ -160,13 +160,17 @@
           <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
         </Measure>
         <Measure DataMember="YTDRVC" DefaultId="DataItem3">
-          <NumericFormat FormatType="Currency" Precision="1" Unit="Ones" IncludeGroupSeparator="true" />
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
         </Measure>
         <Measure DataMember="YTD1RVC" DefaultId="DataItem4">
-          <NumericFormat FormatType="Currency" Precision="1" Unit="Ones" IncludeGroupSeparator="true" />
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
         </Measure>
-        <Measure DataMember="YTD2ProdajnaVrednost" DefaultId="DataItem5" />
-        <Measure DataMember="YTD2RVC" DefaultId="DataItem6" />
+        <Measure DataMember="YTD2ProdajnaVrednost" DefaultId="DataItem5">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="YTD2RVC" DefaultId="DataItem6">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
       </DataItems>
       <Arguments>
         <Argument DefaultId="DataItem0" />
@@ -196,43 +200,49 @@
         </Pane>
       </Panes>
     </Chart>
-    <Grid ComponentName="gridDashboardItem2" Name="Dobavitelji" ShowCaption="false" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true">
+    <Pie ComponentName="pieDashboardItem4" Name="Prodaja po dobaviteljih" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" PieType="Donut" ShowPieCaptions="false">
       <InteractivityOptions MasterFilterMode="Multiple" />
       <DataItems>
-        <Dimension DataMember="ProdajaDobavitelj" DefaultId="DataItem0" />
+        <Dimension DataMember="ProdajaDobavitelj" Name="Dobavitelj" DefaultId="DataItem0" />
+        <Measure DataMember="YTDProdajnaVrednost" Name="Prodajna vrednost" DefaultId="DataItem1" />
       </DataItems>
-      <GridColumns>
-        <GridDimensionColumn Name="Dobavitelj">
-          <Dimension DefaultId="DataItem0" />
-        </GridDimensionColumn>
-      </GridColumns>
-      <GridOptions EnableBandedRows="true" />
-    </Grid>
-    <ListBox ComponentName="listBoxDashboardItem1" Name="Mesec" DataSource="sqlDataSource1" DataMember="CustomSqlQuery">
+      <Arguments>
+        <Argument DefaultId="DataItem0" />
+      </Arguments>
+      <Values>
+        <Value DefaultId="DataItem1" />
+      </Values>
+    </Pie>
+    <Pie ComponentName="pieDashboardItem3" Name="Prodaja po mesecih" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" PieType="Donut" ShowPieCaptions="false">
+      <InteractivityOptions MasterFilterMode="Multiple" />
       <DataItems>
-        <Dimension DataMember="ProdajaDatumDobavnice" Name="Mesec" DateTimeGroupInterval="Month" DefaultId="DataItem0" />
+        <Dimension DataMember="ProdajaDatumDobavnice" DateTimeGroupInterval="Month" DefaultId="DataItem0" />
+        <Measure DataMember="YTDProdajnaVrednost" Name="Prodajna vrednost" DefaultId="DataItem1">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
       </DataItems>
-      <FilterDimensions>
-        <Dimension DefaultId="DataItem0" />
-      </FilterDimensions>
-    </ListBox>
+      <Arguments>
+        <Argument DefaultId="DataItem0" />
+      </Arguments>
+      <Values>
+        <Value DefaultId="DataItem1" />
+      </Values>
+    </Pie>
   </Items>
   <LayoutTree>
     <LayoutGroup>
-      <LayoutGroup Orientation="Vertical" Weight="1.2280022136137243">
-        <LayoutItem DashboardItem="gridDashboardItem1" Weight="1.4576545756401871" />
-        <LayoutGroup Weight="0.99834985158726153">
-          <LayoutItem DashboardItem="chartDashboardItem1" Weight="2.0018220624981722" />
-          <LayoutItem DashboardItem="gridDashboardItem2" Weight="0.72604069405865734" />
-          <LayoutItem DashboardItem="listBoxDashboardItem1" Weight="0.3225408765806167" />
+      <LayoutGroup Orientation="Vertical" Weight="1.1294377796328778">
+        <LayoutGroup Weight="1.5084478545487841">
+          <LayoutItem DashboardItem="gridDashboardItem1" Weight="1.4427153759611884" />
+          <LayoutItem DashboardItem="pieMapDashboardItem1" Weight="0.87056222036712227" />
         </LayoutGroup>
-      </LayoutGroup>
-      <LayoutGroup Orientation="Vertical" Weight="0.77199778638627581">
-        <LayoutGroup Weight="0.47360121892496004">
-          <LayoutItem DashboardItem="pieDashboardItem2" Weight="0.61713201261433648" />
-          <LayoutItem DashboardItem="pieDashboardItem1" Weight="0.5903942740486412" />
+        <LayoutGroup Weight="0.94755657267866455">
+          <LayoutItem DashboardItem="chartDashboardItem1" Weight="1.7771529651009699" />
+          <LayoutItem DashboardItem="pieDashboardItem4" Weight="0.80105518558629885" />
+          <LayoutItem DashboardItem="pieDashboardItem3" Weight="0.682224171658971" />
+          <LayoutItem DashboardItem="pieDashboardItem2" Weight="0.65944882352205936" />
+          <LayoutItem DashboardItem="pieDashboardItem1" Weight="0.64165884285916752" />
         </LayoutGroup>
-        <LayoutItem DashboardItem="pieMapDashboardItem1" Weight="0.73392506773801758" />
       </LayoutGroup>
     </LayoutGroup>
   </LayoutTree>

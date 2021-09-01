@@ -5,7 +5,7 @@
     <SqlDataSource Name="CustomSqlQuery" ComponentName="sqlDataSource1">
       <Connection Name="eHolding ERFA" FromAppConfig="true" />
       <Query Type="CustomSqlQuery" Name="CustomSqlQuery">
-        <Sql>select * from uTN_DB_Zaloge</Sql>
+        <Sql>select * from dbo.uTN_DB_Zaloge</Sql>
       </Query>
       <ConnectionOptions CloseConnection="true" />
       <CalculatedFields>

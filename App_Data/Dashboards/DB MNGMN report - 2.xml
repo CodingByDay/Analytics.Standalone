@@ -211,7 +211,7 @@ FROM dbo.uTN_DB_MNGMTDetalj_SUM;</Sql>
       </GridColumns>
       <GridOptions EnableBandedRows="true" ColumnWidthMode="Manual" />
     </Grid>
-    <Pie ComponentName="pieDashboardItem3" Name="Prihodki" DataSource="sqlDataSource1" DataMember="DB MNGMT report" FilterString="[DataItem3] = 'Prihodek'" IsMasterFilterCrossDataSource="true" ShowPieCaptions="false">
+    <Pie ComponentName="pieDashboardItem3" Name="Prihodki" DataSource="sqlDataSource1" DataMember="DB MNGMT report" FilterString="[DataItem3] = 'Prihodek'" IsMasterFilterCrossDataSource="true" PieType="Donut" ShowPieCaptions="false">
       <InteractivityOptions MasterFilterMode="Multiple" IsDrillDownEnabled="true" />
       <DataItems>
         <Measure DataMember="MngmtSaldo" Name="Saldo" FilterString="Not IsNullOrEmpty([DataItem4])" DefaultId="DataItem2">
@@ -230,7 +230,7 @@ FROM dbo.uTN_DB_MNGMTDetalj_SUM;</Sql>
         <Value DefaultId="DataItem2" />
       </Values>
     </Pie>
-    <Pie ComponentName="pieDashboardItem1" Name="Ostali stroški" DataSource="sqlDataSource1" DataMember="DB MNGMT report" FilterString="[DataItem3] = 'Strošek ostalo'" IsMasterFilterCrossDataSource="true" ShowPieCaptions="false">
+    <Pie ComponentName="pieDashboardItem1" Name="Ostali stroški" DataSource="sqlDataSource1" DataMember="DB MNGMT report" FilterString="[DataItem3] = 'Strošek ostalo'" IsMasterFilterCrossDataSource="true" PieType="Donut" ShowPieCaptions="false">
       <InteractivityOptions MasterFilterMode="Multiple" IsDrillDownEnabled="true" />
       <DataItems>
         <Measure DataMember="MngmtSaldo" Name="Saldo" FilterString="Not IsNullOrEmpty([DataItem4])" DefaultId="DataItem2">
@@ -249,7 +249,7 @@ FROM dbo.uTN_DB_MNGMTDetalj_SUM;</Sql>
         <Value DefaultId="DataItem2" />
       </Values>
     </Pie>
-    <Pie ComponentName="pieDashboardItem2" Name="Strošji prodaje" DataSource="sqlDataSource1" DataMember="DB MNGMT report" FilterString="[DataItem3] = 'Strošek prodaja'" IsMasterFilterCrossDataSource="true" ShowPieCaptions="false">
+    <Pie ComponentName="pieDashboardItem2" Name="Strošji prodaje" DataSource="sqlDataSource1" DataMember="DB MNGMT report" FilterString="[DataItem3] = 'Strošek prodaja'" IsMasterFilterCrossDataSource="true" PieType="Donut" ShowPieCaptions="false">
       <InteractivityOptions MasterFilterMode="Multiple" />
       <DataItems>
         <Measure DataMember="MngmtSaldo" Name="Saldo" FilterString="Not IsNullOrEmpty([DataItem4])" DefaultId="DataItem2">

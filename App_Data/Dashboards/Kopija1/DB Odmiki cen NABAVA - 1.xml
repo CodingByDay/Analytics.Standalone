@@ -56,59 +56,59 @@
         <Dimension DefaultId="DataItem8" />
       </HiddenDimensions>
       <GridColumns>
-        <GridDimensionColumn Name="Dokument" Weight="68.212104386451969">
+        <GridDimensionColumn Name="Dokument" Weight="68.212104386451955">
           <Dimension DefaultId="DataItem0" />
         </GridDimensionColumn>
-        <GridDimensionColumn Name="POZ" Weight="25.652415324819543">
+        <GridDimensionColumn Name="POZ" Weight="25.65241532481954">
           <Dimension DefaultId="DataItem1" />
         </GridDimensionColumn>
-        <GridDimensionColumn Name="Datum" Weight="48.389783453636866">
+        <GridDimensionColumn Name="Datum" Weight="48.389783453636859">
           <Dimension DefaultId="DataItem2" />
         </GridDimensionColumn>
-        <GridDimensionColumn Name="Dobavitelj" Weight="119.51693503609106">
+        <GridDimensionColumn Name="Dobavitelj" Weight="119.51693503609103">
           <Dimension DefaultId="DataItem3" />
         </GridDimensionColumn>
-        <GridDimensionColumn Name="Ident" Weight="64.714047751249311">
+        <GridDimensionColumn Name="Ident" Weight="64.7140477512493">
           <Dimension DefaultId="DataItem4" />
         </GridDimensionColumn>
-        <GridDimensionColumn Name="Naziv identa" Weight="164.99167129372572">
+        <GridDimensionColumn Name="Naziv identa" Weight="164.99167129372569">
           <Dimension DefaultId="DataItem5" />
         </GridDimensionColumn>
-        <GridMeasureColumn Name="Količina" Weight="46.057745696835092">
+        <GridMeasureColumn Name="Količina" Weight="46.057745696835084">
           <Measure DefaultId="DataItem6" />
         </GridMeasureColumn>
-        <GridDimensionColumn Name="Cena cenik" Weight="55.968906163242643">
+        <GridDimensionColumn Name="Cena cenik" Weight="55.968906163242629">
           <Dimension DefaultId="DataItem7" />
         </GridDimensionColumn>
-        <GridDimensionColumn Name="Rabat cenik" Weight="58.300943920044418">
+        <GridDimensionColumn Name="Rabat cenik" Weight="58.3009439200444">
           <Dimension DefaultId="DataItem9" />
         </GridDimensionColumn>
-        <GridMeasureColumn Name="Vrednost cenik" Weight="85.119378123264852">
+        <GridMeasureColumn Name="Vrednost cenik" Weight="85.119378123264838">
           <Measure DefaultId="DataItem10" />
           <Totals>
             <Total Type="Sum" />
           </Totals>
         </GridMeasureColumn>
-        <GridMeasureColumn Name="Cena dokument" Weight="69.9611327040533">
+        <GridMeasureColumn Name="Cena dokument" Weight="69.961132704053284">
           <Measure DefaultId="DataItem11" />
         </GridMeasureColumn>
-        <GridDimensionColumn Name="Rabat dokument" Weight="75.791227096057739">
+        <GridDimensionColumn Name="Rabat dokument" Weight="75.791227096057725">
           <Dimension DefaultId="DataItem12" />
         </GridDimensionColumn>
-        <GridMeasureColumn Name="Vrednost dokument" Weight="86.868406440866181">
+        <GridMeasureColumn Name="Vrednost dokument" Weight="86.868406440866167">
           <Measure DefaultId="DataItem13" />
           <Totals>
             <Total Type="Sum" />
           </Totals>
         </GridMeasureColumn>
-        <GridMeasureColumn Name="Vrednost odmikov" Weight="80.4553026096613">
+        <GridMeasureColumn Name="Vrednost odmikov" Weight="80.455302609661288">
           <Measure DefaultId="DataItem14" />
           <Totals>
             <Total Type="Sum" />
           </Totals>
         </GridMeasureColumn>
       </GridColumns>
-      <GridOptions EnableBandedRows="true" ColumnWidthMode="Manual" />
+      <GridOptions EnableBandedRows="true" ColumnWidthMode="Manual" WordWrap="true" />
     </Grid>
     <Chart ComponentName="chartDashboardItem1" Name="Odmiki prdajnih cen po mesecih in letih" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" FilterString="[DataItem2] = 'N'" IsMasterFilterCrossDataSource="true">
       <InteractivityOptions MasterFilterMode="Multiple" />

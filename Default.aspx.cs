@@ -19,6 +19,8 @@ namespace peptak
         protected void Page_Load(object sender, EventArgs e)
         {
             ASPxDashboard1.DashboardLoading += ASPxDashboard1_DashboardLoading;
+            ASPxDashboard1.SetConnectionStringsProvider(new DevExpress.DataAccess.Web.ConfigFileConnectionStringsProvider());
+            ASPxDashboard1.WorkingMode = WorkingMode.Viewer;
 
             if (!IsPostBack)
             {

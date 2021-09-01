@@ -44,7 +44,7 @@
       <HiddenDimensions>
         <Dimension DefaultId="DataItem0" />
       </HiddenDimensions>
-      <ViewArea TopLatitude="84.613471803346428" BottomLatitude="-61.923533134582009" CenterPointLatitude="43.102746927920194" CenterPointLongitude="-7.0250188825447228" CreateViewerPaddings="false" />
+      <ViewArea TopLatitude="55.397846452513107" BottomLatitude="45.296898272401613" LeftLongitude="-3.0139643317882965" RightLongitude="22.0386209530684" CenterPointLatitude="50.617580514431673" CenterPointLongitude="9.499052727444246" CreateViewerPaddings="false" />
       <MapLegend Visible="true" />
       <WeightedLegend />
       <Latitude DefaultId="DataItem2" />
@@ -205,6 +205,19 @@
         <Dimension DefaultId="DataItem0" />
       </FilterDimensions>
     </ListBox>
+    <DateFilter ComponentName="dateFilterDashboardItem1" Name="Date Filter 1" DataSource="sqlDataSource1" DataMember="CustomSqlQuery">
+      <DataItems>
+        <Dimension DataMember="ProdajaDatumDobavnice" DefaultId="DataItem0" />
+      </DataItems>
+      <Dimension DefaultId="DataItem0" />
+      <DateTimePeriods>
+        <DateTimePeriod Name="mesec">
+          <StartLimit>
+            <FlowDateTimePeriodLimit />
+          </StartLimit>
+        </DateTimePeriod>
+      </DateTimePeriods>
+    </DateFilter>
   </Items>
   <LayoutTree>
     <LayoutGroup>
@@ -218,6 +231,7 @@
       </LayoutGroup>
       <LayoutGroup Orientation="Vertical" Weight="0.77199778638627581">
         <LayoutGroup Weight="0.47360121892496004">
+          <LayoutItem DashboardItem="dateFilterDashboardItem1" Weight="0.61713201261433648" />
           <LayoutItem DashboardItem="pieDashboardItem2" Weight="0.61713201261433648" />
           <LayoutItem DashboardItem="pieDashboardItem1" Weight="0.5903942740486412" />
         </LayoutGroup>

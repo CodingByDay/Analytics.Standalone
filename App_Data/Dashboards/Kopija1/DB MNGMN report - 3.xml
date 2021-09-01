@@ -3,10 +3,10 @@
   <Title Text="DB MNGMT report - 3" />
   <DataSources>
     <SqlDataSource Name="DB MNGMT report" ComponentName="sqlDataSource1">
-      <Connection Name="eHolding Centralna Baza" FromAppConfig="true" />
+      <Connection Name="eHolding ERFA" FromAppConfig="true" />
       <Query Type="CustomSqlQuery" Name="DB MNGMT report">
         <Sql>select *
-FROM PA_eHolding_Efra.dbo.uTN_DB_MNGMTDetalj
+FROM dbo.uTN_DB_MNGMTDetalj
 WHERE DATEPART(YEAR,MNGMTDatumTemeljnice)&gt;=DATEPART(YEAR, GETDATE())-1;</Sql>
       </Query>
       <ConnectionOptions CloseConnection="true" />
@@ -25,7 +25,7 @@ WHERE DATEPART(YEAR,MNGMTDatumTemeljnice)&gt;=DATEPART(YEAR, GETDATE())-1;</Sql>
     </SqlDataSource>
   </DataSources>
   <Items>
-    <Pie ComponentName="pieDashboardItem2" Name="Ostali stroški" DataSource="sqlDataSource1" DataMember="DB MNGMT report" FilterString="[DataItem0] = 'Strošek ostalo'" IsMasterFilterCrossDataSource="true" PieType="Donut">
+    <Pie ComponentName="pieDashboardItem2" Name="Ostali stroški" DataSource="sqlDataSource1" DataMember="DB MNGMT report" FilterString="[DataItem0] = 'Strošek ostalo'" IsMasterFilterCrossDataSource="true" PieType="Donut" ShowPieCaptions="false">
       <InteractivityOptions MasterFilterMode="Multiple" IsDrillDownEnabled="true" />
       <DataItems>
         <Dimension DataMember="MngmtIDOznaka" DefaultId="DataItem0" />

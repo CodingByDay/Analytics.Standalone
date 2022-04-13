@@ -28,10 +28,15 @@ function regex_return(text_to_search) {
     }
     return matches;
 }
+
 function customizeWidgets(sender, args) {
     var parName = []
     var collection = dashboard.GetParameters().GetParameterList();
     if (args.ItemName.startsWith("gridDashboardItem") && collection.length > 2) {
+    
+
+        initialPayload = [];
+
         initialPayload.push(dashboard.GetParameters().GetParameterList()[0].Value);
         initialPayload.push(dashboard.GetParameters().GetParameterList()[1].Value);
         initialPayload.push(dashboard.GetParameters().GetParameterList()[2].Value);
@@ -52,6 +57,7 @@ function customizeWidgets(sender, args) {
             window.textNew = textToCheck;
             var parameterized_values = regex_return(textToCheck);
             if (parameterized_values.length != 0) {
+                console.log("Works inside")
                      // for each loop for every found parameter
                    parameterized_values.forEach((singular) => {
                    const found = parName.find(element => element == singular)
@@ -62,7 +68,6 @@ function customizeWidgets(sender, args) {
                            text_to_replace = "#" + found
                            text_replace = dashboard.GetParameters().GetParameterList()[indexOfElement].Value.toLocaleDateString("uk-Uk")
                            window.textNew = window.textNew.replace(text_to_replace, text_replace);
-                           console.log(window.textNew)
                            columns[i].caption = window.textNew;
                     } else {
                        
@@ -81,31 +86,23 @@ function customizeWidgets(sender, args) {
 function updatecustomizeWidgets(sender, args) {
     var parName = []
     var collection = dashboard.GetParameters().GetParameterList();
-
     if (args.ItemName.startsWith("gridDashboardItem") && collection.length > 2) {
-
         initialPayload = [];
         initialPayload.push(dashboard.GetParameters().GetParameterList()[0].Value);
         initialPayload.push(dashboard.GetParameters().GetParameterList()[1].Value);
         initialPayload.push(dashboard.GetParameters().GetParameterList()[2].Value);
         initialPayload.push(dashboard.GetParameters().GetParameterList()[3].Value);
-
-
         parName.push(dashboard.GetParameters().GetParameterList()[0].Name);
         parName.push(dashboard.GetParameters().GetParameterList()[1].Name);
         parName.push(dashboard.GetParameters().GetParameterList()[2].Name);
-        parName.push(dashboard.GetParameters().GetParameterList()[3].Name);
-
-       
+        parName.push(dashboard.GetParameters().GetParameterList()[3].Name);       
         var grid = args.GetWidget();
         var columns = grid.option("columns");
         for (var i = 0; i < columns.length; i++) {
             var textToCheck = columns[i].caption;
             window.textNew = textToCheck;
-
             var parameterized_values = regex_return(textToCheck);
             if (parameterized_values.length != 0) {
-
                 // for each loop for every found parameter
                 parameterized_values.forEach((singular) => {
 
@@ -118,7 +115,6 @@ function updatecustomizeWidgets(sender, args) {
                         text_to_replace = "#" + found
                         text_replace = dashboard.GetParameters().GetParameterList()[indexOfElement].Value.toLocaleDateString("uk-Uk")
                         window.textNew = window.textNew.replace(text_to_replace, text_replace);
-                        console.log(window.textNew)
                         columns[i].caption = window.textNew;
                     } else {
                      

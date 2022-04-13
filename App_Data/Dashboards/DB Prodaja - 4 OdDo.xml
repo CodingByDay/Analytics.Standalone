@@ -477,7 +477,7 @@ GROUP BY ZalogaIdent, ZalogaSkladišče, ZalogaIdentNaziv;</Sql>
             <Total Type="Sum" />
           </Totals>
         </GridMeasureColumn>
-        <GridMeasureColumn Name="Količina Obdobje-1" Weight="55.867693701857775">
+        <GridMeasureColumn Name="Količina #DatumOd - #DatumDo" Weight="55.867693701857775">
           <Measure DefaultId="DataItem4" />
           <Totals>
             <Total Type="Sum" />
@@ -548,7 +548,7 @@ GROUP BY ZalogaIdent, ZalogaSkladišče, ZalogaIdentNaziv;</Sql>
   <LayoutTree>
     <LayoutGroup>
       <LayoutGroup Orientation="Vertical" Weight="1.1294377796328778">
-        <LayoutGroup Weight="1.8106017583633593">
+        <LayoutGroup Weight="1.8106017583633594">
           <LayoutTabContainer DashboardItem="tabContainerDashboardItem3" Weight="2.3270961750228873">
             <LayoutTabPage Orientation="Vertical" DashboardItem="dashboardTabPage6">
               <LayoutItem DashboardItem="gridDashboardItem2" Weight="2.3270961750228873" />

@@ -1,0 +1,200 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Dashboard>
+  <Title Text="DB Odmiki cen PRODAJA - 2" />
+  <DataSources>
+    <SqlDataSource Name="CustomSqlQuery" ComponentName="sqlDataSource1">
+      <Connection Name="Skaza nova" FromAppConfig="true" />
+      <Query Type="CustomSqlQuery" Name="CustomSqlQuery">
+        <Sql>select * from dbo.utn_DB_OdmikiCen where OdmikiCenOdmik='DA';</Sql>
+      </Query>
+      <ConnectionOptions CloseConnection="true" />
+      <CalculatedFields>
+        <CalculatedField Name="OdmikiCenVrednostPoCeniku" Expression="sum([OdmikiCenKoličina]*[OdmikiCenCenaPoCeniku]*(1-([OdmikiCenRabatPoCeniku]/100)))" DataType="Auto" DataMember="CustomSqlQuery" />
+        <CalculatedField Name="OdmikiCenVrednostNaDokumentu" Expression="sum([OdmikiCenKoličina]*[OdmikiCenCenaNaDokumentu]*(1-([OdmikiCenRabatNaDokumentu]/100)))" DataType="Auto" DataMember="CustomSqlQuery" />
+        <CalculatedField Name="OdmikiCenVrednostOdmikov" Expression="[OdmikiCenVrednostNaDokumentu]-[OdmikiCenVrednostPoCeniku]" DataType="Auto" DataMember="CustomSqlQuery" />
+        <CalculatedField Name="OdmikiCenRabatPoCenikuProcent" Expression="[OdmikiCenRabatPoCeniku]/100" DataType="Auto" DataMember="CustomSqlQuery" />
+        <CalculatedField Name="OdmikiCenRabatNaDokumentuProcent" Expression="[OdmikiCenRabatNaDokumentu]/100" DataType="Auto" DataMember="CustomSqlQuery" />
+      </CalculatedFields>
+    </SqlDataSource>
+  </DataSources>
+  <Items>
+    <Grid ComponentName="gridDashboardItem1" Name="Pregled dokumentov - DETALJ" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" FilterString="[DataItem8] = 'P'">
+      <DataItems>
+        <Dimension DataMember="OdmikiCenŠtevilkaDokumenta" DefaultId="DataItem0" />
+        <Dimension DataMember="OdmikiCenPozicijaDokumenta" DefaultId="DataItem1" />
+        <Dimension DataMember="OdmikiCenDatumDokumenta" DateTimeGroupInterval="DayMonthYear" DefaultId="DataItem2" />
+        <Dimension DataMember="OdmikiCenKupec" DefaultId="DataItem3" />
+        <Dimension DataMember="OdmikiCenIdent" DefaultId="DataItem4" />
+        <Dimension DataMember="OdmikiCenIdentNaziv" DefaultId="DataItem5" />
+        <Measure DataMember="OdmikiCenKoličina" DefaultId="DataItem6">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Dimension DataMember="OdmikiCenCenaPoCeniku" DefaultId="DataItem7">
+          <NumericFormat FormatType="Currency" Precision="4" Unit="Ones" IncludeGroupSeparator="true" />
+        </Dimension>
+        <Dimension DataMember="OdmikiCenVrstaPrometa" DefaultId="DataItem8" />
+        <Measure DataMember="OdmikiCenVrednostPoCeniku" DefaultId="DataItem10">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="OdmikiCenVrednostNaDokumentu" DefaultId="DataItem13">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="OdmikiCenVrednostOdmikov" DefaultId="DataItem14">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Dimension DataMember="OdmikiCenRabatNaDokumentuProcent" DefaultId="DataItem12">
+          <NumericFormat FormatType="Percent" Unit="Ones" />
+        </Dimension>
+        <Dimension DataMember="OdmikiCenRabatPoCenikuProcent" DefaultId="DataItem9">
+          <NumericFormat FormatType="Percent" />
+        </Dimension>
+        <Dimension DataMember="OdmikiCenCenaNaDokumentu" DefaultId="DataItem11">
+          <NumericFormat FormatType="Currency" Precision="4" Unit="Ones" IncludeGroupSeparator="true" />
+        </Dimension>
+      </DataItems>
+      <HiddenDimensions>
+        <Dimension DefaultId="DataItem8" />
+      </HiddenDimensions>
+      <FormatRules>
+        <GridItemFormatRule Name="Format Rule 1" DataItem="DataItem2" DataItemApplyTo="DataItem2">
+          <FormatConditionValue>
+            <AppearanceSettings AppearanceType="FontGrayed" />
+            <Value1 Type="System.DateTime" Value="1900-01-01T00:00:00.0000000" />
+          </FormatConditionValue>
+        </GridItemFormatRule>
+      </FormatRules>
+      <GridColumns>
+        <GridDimensionColumn Name="Dokument" Weight="68.212104386451969">
+          <Dimension DefaultId="DataItem0" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="POZ" Weight="25.652415324819543">
+          <Dimension DefaultId="DataItem1" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Datum" Weight="48.389783453636866">
+          <Dimension DefaultId="DataItem2" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Kupec" Weight="119.51693503609106">
+          <Dimension DefaultId="DataItem3" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Ident" Weight="64.714047751249311">
+          <Dimension DefaultId="DataItem4" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Naziv identa" Weight="164.99167129372572">
+          <Dimension DefaultId="DataItem5" />
+        </GridDimensionColumn>
+        <GridMeasureColumn Name="Količina" Weight="46.057745696835092">
+          <Measure DefaultId="DataItem6" />
+        </GridMeasureColumn>
+        <GridDimensionColumn Name="Cena cenik" Weight="55.968906163242643">
+          <Dimension DefaultId="DataItem7" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Rabat cenik" Weight="58.300943920044418">
+          <Dimension DefaultId="DataItem9" />
+        </GridDimensionColumn>
+        <GridMeasureColumn Name="Vrednost cenik" Weight="85.119378123264852">
+          <Measure DefaultId="DataItem10" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridDimensionColumn Name="Cena dokument" Weight="69.9611327040533">
+          <Dimension DefaultId="DataItem11" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Rabat dokument" Weight="75.791227096057739">
+          <Dimension DefaultId="DataItem12" />
+        </GridDimensionColumn>
+        <GridMeasureColumn Name="Vrednost dokument" Weight="86.868406440866181">
+          <Measure DefaultId="DataItem13" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Vrednost odmikov" Weight="80.4553026096613">
+          <Measure DefaultId="DataItem14" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+      </GridColumns>
+      <GridOptions EnableBandedRows="true" ColumnWidthMode="AutoFitToContents" WordWrap="true" />
+    </Grid>
+    <Chart ComponentName="chartDashboardItem1" Name="Odmiki prdajnih cen po mesecih in letih" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" FilterString="[DataItem2] = 'P'" IsMasterFilterCrossDataSource="true">
+      <InteractivityOptions MasterFilterMode="Multiple" />
+      <DataItems>
+        <Measure DataMember="OdmikiCenVrednostOdmikov" DefaultId="DataItem0">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Dimension DataMember="OdmikiCenDatumDokumenta" Name="Mesec - Leto" DateTimeGroupInterval="MonthYear" DefaultId="DataItem1" />
+        <Dimension DataMember="OdmikiCenVrstaPrometa" Name="Vrsta prometa" DefaultId="DataItem2" />
+      </DataItems>
+      <HiddenDimensions>
+        <Dimension DefaultId="DataItem2" />
+      </HiddenDimensions>
+      <Arguments>
+        <Argument DefaultId="DataItem1" />
+      </Arguments>
+      <Panes>
+        <Pane Name="Pane 1">
+          <Series>
+            <Simple Name="Odmiki">
+              <Value DefaultId="DataItem0" />
+            </Simple>
+          </Series>
+        </Pane>
+      </Panes>
+      <AxisX EnableZooming="true" />
+    </Chart>
+    <Pie ComponentName="pieDashboardItem1" Name="Vrednost odmikov po kupcih" ShowCaption="false" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" FilterString="[DataItem2] = 'P'" IsMasterFilterCrossDataSource="true" PieType="Donut">
+      <InteractivityOptions MasterFilterMode="Multiple" />
+      <DataItems>
+        <Measure DataMember="OdmikiCenVrednostOdmikov" Name="Vrednost odmikov po kupcih" DefaultId="DataItem0">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Dimension DataMember="OdmikiCenKupec" Name="Kupec" DefaultId="DataItem1" />
+        <Dimension DataMember="OdmikiCenVrstaPrometa" Name="Vrsta prometa" DefaultId="DataItem2" />
+      </DataItems>
+      <HiddenDimensions>
+        <Dimension DefaultId="DataItem2" />
+      </HiddenDimensions>
+      <Arguments>
+        <Argument DefaultId="DataItem1" />
+      </Arguments>
+      <Values>
+        <Value DefaultId="DataItem0" />
+      </Values>
+    </Pie>
+    <Pie ComponentName="pieDashboardItem2" Name="Pies 1" ShowCaption="false" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" FilterString="[DataItem2] = 'P'" IsMasterFilterCrossDataSource="true" PieType="Donut">
+      <InteractivityOptions MasterFilterMode="Multiple" IsDrillDownEnabled="true" />
+      <DataItems>
+        <Measure DataMember="OdmikiCenVrednostOdmikov" Name="Vrednost odmikov po letih, mesecih" DefaultId="DataItem0">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Dimension DataMember="OdmikiCenDatumDokumenta" Name="Leto" DefaultId="DataItem1" />
+        <Dimension DataMember="OdmikiCenVrstaPrometa" Name="Vrsta prometa" DefaultId="DataItem2" />
+        <Dimension DataMember="OdmikiCenDatumDokumenta" Name="Mesec" DateTimeGroupInterval="Month" DefaultId="DataItem3" />
+      </DataItems>
+      <HiddenDimensions>
+        <Dimension DefaultId="DataItem2" />
+      </HiddenDimensions>
+      <Arguments>
+        <Argument DefaultId="DataItem1" />
+        <Argument DefaultId="DataItem3" />
+      </Arguments>
+      <Values>
+        <Value DefaultId="DataItem0" />
+      </Values>
+    </Pie>
+  </Items>
+  <LayoutTree>
+    <LayoutGroup>
+      <LayoutGroup Orientation="Vertical">
+        <LayoutGroup Weight="0.84692597239648681">
+          <LayoutItem DashboardItem="pieDashboardItem2" Weight="0.70780298837852818" />
+          <LayoutItem DashboardItem="pieDashboardItem1" Weight="0.96513558384061937" />
+          <LayoutItem DashboardItem="chartDashboardItem1" Weight="1.3270614277808526" />
+        </LayoutGroup>
+        <LayoutItem DashboardItem="gridDashboardItem1" Weight="1.1530740276035132" />
+      </LayoutGroup>
+    </LayoutGroup>
+  </LayoutTree>
+</Dashboard>

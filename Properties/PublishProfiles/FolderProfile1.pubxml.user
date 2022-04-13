@@ -4,7 +4,8 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
 -->
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <_PublishTargetUrl>C:\Users\janko\Desktop\output</_PublishTargetUrl>
+    <_PublishTargetUrl>C:\Users\administrator.TRENDNET\Desktop\Tadej_Publish</_PublishTargetUrl>
+    <History>True|2021-10-05T07:05:37.9500418Z;</History>
   </PropertyGroup>
   <ItemGroup>
     <File Include="About.aspx">
@@ -371,10 +372,10 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>04/22/2019 02:06:16</publishTime>
     </File>
     <File Include="bin/peptak.dll">
-      <publishTime>07/26/2021 20:35:10</publishTime>
+      <publishTime>10/05/2021 09:04:56</publishTime>
     </File>
     <File Include="bin/peptak.pdb">
-      <publishTime>07/26/2021 20:35:10</publishTime>
+      <publishTime>10/05/2021 09:04:56</publishTime>
     </File>
     <File Include="bin/roslyn/csc.exe">
       <publishTime>08/08/2018 06:38:48</publishTime>
@@ -656,7 +657,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>03/19/2021 12:12:50</publishTime>
     </File>
     <File Include="Content/Site.css">
-      <publishTime>03/18/2021 14:09:50</publishTime>
+      <publishTime>09/15/2021 19:47:32</publishTime>
     </File>
     <File Include="css/custom.css">
       <publishTime>05/23/2021 22:44:49</publishTime>
@@ -664,8 +665,17 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
     <File Include="css/graphs.css">
       <publishTime>05/25/2021 17:31:40</publishTime>
     </File>
+    <File Include="css/shared.css">
+      <publishTime>09/15/2021 19:27:27</publishTime>
+    </File>
     <File Include="Default.aspx">
-      <publishTime>07/26/2021 19:49:07</publishTime>
+      <publishTime>09/13/2021 15:32:41</publishTime>
+    </File>
+    <File Include="Emulator.aspx">
+      <publishTime>07/29/2021 14:40:30</publishTime>
+    </File>
+    <File Include="Extension.Master">
+      <publishTime>08/04/2021 09:58:30</publishTime>
     </File>
     <File Include="favicon.ico">
       <publishTime>03/20/2021 15:27:02</publishTime>
@@ -689,7 +699,10 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>02/13/2021 19:56:36</publishTime>
     </File>
     <File Include="Logon.aspx">
-      <publishTime>02/20/2021 23:34:23</publishTime>
+      <publishTime>09/20/2021 13:55:37</publishTime>
+    </File>
+    <File Include="MobileDashboard.aspx">
+      <publishTime>08/04/2021 09:58:27</publishTime>
     </File>
     <File Include="Scripts/bootstrap.bundle.js">
       <publishTime>03/19/2021 12:12:50</publishTime>
@@ -1070,16 +1083,19 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>02/13/2021 19:56:44</publishTime>
     </File>
     <File Include="Site.Master">
-      <publishTime>05/23/2021 22:57:51</publishTime>
+      <publishTime>09/15/2021 19:34:16</publishTime>
     </File>
     <File Include="Site.Mobile.Master">
-      <publishTime>02/13/2021 19:56:45</publishTime>
+      <publishTime>07/29/2021 14:40:30</publishTime>
+    </File>
+    <File Include="sun.png">
+      <publishTime>07/28/2021 14:39:06</publishTime>
     </File>
     <File Include="ViewSwitcher.ascx">
       <publishTime>02/13/2021 19:56:45</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>07/26/2021 20:35:13</publishTime>
+      <publishTime>10/05/2021 09:05:02</publishTime>
     </File>
   </ItemGroup>
 </Project>

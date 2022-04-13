@@ -1,0 +1,284 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Dashboard>
+  <Title Text="DB Forcast - 1" />
+  <DataSources>
+    <SqlDataSource Name="uTN_DB_Forcast" ComponentName="sqlDataSource1">
+      <Connection Name="PetPak" FromAppConfig="true" />
+      <Query Type="CustomSqlQuery" Name="uTN_DB_Forcast">
+        <Sql>SELECT * FROM dbo.uTN_DB_Forcast;</Sql>
+      </Query>
+      <ConnectionOptions CloseConnection="true" />
+      <CalculatedFields>
+        <CalculatedField Name="ForcastProdajaPovprečjeNaTeden" Expression="([ForcastProdajaZadnjih90Dni]/90)*7" DataType="Auto" DataMember="uTN_DB_Forcast" />
+        <CalculatedField Name="ForcastZadostujeZaDni" Expression="[ForcastZaloga]/(Iif([ForcastProdajaZadnjih90Dni]=0, 1, [ForcastProdajaZadnjih90Dni])/90)" DataType="Auto" DataMember="uTN_DB_Forcast" />
+        <CalculatedField Name="ForcastStatusZalogeOpisno" Expression="Iif([ForcastZaloga]&lt;[ForcastMinimalnaZaloga],'Pod minimalno',Iif([ForcastZaloga]&lt;[ForcastOptimalnaZaloga],'Pod optimalno',Iif([ForcastZaloga]&lt;[ForcastMaximalnaZaloga],'Pod maksimalno','Nad maksimalno') ) )" DataMember="uTN_DB_Forcast" />
+        <CalculatedField Name="ForcastStatusZaloge" Expression="Iif([ForcastZaloga]&lt;[ForcastMinimalnaZaloga],1,Iif([ForcastZaloga]&lt;[ForcastOptimalnaZaloga],2,Iif([ForcastZaloga]&lt;[ForcastMaximalnaZaloga],3,4) ) )" DataMember="uTN_DB_Forcast" />
+        <CalculatedField Name="ForcastZadostujeZaDniPreračunano" Expression="([ForcastZaloga]+[ForcastOdprtaKoličinaNabava]-[ForcastOdprtaKoličinaProdaja])/(Iif([ForcastProdajaZadnjih90Dni]=0, 1, [ForcastProdajaZadnjih90Dni])/90)" DataType="Auto" DataMember="uTN_DB_Forcast" />
+        <CalculatedField Name="ForcastNaročiloDoOptimalneZaloge" Expression="Ceiling(Iif(IsNullOrEmpty([ForcastZaloga]),[ForcastOptimalnaZaloga]+(([ForcastProdajaZadnjih90Dni]/90)*[ForcastDobavniRok]),Iif([ForcastZaloga]-(([ForcastProdajaZadnjih90Dni]/90)*[ForcastDobavniRok])&lt;[ForcastOptimalnaZaloga],[ForcastOptimalnaZaloga]-([ForcastZaloga]-(([ForcastProdajaZadnjih90Dni]/90)*[ForcastDobavniRok])) , 0))/[ForcastMinimalnaKoloičinaNaročanja])*[ForcastMinimalnaKoloičinaNaročanja]" DataType="Auto" DataMember="uTN_DB_Forcast" />
+        <CalculatedField Name="NaročiloDoMaksimalneZaloge" Expression="Iif(([ForcastZaloga]-(([ForcastProdajaZadnjih90Dni]/90)*[ForcastDobavniRok]))&lt;[ForcastMaximalnaZaloga],([ForcastMaximalnaZaloga]-([ForcastZaloga]-(([ForcastProdajaZadnjih90Dni]/90)*[ForcastDobavniRok]))) , 0)" DataType="Auto" DataMember="uTN_DB_Forcast" />
+      </CalculatedFields>
+    </SqlDataSource>
+  </DataSources>
+  <Items>
+    <Grid ComponentName="gridDashboardItem1" Name="Pregled nad zaogo in prodajo s predlogom naročila" ShowCaption="false" DataSource="sqlDataSource1" DataMember="uTN_DB_Forcast">
+      <DataItems>
+        <Dimension DataMember="ForcastIdent" DefaultId="DataItem0" />
+        <Dimension DataMember="ForcastNazivIdenta" DefaultId="DataItem1" />
+        <Dimension DataMember="ForcastDobaviteljevaŠifra" DefaultId="DataItem2" />
+        <Dimension DataMember="ForcastEM" DefaultId="DataItem4" />
+        <Measure DataMember="ForcastProdajaZadnjih15Dni" DefaultId="DataItem5">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="ForcastProdajaZadnjih30Dni" DefaultId="DataItem7">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="ForcastProdajaZadnjih60Dni" DefaultId="DataItem8">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="ForcastProdajaZadnjih90Dni" DefaultId="DataItem9">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="ForcastProdajaZadnjih90DniLani" Name="Prod. 90 dni LANI" DefaultId="DataItem12">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="ForcastZadostujeZaDni" DefaultId="DataItem11">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="ForcastOdprtaKoličinaNabava" DefaultId="DataItem13">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="ForcastOdprtaKoličinaProdaja" DefaultId="DataItem10">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="ForcastZaloga" DefaultId="DataItem3">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Dimension DataMember="ForcastStatusZaloge" DefaultId="DataItem15" />
+        <Dimension DataMember="ForcastStatusZaloge" DefaultId="DataItem16" />
+        <Dimension DataMember="ForcastStatusZaloge" DefaultId="DataItem17" />
+        <Dimension DataMember="ForcastStatusZaloge" DefaultId="DataItem18" />
+        <Measure DataMember="ForcastMinimalnaZaloga" SummaryType="Max" DefaultId="DataItem14" />
+        <Measure DataMember="ForcastOptimalnaZaloga" SummaryType="Max" DefaultId="DataItem19" />
+        <Measure DataMember="ForcastMaximalnaZaloga" SummaryType="Max" DefaultId="DataItem20" />
+        <Measure DataMember="ForcastProdajaZadnjih60DniLani" Name="Prod. 60 dni LANI" DefaultId="DataItem23">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="ForcastProdajaZadnjih30DniLani" Name="Prod. 30 dni LANI" DefaultId="DataItem24">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="ForcastProdajaZadnjih15DniLani" Name="Prod. 15 dni LANI" DefaultId="DataItem25">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="ForcastNaročiloDoOptimalneZaloge" DefaultId="DataItem29">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+      </DataItems>
+      <HiddenMeasures>
+        <Measure DefaultId="DataItem12" />
+        <Measure DefaultId="DataItem23" />
+        <Measure DefaultId="DataItem24" />
+        <Measure DefaultId="DataItem25" />
+        <Measure DefaultId="DataItem14" />
+        <Measure DefaultId="DataItem19" />
+        <Measure DefaultId="DataItem20" />
+      </HiddenMeasures>
+      <FormatRules>
+        <GridItemFormatRule Name="Format Rule 1" DataItem="DataItem14" DataItemApplyTo="DataItem3">
+          <FormatConditionExpression Expression="[DataItem3] &lt; [DataItem14]">
+            <IconSettings IconType="DirectionalGreenArrowUp" />
+          </FormatConditionExpression>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 2" DataItem="DataItem3" DataItemApplyTo="DataItem3">
+          <FormatConditionExpression Expression="[DataItem3] &gt;= [DataItem14] And [DataItem3] &lt; [DataItem19]">
+            <IconSettings IconType="DirectionalYellowUpInclineArrow" />
+          </FormatConditionExpression>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 3" DataItem="DataItem3" DataItemApplyTo="DataItem3">
+          <FormatConditionExpression Expression="[DataItem3] &gt;= [DataItem19] And [DataItem3] &lt; [DataItem20]">
+            <IconSettings IconType="DirectionalYellowDownInclineArrow" />
+          </FormatConditionExpression>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 4" DataItem="DataItem3" DataItemApplyTo="DataItem3">
+          <FormatConditionExpression Expression="[DataItem3] &gt;= [DataItem20]">
+            <IconSettings IconType="DirectionalRedDownArrow" />
+          </FormatConditionExpression>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 5" DataItem="DataItem9" DataItemApplyTo="DataItem9">
+          <FormatConditionExpression Expression="[DataItem9] &gt; [DataItem12]">
+            <IconSettings IconType="DirectionalGreenTriangleUp" />
+          </FormatConditionExpression>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 6" DataItem="DataItem9" DataItemApplyTo="DataItem9">
+          <FormatConditionExpression Expression="[DataItem9] &lt; [DataItem12]">
+            <IconSettings IconType="DirectionalRedTriangleDown" />
+          </FormatConditionExpression>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 7" DataItem="DataItem9" DataItemApplyTo="DataItem9">
+          <FormatConditionExpression Expression="[DataItem9] = [DataItem12]">
+            <IconSettings IconType="DirectionalYellowDash" />
+          </FormatConditionExpression>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 8" DataItem="DataItem8" DataItemApplyTo="DataItem8">
+          <FormatConditionExpression Expression="[DataItem8] &lt; [DataItem23]">
+            <IconSettings IconType="DirectionalRedTriangleDown" />
+          </FormatConditionExpression>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 9" DataItem="DataItem8" DataItemApplyTo="DataItem8">
+          <FormatConditionExpression Expression="[DataItem8] &gt;= [DataItem23]">
+            <IconSettings IconType="DirectionalGreenTriangleUp" />
+          </FormatConditionExpression>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 10" DataItem="DataItem8" DataItemApplyTo="DataItem8">
+          <FormatConditionExpression Expression="[DataItem8] = [DataItem23]">
+            <IconSettings IconType="DirectionalYellowDash" />
+          </FormatConditionExpression>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 11" DataItem="DataItem7" DataItemApplyTo="DataItem7">
+          <FormatConditionExpression Expression="[DataItem7] &lt; [DataItem24]">
+            <IconSettings IconType="DirectionalRedTriangleDown" />
+          </FormatConditionExpression>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 12" DataItem="DataItem7" DataItemApplyTo="DataItem7">
+          <FormatConditionExpression Expression="[DataItem7] &gt; [DataItem24]">
+            <IconSettings IconType="DirectionalGreenTriangleUp" />
+          </FormatConditionExpression>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 13" DataItem="DataItem7" DataItemApplyTo="DataItem7">
+          <FormatConditionExpression Expression="[DataItem7] = [DataItem24]">
+            <IconSettings IconType="DirectionalYellowDash" />
+          </FormatConditionExpression>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 14" DataItem="DataItem5" DataItemApplyTo="DataItem5">
+          <FormatConditionExpression Expression="[DataItem5] &lt; [DataItem25]">
+            <IconSettings IconType="DirectionalRedTriangleDown" />
+          </FormatConditionExpression>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 15" DataItem="DataItem5" DataItemApplyTo="DataItem5">
+          <FormatConditionExpression Expression="[DataItem5] &gt; [DataItem25]">
+            <IconSettings IconType="DirectionalGreenTriangleUp" />
+          </FormatConditionExpression>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 16" DataItem="DataItem5" DataItemApplyTo="DataItem5">
+          <FormatConditionExpression Expression="[DataItem5] = [DataItem25]">
+            <IconSettings IconType="DirectionalGreenTriangleUp" />
+          </FormatConditionExpression>
+        </GridItemFormatRule>
+      </FormatRules>
+      <GridColumns>
+        <GridDimensionColumn Name="Ident">
+          <Dimension DefaultId="DataItem0" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Naziv identa">
+          <Dimension DefaultId="DataItem1" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="ID dobavitelja">
+          <Dimension DefaultId="DataItem2" />
+        </GridDimensionColumn>
+        <GridMeasureColumn Name="Zaloga">
+          <Measure DefaultId="DataItem3" />
+        </GridMeasureColumn>
+        <GridDimensionColumn Name="EM">
+          <Dimension DefaultId="DataItem4" />
+        </GridDimensionColumn>
+        <GridMeasureColumn Name="Prod. 15 dni">
+          <Measure DefaultId="DataItem5" />
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Prod. 30 dni">
+          <Measure DefaultId="DataItem7" />
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Prod. 60 dni">
+          <Measure DefaultId="DataItem8" />
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Prod. 90 dni">
+          <Measure DefaultId="DataItem9" />
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Zaloga za ? dni">
+          <Measure DefaultId="DataItem11" />
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Predlog naročila OPT">
+          <Measure DefaultId="DataItem29" />
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Naročila PREVZEM">
+          <Measure DefaultId="DataItem13" />
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Naročila IZDAJA">
+          <Measure DefaultId="DataItem10" />
+        </GridMeasureColumn>
+      </GridColumns>
+      <GridOptions EnableBandedRows="true" WordWrap="true" />
+    </Grid>
+    <Pie ComponentName="pieDashboardItem1" Name="Zaloga po statusih" ShowCaption="false" DataSource="sqlDataSource1" DataMember="uTN_DB_Forcast" IsMasterFilterCrossDataSource="true" PieType="Donut">
+      <InteractivityOptions MasterFilterMode="Multiple" />
+      <DataItems>
+        <Measure DataMember="ForcastZalogaVrednost" Name="Vrednost zaloge glede na status" DefaultId="DataItem0">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Dimension DataMember="ForcastStatusZalogeOpisno" Name="Status zaloge" DefaultId="DataItem1" />
+      </DataItems>
+      <Arguments>
+        <Argument DefaultId="DataItem1" />
+      </Arguments>
+      <Values>
+        <Value DefaultId="DataItem0" />
+      </Values>
+    </Pie>
+    <Pie ComponentName="pieDashboardItem2" Name="Zaloga po sekundarni klasifikaciji" ShowCaption="false" DataSource="sqlDataSource1" DataMember="uTN_DB_Forcast" IsMasterFilterCrossDataSource="true" PieType="Donut">
+      <InteractivityOptions MasterFilterMode="Multiple" />
+      <DataItems>
+        <Measure DataMember="ForcastZalogaVrednost" Name="Vrednost zaloge po sekundarni klasifikaciji" DefaultId="DataItem0">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Dimension DataMember="ForcastSekundarnaKlasifikacijaNaziv" Name="Sekundarna klasifikacija" DefaultId="DataItem1" />
+      </DataItems>
+      <Arguments>
+        <Argument DefaultId="DataItem1" />
+      </Arguments>
+      <Values>
+        <Value DefaultId="DataItem0" />
+      </Values>
+    </Pie>
+    <Pie ComponentName="pieDashboardItem3" Name="Zaloga po dobaviteljih" ShowCaption="false" DataSource="sqlDataSource1" DataMember="uTN_DB_Forcast" IsMasterFilterCrossDataSource="true" PieType="Donut">
+      <InteractivityOptions MasterFilterMode="Multiple" />
+      <DataItems>
+        <Measure DataMember="ForcastZalogaVrednost" Name="Vrednost zaloge po dobaviteljih" DefaultId="DataItem0">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Dimension DataMember="ForcastDobavitelj" Name="Dobavitelj" DefaultId="DataItem1" />
+      </DataItems>
+      <Arguments>
+        <Argument DefaultId="DataItem1" />
+      </Arguments>
+      <Values>
+        <Value DefaultId="DataItem0" />
+      </Values>
+    </Pie>
+    <Pie ComponentName="pieDashboardItem4" Name="Zaloga po primarni klasifikaciji" ShowCaption="false" DataSource="sqlDataSource1" DataMember="uTN_DB_Forcast" IsMasterFilterCrossDataSource="true" PieType="Donut">
+      <InteractivityOptions MasterFilterMode="Multiple" />
+      <DataItems>
+        <Measure DataMember="ForcastZalogaVrednost" Name="Vrednost zaloge po primarni klasifikaciji" DefaultId="DataItem0">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Dimension DataMember="ForcastPrimarnaKlasifikacijaNaziv" Name="Primarna klasifikacija" DefaultId="DataItem1" />
+      </DataItems>
+      <Arguments>
+        <Argument DefaultId="DataItem1" />
+      </Arguments>
+      <Values>
+        <Value DefaultId="DataItem0" />
+      </Values>
+    </Pie>
+  </Items>
+  <LayoutTree>
+    <LayoutGroup>
+      <LayoutGroup Orientation="Vertical">
+        <LayoutGroup Weight="0.90966122961104146">
+          <LayoutItem DashboardItem="pieDashboardItem1" />
+          <LayoutItem DashboardItem="pieDashboardItem3" />
+          <LayoutItem DashboardItem="pieDashboardItem4" />
+          <LayoutItem DashboardItem="pieDashboardItem2" />
+        </LayoutGroup>
+        <LayoutItem DashboardItem="gridDashboardItem1" Weight="1.0903387703889587" />
+      </LayoutGroup>
+    </LayoutGroup>
+  </LayoutTree>
+</Dashboard>

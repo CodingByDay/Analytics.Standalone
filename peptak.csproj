@@ -145,6 +145,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="css\custom.css" />
     <Content Include="css\graphs.css" />
+    <Content Include="css\shared.css" />
     <Content Include="Default.aspx" />
     <Content Include="Emulator.aspx" />
     <Content Include="favicon.ico" />
@@ -417,7 +418,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>50650</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>https://localhost:44339/</IISUrl>
+          <IISUrl>https://localhost:44351/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

@@ -43,8 +43,7 @@ namespace peptak
             {
                 // Consult with your SQL Server administrator for an appropriate connection
                 // string to use to connect to your local SQL Server.
-                conn = new SqlConnection("server=10.100.100.25\\SPLAHOST;Database=petpakDash;Integrated Security=false;User ID=petpakn;Password=net123tnet2!;");
-                conn.Open();
+                conn = new SqlConnection("server=10.100.100.25\\SPLAHOST;Database=petpakDash;Integrated Security=false;User ID=petpakn;Password=net123tnet2!;"); conn.Open();
 
                 // Create SqlCommand to select pwd field from users table given supplied userName.
                 cmd = new SqlCommand("Select pwd from users where uname=@userName", conn);

@@ -60,10 +60,10 @@
         <Pane Name="Pane 1">
           <AxisY Title="Vrednosti" />
           <Series>
-            <Simple>
+            <Simple Name="Bruto na opravljeno delo">
               <Value DefaultId="DataItem1" />
             </Simple>
-            <Simple>
+            <Simple Name="Bruto na fond ur">
               <Value DefaultId="DataItem2" />
             </Simple>
             <Simple Name="RVC NC / Fond ur" SeriesType="Line">
@@ -92,7 +92,7 @@
         <Pane Name="Pane 1">
           <AxisY Title="Vrednosti" />
           <Series>
-            <Simple Name="PrihodkiOdProdaje / Opravljeno delo">
+            <Simple Name="Prihodki od prodaje / Opravljeno delo">
               <Value DefaultId="DataItem0" />
             </Simple>
             <Simple Name="Prihodki od prodaje / Fond ur">

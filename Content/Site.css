@@ -45,6 +45,7 @@ float: right;
 }
 
 .logout {
+    top: 1px!important;
     width: 70px;
     height: 25px;
     color:white!important;
@@ -193,9 +194,9 @@ span {
     position: absolute !important;
     float: right !important;
     right: 5px !important;
-    top: 2px;
+    top: -13px;
     max-height: 25px !important;
-    margin-top: 1px !important;
+    margin-top: -13px !important;
     border: 1px solid;
     padding-left: 10px;
     padding-right: 10px;

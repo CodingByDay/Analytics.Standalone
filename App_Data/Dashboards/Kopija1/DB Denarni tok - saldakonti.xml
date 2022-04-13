@@ -1,0 +1,326 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Dashboard>
+  <Title Text="DB Denarni tok" />
+  <DataSources>
+    <SqlDataSource Name="CustomSqlQuery" ComponentName="sqlDataSource1">
+      <Connection Name="eHolding ERFA" FromAppConfig="true" />
+      <Query Type="CustomSqlQuery" Name="CustomSqlQuery">
+        <Sql>SELECT * FROM  dbo.uTN_DB_DenarniTok;</Sql>
+      </Query>
+      <ConnectionOptions CloseConnection="true" />
+      <CalculatedFields>
+        <CalculatedField Name="Terjatev" Expression="sum(iif([DTVrstaSubjekta]='Kupec',[DTSaldo],0))" DataType="Auto" DataMember="CustomSqlQuery" />
+        <CalculatedField Name="Obveznost" Expression="sum(iif([DTVrstaSubjekta]='Dobavitelj',[DTSaldo],0))" DataType="Auto" DataMember="CustomSqlQuery" />
+        <CalculatedField Name="TerjatevSaldo" Expression="sum(iif([DTVrstaSubjekta]='Kupec',[DTSaldo],0))" DataType="Auto" DataMember="CustomSqlQuery" />
+        <CalculatedField Name="ObveznostSaldo" Expression="sum(iif([DTVrstaSubjekta]='Dobavitelj',[DTSaldo],0))" DataType="Auto" DataMember="CustomSqlQuery" />
+        <CalculatedField Name="Saldo" Expression="sum([DTSaldo])" DataType="Auto" DataMember="CustomSqlQuery" />
+        <CalculatedField Name="Terjatev/Obveznost" Expression="iif([DTVrstaSubjekta]='Kupec','Terjatev','Obveznost')" DataType="Auto" DataMember="CustomSqlQuery" />
+        <CalculatedField Name="VrednostTerjatveObveznosti" Expression="sum(iif([DTVrstaSubjekta]='Dobavitelj',[DTKredit],[DTDebit]))" DataType="Auto" DataMember="CustomSqlQuery" />
+        <CalculatedField Name="DatumPlačila" Expression="max([DTDatumPoplačila])" DataType="DateTime" DataMember="CustomSqlQuery" />
+        <CalculatedField Name="DniZamude" Expression="IIF(sum([DTPovprečnaZapadlostTeža])&gt;0,sum([DTPovprečnaZapadlost])/sum([DTPovprečnaZapadlostTeža]),sum([DTDniZamudeDokument]))" DataType="Auto" DataMember="CustomSqlQuery" />
+        <CalculatedField Name="SaldoVisible" Expression="iif(sum([DTSaldo])&gt;0,'T','F')" DataType="Auto" DataMember="CustomSqlQuery" />
+      </CalculatedFields>
+    </SqlDataSource>
+  </DataSources>
+  <Items>
+    <Grid ComponentName="gridDashboardItem1" Name="Trenutno stanje terjatev in obveznosti" DataSource="sqlDataSource1" DataMember="CustomSqlQuery">
+      <DataItems>
+        <Dimension DataMember="DTStatus" DefaultId="DataItem0" />
+        <Measure DataMember="Obveznost" DefaultId="DataItem1">
+          <NumericFormat FormatType="Currency" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="Terjatev" DefaultId="DataItem2">
+          <NumericFormat FormatType="Currency" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="Saldo" DefaultId="DataItem3">
+          <NumericFormat FormatType="Currency" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+      </DataItems>
+      <GridColumns>
+        <GridDimensionColumn Name="Status">
+          <Dimension DefaultId="DataItem0" />
+        </GridDimensionColumn>
+        <GridMeasureColumn Name="Obveznost">
+          <Measure DefaultId="DataItem1" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Terjatev">
+          <Measure DefaultId="DataItem2" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Saldo">
+          <Measure DefaultId="DataItem3" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+      </GridColumns>
+      <GridOptions />
+    </Grid>
+    <Chart ComponentName="chartDashboardItem2" Name="Struktura pričakovanih odlivov po DOBAVITELJIH" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" FilterString="[DataItem3] = 'Dobavitelj' And [DataItem2] &lt;&gt; 'Zaprto'" IsMasterFilterCrossDataSource="true" Rotated="true">
+      <InteractivityOptions MasterFilterMode="Multiple" />
+      <DataItems>
+        <Measure DataMember="DTSaldo" DefaultId="DataItem0">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Dimension DataMember="DTSubjekt" SortOrder="Descending" SortByMeasure="DataItem0" DefaultId="DataItem1" />
+        <Dimension DataMember="DTStatus" SortByMeasure="DataItem0" DefaultId="DataItem2" />
+        <Dimension DataMember="DTVrstaSubjekta" DefaultId="DataItem3" />
+      </DataItems>
+      <HiddenDimensions>
+        <Dimension DefaultId="DataItem3" />
+      </HiddenDimensions>
+      <SeriesDimensions>
+        <SeriesDimension DefaultId="DataItem2" />
+      </SeriesDimensions>
+      <Arguments>
+        <Argument DefaultId="DataItem1" />
+      </Arguments>
+      <Panes>
+        <Pane Name="Pane 1">
+          <AxisY Visible="false" />
+          <Series>
+            <Simple Name="Obveznost" SeriesType="StackedBar">
+              <Value DefaultId="DataItem0" />
+            </Simple>
+          </Series>
+        </Pane>
+      </Panes>
+      <AxisX EnableZooming="true" VisiblePointsCount="15" />
+    </Chart>
+    <Chart ComponentName="chartDashboardItem3" Name="Struktura pričakovanih prilivov po KUPCIH" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" FilterString="[DataItem3] = 'Kupec'" IsMasterFilterCrossDataSource="true" Rotated="true">
+      <InteractivityOptions MasterFilterMode="Multiple" />
+      <DataItems>
+        <Measure DataMember="DTDebit" DefaultId="DataItem0">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Dimension DataMember="DTSubjekt" SortByMeasure="DataItem0" DefaultId="DataItem1" />
+        <Dimension DataMember="DTStatus" DefaultId="DataItem2" />
+        <Dimension DataMember="DTVrstaSubjekta" DefaultId="DataItem3" />
+      </DataItems>
+      <HiddenDimensions>
+        <Dimension DefaultId="DataItem3" />
+      </HiddenDimensions>
+      <SeriesDimensions>
+        <SeriesDimension DefaultId="DataItem2" />
+      </SeriesDimensions>
+      <Arguments>
+        <Argument DefaultId="DataItem1" />
+      </Arguments>
+      <Panes>
+        <Pane Name="Pane 1">
+          <AxisY Visible="false" />
+          <Series>
+            <Simple Name="Terjatev" SeriesType="StackedBar">
+              <Value DefaultId="DataItem0" />
+            </Simple>
+          </Series>
+        </Pane>
+      </Panes>
+      <AxisX EnableZooming="true" VisiblePointsCount="15" />
+    </Chart>
+    <Grid ComponentName="gridDashboardItem2" Name="Terjatve/Obveznosti po Subjektih" ParentContainer="dashboardTabPage1" DataSource="sqlDataSource1" DataMember="CustomSqlQuery">
+      <DataItems>
+        <Dimension DataMember="DTSubjekt" DefaultId="DataItem1" />
+        <Dimension DataMember="DTDokument" DefaultId="DataItem5" />
+        <Measure DataMember="DTSaldo" DefaultId="DataItem4">
+          <NumericFormat FormatType="Currency" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="VrednostTerjatveObveznosti" DefaultId="DataItem3">
+          <NumericFormat FormatType="Currency" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Dimension DataMember="DTStatus" DefaultId="DataItem8" />
+        <Dimension DataMember="DTStatus" DefaultId="DataItem9" />
+        <Dimension DataMember="Terjatev/Obveznost" DefaultId="DataItem10" />
+        <Measure DataMember="DniZamude" SummaryType="Count" DefaultId="DataItem11" />
+        <Dimension DataMember="DTTehtanaPovprečnaZapadlostSum" DefaultId="DataItem2" />
+        <Dimension DataMember="DTPovprečnaZapadlostSum" DefaultId="DataItem0" />
+      </DataItems>
+      <HiddenDimensions>
+        <Dimension DefaultId="DataItem8" />
+        <Dimension DefaultId="DataItem5" />
+      </HiddenDimensions>
+      <FormatRules>
+        <GridItemFormatRule Name="Format Rule 1" DataItem="DataItem8" DataItemApplyTo="DataItem8">
+          <FormatConditionValue>
+            <AppearanceSettings AppearanceType="FontGrayed" />
+            <Value1 Type="System.DateTime" Value="1900-01-01T00:00:00.0000000" />
+          </FormatConditionValue>
+        </GridItemFormatRule>
+      </FormatRules>
+      <GridColumns>
+        <GridDimensionColumn>
+          <Dimension DefaultId="DataItem10" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Status">
+          <Dimension DefaultId="DataItem9" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Subjekt">
+          <Dimension DefaultId="DataItem1" />
+        </GridDimensionColumn>
+        <GridMeasureColumn Name="Vrednost">
+          <Measure DefaultId="DataItem3" />
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Odprto">
+          <Measure DefaultId="DataItem4" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Dni zamude">
+          <Measure DefaultId="DataItem11" />
+        </GridMeasureColumn>
+        <GridDimensionColumn Name="Povprečna zapadlost">
+          <Dimension DefaultId="DataItem0" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Tehtana povprečna zapadlost">
+          <Dimension DefaultId="DataItem2" />
+        </GridDimensionColumn>
+      </GridColumns>
+      <GridOptions EnableBandedRows="true" WordWrap="true" />
+    </Grid>
+    <ListBox ComponentName="listBoxDashboardItem1" Name="List Box 1" DataSource="sqlDataSource1" DataMember="CustomSqlQuery">
+      <DataItems>
+        <Dimension DataMember="DTStatus" DefaultId="DataItem0" />
+      </DataItems>
+      <FilterDimensions>
+        <Dimension DefaultId="DataItem0" />
+      </FilterDimensions>
+    </ListBox>
+    <ComboBox ComponentName="comboBoxDashboardItem1" Name="Terjatev/Obveznost" DataSource="sqlDataSource1" DataMember="CustomSqlQuery">
+      <DataItems>
+        <Dimension DataMember="Terjatev/Obveznost" Name="Terjatev/Obveznost" DefaultId="DataItem0" />
+      </DataItems>
+      <FilterDimensions>
+        <Dimension DefaultId="DataItem0" />
+      </FilterDimensions>
+    </ComboBox>
+    <TabContainer ComponentName="tabContainerDashboardItem1" Name="Tab Container 1">
+      <Pages>
+        <Page ComponentName="dashboardTabPage1" Name="Page 1" />
+        <Page ComponentName="dashboardTabPage2" Name="Page 2" />
+      </Pages>
+    </TabContainer>
+    <Grid ComponentName="gridDashboardItem3" Name="Terjatve/Obveznosti po dokumnetih" ParentContainer="dashboardTabPage2" DataSource="sqlDataSource1" DataMember="CustomSqlQuery">
+      <DataItems>
+        <Dimension DataMember="DTSubjekt" DefaultId="DataItem1" />
+        <Dimension DataMember="DTDokument" DefaultId="DataItem2" />
+        <Dimension DataMember="DTDokument" DefaultId="DataItem5" />
+        <Dimension DataMember="DTDatumDokumenta" DateTimeGroupInterval="None" DefaultId="DataItem6" />
+        <Dimension DataMember="DTDatumZapadlosti" DateTimeGroupInterval="None" DefaultId="DataItem7" />
+        <Measure DataMember="DTSaldo" DefaultId="DataItem4">
+          <NumericFormat FormatType="Currency" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="VrednostTerjatveObveznosti" DefaultId="DataItem3">
+          <NumericFormat FormatType="Currency" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Dimension DataMember="DTStatus" DefaultId="DataItem8" />
+        <Dimension DataMember="DTStatus" DefaultId="DataItem9" />
+        <Dimension DataMember="Terjatev/Obveznost" DefaultId="DataItem10" />
+        <Measure DataMember="DTDatumPoplačila" SummaryType="Max" DefaultId="DataItem0" />
+        <Measure DataMember="DniZamude" SummaryType="Count" DefaultId="DataItem11" />
+      </DataItems>
+      <HiddenDimensions>
+        <Dimension DefaultId="DataItem8" />
+        <Dimension DefaultId="DataItem5" />
+      </HiddenDimensions>
+      <FormatRules>
+        <GridItemFormatRule Name="Format Rule 1" DataItem="DataItem8" DataItemApplyTo="DataItem8">
+          <FormatConditionValue>
+            <AppearanceSettings AppearanceType="FontGrayed" />
+            <Value1 Type="System.DateTime" Value="1900-01-01T00:00:00.0000000" />
+          </FormatConditionValue>
+        </GridItemFormatRule>
+      </FormatRules>
+      <GridColumns>
+        <GridDimensionColumn>
+          <Dimension DefaultId="DataItem10" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Status">
+          <Dimension DefaultId="DataItem9" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Subjekt">
+          <Dimension DefaultId="DataItem1" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Dokument">
+          <Dimension DefaultId="DataItem2" />
+        </GridDimensionColumn>
+        <GridMeasureColumn Name="Vrednost">
+          <Measure DefaultId="DataItem3" />
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Odprto">
+          <Measure DefaultId="DataItem4" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridDimensionColumn Name="Datum dokumenta">
+          <Dimension DefaultId="DataItem6" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Rok plačila">
+          <Dimension DefaultId="DataItem7" />
+        </GridDimensionColumn>
+        <GridMeasureColumn Name="Datum plačila">
+          <Measure DefaultId="DataItem0" />
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Dni zamude">
+          <Measure DefaultId="DataItem11" />
+        </GridMeasureColumn>
+      </GridColumns>
+      <GridOptions EnableBandedRows="true" WordWrap="true" />
+    </Grid>
+  </Items>
+  <ColorScheme>
+    <Entry DataSource="sqlDataSource1" DataMember="CustomSqlQuery" Color="-13583066">
+      <DimensionKeys>
+        <DimensionKey>
+          <Definition DataMember="DTStatus" />
+          <Value Type="System.String" Value="Nezapadlo" />
+        </DimensionKey>
+      </DimensionKeys>
+    </Entry>
+    <Entry DataSource="sqlDataSource1" DataMember="CustomSqlQuery" Color="-2220762">
+      <DimensionKeys>
+        <DimensionKey>
+          <Definition DataMember="DTStatus" />
+          <Value Type="System.String" Value="Zapadlo" />
+        </DimensionKey>
+      </DimensionKeys>
+    </Entry>
+    <Entry DataSource="sqlDataSource1" DataMember="CustomSqlQuery" Color="-5859171">
+      <DimensionKeys>
+        <DimensionKey>
+          <Definition DataMember="DTStatus" />
+          <Value Type="System.String" Value="Zaprto" />
+        </DimensionKey>
+      </DimensionKeys>
+    </Entry>
+  </ColorScheme>
+  <LayoutTree>
+    <LayoutGroup>
+      <LayoutGroup Orientation="Vertical" Weight="1.9092418372993911">
+        <LayoutGroup Weight="0.96350364963503654">
+          <LayoutGroup Orientation="Vertical" Weight="0.39797309104058121">
+            <LayoutItem DashboardItem="listBoxDashboardItem1" Weight="0.30604017628120972" />
+            <LayoutItem DashboardItem="comboBoxDashboardItem1" Weight="0.30604017628120972" />
+          </LayoutGroup>
+          <LayoutItem DashboardItem="gridDashboardItem1" Weight="1.6385232593243821" />
+        </LayoutGroup>
+        <LayoutTabContainer DashboardItem="tabContainerDashboardItem1" Weight="1.0364963503649633">
+          <LayoutTabPage DashboardItem="dashboardTabPage1">
+            <LayoutItem DashboardItem="gridDashboardItem2" Weight="1.0364963503649633" />
+          </LayoutTabPage>
+          <LayoutTabPage DashboardItem="dashboardTabPage2">
+            <LayoutItem DashboardItem="gridDashboardItem3" Weight="1.0364963503649633" />
+          </LayoutTabPage>
+        </LayoutTabContainer>
+      </LayoutGroup>
+      <LayoutItem DashboardItem="chartDashboardItem3" Weight="0.5423353624792473" />
+      <LayoutItem DashboardItem="chartDashboardItem2" Weight="0.54842280022136158" />
+    </LayoutGroup>
+  </LayoutTree>
+</Dashboard>

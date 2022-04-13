@@ -57,7 +57,7 @@
         <Page ComponentName="dashboardTabPage3" Name="Reklamacije po letih - Kupci" />
       </Pages>
     </TabContainer>
-    <Grid ComponentName="gridDashboardItem1" Name="Reklamacije po leti DOBAVITELJI" ParentContainer="dashboardTabPage1" DataSource="sqlDataSource1" DataMember="uTN_Analitika_Reklamacije_Osnova" FilterString="[DataItem7] = 'Reklamacije DOBAVITELJI'">
+    <Grid ComponentName="gridDashboardItem1" Name="Reklamacije po letih DOBAVITELJI" ParentContainer="dashboardTabPage1" DataSource="sqlDataSource1" DataMember="uTN_Analitika_Reklamacije_Osnova" FilterString="[DataItem7] = 'Reklamacije DOBAVITELJI'">
       <DataItems>
         <Dimension DataMember="ReklamacijeDatumDokumenta" SortOrder="Descending" DefaultId="DataItem0" />
         <Measure DataMember="ReklamacijePrejeto" DefaultId="DataItem1" />

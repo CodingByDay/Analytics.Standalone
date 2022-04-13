@@ -11,16 +11,132 @@
              <webopt:bundlereference runat="server" path="~/css/graphs.css" />
 <link href= "~/css/graphs.css" rel="stylesheet" runat="server" type="text/css" />
            <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+<style>
+    .dx-widget{  
+    color: #333!important;  
+    font-weight: normal!important;  
+    font-size: 11px!important;  
+} 
+</style>
         <script>
        
-          
+           
+function regex_return(text_to_search) {
+    var re = /(?:^|\W)#(\w+)(?!\w)/g, match, matches = [];
+    while (match = re.exec(text_to_search)) {
+        matches.push(match[1]);
+    }
+    return matches;
+}
+function customizeWidgets(sender, args) {
+    var parName = []
+    var collection = dashboard.GetParameters().GetParameterList();
+    if (args.ItemName.startsWith("gridDashboardItem") && collection.length > 2) {
+        initialPayload.push(dashboard.GetParameters().GetParameterList()[0].Value);
+        initialPayload.push(dashboard.GetParameters().GetParameterList()[1].Value);
+        initialPayload.push(dashboard.GetParameters().GetParameterList()[2].Value);
+        initialPayload.push(dashboard.GetParameters().GetParameterList()[3].Value);
 
-            var extension;
 
-            /**
-             *  
-             * @param sender
-             */
+        parName.push(dashboard.GetParameters().GetParameterList()[0].Name);
+        parName.push(dashboard.GetParameters().GetParameterList()[1].Name);
+        parName.push(dashboard.GetParameters().GetParameterList()[2].Name);
+        parName.push(dashboard.GetParameters().GetParameterList()[3].Name);
+
+
+        var grid = args.GetWidget();
+
+        var columns = grid.option("columns");
+        for (var i = 0; i < columns.length; i++) {
+            var textToCheck = columns[i].caption;
+            window.textNew = textToCheck;
+            var parameterized_values = regex_return(textToCheck);
+            if (parameterized_values.length != 0) {
+                     // for each loop for every found parameter
+                   parameterized_values.forEach((singular) => {
+                   const found = parName.find(element => element == singular)
+                   indexOfElement = parName.indexOf(found)
+
+                       if (found != null && indexOfElement != -1) {
+                           
+                           text_to_replace = "#" + found
+                           text_replace = dashboard.GetParameters().GetParameterList()[indexOfElement].Value.toLocaleDateString("uk-Uk")
+                           window.textNew = window.textNew.replace(text_to_replace, text_replace);
+                           console.log(window.textNew)
+                           columns[i].caption = window.textNew;
+                    } else {
+                       
+                    }
+                })
+            } else {
+              
+            }
+
+        }
+        grid.option("columns", columns);
+    }
+}
+
+
+function updatecustomizeWidgets(sender, args) {
+    var parName = []
+    var collection = dashboard.GetParameters().GetParameterList();
+
+    if (args.ItemName.startsWith("gridDashboardItem") && collection.length > 2) {
+
+        initialPayload = [];
+        initialPayload.push(dashboard.GetParameters().GetParameterList()[0].Value);
+        initialPayload.push(dashboard.GetParameters().GetParameterList()[1].Value);
+        initialPayload.push(dashboard.GetParameters().GetParameterList()[2].Value);
+        initialPayload.push(dashboard.GetParameters().GetParameterList()[3].Value);
+
+
+        parName.push(dashboard.GetParameters().GetParameterList()[0].Name);
+        parName.push(dashboard.GetParameters().GetParameterList()[1].Name);
+        parName.push(dashboard.GetParameters().GetParameterList()[2].Name);
+        parName.push(dashboard.GetParameters().GetParameterList()[3].Name);
+
+       
+        var grid = args.GetWidget();
+        var columns = grid.option("columns");
+        for (var i = 0; i < columns.length; i++) {
+            var textToCheck = columns[i].caption;
+            window.textNew = textToCheck;
+
+            var parameterized_values = regex_return(textToCheck);
+            if (parameterized_values.length != 0) {
+
+                // for each loop for every found parameter
+                parameterized_values.forEach((singular) => {
+
+                    const found = parName.find(element => element == singular)
+
+                    indexOfElement = parName.indexOf(found)
+
+                    if (found != null && indexOfElement != -1) {
+
+                        text_to_replace = "#" + found
+                        text_replace = dashboard.GetParameters().GetParameterList()[indexOfElement].Value.toLocaleDateString("uk-Uk")
+                        window.textNew = window.textNew.replace(text_to_replace, text_replace);
+                        console.log(window.textNew)
+                        columns[i].caption = window.textNew;
+                    } else {
+                     
+                    }
+                })
+            } else {
+               
+            }
+        }
+        grid.option("columns", columns);
+    }
+}
+
+
+
+
+
+
             function onBeforeRender(sender) {
 
               var dashboardControl = sender.GetDashboardControl();
@@ -115,6 +231,13 @@
             });
 
 
+            $(document).ready(function () {
+                var control = dashboard.GetDashboardControl();
+
+                
+
+            });
+
 
 
             function show() {
@@ -151,7 +274,18 @@
             }
 
 
+            function initialise() {
+                control = dashboard.GetDashboardControl();
+                design = control.isDesignMode();
 
+                if (design) {
+                 
+                    // Pass
+                } else {
+                    onCollapse();
+                }
+
+            }
 
 
             function onCollapse() {
@@ -185,8 +319,9 @@
 <div style="position: absolute; left: 0; right: 0; top:35px; bottom:0;">
     <dx:ASPxDashboard ID="ASPxDashboard1" runat="server" AllowCreateNewJsonConnection="True"  ClientInstanceName="dashboard"  AllowExecutingCustomSql="True" AllowInspectAggregatedData="True"    MobileLayoutEnabled="Auto" AllowInspectRawData="True" DashboardStorageFolder="~/App_Data/Dashboards" EnableCustomSql="True" EnableTextBoxItemEditor="True" >
         <ClientSideEvents BeforeRender="onBeforeRender" 
-
-                          DashboardInitialized="onCollapse"
+                          ItemWidgetCreated="customizeWidgets"
+                          ItemWidgetUpdated="updatecustomizeWidgets"    
+                          DashboardInitialized="initialise"
                        
                               />
     </dx:ASPxDashboard>

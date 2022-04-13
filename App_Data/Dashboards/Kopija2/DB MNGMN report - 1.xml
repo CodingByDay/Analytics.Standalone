@@ -3,10 +3,10 @@
   <Title Text="DB MNGMT report - 1" />
   <DataSources>
     <SqlDataSource Name="DB MNGMT report" ComponentName="sqlDataSource1">
-      <Connection Name="eHolding Centralna Baza" FromAppConfig="true" />
+      <Connection Name="eHolding ERFA" FromAppConfig="true" />
       <Query Type="CustomSqlQuery" Name="DB MNGMT report">
         <Sql>select *
-FROM PA_eHolding_Efra.dbo.uTN_DB_MNGMTDetalj
+FROM dbo.uTN_DB_MNGMTDetalj
 WHERE DATEPART(YEAR,MNGMTDatumTemeljnice)&gt;=DATEPART(YEAR, GETDATE())-1;</Sql>
       </Query>
       <ConnectionOptions CloseConnection="true" />
@@ -29,7 +29,7 @@ WHERE DATEPART(YEAR,MNGMTDatumTemeljnice)&gt;=DATEPART(YEAR, GETDATE())-1;</Sql>
         <Measure DataMember="MngmtSaldo" DefaultId="DataItem2">
           <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
         </Measure>
-        <Dimension DataMember="MngmtIDNivo2" DefaultId="DataItem0" />
+        <Dimension DataMember="MngmtIDNivo2" Name="Nvo2" DefaultId="DataItem0" />
       </DataItems>
       <HiddenDimensions>
         <Dimension DefaultId="DataItem0" />
@@ -51,9 +51,9 @@ WHERE DATEPART(YEAR,MNGMTDatumTemeljnice)&gt;=DATEPART(YEAR, GETDATE())-1;</Sql>
         <Measure DataMember="MngmtSaldo" DefaultId="DataItem2">
           <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
         </Measure>
-        <Dimension DataMember="MngmtIDNivo1" DefaultId="DataItem0" />
-        <Dimension DataMember="MngmtIDNivo2" DefaultId="DataItem3" />
-        <Dimension DataMember="MngmtIDNivo3" DefaultId="DataItem4" />
+        <Dimension DataMember="MngmtIDNivo1" Name="Nivo1" DefaultId="DataItem0" />
+        <Dimension DataMember="MngmtIDNivo2" Name="Nivo2" DefaultId="DataItem3" />
+        <Dimension DataMember="MngmtIDNivo3" Name="Nivo3" DefaultId="DataItem4" />
       </DataItems>
       <HiddenDimensions>
         <Dimension DefaultId="DataItem0" />
@@ -90,7 +90,7 @@ WHERE DATEPART(YEAR,MNGMTDatumTemeljnice)&gt;=DATEPART(YEAR, GETDATE())-1;</Sql>
     <Grid ComponentName="gridDashboardItem3" Name="Poslovno poročilo - 3 nivo" DataSource="sqlDataSource1" DataMember="DB MNGMT report" FilterString="[DataItem0] = 'T'">
       <InteractivityOptions IsDrillDownEnabled="true" />
       <DataItems>
-        <Dimension DataMember="MngmtIDNivo3" DefaultId="DataItem0" />
+        <Dimension DataMember="MngmtIDNivo3" Name="Nivo3" DefaultId="DataItem0" />
         <Dimension DataMember="Nivo3" DefaultId="DataItem1" />
         <Measure DataMember="MngmtSaldo" DefaultId="DataItem2">
           <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
@@ -117,14 +117,11 @@ WHERE DATEPART(YEAR,MNGMTDatumTemeljnice)&gt;=DATEPART(YEAR, GETDATE())-1;</Sql>
         <Dimension DataMember="MngmtKonto" DefaultId="DataItem4" />
         <Dimension DataMember="MngmtKontoNaziv" DefaultId="DataItem5" />
         <Dimension DataMember="MngmtSubjekt" DefaultId="DataItem6" />
-        <Dimension DataMember="MngmtIDNivo1" DefaultId="DataItem7" />
+        <Dimension DataMember="MngmtIDNivo1" Name="Nivo1" DefaultId="DataItem7" />
         <Measure DataMember="Debet" DefaultId="DataItem8">
           <NumericFormat FormatType="Currency" Unit="Ones" IncludeGroupSeparator="true" />
         </Measure>
         <Measure DataMember="Kredit" DefaultId="DataItem9">
-          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
-        </Measure>
-        <Measure DataMember="MngmtSaldo" DefaultId="DataItem10">
           <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
         </Measure>
         <Dimension DataMember="MngmtPozicijaTemeljnice" DefaultId="DataItem1">
@@ -168,14 +165,8 @@ WHERE DATEPART(YEAR,MNGMTDatumTemeljnice)&gt;=DATEPART(YEAR, GETDATE())-1;</Sql>
             <Total Type="Sum" />
           </Totals>
         </GridMeasureColumn>
-        <GridMeasureColumn Weight="57.718088003239714">
-          <Measure DefaultId="DataItem10" />
-          <Totals>
-            <Total Type="Sum" />
-          </Totals>
-        </GridMeasureColumn>
       </GridColumns>
-      <GridOptions ColumnWidthMode="Manual" />
+      <GridOptions />
     </Grid>
     <ListBox ComponentName="listBoxDashboardItem2" Name="Opis" DataSource="sqlDataSource1" DataMember="DB MNGMT report" FilterString="Not IsNullOrEmpty([DataItem0])" EnableSearch="true">
       <DataItems>

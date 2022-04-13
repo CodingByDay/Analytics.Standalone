@@ -11,13 +11,19 @@
 <body>
     <form id="form1" runat="server">
     <div>
-        <h1>Mobile Master Page</h1>
+        <script src="Content/feedback.js?v=2013"></script>
+    <script src="Content/sidebar/sidebar.js?v=2013"></script>
+        <script src="Content/scripts.js?v=2013"></script>
         <asp:ContentPlaceHolder runat="server" ID="FeaturedContent" />
         <section class="content-wrapper main-content clear-fix">
             <asp:ContentPlaceHolder runat="server" ID="MainContent" />
         </section>
         <friendlyUrls:ViewSwitcher runat="server" />
     </div>
+
+         <asp:ContentPlaceHolder id="LayoutContentPlaceHolder" runat="server">
+        
+    </asp:ContentPlaceHolder>
     </form>
 </body>
 </html>

@@ -20,7 +20,7 @@
     </SqlDataSource>
   </DataSources>
   <Items>
-    <Grid ComponentName="gridDashboardItem1" Name="Grid 1" ShowCaption="false" DataSource="sqlDataSource1" DataMember="uTN_DB_Forcast">
+    <Grid ComponentName="gridDashboardItem1" Name="Pregled nad zaogo in prodajo s predlogom naročila" ShowCaption="false" DataSource="sqlDataSource1" DataMember="uTN_DB_Forcast">
       <DataItems>
         <Dimension DataMember="ForcastIdent" DefaultId="DataItem0" />
         <Dimension DataMember="ForcastNazivIdenta" DefaultId="DataItem1" />
@@ -180,16 +180,16 @@
         <GridDimensionColumn Name="EM">
           <Dimension DefaultId="DataItem4" />
         </GridDimensionColumn>
-        <GridMeasureColumn Name="Prod. 15 dni">
+        <GridMeasureColumn Name="Prodaja/poraba 15 dni">
           <Measure DefaultId="DataItem5" />
         </GridMeasureColumn>
-        <GridMeasureColumn Name="Prod. 30 dni">
+        <GridMeasureColumn Name="Prodaja/poraba 30 dni">
           <Measure DefaultId="DataItem7" />
         </GridMeasureColumn>
-        <GridMeasureColumn Name="Prod. 60 dni">
+        <GridMeasureColumn Name="Prodaja/poraba 60 dni">
           <Measure DefaultId="DataItem8" />
         </GridMeasureColumn>
-        <GridMeasureColumn Name="Prod. 90 dni">
+        <GridMeasureColumn Name="Prodaja/poraba 90 dni">
           <Measure DefaultId="DataItem9" />
         </GridMeasureColumn>
         <GridMeasureColumn Name="Zaloga za ? dni">
@@ -207,7 +207,7 @@
       </GridColumns>
       <GridOptions EnableBandedRows="true" WordWrap="true" />
     </Grid>
-    <Pie ComponentName="pieDashboardItem1" Name="Pies 1" ShowCaption="false" DataSource="sqlDataSource1" DataMember="uTN_DB_Forcast" IsMasterFilterCrossDataSource="true" PieType="Donut">
+    <Pie ComponentName="pieDashboardItem1" Name="Zaloga po statusih" ShowCaption="false" DataSource="sqlDataSource1" DataMember="uTN_DB_Forcast" IsMasterFilterCrossDataSource="true" PieType="Donut">
       <InteractivityOptions MasterFilterMode="Multiple" />
       <DataItems>
         <Measure DataMember="ForcastZalogaVrednost" Name="Vrednost zaloge glede na status" DefaultId="DataItem0">
@@ -222,13 +222,13 @@
         <Value DefaultId="DataItem0" />
       </Values>
     </Pie>
-    <Pie ComponentName="pieDashboardItem2" Name="Pies 2" ShowCaption="false" DataSource="sqlDataSource1" DataMember="uTN_DB_Forcast" IsMasterFilterCrossDataSource="true" PieType="Donut">
+    <Pie ComponentName="pieDashboardItem2" Name="Zaloga po sekundarni klasifikaciji" ShowCaption="false" DataSource="sqlDataSource1" DataMember="uTN_DB_Forcast" IsMasterFilterCrossDataSource="true" PieType="Donut">
       <InteractivityOptions MasterFilterMode="Multiple" />
       <DataItems>
         <Measure DataMember="ForcastZalogaVrednost" Name="Vrednost zaloge po sekundarni klasifikaciji" DefaultId="DataItem0">
           <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
         </Measure>
-        <Dimension DataMember="ForcastSekundarnaKlasifikacijaNaziv" DefaultId="DataItem1" />
+        <Dimension DataMember="ForcastSekundarnaKlasifikacijaNaziv" Name="Sekundarna klasifikacija" DefaultId="DataItem1" />
       </DataItems>
       <Arguments>
         <Argument DefaultId="DataItem1" />
@@ -237,13 +237,13 @@
         <Value DefaultId="DataItem0" />
       </Values>
     </Pie>
-    <Pie ComponentName="pieDashboardItem3" Name="Pies 2" ShowCaption="false" DataSource="sqlDataSource1" DataMember="uTN_DB_Forcast" IsMasterFilterCrossDataSource="true" PieType="Donut">
+    <Pie ComponentName="pieDashboardItem3" Name="Zaloga po dobaviteljih" ShowCaption="false" DataSource="sqlDataSource1" DataMember="uTN_DB_Forcast" IsMasterFilterCrossDataSource="true" PieType="Donut">
       <InteractivityOptions MasterFilterMode="Multiple" />
       <DataItems>
         <Measure DataMember="ForcastZalogaVrednost" Name="Vrednost zaloge po dobaviteljih" DefaultId="DataItem0">
           <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
         </Measure>
-        <Dimension DataMember="ForcastDobavitelj" DefaultId="DataItem1" />
+        <Dimension DataMember="ForcastDobavitelj" Name="Dobavitelj" DefaultId="DataItem1" />
       </DataItems>
       <Arguments>
         <Argument DefaultId="DataItem1" />
@@ -252,13 +252,13 @@
         <Value DefaultId="DataItem0" />
       </Values>
     </Pie>
-    <Pie ComponentName="pieDashboardItem4" Name="Pies 2" ShowCaption="false" DataSource="sqlDataSource1" DataMember="uTN_DB_Forcast" IsMasterFilterCrossDataSource="true" PieType="Donut">
+    <Pie ComponentName="pieDashboardItem4" Name="Zaloga po primarni klasifikaciji" ShowCaption="false" DataSource="sqlDataSource1" DataMember="uTN_DB_Forcast" IsMasterFilterCrossDataSource="true" PieType="Donut">
       <InteractivityOptions MasterFilterMode="Multiple" />
       <DataItems>
         <Measure DataMember="ForcastZalogaVrednost" Name="Vrednost zaloge po primarni klasifikaciji" DefaultId="DataItem0">
           <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
         </Measure>
-        <Dimension DataMember="ForcastPrimarnaKlasifikacijaNaziv" DefaultId="DataItem1" />
+        <Dimension DataMember="ForcastPrimarnaKlasifikacijaNaziv" Name="Primarna klasifikacija" DefaultId="DataItem1" />
       </DataItems>
       <Arguments>
         <Argument DefaultId="DataItem1" />

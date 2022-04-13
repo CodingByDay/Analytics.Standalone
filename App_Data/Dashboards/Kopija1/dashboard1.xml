@@ -1,46 +1,449 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Dashboard>
-  <Title Text="TADEJ TEST" />
+  <Title Text="DB Prodaja TC MotoShop - 1" />
   <DataSources>
-    <SqlDataSource Name="tHE_SetItem" ComponentName="sqlDataSource1">
-      <Connection Name="eHolding ERFA" FromAppConfig="true" />
-      <Query Type="CustomSqlQuery" Name="tHE_SetItem">
-        <Sql>select "tHE_SetItem"."acIdent","tHE_SetItem"."acName","tHE_SetItem"."acClassif","tHE_SetItem"."anSubClassif","tHE_SetItem"."acClassif2","tHE_SetItem"."acCode","tHE_SetItem"."acSetOfItem","tHE_SetItem"."acSupplier","tHE_SetItem"."acFormula","tHE_SetItem"."anVAT","tHE_SetItem"."acCurrency","tHE_SetItem"."anSalePrice","tHE_SetItem"."anRTPrice","tHE_SetItem"."anWSPrice","tHE_SetItem"."anWSPrice2","tHE_SetItem"."anPrStPrice","tHE_SetItem"."anBuyPrice","tHE_SetItem"."anProdPrice","tHE_SetItem"."acUM","tHE_SetItem"."anUMToUM2","tHE_SetItem"."acUM2","tHE_SetItem"."acVATCode","tHE_SetItem"."acVATCodeLow","tHE_SetItem"."anDiscount","tHE_SetItem"."anWarrenty","tHE_SetItem"."acSerialNo","tHE_SetItem"."acActive","tHE_SetItem"."acHTTPPath","tHE_SetItem"."acMakeCalc","tHE_SetItem"."anPrice","tHE_SetItem"."anRebate","tHE_SetItem"."anTransport","tHE_SetItem"."anDuty","tHE_SetItem"."anDirectCost","tHE_SetItem"."anIncTax","tHE_SetItem"."anWSPrice2P","tHE_SetItem"."anWSPriceP","tHE_SetItem"."anRTPriceP","tHE_SetItem"."anMinStock","tHE_SetItem"."acStandardize","tHE_SetItem"."acDocTypeOrdSupp","tHE_SetItem"."acDocTypeProd","tHE_SetItem"."anDimHeight","tHE_SetItem"."anDimWidth","tHE_SetItem"."anDimDepth","tHE_SetItem"."anDimWeight","tHE_SetItem"."anDimWeightBrutto","tHE_SetItem"."acCustTariff","tHE_SetItem"."anPriceSupp","tHE_SetItem"."anPrStPriceP","tHE_SetItem"."acPurchCurr","tHE_SetItem"."acOrderTransInMF","tHE_SetItem"."acOrigin","tHE_SetItem"."acDeclarForOriginType","tHE_SetItem"."acAcct","tHE_SetItem"."acFieldSA","tHE_SetItem"."acFieldSB","tHE_SetItem"."acFieldSC","tHE_SetItem"."anFieldNA","tHE_SetItem"."anFieldNB","tHE_SetItem"."acEvidence","tHE_SetItem"."anExcise","tHE_SetItem"."anExciseP","tHE_SetItem"."anMaxStock","tHE_SetItem"."anOptStock","tHE_SetItem"."acDeclarForOrigin","tHE_SetItem"."acDept","tHE_SetItem"."acQtyInCode","tHE_SetItem"."acUMDim1","tHE_SetItem"."acUMDim2","tHE_SetItem"."anWasteQty","tHE_SetItem"."acUMSeries","tHE_SetItem"."anQtySeries","tHE_SetItem"."acColumn","tHE_SetItem"."anUMToUM3","tHE_SetItem"."acUM3","tHE_SetItem"."anUMToDeclarReport","tHE_SetItem"."acReportDeclar","tHE_SetItem"."anFieldNC","tHE_SetItem"."anFieldND","tHE_SetItem"."anFieldNE","tHE_SetItem"."acFieldSD","tHE_SetItem"."acFieldSE","tHE_SetItem"."acPrstUMTime","tHE_SetItem"."anPrstTime","tHE_SetItem"."anPrStInsertUserID","tHE_SetItem"."adPrStInsertTime","tHE_SetItem"."anPrStUpdateUserID","tHE_SetItem"."adPrStUpdateTime","tHE_SetItem"."anPrStCheckUserID","tHE_SetItem"."adPrStCheckTime","tHE_SetItem"."anPrStVariantValid","tHE_SetItem"."anPrStOptimalQty","tHE_SetItem"."anPrStDailyQty","tHE_SetItem"."anUnionDeadline","tHE_SetItem"."anDeliveryDeadline","tHE_SetItem"."anPOSQty","tHE_SetItem"."acShowAtena","tHE_SetItem"."acAcctIncome","tHE_SetItem"."acInFlowOutFlow","tHE_SetItem"."anFieldNF","tHE_SetItem"."anFieldNG","tHE_SetItem"."acFieldSF","tHE_SetItem"."acFieldSG","tHE_SetItem"."acFieldSH","tHE_SetItem"."acFieldSI","tHE_SetItem"."acFieldSJ","tHE_SetItem"."anFieldNH","tHE_SetItem"."anFieldNI","tHE_SetItem"."anFieldNJ","tHE_SetItem"."anFixPriceDiff","tHE_SetItem"."anQtyInCodeDecPlace","tHE_SetItem"."anOrderMinQty","tHE_SetItem"."anOrderOptQty","tHE_SetItem"."acCostDrv","tHE_SetItem"."acPacking","tHE_SetItem"."anPurExciseE","tHE_SetItem"."anPurExciseA","tHE_SetItem"."anPurExciseT","tHE_SetItem"."anBeatShare","tHE_SetItem"."adTimeIns","tHE_SetItem"."anUserIns","tHE_SetItem"."adTimeChg","tHE_SetItem"."anUserChg","tHE_SetItem"."acIsReturnPack","tHE_SetItem"."acEnvrmntCost","tHE_SetItem"."acWastePack","tHE_SetItem"."acWstEEEquip","tHE_SetItem"."acUsedTyre","tHE_SetItem"."acVehiclePart","tHE_SetItem"."acPackSLOPAK","tHE_SetItem"."acPackSLOPAKType","tHE_SetItem"."acUMMarkLabel","tHE_SetItem"."anQtyMarkLabel","tHE_SetItem"."acPrstPrice","tHE_SetItem"."anPLUCode","tHE_SetItem"."acDateDue","tHE_SetItem"."anMonthDue","tHE_SetItem"."acPicture","tHE_SetItem"."anMaxRebate","tHE_SetItem"."acTechProcedure","tHE_SetItem"."acDescr","tHE_SetItem"."acTouchPicture","tHE_SetItem"."acDROE","tHE_SetItem"."acDROESubject","tHE_SetItem"."adFieldDA","tHE_SetItem"."adFieldDB","tHE_SetItem"."adFieldDC","tHE_SetItem"."adFieldDD","tHE_SetItem"."anMinMargin","tHE_SetItem"."adDiscountBegin","tHE_SetItem"."adDiscountEnd","tHE_SetItem"."acDocTypeIssue","tHE_SetItem"."acEnableChgPrSt","tHE_SetItem"."acNote","tHE_SetItem"."anPLUCode2","tHE_SetItem"."anBuyRebate2","tHE_SetItem"."anBuyRebate3","tHE_SetItem"."anSaleRebate2","tHE_SetItem"."anSaleRebate3","tHE_SetItem"."anPosQtyStep","tHE_SetItem"."acQtyNotToKol","tHE_SetItem"."anQId","tHE_SetItem"."acStretchPicture","tHE_SetItem"."acBackPacking","tHE_SetItem"."_anQId","tHE_SetItem"."utn_EmbValue","tHE_SetItem"."uTN_EmbEkoValue","tHE_SetItem"."uTN_EmbSum","tHE_SetItem"."uTN_EmbCartonTotal","tHE_SetItem"."uTN_EmbCartonBrutoWeight","tHE_SetItem"."uTN_EmbCartonDiffWeight","tHE_SetItem"."acFormulaRT","tHE_SetItem"."acAcctNotTaxDeduct","tHE_SetItem"."acPrtPicture","tHE_SetItem"."acClassProdByAct","tHE_SetItem"."acBullId","tHE_SetItem"."acPOSPrinterId","tHE_SetItem"."acBST","tHE_SetItem"."acVATCodeReceive","tHE_SetItem"."anVATReceive","tHE_SetItem"."acWeighableItem","tHE_SetItem"."anAllowedWastage","tHE_SetItem"."acSerialnoDueType","tHE_SetItem"."acPackagingType","tHE_SetItem"."acTransferredWS","tHE_SetItem"."anColorCode","tHE_SetItem"."abIcon","tHE_SetItem"."anAllowedInvShort","tHE_SetItem"."acDescrRTF","tHE_SetItem"."acTechProcedureRTF","tHE_SetItem"."acAcctBuyVASale","tHE_SetItem"."anPackWeight","tHE_SetItem"."anPackWasteWeight","tHE_SetItem"."anDiscountPrice","tHE_SetItem"."anDiscountPriceRT","tHE_SetItem"."acUseAsCostOnIntrastat","tHE_SetItem"."acPrintTechProc" from "dbo"."tHE_SetItem" "tHE_SetItem" where acident like '00%'</Sql>
+    <SqlDataSource Name="CustomSqlQuery" ComponentName="sqlDataSource1">
+      <Connection Name="TCMOTOSHOP" FromAppConfig="true" />
+      <Query Type="CustomSqlQuery" Name="CustomSqlQuery">
+        <Sql>select * from .dbo.uTN_DB_ProdajaTMS;</Sql>
       </Query>
       <ConnectionOptions CloseConnection="true" />
     </SqlDataSource>
   </DataSources>
   <Items>
-    <Pie ComponentName="pieDashboardItem1" Name="Pies 1" DataSource="sqlDataSource1" DataMember="tHE_SetItem">
+    <Pie ComponentName="pieDashboardItem1" Name="Priomarna klasifikacija" ShowCaption="false" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" PieType="Donut">
+      <InteractivityOptions MasterFilterMode="Multiple" />
       <DataItems>
-        <Measure DataMember="anPrice" SummaryType="Average" DefaultId="DataItem0" />
-        <Dimension DataMember="acClassif" DefaultId="DataItem1" />
+        <Dimension DataMember="ProdajaPrimarnaKlasifikacija" Name="Primarna klasifikacija" DefaultId="DataItem0" />
+        <Measure DataMember="ProdajaZadnjih90DniVrednost" Name="Prodaja -90 po primarni klasifikaciji" DefaultId="DataItem1">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
       </DataItems>
-      <SeriesDimensions>
-        <SeriesDimension DefaultId="DataItem1" />
-      </SeriesDimensions>
+      <Arguments>
+        <Argument DefaultId="DataItem0" />
+      </Arguments>
+      <Values>
+        <Value DefaultId="DataItem1" />
+      </Values>
+    </Pie>
+    <Pie ComponentName="pieDashboardItem2" Name="Sekundarna klasifikacija" ShowCaption="false" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" PieType="Donut">
+      <InteractivityOptions MasterFilterMode="Multiple" />
+      <DataItems>
+        <Dimension DataMember="ProdajaSekundarnaKlasifikacija" DefaultId="DataItem0" />
+        <Measure DataMember="ProdajaZadnjih90DniVrednost" Name="Prodaja -90 po sekundarni klasifikaciji" DefaultId="DataItem1">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+      </DataItems>
+      <Arguments>
+        <Argument DefaultId="DataItem0" />
+      </Arguments>
+      <Values>
+        <Value DefaultId="DataItem1" />
+      </Values>
+    </Pie>
+    <Pie ComponentName="pieDashboardItem3" Name="Vrsta prodaje/Prodajalne" ShowCaption="false" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" PieType="Donut">
+      <InteractivityOptions MasterFilterMode="Multiple" />
+      <DataItems>
+        <Measure DataMember="ProdajaZadnjih90DniVrednost" Name="Prodaja -90 po tipu prodajalne/skladišča" DefaultId="DataItem0">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Dimension DataMember="ProdajaSkladiščeTip" Name="Vrsta prodaje/prodajalne" DefaultId="DataItem1" />
+      </DataItems>
+      <Arguments>
+        <Argument DefaultId="DataItem1" />
+      </Arguments>
       <Values>
         <Value DefaultId="DataItem0" />
       </Values>
     </Pie>
-    <Pie ComponentName="pieDashboardItem2" Name="Pies 2" DataSource="sqlDataSource1" DataMember="tHE_SetItem">
+    <Pie ComponentName="pieDashboardItem4" Name="Dobavitelji" ShowCaption="false" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" PieType="Donut">
+      <InteractivityOptions MasterFilterMode="Multiple" />
       <DataItems>
-        <Measure DataMember="acAcct" SummaryType="Count" DefaultId="DataItem0" />
-        <Dimension DataMember="acFieldSF" DefaultId="DataItem1" />
+        <Measure DataMember="ProdajaZadnjih90DniVrednost" Name="Prodaja -90 po dobaviteljih" SummaryType="Count" DefaultId="DataItem0">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Dimension DataMember="ProdajaDobavitelj" Name="Dobavitelj" DefaultId="DataItem1" />
       </DataItems>
-      <SeriesDimensions>
-        <SeriesDimension DefaultId="DataItem1" />
-      </SeriesDimensions>
+      <Arguments>
+        <Argument DefaultId="DataItem1" />
+      </Arguments>
       <Values>
         <Value DefaultId="DataItem0" />
       </Values>
     </Pie>
+    <Grid ComponentName="gridDashboardItem1" Name="Po artiklih" ParentContainer="dashboardTabPage2" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true">
+      <InteractivityOptions IgnoreMasterFilters="true" MasterFilterMode="Multiple" />
+      <DataItems>
+        <Measure DataMember="ProdajaZadnjih90DniLani" DefaultId="DataItem4" />
+        <Measure DataMember="ProdajaZadnjih90DniVrednost" DefaultId="DataItem5" />
+        <Dimension DataMember="ProdajaIdentBrezVelikostiBarve" DefaultId="DataItem0" />
+        <Measure DataMember="ProdajaZaloga" DefaultId="DataItem7">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="ProdajaZadnjih15Dni" DefaultId="DataItem9">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="ProdajaZadnjih30Dni" DefaultId="DataItem2">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="ProdajaZadnjih60Dni" DefaultId="DataItem3">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="ProdajaZadnjih90Dni" DefaultId="DataItem10">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="ProdajaNazivIdenta" SummaryType="Max" DefaultId="DataItem1" />
+        <Measure DataMember="ProdajaDobavitelj" SummaryType="Max" DefaultId="DataItem6" />
+        <Measure DataMember="ProdajaEM" SummaryType="Min" DefaultId="DataItem8" />
+      </DataItems>
+      <HiddenMeasures>
+        <Measure DefaultId="DataItem4" />
+        <Measure DefaultId="DataItem5" />
+      </HiddenMeasures>
+      <GridColumns>
+        <GridDimensionColumn Name="Ident">
+          <Dimension DefaultId="DataItem0" />
+        </GridDimensionColumn>
+        <GridMeasureColumn Name="Naziv artikla">
+          <Measure DefaultId="DataItem1" />
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Dobavitelj">
+          <Measure DefaultId="DataItem6" />
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Zaloga">
+          <Measure DefaultId="DataItem7" />
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="EM">
+          <Measure DefaultId="DataItem8" />
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Prodaja 15 dni">
+          <Measure DefaultId="DataItem9" />
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Prodaja 30 dni">
+          <Measure DefaultId="DataItem2" />
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Prodaja 60 dni">
+          <Measure DefaultId="DataItem3" />
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Prodaja 90 dni">
+          <Measure DefaultId="DataItem10" />
+        </GridMeasureColumn>
+      </GridColumns>
+      <GridOptions />
+    </Grid>
+    <ListBox ComponentName="listBoxDashboardItem1" Name="Izbor artikla" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" EnableSearch="true">
+      <InteractivityOptions IgnoreMasterFilters="false" />
+      <DataItems>
+        <Dimension DataMember="ProdajaNazivIdenta" Name="Artikel" DefaultId="DataItem0" />
+      </DataItems>
+      <FilterDimensions>
+        <Dimension DefaultId="DataItem0" />
+      </FilterDimensions>
+    </ListBox>
+    <Pie ComponentName="pieDashboardItem5" Name="Prodajalna/Skladišče" ShowCaption="false" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" PieType="Donut">
+      <InteractivityOptions MasterFilterMode="Multiple" />
+      <DataItems>
+        <Measure DataMember="ProdajaZadnjih90DniVrednost" Name="Prodaja -90 po prodajalnah/skladiščih" DefaultId="DataItem0">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Dimension DataMember="ProdajaSkladišče" Name="Prodajno mesto/Skladišče" DefaultId="DataItem1" />
+      </DataItems>
+      <Arguments>
+        <Argument DefaultId="DataItem1" />
+      </Arguments>
+      <Values>
+        <Value DefaultId="DataItem0" />
+      </Values>
+    </Pie>
+    <TabContainer ComponentName="tabContainerDashboardItem1" Name="Tab Container 1">
+      <Pages>
+        <Page ComponentName="dashboardTabPage1" Name="Page 1" />
+        <Page ComponentName="dashboardTabPage2" Name="Page 2" />
+        <Page ComponentName="dashboardTabPage3" Name="Page 3" />
+      </Pages>
+    </TabContainer>
+    <Grid ComponentName="gridDashboardItem2" Name="Po identih" ParentContainer="dashboardTabPage1" DataSource="sqlDataSource1" DataMember="CustomSqlQuery">
+      <DataItems>
+        <Dimension DataMember="ProdajaNazivIdenta" DefaultId="DataItem1" />
+        <Measure DataMember="ProdajaZadnjih90DniLani" DefaultId="DataItem4" />
+        <Measure DataMember="ProdajaZadnjih90DniVrednost" DefaultId="DataItem5" />
+        <Dimension DataMember="ProdajaIdent" DefaultId="DataItem0" />
+        <Dimension DataMember="ProdajaDobavitelj" DefaultId="DataItem6" />
+        <Measure DataMember="ProdajaZaloga" DefaultId="DataItem7">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Dimension DataMember="ProdajaEM" DefaultId="DataItem8" />
+        <Measure DataMember="ProdajaZadnjih15Dni" DefaultId="DataItem9">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="ProdajaZadnjih30Dni" DefaultId="DataItem2">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="ProdajaZadnjih60Dni" DefaultId="DataItem3">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="ProdajaZadnjih90Dni" DefaultId="DataItem10">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+      </DataItems>
+      <HiddenMeasures>
+        <Measure DefaultId="DataItem4" />
+        <Measure DefaultId="DataItem5" />
+      </HiddenMeasures>
+      <GridColumns>
+        <GridDimensionColumn Name="Ident">
+          <Dimension DefaultId="DataItem0" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Naziv artikla">
+          <Dimension DefaultId="DataItem1" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Dobavitelj">
+          <Dimension DefaultId="DataItem6" />
+        </GridDimensionColumn>
+        <GridMeasureColumn Name="Zaloga">
+          <Measure DefaultId="DataItem7" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridDimensionColumn Name="EM">
+          <Dimension DefaultId="DataItem8" />
+        </GridDimensionColumn>
+        <GridMeasureColumn Name="Prodaja 15 dni">
+          <Measure DefaultId="DataItem9" />
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Prodaja 30 dni">
+          <Measure DefaultId="DataItem2" />
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Prodaja 60 dni">
+          <Measure DefaultId="DataItem3" />
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Prodaja 90 dni">
+          <Measure DefaultId="DataItem10" />
+        </GridMeasureColumn>
+      </GridColumns>
+      <GridOptions />
+    </Grid>
+    <Grid ComponentName="gridDashboardItem3" Name="Po prodajalnah/skladiščih" ParentContainer="dashboardTabPage3" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true">
+      <InteractivityOptions IgnoreMasterFilters="true" MasterFilterMode="Multiple" />
+      <DataItems>
+        <Measure DataMember="ProdajaZaloga" DefaultId="DataItem7">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="ProdajaZadnjih15Dni" FilterString="[DataItem0] = 'xs'" DefaultId="DataItem9">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="ProdajaEM" SummaryType="Min" DefaultId="DataItem8" />
+        <Dimension DataMember="ProdajaSkladišče" DefaultId="DataItem1" />
+        <Dimension DataMember="ProdajaVelikost" DefaultId="DataItem0" />
+        <Measure DataMember="ProdajaZadnjih15Dni" FilterString="[DataItem0] = 'S'" DefaultId="DataItem3">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="ProdajaZadnjih15Dni" FilterString="[DataItem0] = 'M'" DefaultId="DataItem4">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Dimension DataMember="ProdajaSkladišče" Name="Skladišče dimenzija" DefaultId="DataItem5" />
+        <Measure DataMember="ProdajaZadnjih15Dni" FilterString="[DataItem0] = 'L'" DefaultId="DataItem2">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="ProdajaZadnjih15Dni" FilterString="[DataItem0] = 'XL'" DefaultId="DataItem6">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="ProdajaZadnjih15Dni" FilterString="[DataItem0] = '2X'" DefaultId="DataItem10">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="ProdajaZadnjih15Dni" FilterString="[DataItem0] &lt;&gt; 'XS' And [DataItem0] &lt;&gt; 'S' And [DataItem0] &lt;&gt; 'M' And [DataItem0] &lt;&gt; 'L' And [DataItem0] &lt;&gt; 'XL' And [DataItem0] &lt;&gt; '2X'" DefaultId="DataItem11">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="ProdajaZadnjih15Dni" DefaultId="DataItem12">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+      </DataItems>
+      <HiddenDimensions>
+        <Dimension DefaultId="DataItem5" />
+        <Dimension DefaultId="DataItem0" />
+      </HiddenDimensions>
+      <FormatRules>
+        <GridItemFormatRule Name="Format Rule 1" DataItem="DataItem9" DataItemApplyTo="DataItem9">
+          <FormatConditionExpression Expression="[DataItem9] &lt;= 0">
+            <IconSettings IconType="ShapeRedCircle" />
+          </FormatConditionExpression>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 3" DataItem="DataItem9" DataItemApplyTo="DataItem9">
+          <FormatConditionExpression Expression="[DataItem9] &gt;= 1 And [DataItem9] &lt;= 2">
+            <IconSettings IconType="ShapeYellowCircle" />
+          </FormatConditionExpression>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 2" DataItem="DataItem9" DataItemApplyTo="DataItem9">
+          <FormatConditionExpression Expression="[DataItem9] &gt; 2">
+            <IconSettings IconType="ShapeGreenCircle" />
+          </FormatConditionExpression>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 4" DataItem="DataItem3" DataItemApplyTo="DataItem3">
+          <FormatConditionExpression Expression="[DataItem3] &lt;= 0">
+            <IconSettings IconType="ShapeRedCircle" />
+          </FormatConditionExpression>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 5" DataItem="DataItem3" DataItemApplyTo="DataItem3">
+          <FormatConditionExpression Expression="[DataItem3] &gt;= 1 And [DataItem3] &lt;= 2">
+            <IconSettings IconType="ShapeYellowCircle" />
+          </FormatConditionExpression>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 6" DataItem="DataItem3" DataItemApplyTo="DataItem3">
+          <FormatConditionExpression Expression="[DataItem3] &gt; 2">
+            <IconSettings IconType="ShapeGreenCircle" />
+          </FormatConditionExpression>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 7" DataItem="DataItem4" DataItemApplyTo="DataItem4">
+          <FormatConditionExpression Expression="[DataItem4] &lt;= 0">
+            <IconSettings IconType="ShapeRedCircle" />
+          </FormatConditionExpression>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 8" DataItem="DataItem4" DataItemApplyTo="DataItem4">
+          <FormatConditionExpression Expression="[DataItem4] &gt;= 1 And [DataItem4] &lt;= 2">
+            <IconSettings IconType="ShapeYellowCircle" />
+          </FormatConditionExpression>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 9" DataItem="DataItem4" DataItemApplyTo="DataItem4">
+          <FormatConditionExpression Expression="[DataItem4] &gt; 2">
+            <IconSettings IconType="ShapeGreenCircle" />
+          </FormatConditionExpression>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 10" DataItem="DataItem2" DataItemApplyTo="DataItem2">
+          <FormatConditionExpression Expression="[DataItem2] &lt;= 0">
+            <IconSettings IconType="ShapeRedCircle" />
+          </FormatConditionExpression>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 11" DataItem="DataItem2" DataItemApplyTo="DataItem2">
+          <FormatConditionExpression Expression="[DataItem2] &gt;= 1 And [DataItem2] &lt;= 2">
+            <IconSettings IconType="ShapeYellowCircle" />
+          </FormatConditionExpression>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 12" DataItem="DataItem2" DataItemApplyTo="DataItem2">
+          <FormatConditionExpression Expression="[DataItem2] &gt; 2">
+            <IconSettings IconType="ShapeGreenCircle" />
+          </FormatConditionExpression>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 13" DataItem="DataItem6" DataItemApplyTo="DataItem6">
+          <FormatConditionExpression Expression="[DataItem6] &lt;= 0">
+            <IconSettings IconType="ShapeRedCircle" />
+          </FormatConditionExpression>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 14" DataItem="DataItem6" DataItemApplyTo="DataItem6">
+          <FormatConditionExpression Expression="[DataItem6] &gt;= 1 And [DataItem6] &lt;= 2">
+            <IconSettings IconType="ShapeYellowCircle" />
+          </FormatConditionExpression>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 15" DataItem="DataItem6" DataItemApplyTo="DataItem6">
+          <FormatConditionExpression Expression="[DataItem6] &gt; 2">
+            <IconSettings IconType="ShapeGreenCircle" />
+          </FormatConditionExpression>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 16" DataItem="DataItem10" DataItemApplyTo="DataItem10">
+          <FormatConditionExpression Expression="[DataItem10] &lt;= 0">
+            <IconSettings IconType="ShapeRedCircle" />
+          </FormatConditionExpression>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 17" DataItem="DataItem10" DataItemApplyTo="DataItem10">
+          <FormatConditionExpression Expression="[DataItem10] &gt;= 1 And [DataItem10] &lt;= 2">
+            <IconSettings IconType="ShapeYellowCircle" />
+          </FormatConditionExpression>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 18" DataItem="DataItem10" DataItemApplyTo="DataItem10">
+          <FormatConditionExpression Expression="[DataItem10] &gt; 2">
+            <IconSettings IconType="ShapeGreenCircle" />
+          </FormatConditionExpression>
+        </GridItemFormatRule>
+      </FormatRules>
+      <GridColumns>
+        <GridDimensionColumn Name="Prodajalna/skladišče">
+          <Dimension DefaultId="DataItem1" />
+        </GridDimensionColumn>
+        <GridMeasureColumn Name="Zaloga">
+          <Measure DefaultId="DataItem7" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="EM">
+          <Measure DefaultId="DataItem8" />
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Prodaja v EM">
+          <Measure DefaultId="DataItem12" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="XS">
+          <Measure DefaultId="DataItem9" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="S">
+          <Measure DefaultId="DataItem3" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="M">
+          <Measure DefaultId="DataItem4" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="L">
+          <Measure DefaultId="DataItem2" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="XL">
+          <Measure DefaultId="DataItem6" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="2X">
+          <Measure DefaultId="DataItem10" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Neopredeljeno">
+          <Measure DefaultId="DataItem11" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+      </GridColumns>
+      <GridOptions />
+    </Grid>
   </Items>
   <LayoutTree>
     <LayoutGroup>
       <LayoutGroup Orientation="Vertical">
-        <LayoutItem DashboardItem="pieDashboardItem1" Weight="1.2685069008782937" />
-        <LayoutItem DashboardItem="pieDashboardItem2" Weight="0.73149309912170635" />
+        <LayoutGroup Weight="0.778588807785888">
+          <LayoutItem DashboardItem="listBoxDashboardItem1" Weight="0.92815584702367249" />
+          <LayoutItem DashboardItem="pieDashboardItem3" Weight="1.1238277205299205" />
+          <LayoutItem DashboardItem="pieDashboardItem5" Weight="1.1748579799832239" />
+          <LayoutItem DashboardItem="pieDashboardItem1" Weight="1.1301023190431361" />
+          <LayoutItem DashboardItem="pieDashboardItem2" Weight="1.1301023190431376" />
+          <LayoutItem DashboardItem="pieDashboardItem4" Weight="1.0433674396810457" />
+        </LayoutGroup>
+        <LayoutTabContainer DashboardItem="tabContainerDashboardItem1" Weight="1.221411192214112">
+          <LayoutTabPage DashboardItem="dashboardTabPage2">
+            <LayoutItem DashboardItem="gridDashboardItem1" Weight="1.2652068126520681" />
+          </LayoutTabPage>
+          <LayoutTabPage Orientation="Vertical" DashboardItem="dashboardTabPage1">
+            <LayoutGroup>
+              <LayoutItem DashboardItem="gridDashboardItem2" Weight="1.2652068126520681" />
+            </LayoutGroup>
+          </LayoutTabPage>
+          <LayoutTabPage DashboardItem="dashboardTabPage3">
+            <LayoutItem DashboardItem="gridDashboardItem3" Weight="1.2652068126520681" />
+          </LayoutTabPage>
+        </LayoutTabContainer>
       </LayoutGroup>
     </LayoutGroup>
   </LayoutTree>

@@ -33,6 +33,7 @@ where ProdajaLeto&gt;=2018;</Sql>
           </Series>
         </Pane>
       </Panes>
+      <AxisX EnableZooming="true" />
     </Chart>
     <Grid ComponentName="gridDashboardItem1" Name="Prodaja po državah" DataSource="sqlDataSource1" DataMember="CustomSqlQuery">
       <InteractivityOptions MasterFilterMode="Multiple" />

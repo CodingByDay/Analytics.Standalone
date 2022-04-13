@@ -1,0 +1,470 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Dashboard>
+  <Title Text="DB Prodaja - 2 YTD" />
+  <DataSources>
+    <SqlDataSource Name="CustomSqlQuery" ComponentName="sqlDataSource1">
+      <Connection Name="Skaza nova" FromAppConfig="true" />
+      <Query Type="CustomSqlQuery" Name="CustomSqlQuery">
+        <Sql>SELECT	--ProdajaPoslovniDogodekDobavnice,
+				ProdajaDatumDobavnice,
+--			ProdajaDatumDatumKupčevegaNaročila,
+--			ProdajaŠtevilkaDobavnice,
+--			ProdajaPozicija,
+				ProdajaDostavnoMesto,
+				ProdajaDostavnoMestoPošta,
+				ProdajaDostavnoMestoŠirina,
+				ProdajaDostavnoMestoDolžina,
+				ProdajaRegija,
+				ProdajaRegijaŠirina,
+				ProdjaRegijaDolžina,
+				ProdajaPlačnik,
+				ProdajaDržava,
+				ProdajaDržavaŠirina,
+				ProdajaDržavaDolžina,
+--			ProdajaStroškovniNosilec,
+				ProdajaIdent,
+				ProdajaNazivIdenta,
+				ProdajaIdentNaziv,
+				ProdajaPrimarnaKlasifikacija,
+				ProdajaPrimarnaKlasifikacijaNaziv,
+				ProdajaSekundarnaKlasifikacija,
+				ProdajaSekundarnaKlasifikacijaNaziv,
+				ProdajaEM,
+--			ProdajaNetoTeža,
+--			ProdajaBrutoTeža,
+				ProdajaKoličina,
+--			ProdajaVrstaCenika,
+--			ProdajaProdajnaCenaPolna,
+--			ProdajaProdajnaVrednostPolna,
+				ProdajaOsnovaZaDDV,
+--			ProdajaProdajnaCena,
+--			ProdajaProdajnaVrednost,
+--			ProdajaDobaviteljevaCena,
+--			ProdajaNabavnaVrednost,
+--			ProdajaSkladiščnaCena,
+				ProdajaSkladiščnaVrednost,
+--			ProdajaOdvisniStroški,
+--			ProdajaRabatVrednost,
+--			ProdajaRabat,
+--			ProdajaRabat1,
+--			ProdajaRabat2,
+--			ProdajaRabat3,
+--			ProdajaVrednostDobavnice,
+--			ProdajaŠtevilkaRačuna,
+--			ProdajaDatumRačuna,
+--			ProdajaPoslovniDogodekRačuna,
+				ProdajaDobavitelj,
+--			ProdajaOddelek,
+--			ProdajaSkladišče,
+--			ProdajaDobaviteljevaŠifra,
+--			ProdajaEANKoda,
+				ProdajaTipKupca
+--			ProdajaReferent,
+--			ProdajaAcFieldSA,
+--			ProdajaAcFieldSB,
+--			ProdajaAcFieldSC,
+--			ProdajaAcFieldSD,
+--			ProdajaAcFieldSE,
+--			ProdajaAcFieldSF,
+--			ProdajaAcFieldSG,
+--			ProdajaAcFieldSH,
+--			ProdajaAcFieldSI,
+--			ProdajaAcFieldSJ,
+--			ProdajaAnFieldNA,
+--			ProdajaAnFieldNB,
+--			ProdajaAnFieldNC,
+--			ProdajaAnFieldND,
+--			ProdajaAnFieldNE,
+--			ProdajaAnFieldNF,
+--			ProdajaAnFieldNG,
+--			ProdajaAnFieldNH,
+--			ProdajaAnFieldNI,
+--			ProdajaAnFieldNJ
+  FROM dbo.uTN_DB_ProdajaPoRealizaciji_DET 
+	WHERE year(ProdajaDatumDobavnice)&gt;=(year(getdate())-1)</Sql>
+      </Query>
+      <ConnectionOptions CloseConnection="true" />
+      <CalculatedFields>
+        <CalculatedField Name="RVC" Expression="[ProdajaOsnovaZaDDV]-[ProdajaSkladiščnaVrednost]" DataType="Auto" DataMember="CustomSqlQuery" />
+        <CalculatedField Name="YTDProdajnaVrednost" Expression="Iif(GetYear([ProdajaDatumDobavnice])=GetYear(LocalDateTimeNow()),[ProdajaOsnovaZaDDV],0)" DataType="Auto" DataMember="CustomSqlQuery" />
+        <CalculatedField Name="YTDSkladiščnaVrednost" Expression="Iif(GetYear([ProdajaDatumDobavnice])=GetYear(LocalDateTimeNow()),[ProdajaSkladiščnaVrednost],0)" DataType="Auto" DataMember="CustomSqlQuery" />
+        <CalculatedField Name="YTDRVC" Expression="Iif(GetYear([ProdajaDatumDobavnice])=GetYear(LocalDateTimeNow()),[ProdajaOsnovaZaDDV]-[ProdajaSkladiščnaVrednost],0)" DataType="Auto" DataMember="CustomSqlQuery" />
+        <CalculatedField Name="YTD1ProdajnaVrednost" Expression="Iif(IsLastYear([ProdajaDatumDobavnice])=True and [ProdajaDatumDobavnice]&lt;=AddYears(LocalDateTimeNow(),-1 ),[ProdajaOsnovaZaDDV],0)" DataType="Auto" DataMember="CustomSqlQuery" />
+        <CalculatedField Name="YTD1RVC" Expression="Iif(IsLastYear([ProdajaDatumDobavnice])=True and [ProdajaDatumDobavnice]&lt;=AddYears(LocalDateTimeNow(),-1 ),[ProdajaOsnovaZaDDV]-[ProdajaSkladiščnaVrednost],0)" DataType="Auto" DataMember="CustomSqlQuery" />
+        <CalculatedField Name="YTD1SkladiščnaVrednost" Expression="Iif(IsLastYear([ProdajaDatumDobavnice])=True and [ProdajaDatumDobavnice]&lt;=AddYears(LocalDateTimeNow(),-1 ),[ProdajaSkladiščnaVrednost],0)" DataType="Auto" DataMember="CustomSqlQuery" />
+        <CalculatedField Name="YTD Količina" Expression="Iif(GetYear([ProdajaDatumDobavnice])=GetYear(LocalDateTimeNow()),[ProdajaKoličina],0)" DataType="Auto" DataMember="CustomSqlQuery" />
+        <CalculatedField Name="YTD1Količina" Expression="Iif(IsLastYear([ProdajaDatumDobavnice])=True and [ProdajaDatumDobavnice]&lt;=AddYears(LocalDateTimeNow(),-1 ),[ProdajaKoličina],0)" DataType="Auto" DataMember="CustomSqlQuery" />
+      </CalculatedFields>
+    </SqlDataSource>
+  </DataSources>
+  <Items>
+    <PieMap ComponentName="pieMapDashboardItem1" Name="Prodaja v tekočem letu" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" EnableClustering="true">
+      <InteractivityOptions MasterFilterMode="Multiple" />
+      <DataItems>
+        <Dimension DataMember="YTDProdajnaVrednost" DefaultId="DataItem0" />
+        <Dimension DataMember="ProdajaDržava" Name="Država" DefaultId="DataItem1" />
+        <Dimension DataMember="ProdajaDržavaŠirina" Name="Zemljeposna širina" DefaultId="DataItem2">
+          <NumericFormat FormatType="Number" Precision="6" Unit="Ones" />
+        </Dimension>
+        <Dimension DataMember="ProdajaDržavaDolžina" Name="Zemljepisna dolžina" DefaultId="DataItem3">
+          <NumericFormat FormatType="Number" Precision="6" Unit="Ones" />
+        </Dimension>
+        <Measure DataMember="YTDProdajnaVrednost" Name="Prodajna vrednost" DefaultId="DataItem4">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="YTDRVC" Name="RVC" DefaultId="DataItem5">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+      </DataItems>
+      <HiddenDimensions>
+        <Dimension DefaultId="DataItem0" />
+      </HiddenDimensions>
+      <ViewArea TopLatitude="65.870424533129835" BottomLatitude="24.030648351153946" LeftLongitude="-28.073159072785849" RightLongitude="67.802201552801932" CenterPointLatitude="49.143865427285775" CenterPointLongitude="19.829859142891056" CreateViewerPaddings="false" />
+      <MapLegend Visible="true" />
+      <WeightedLegend />
+      <Latitude DefaultId="DataItem2" />
+      <Longitude DefaultId="DataItem3" />
+      <TooltipDimensions>
+        <TooltipDimension DefaultId="DataItem1" />
+      </TooltipDimensions>
+      <Values>
+        <Value DefaultId="DataItem4" />
+        <Value DefaultId="DataItem5" />
+      </Values>
+    </PieMap>
+    <Grid ComponentName="gridDashboardItem1" Name="Realizacija po dostavnih mestih - primerjalno" ParentContainer="dashboardTabPage4" DataSource="sqlDataSource1" DataMember="CustomSqlQuery">
+      <DataItems>
+        <Dimension DataMember="ProdajaDostavnoMesto" SortOrder="Descending" SortByMeasure="DataItem1" DefaultId="DataItem0" />
+        <Measure DataMember="YTDProdajnaVrednost" DefaultId="DataItem1">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="YTDProdajnaVrednost" DefaultId="DataItem2" />
+        <Measure DataMember="YTD1ProdajnaVrednost" DefaultId="DataItem3" />
+        <Measure DataMember="YTD Količina" DefaultId="DataItem4">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="YTDRVC" DefaultId="DataItem5">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="YTDRVC" DefaultId="DataItem6" />
+        <Measure DataMember="YTD1RVC" DefaultId="DataItem7" />
+        <Dimension DataMember="YTD Količina" DefaultId="DataItem8" />
+        <Dimension DataMember="YTD1Količina" DefaultId="DataItem9" />
+        <Measure DataMember="YTD1Količina" DefaultId="DataItem10">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="YTD1ProdajnaVrednost" DefaultId="DataItem11">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="YTD1RVC" DefaultId="DataItem12">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+      </DataItems>
+      <HiddenDimensions>
+        <Dimension DefaultId="DataItem8" />
+        <Dimension DefaultId="DataItem9" />
+      </HiddenDimensions>
+      <GridColumns>
+        <GridDimensionColumn Name="Kupec - dostavno mesto" Weight="145.17444494789322">
+          <Dimension DefaultId="DataItem0" />
+        </GridDimensionColumn>
+        <GridMeasureColumn Name="Količina" Weight="57.906660625283259">
+          <Measure DefaultId="DataItem4" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Prodaja" Weight="66.06252831898513">
+          <Measure DefaultId="DataItem1" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Količina-1" Weight="75.000000000000057">
+          <Measure DefaultId="DataItem10" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Prodaja-1" Weight="75.000000000000071">
+          <Measure DefaultId="DataItem11" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridDeltaColumn Name="Primerjava z LANI" Weight="56.275487086542881">
+          <ActualValue DefaultId="DataItem2" />
+          <TargetValue DefaultId="DataItem3" />
+          <DeltaOptions ResultIndicationThreshold="1" ValueType="PercentVariation" />
+        </GridDeltaColumn>
+        <GridMeasureColumn Name="RVC" Weight="67.6937018577255">
+          <Measure DefaultId="DataItem5" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="RVC-1" Weight="75.000000000000071">
+          <Measure DefaultId="DataItem12" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridDeltaColumn Name="Primerjava z LANI" Weight="56.88717716357052">
+          <ActualValue DefaultId="DataItem6" />
+          <TargetValue DefaultId="DataItem7" />
+          <DeltaOptions ResultIndicationThreshold="1" ValueType="PercentVariation" />
+        </GridDeltaColumn>
+      </GridColumns>
+      <GridOptions EnableBandedRows="true" ColumnWidthMode="AutoFitToContents" WordWrap="true" />
+    </Grid>
+    <Chart ComponentName="chartDashboardItem2" Name="Prodaja po tipu kupca - tekoče leto" DataSource="sqlDataSource1" DataMember="CustomSqlQuery">
+      <InteractivityOptions IgnoreMasterFilters="true" MasterFilterMode="Multiple" />
+      <DataItems>
+        <Dimension DataMember="ProdajaTipKupca" DefaultId="DataItem0" />
+        <Measure DataMember="YTD1SkladiščnaVrednost" Name="Prodajna vrednost" DefaultId="DataItem1">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="YTDRVC" Name="RVC" DefaultId="DataItem2">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+      </DataItems>
+      <Arguments>
+        <Argument DefaultId="DataItem0" />
+      </Arguments>
+      <Panes>
+        <Pane Name="Pane 1">
+          <AxisY Title="Vrednost" />
+          <Series>
+            <Simple Name="Skladiščna vrednost" SeriesType="StackedBar">
+              <Value DefaultId="DataItem1" />
+            </Simple>
+            <Simple SeriesType="StackedBar">
+              <Value DefaultId="DataItem2" />
+            </Simple>
+          </Series>
+        </Pane>
+      </Panes>
+    </Chart>
+    <Chart ComponentName="chartDashboardItem1" Name="Realizacija po mesecih" ParentContainer="dashboardTabPage2" DataSource="sqlDataSource1" DataMember="CustomSqlQuery">
+      <DataItems>
+        <Dimension DataMember="ProdajaDatumDobavnice" Name="Mesec-Leto" DateTimeGroupInterval="MonthYear" DefaultId="DataItem0">
+          <DateTimeFormat MonthFormat="Abbreviated" />
+        </Dimension>
+        <Measure DataMember="ProdajaSkladiščnaVrednost" DefaultId="DataItem1">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="RVC" DefaultId="DataItem3">
+          <NumericFormat FormatType="Currency" Precision="1" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="ProdajaOsnovaZaDDV" DefaultId="DataItem2">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+      </DataItems>
+      <Arguments>
+        <Argument DefaultId="DataItem0" />
+      </Arguments>
+      <Panes>
+        <Pane Name="Pane 1">
+          <Series>
+            <Simple Name="Skladiščna/nabavna vrednost" SeriesType="StackedBar">
+              <Value DefaultId="DataItem1" />
+            </Simple>
+            <Simple Name="RVC" SeriesType="StackedBar">
+              <Value DefaultId="DataItem3" />
+            </Simple>
+            <Simple Name="Prodajna vrednost" SeriesType="Line">
+              <Value DefaultId="DataItem2" />
+            </Simple>
+          </Series>
+        </Pane>
+      </Panes>
+      <AxisX EnableZooming="true" />
+    </Chart>
+    <ListBox ComponentName="listBoxDashboardItem1" Name="Mesec" DataSource="sqlDataSource1" DataMember="CustomSqlQuery">
+      <DataItems>
+        <Dimension DataMember="ProdajaDatumDobavnice" Name="Mesec" DateTimeGroupInterval="Month" DefaultId="DataItem0" />
+      </DataItems>
+      <FilterDimensions>
+        <Dimension DefaultId="DataItem0" />
+      </FilterDimensions>
+    </ListBox>
+    <TabContainer ComponentName="tabContainerDashboardItem1" Name="Tab Container 1">
+      <Pages>
+        <Page ComponentName="dashboardTabPage1" Name="Page 1" />
+        <Page ComponentName="dashboardTabPage2" Name="Page 2" />
+      </Pages>
+    </TabContainer>
+    <Chart ComponentName="chartDashboardItem3" Name="Realizacija po mesecih - primerjalno" ParentContainer="dashboardTabPage1" DataSource="sqlDataSource1" DataMember="CustomSqlQuery">
+      <DataItems>
+        <Dimension DataMember="ProdajaDatumDobavnice" Name="Mesec" DateTimeGroupInterval="Month" DefaultId="DataItem0">
+          <DateTimeFormat MonthFormat="Abbreviated" />
+        </Dimension>
+        <Measure DataMember="YTDProdajnaVrednost" DefaultId="DataItem1">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="YTD1ProdajnaVrednost" DefaultId="DataItem2">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="YTDRVC" DefaultId="DataItem3">
+          <NumericFormat FormatType="Currency" Precision="1" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="YTD1RVC" DefaultId="DataItem4">
+          <NumericFormat FormatType="Currency" Precision="1" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+      </DataItems>
+      <Arguments>
+        <Argument DefaultId="DataItem0" />
+      </Arguments>
+      <Panes>
+        <Pane Name="Pane 1">
+          <Series>
+            <Simple Name="Prodaja tekoče leto" SeriesType="Line">
+              <Value DefaultId="DataItem1" />
+            </Simple>
+            <Simple Name="RVC tekoče leto" SeriesType="Line">
+              <Value DefaultId="DataItem3" />
+            </Simple>
+            <Simple Name="Prodaja preteklo leto">
+              <Value DefaultId="DataItem2" />
+            </Simple>
+            <Simple Name="RVC preteklo leto">
+              <Value DefaultId="DataItem4" />
+            </Simple>
+          </Series>
+        </Pane>
+      </Panes>
+    </Chart>
+    <TabContainer ComponentName="tabContainerDashboardItem2" Name="Tab Container 2">
+      <Pages>
+        <Page ComponentName="dashboardTabPage3" Name="Page 1" />
+        <Page ComponentName="dashboardTabPage4" Name="Page 2" />
+      </Pages>
+    </TabContainer>
+    <Grid ComponentName="gridDashboardItem3" Name="Realizacija po kupcih - primerjalno" ParentContainer="dashboardTabPage3" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true">
+      <InteractivityOptions MasterFilterMode="Multiple" />
+      <DataItems>
+        <Dimension DataMember="ProdajaPlačnik" SortOrder="Descending" SortByMeasure="DataItem1" DefaultId="DataItem0" />
+        <Measure DataMember="YTDProdajnaVrednost" DefaultId="DataItem1">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="YTDProdajnaVrednost" DefaultId="DataItem2" />
+        <Measure DataMember="YTD1ProdajnaVrednost" DefaultId="DataItem3" />
+        <Measure DataMember="YTD Količina" DefaultId="DataItem4">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="YTDRVC" DefaultId="DataItem5">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="YTDRVC" DefaultId="DataItem6" />
+        <Measure DataMember="YTD1RVC" DefaultId="DataItem7" />
+        <Dimension DataMember="YTD Količina" DefaultId="DataItem8" />
+        <Dimension DataMember="YTD1Količina" DefaultId="DataItem9" />
+        <Measure DataMember="YTD1Količina" DefaultId="DataItem10">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="YTD1ProdajnaVrednost" DefaultId="DataItem11">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="YTD1RVC" DefaultId="DataItem12">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+      </DataItems>
+      <HiddenDimensions>
+        <Dimension DefaultId="DataItem8" />
+        <Dimension DefaultId="DataItem9" />
+      </HiddenDimensions>
+      <GridColumns>
+        <GridDimensionColumn Name="Kupec - plačnik" Weight="145.17444494789322">
+          <Dimension DefaultId="DataItem0" />
+        </GridDimensionColumn>
+        <GridMeasureColumn Name="Količina" Weight="57.906660625283259">
+          <Measure DefaultId="DataItem4" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Prodaja" Weight="66.06252831898513">
+          <Measure DefaultId="DataItem1" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Količina-1" Weight="75.000000000000057">
+          <Measure DefaultId="DataItem10" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Prodaja-1" Weight="75.000000000000071">
+          <Measure DefaultId="DataItem11" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridDeltaColumn Name="Primerjava z LANI" Weight="56.275487086542881">
+          <ActualValue DefaultId="DataItem2" />
+          <TargetValue DefaultId="DataItem3" />
+          <DeltaOptions ResultIndicationThreshold="1" ValueType="PercentVariation" />
+        </GridDeltaColumn>
+        <GridMeasureColumn Name="RVC" Weight="67.6937018577255">
+          <Measure DefaultId="DataItem5" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="RVC-1" Weight="75.000000000000071">
+          <Measure DefaultId="DataItem12" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridDeltaColumn Name="Primerjava z LANI" Weight="56.88717716357052">
+          <ActualValue DefaultId="DataItem6" />
+          <TargetValue DefaultId="DataItem7" />
+          <DeltaOptions ResultIndicationThreshold="1" ValueType="PercentVariation" />
+        </GridDeltaColumn>
+      </GridColumns>
+      <GridOptions EnableBandedRows="true" ColumnWidthMode="AutoFitToContents" WordWrap="true" />
+    </Grid>
+    <ListBox ComponentName="listBoxDashboardItem3" Name="Artikel" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" EnableSearch="true">
+      <DataItems>
+        <Dimension DataMember="ProdajaIdentNaziv" Name="Ident" DefaultId="DataItem0" />
+      </DataItems>
+      <FilterDimensions>
+        <Dimension DefaultId="DataItem0" />
+      </FilterDimensions>
+    </ListBox>
+  </Items>
+  <LayoutTree>
+    <LayoutGroup>
+      <LayoutGroup Orientation="Vertical" Weight="1.2280022136137243">
+        <LayoutTabContainer DashboardItem="tabContainerDashboardItem2" Weight="1.4576545756401871">
+          <LayoutTabPage DashboardItem="dashboardTabPage3">
+            <LayoutItem DashboardItem="gridDashboardItem3" Weight="1.4576545756401871" />
+          </LayoutTabPage>
+          <LayoutTabPage DashboardItem="dashboardTabPage4">
+            <LayoutItem DashboardItem="gridDashboardItem1" Weight="1.4576545756401871" />
+          </LayoutTabPage>
+        </LayoutTabContainer>
+        <LayoutGroup Weight="0.99834985158726153">
+          <LayoutItem DashboardItem="listBoxDashboardItem3" Weight="0.41526674764084831" />
+          <LayoutTabContainer DashboardItem="tabContainerDashboardItem1" Weight="1.5814329555336748">
+            <LayoutTabPage DashboardItem="dashboardTabPage1">
+              <LayoutItem DashboardItem="chartDashboardItem3" Weight="2.3509863063964183" />
+            </LayoutTabPage>
+            <LayoutTabPage DashboardItem="dashboardTabPage2">
+              <LayoutItem DashboardItem="chartDashboardItem1" Weight="2.3509863063964183" />
+            </LayoutTabPage>
+          </LayoutTabContainer>
+        </LayoutGroup>
+      </LayoutGroup>
+      <LayoutGroup Orientation="Vertical" Weight="0.77199778638627581">
+        <LayoutGroup Weight="0.47360121892496004">
+          <LayoutItem DashboardItem="listBoxDashboardItem1" Weight="0.15748320686263803" />
+          <LayoutItem DashboardItem="chartDashboardItem2" Weight="0.80888646819081889" />
+        </LayoutGroup>
+        <LayoutItem DashboardItem="pieMapDashboardItem1" Weight="0.73392506773801758" />
+      </LayoutGroup>
+    </LayoutGroup>
+  </LayoutTree>
+</Dashboard>

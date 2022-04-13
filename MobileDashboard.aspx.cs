@@ -21,6 +21,15 @@ namespace peptak
             DashboardFileStorage dashboardStorage = new DashboardFileStorage(@"~/App_Data/Dashboards");
             ASPxWebDashboard1.SetDashboardStorage(dashboardStorage);
         }
+
+        private void ASPxDashboard_CallbackError(object sender, EventArgs e)
+        {
+            var s = e.ToString();
+            var debug = true;
+        }
+
+      
+
         protected void OnDataLoading(object sender, DevExpress.DashboardWeb.DataLoadingWebEventArgs e)
         {
          //   DashboardMainDemo.DataLoader.LoadData(e);

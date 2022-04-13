@@ -91,7 +91,7 @@
       <InteractivityOptions MasterFilterMode="Multiple" TargetDimensions="Points" />
       <DataItems>
         <Dimension DataMember="ReklamacijeNazivIdenta" Name="Ident" DefaultId="DataItem0" />
-        <Measure DataMember="ReklamacijePrejeto" Name="Prejetih reklamacij" DefaultId="DataItem1" />
+        <Measure DataMember="ReklamacijePrejeto" Name="Prejetih reklamacij " DefaultId="DataItem1" />
       </DataItems>
       <Arguments>
         <Argument DefaultId="DataItem0" />

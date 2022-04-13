@@ -124,7 +124,7 @@
     <Pie ComponentName="pieDashboardItem4" Name="Vrednost trenutne zaloge glede na hitrost obračanja" ShowCaption="false" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" PieType="Donut" LabelContentType="ArgumentValueAndPercent">
       <InteractivityOptions MasterFilterMode="Multiple" IsDrillDownEnabled="true" />
       <DataItems>
-        <Measure DataMember="ZalogaVrednost" Name="Zaloga glede na obrat" DefaultId="DataItem0">
+        <Measure DataMember="ZalogaVrednost" Name="Zaloga glede na obrat " DefaultId="DataItem0">
           <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
         </Measure>
         <Dimension DataMember="ZalogaObdobjeZaležanosti" Name="Obrat zaloge" DefaultId="DataItem1" />

@@ -1,0 +1,183 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Dashboard>
+  <Title Text="DB SETCCE - 4" />
+  <DataSources>
+    <SqlDataSource Name="DB SETCCE - 4" ComponentName="sqlDataSource1">
+      <Connection Name="SETCCE" FromAppConfig="true" />
+      <Query Type="CustomSqlQuery" Name="DB SETCCE - 4">
+        <Sql>select	ji.JiraUporabnik			as JiraUporabnikID,
+		ss1.acsubject				as JiraUporabnikNaziv,
+		ji.JiraObdobje,
+		ji.JiraŠteviloUr,
+		ji.JiraNaročiloŠifraSETCCE	as JiraOddelekJira,
+		ss2.acName2					as JiraOddelekJiraNaziv,
+		ji.JiraNaročiloŠifraET		as JiraOddelekPA,
+		ss3.acName2					as JiraOddelekPANaziv,
+		ji.JiraNaročiloSNSETCCE		as JiraSNJira,
+		ji.JiraNaročiloOpis			as JiraSNJiraOpis,
+		ji.JiraNaročiloSNET			as JiraSNPA,
+		scd.acName					as JiraSNPAOpis,
+		SUBSTRING(ji.JiraNaročiloŠifraET,CHARINDEX('-',ji.JiraNaročiloŠifraET)+1,LEN(LTRIM(RTRIM(ji.JiraNaročiloŠifraET)))-CHARINDEX(' ',ji.JiraNaročiloŠifraET)) AS SkupinaPA,
+		SUBSTRING(ji.JiraNaročiloŠifraSETCCE,CHARINDEX('-',ji.JiraNaročiloŠifraSETCCE)+1,LEN(LTRIM(RTRIM(ji.JiraNaročiloŠifraSETCCE)))-CHARINDEX(' ',ji.JiraNaročiloŠifraSETCCE)) AS SkupinaJira
+from uTN_DB_Jira ji
+left join PA_Setcce_druzba.dbo.tHE_SetSubj ss1 on ss1.acFieldSF=ji.JiraUporabnik
+left join PA_Setcce_druzba.dbo.tHE_SetSubj ss2 on ss2.acSubject=ji.JiraNaročiloŠifraSETCCE
+left join PA_Setcce_druzba.dbo.tHE_SetSubj ss3 on ss3.acSubject=ji.JiraNaročiloŠifraET
+LEFT JOIN PA_Setcce_druzba.dbo.tHE_CostDrv scd ON scd.acCostDrv=ji.JiraNaročiloSNET
+order by JiraNaročiloSNSETCCE, JiraObdobje;</Sql>
+      </Query>
+      <ConnectionOptions CloseConnection="true" />
+      <CalculatedFields>
+        <CalculatedField Name="OddelkaStaRazlična" Expression="iif([JiraOddelekJira]&lt;&gt;[JiraOddelekPA],'T','F')" DataType="Auto" DataMember="DB SETCCE - 4" />
+      </CalculatedFields>
+    </SqlDataSource>
+  </DataSources>
+  <Items>
+    <Grid ComponentName="gridDashboardItem1" Name="Pregled opravljenega dela iz Jire - detajl" DataSource="sqlDataSource1" DataMember="DB SETCCE - 4">
+      <DataItems>
+        <Dimension DataMember="JiraUporabnikNaziv" DefaultId="DataItem0" />
+        <Dimension DataMember="JiraSNPA" DefaultId="DataItem1" />
+        <Dimension DataMember="JiraSNPAOpis" DefaultId="DataItem2" />
+        <Dimension DataMember="JiraOddelekJira" DefaultId="DataItem3" />
+        <Dimension DataMember="JiraOddelekJiraNaziv" DefaultId="DataItem4" />
+        <Dimension DataMember="JiraOddelekPA" DefaultId="DataItem5" />
+        <Dimension DataMember="JiraOddelekPANaziv" DefaultId="DataItem6" />
+        <Measure DataMember="JiraŠteviloUr" DefaultId="DataItem7">
+          <NumericFormat FormatType="Number" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Dimension DataMember="JiraObdobje" DefaultId="DataItem8" />
+        <Measure DataMember="OddelkaStaRazlična" SummaryType="Max" DefaultId="DataItem9" />
+      </DataItems>
+      <HiddenMeasures>
+        <Measure DefaultId="DataItem9" />
+      </HiddenMeasures>
+      <FormatRules>
+        <GridItemFormatRule Name="Format Rule 1" DataItem="DataItem3" DataItemApplyTo="DataItem3">
+          <FormatConditionExpression Expression="[DataItem9] = 'T'">
+            <AppearanceSettings AppearanceType="PaleRed" />
+          </FormatConditionExpression>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 2" DataItem="DataItem4" DataItemApplyTo="DataItem4">
+          <FormatConditionExpression Expression="[DataItem9] = 'T'">
+            <AppearanceSettings AppearanceType="PaleRed" />
+          </FormatConditionExpression>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 3" DataItem="DataItem5" DataItemApplyTo="DataItem5">
+          <FormatConditionExpression Expression="[DataItem9] = 'T'">
+            <AppearanceSettings AppearanceType="PaleGreen" />
+          </FormatConditionExpression>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 4" DataItem="DataItem6" DataItemApplyTo="DataItem6">
+          <FormatConditionExpression Expression="[DataItem9] = 'T'">
+            <AppearanceSettings AppearanceType="PaleGreen" />
+          </FormatConditionExpression>
+        </GridItemFormatRule>
+      </FormatRules>
+      <GridColumns>
+        <GridDimensionColumn Name="Delavec">
+          <Dimension DefaultId="DataItem0" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Obdobje">
+          <Dimension DefaultId="DataItem8" />
+        </GridDimensionColumn>
+        <GridMeasureColumn Name="Število ur">
+          <Measure DefaultId="DataItem7" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridDimensionColumn Name="S N">
+          <Dimension DefaultId="DataItem1" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Naziv stroškovnega nosilca">
+          <Dimension DefaultId="DataItem2" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Oddelek Jira">
+          <Dimension DefaultId="DataItem3" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Naziv oddelka Jira">
+          <Dimension DefaultId="DataItem4" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Oddelek PA">
+          <Dimension DefaultId="DataItem5" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Naziv oddelka PA">
+          <Dimension DefaultId="DataItem6" />
+        </GridDimensionColumn>
+      </GridColumns>
+      <GridOptions />
+    </Grid>
+    <ListBox ComponentName="listBoxDashboardItem1" Name="Obdobje" DataSource="sqlDataSource1" DataMember="DB SETCCE - 4" IsMasterFilterCrossDataSource="true" EnableSearch="true">
+      <InteractivityOptions IgnoreMasterFilters="false" />
+      <DataItems>
+        <Dimension DataMember="JiraObdobje" Name="Obdobje" DefaultId="DataItem0" />
+      </DataItems>
+      <FilterDimensions>
+        <Dimension DefaultId="DataItem0" />
+      </FilterDimensions>
+    </ListBox>
+    <ListBox ComponentName="listBoxDashboardItem2" Name="Delavec" DataSource="sqlDataSource1" DataMember="DB SETCCE - 4" IsMasterFilterCrossDataSource="true" EnableSearch="true">
+      <InteractivityOptions IgnoreMasterFilters="false" />
+      <DataItems>
+        <Dimension DataMember="JiraUporabnikNaziv" Name="Delavec" DefaultId="DataItem0" />
+      </DataItems>
+      <FilterDimensions>
+        <Dimension DefaultId="DataItem0" />
+      </FilterDimensions>
+    </ListBox>
+    <Pie ComponentName="pieDashboardItem1" Name="Število ur po oddelkih PA" DataSource="sqlDataSource1" DataMember="DB SETCCE - 4" IsMasterFilterCrossDataSource="true" PieType="Donut" LabelContentType="ArgumentValueAndPercent">
+      <InteractivityOptions MasterFilterMode="Multiple" />
+      <DataItems>
+        <Measure DataMember="JiraŠteviloUr" Name="Število UR" DefaultId="DataItem0">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Dimension DataMember="JiraOddelekJira" Name="Oddelek" DefaultId="DataItem1" />
+      </DataItems>
+      <Arguments>
+        <Argument DefaultId="DataItem1" />
+      </Arguments>
+      <Values>
+        <Value DefaultId="DataItem0" />
+      </Values>
+    </Pie>
+    <Pie ComponentName="pieDashboardItem2" Name="Število ur po delavcih" DataSource="sqlDataSource1" DataMember="DB SETCCE - 4" IsMasterFilterCrossDataSource="true" PieType="Donut" LabelContentType="ArgumentValueAndPercent">
+      <InteractivityOptions MasterFilterMode="Multiple" />
+      <DataItems>
+        <Measure DataMember="JiraŠteviloUr" Name="Število UR" DefaultId="DataItem0">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Dimension DataMember="JiraUporabnikNaziv" Name="Delavec" DefaultId="DataItem1" />
+      </DataItems>
+      <Arguments>
+        <Argument DefaultId="DataItem1" />
+      </Arguments>
+      <Values>
+        <Value DefaultId="DataItem0" />
+      </Values>
+    </Pie>
+    <ListBox ComponentName="listBoxDashboardItem3" Name="Stroškovni nosilec" DataSource="sqlDataSource1" DataMember="DB SETCCE - 4" EnableSearch="true">
+      <DataItems>
+        <Dimension DataMember="JiraSNPA" Name="S N" DefaultId="DataItem0" />
+        <Dimension DataMember="JiraSNPAOpis" Name="Naziv SN" DefaultId="DataItem1" />
+      </DataItems>
+      <FilterDimensions>
+        <Dimension DefaultId="DataItem0" />
+        <Dimension DefaultId="DataItem1" />
+      </FilterDimensions>
+    </ListBox>
+  </Items>
+  <LayoutTree>
+    <LayoutGroup>
+      <LayoutGroup Orientation="Vertical">
+        <LayoutGroup Weight="0.64233576642335766">
+          <LayoutItem DashboardItem="listBoxDashboardItem1" Weight="0.64233576642335766" />
+          <LayoutItem DashboardItem="listBoxDashboardItem2" Weight="0.64233576642335766" />
+          <LayoutItem DashboardItem="listBoxDashboardItem3" Weight="0.64233576642335766" />
+          <LayoutItem DashboardItem="pieDashboardItem1" />
+          <LayoutItem DashboardItem="pieDashboardItem2" />
+        </LayoutGroup>
+        <LayoutItem DashboardItem="gridDashboardItem1" Weight="1.3576642335766422" />
+      </LayoutGroup>
+    </LayoutGroup>
+  </LayoutTree>
+</Dashboard>

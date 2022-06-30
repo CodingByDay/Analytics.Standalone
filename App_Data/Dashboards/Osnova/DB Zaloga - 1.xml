@@ -9,7 +9,7 @@
       </Query>
       <ConnectionOptions CloseConnection="true" />
       <CalculatedFields>
-        <CalculatedField Name="ZalogaObratDni" Expression="((ZalogaKoličinaEM-ZalogaPrevzemKoličina+ZalogaIzdajaKoličina)*365+ZalogaPrevzemDniDoDanes-ZalogaIzdajaDniDoDanes)/&#xD;&#xA;(ZalogaKoličinaEM-ZalogaPrevzemKoličina+ZalogaIzdajaKoličina+ZalogaPrevzemKoličina)" DataType="Auto" DataMember="CustomSqlQuery" />
+        <CalculatedField Name="ZalogaObratDni" Expression="iif((ZalogaKoličinaEM-ZalogaPrevzemKoličina+ZalogaIzdajaKoličina+ZalogaPrevzemKoličina)&lt;&gt;0,&#xD;&#xA;((ZalogaKoličinaEM-ZalogaPrevzemKoličina+ZalogaIzdajaKoličina)*365+ZalogaPrevzemDniDoDanes-ZalogaIzdajaDniDoDanes)/&#xD;&#xA;(ZalogaKoličinaEM-ZalogaPrevzemKoličina+ZalogaIzdajaKoličina+ZalogaPrevzemKoličina),0)" DataType="Auto" DataMember="CustomSqlQuery" />
         <CalculatedField Name="ZalogaZadostujeDni" Expression="[ZalogaKoličinaEM]/&#xD;&#xA;(Iif([ZalogaIzdajaKoličina]=0,1,[ZalogaIzdajaKoličina])/&#xD;&#xA;Iif(([ZalogaKoličinaEM]-[ZalogaPrevzemKoličina]+[ZalogaIzdajaKoličina])=0,DateDiffDay([ZalogaDatumPrvegaPrevzema],LocalDateTimeNow()), 365))" DataType="Auto" DataMember="CustomSqlQuery" />
         <CalculatedField Name="ZalogaObdobjeZaležanosti" Expression="Iif([ZalogaObratDni]&lt;15, 'Do  15 dni',&#xD;&#xA;Iif([ZalogaObratDni]&lt;30, 'Do  30 dni',&#xD;&#xA;Iif([ZalogaObratDni]&lt;45, 'Do  45 dni',&#xD;&#xA;Iif([ZalogaObratDni]&lt;60, 'Do  60 dni',&#xD;&#xA;Iif([ZalogaObratDni]&lt;90, 'Do  90 dni',&#xD;&#xA;Iif([ZalogaObratDni]&lt;180,'Do 180 dni','Nad 180 dni'))))))" DataType="Auto" DataMember="CustomSqlQuery" />
         <CalculatedField Name="ZalogaZačetnoStanje" Expression="sum([ZalogaKoličinaEM])-sum([ZalogaPrevzemKoličina])+sum([ZalogaIzdajaKoličina])" DataType="Auto" DataMember="CustomSqlQuery" />
@@ -148,17 +148,27 @@
         <Dimension DefaultId="DataItem0" />
       </FilterDimensions>
     </ListBox>
+    <ListBox ComponentName="listBoxDashboardItem2" Name="Identi" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" EnableSearch="true">
+      <InteractivityOptions IgnoreMasterFilters="false" />
+      <DataItems>
+        <Dimension DataMember="ZalogaIdentNaziv" Name="Ident" DefaultId="DataItem0" />
+      </DataItems>
+      <FilterDimensions>
+        <Dimension DefaultId="DataItem0" />
+      </FilterDimensions>
+    </ListBox>
   </Items>
   <LayoutTree>
     <LayoutGroup Orientation="Vertical">
       <LayoutGroup Weight="1.0125470514429109">
         <LayoutItem DashboardItem="pieDashboardItem4" Weight="1.1068165504934149" />
-        <LayoutItem DashboardItem="pieDashboardItem2" Weight="1.0501876047069081" />
-        <LayoutItem DashboardItem="pieDashboardItem1" Weight="1.003817473031918" />
+        <LayoutItem DashboardItem="pieDashboardItem2" Weight="1.1463941290858637" />
+        <LayoutItem DashboardItem="pieDashboardItem1" Weight="0.90761094865296243" />
       </LayoutGroup>
       <LayoutGroup Weight="0.98745294855708909">
-        <LayoutItem DashboardItem="listBoxDashboardItem1" Weight="0.2615705676298124" />
-        <LayoutItem DashboardItem="gridDashboardItem1" Weight="1.4334704262213487" />
+        <LayoutItem DashboardItem="listBoxDashboardItem1" Weight="0.25398140532368119" />
+        <LayoutItem DashboardItem="listBoxDashboardItem2" Weight="0.33746219069112393" />
+        <LayoutItem DashboardItem="gridDashboardItem1" Weight="1.3651679654661684" />
         <LayoutItem DashboardItem="pieDashboardItem3" Weight="0.78611169595482466" />
       </LayoutGroup>
     </LayoutGroup>

@@ -1,0 +1,435 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Dashboard>
+  <Title Text="DB Proizvodnja DN - PetPak" />
+  <DataSources>
+    <SqlDataSource Name="uTN_DB_ProizvodnjaDN - PetPak" ComponentName="sqlDataSource1">
+      <Connection Name="PetPakProdukcija" FromAppConfig="true" />
+      <Query Type="CustomSqlQuery" Name="uTN_DB_ProizvodnjaDN">
+        <Sql>SELECT * FROM uTN_DB_ProizvodnjaDN;</Sql>
+      </Query>
+      <ConnectionOptions CloseConnection="true" />
+      <CalculatedFields>
+        <CalculatedField Name="FilterIdent" Expression="[DNIzdelekIdent]+' - '+[DNIzdelekIdentNaziv]" DataType="Auto" DataMember="uTN_DB_ProizvodnjaDN" />
+        <CalculatedField Name="RazlikaVVrednosti" Expression="[DNKompRealiziranaVrednostDN]-[DNKompPlaniranaVrednostDN]" DataType="Auto" DataMember="uTN_DB_ProizvodnjaDN" />
+        <CalculatedField Name="RazlikaVVrednostiNaEnoto" Expression="iif([DNIzdelekRealiziranaKoličina]&lt;&gt;0,([DNKompRealiziranaVrednostDN]-[DNKompPlaniranaVrednostDN])/[DNIzdelekRealiziranaKoličina],0)" DataType="Auto" DataMember="uTN_DB_ProizvodnjaDN" />
+        <CalculatedField Name="RealiziranaVrednostNaEnoto" Expression="iif([DNKompRealiziranaKoličinaDN]&lt;&gt;0,[DNKompRealiziranaVrednostDN]/[DNKompRealiziranaKoličinaDN],0)" DataType="Auto" DataMember="uTN_DB_ProizvodnjaDN" />
+        <CalculatedField Name="PlaniranaVrednostNaEnoto" Expression="iif([DNIzdelekPlaniranaKoličina]&lt;&gt;0 and [DNIzdelekRealiziranaKoličina]&lt;&gt;0,[DNKompPlaniranaVrednostDN]/[DNKompPlaniranaKoličinaDN],0)" DataType="Auto" DataMember="uTN_DB_ProizvodnjaDN" />
+      </CalculatedFields>
+    </SqlDataSource>
+  </DataSources>
+  <Items>
+    <Pie ComponentName="pieDashboardItem2" Name="Privzeti kupci" DataSource="sqlDataSource1" DataMember="uTN_DB_ProizvodnjaDN" IsMasterFilterCrossDataSource="true" PieType="Donut" ShowPieCaptions="false">
+      <InteractivityOptions MasterFilterMode="Multiple" />
+      <DataItems>
+        <Dimension DataMember="DNPrivzetiKupec" Name="Privzeti kupec" DefaultId="DataItem0" />
+        <Measure DataMember="DNŠtevilkaDN" Name="Število nalogov" SummaryType="CountDistinct" DefaultId="DataItem1">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+      </DataItems>
+      <Arguments>
+        <Argument DefaultId="DataItem0" />
+      </Arguments>
+      <Values>
+        <Value DefaultId="DataItem1" />
+      </Values>
+    </Pie>
+    <Pie ComponentName="pieDashboardItem3" Name="Stroškovni nosilci" DataSource="sqlDataSource1" DataMember="uTN_DB_ProizvodnjaDN" IsMasterFilterCrossDataSource="true" PieType="Donut" ShowPieCaptions="false">
+      <InteractivityOptions MasterFilterMode="Multiple" />
+      <DataItems>
+        <Dimension DataMember="DNIzdelekStroškovniNossilec" Name="Stroškovni nosilec" DefaultId="DataItem0" />
+        <Measure DataMember="DNŠtevilkaDN" Name="Število DN" SummaryType="CountDistinct" DefaultId="DataItem1">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+      </DataItems>
+      <Arguments>
+        <Argument DefaultId="DataItem0" />
+      </Arguments>
+      <Values>
+        <Value DefaultId="DataItem1" />
+      </Values>
+    </Pie>
+    <Pie ComponentName="pieDashboardItem5" Name="Sekundarna klasifikacija" DataSource="sqlDataSource1" DataMember="uTN_DB_ProizvodnjaDN" IsMasterFilterCrossDataSource="true" PieType="Donut" ShowPieCaptions="false">
+      <InteractivityOptions MasterFilterMode="Multiple" />
+      <DataItems>
+        <Dimension DataMember="DNIzdelekSekundarnaKlasifikacija" Name="Sekundarna klasifikacija" DefaultId="DataItem0" />
+        <Measure DataMember="DNŠtevilkaDN" Name="Število nalogov" SummaryType="CountDistinct" DefaultId="DataItem1">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+      </DataItems>
+      <Arguments>
+        <Argument DefaultId="DataItem0" />
+      </Arguments>
+      <Values>
+        <Value DefaultId="DataItem1" />
+      </Values>
+    </Pie>
+    <Pie ComponentName="pieDashboardItem6" Name="Primarna klasifikacija" DataSource="sqlDataSource1" DataMember="uTN_DB_ProizvodnjaDN" IsMasterFilterCrossDataSource="true" PieType="Donut" ShowPieCaptions="false">
+      <InteractivityOptions MasterFilterMode="Multiple" />
+      <DataItems>
+        <Dimension DataMember="DNIzdelekPrimarnaKlasifikacija" Name="Primarna klasifikacija" DefaultId="DataItem0" />
+        <Measure DataMember="DNŠtevilkaDN" Name="Število nalogov" SummaryType="CountDistinct" DefaultId="DataItem1">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+      </DataItems>
+      <Arguments>
+        <Argument DefaultId="DataItem0" />
+      </Arguments>
+      <Values>
+        <Value DefaultId="DataItem1" />
+      </Values>
+    </Pie>
+    <TabContainer ComponentName="tabContainerDashboardItem1" Name="Tab Container 1">
+      <Pages>
+        <Page ComponentName="dashboardTabPage1" Name="Page 1" />
+        <Page ComponentName="dashboardTabPage2" Name="Page 2" />
+        <Page ComponentName="dashboardTabPage3" Name="Page 3" />
+      </Pages>
+    </TabContainer>
+    <Grid ComponentName="gridDashboardItem2" Name="Pregled po identih" ParentContainer="dashboardTabPage3" DataSource="sqlDataSource1" DataMember="uTN_DB_ProizvodnjaDN" IsMasterFilterCrossDataSource="true">
+      <InteractivityOptions MasterFilterMode="Multiple" />
+      <DataItems>
+        <Measure DataMember="DNIzdelekPlaniranaKoličina" SummaryType="Max" DefaultId="DataItem2">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="DNIzdelekRealiziranaKoličina" SummaryType="Max" DefaultId="DataItem3">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Dimension DataMember="DNIzdelekIdent" DefaultId="DataItem4" />
+        <Dimension DataMember="DNIzdelekIdentNaziv" DefaultId="DataItem5" />
+        <Dimension DataMember="DNIzdelekEM" DefaultId="DataItem6" />
+        <Measure DataMember="DNKompPlaniranaVrednostDN" DefaultId="DataItem7">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="DNKompRealiziranaVrednostDN" DefaultId="DataItem8">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="RazlikaVVrednosti" DefaultId="DataItem0">
+          <NumericFormat FormatType="Currency" Unit="Ones" />
+        </Measure>
+        <Measure DataMember="RazlikaVVrednostiNaEnoto" DefaultId="DataItem1">
+          <NumericFormat FormatType="Currency" Precision="4" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="RealiziranaVrednostNaEnoto" DefaultId="DataItem9" />
+        <Measure DataMember="PlaniranaVrednostNaEnoto" DefaultId="DataItem10" />
+      </DataItems>
+      <HiddenMeasures>
+        <Measure DefaultId="DataItem9" />
+      </HiddenMeasures>
+      <FormatRules>
+        <GridItemFormatRule Name="Format Rule 1" DataItem="DataItem8" DataItemApplyTo="DataItem8">
+          <FormatConditionExpression Expression="[DataItem8] &lt;= [DataItem7]">
+            <IconSettings IconType="IndicatorGreenFlag" />
+          </FormatConditionExpression>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 2" DataItem="DataItem8" DataItemApplyTo="DataItem8">
+          <FormatConditionExpression Expression="[DataItem8] &gt; [DataItem7]">
+            <IconSettings IconType="ShapeRedCircle" />
+          </FormatConditionExpression>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 3" DataItem="DataItem7" DataItemApplyTo="DataItem7">
+          <FormatConditionExpression Expression="abs([DataItem1]) &gt; abs([DataItem9]*2)">
+            <AppearanceSettings AppearanceType="Red" />
+          </FormatConditionExpression>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 4">
+          <FormatConditionExpression>
+            <AppearanceSettings AppearanceType="PaleRed" />
+          </FormatConditionExpression>
+        </GridItemFormatRule>
+      </FormatRules>
+      <GridColumns>
+        <GridDimensionColumn Name="ID">
+          <Dimension DefaultId="DataItem4" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Naziv izdelka">
+          <Dimension DefaultId="DataItem5" />
+        </GridDimensionColumn>
+        <GridMeasureColumn Name="Planirana količina">
+          <Measure DefaultId="DataItem2" />
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Realizirana količina">
+          <Measure DefaultId="DataItem3" />
+        </GridMeasureColumn>
+        <GridDimensionColumn Name="EM">
+          <Dimension DefaultId="DataItem6" />
+        </GridDimensionColumn>
+        <GridMeasureColumn Name="Planirana vrednost DN">
+          <Measure DefaultId="DataItem7" />
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Realizirana vrednost">
+          <Measure DefaultId="DataItem8" />
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Razlika v vrednosti">
+          <Measure DefaultId="DataItem0" />
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Razlika v vrednosti na enoto">
+          <Measure DefaultId="DataItem1" />
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Planska cena">
+          <Measure DefaultId="DataItem10" />
+        </GridMeasureColumn>
+      </GridColumns>
+      <GridOptions />
+    </Grid>
+    <ListBox ComponentName="listBoxDashboardItem1" Name="Izdelek" DataSource="sqlDataSource1" DataMember="uTN_DB_ProizvodnjaDN" IsMasterFilterCrossDataSource="true" EnableSearch="true">
+      <InteractivityOptions IgnoreMasterFilters="false" />
+      <DataItems>
+        <Dimension DataMember="FilterIdent" Name="Izdelek" DefaultId="DataItem0" />
+      </DataItems>
+      <FilterDimensions>
+        <Dimension DefaultId="DataItem0" />
+      </FilterDimensions>
+    </ListBox>
+    <Grid ComponentName="gridDashboardItem3" Name="Pregled po delovnih nalogih - detalj" ParentContainer="dashboardTabPage2" DataSource="sqlDataSource1" DataMember="uTN_DB_ProizvodnjaDN">
+      <DataItems>
+        <Dimension DataMember="DNŠtevilkaDN" DefaultId="DataItem0" />
+        <Measure DataMember="DNKompPlaniranaKoličinaDN" SummaryType="Max" DefaultId="DataItem2">
+          <NumericFormat FormatType="Number" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="DNKompRealiziranaKoličinaDN" SummaryType="Max" DefaultId="DataItem3">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Dimension DataMember="DNKompIdent" DefaultId="DataItem4" />
+        <Dimension DataMember="DNKompIdentNaziv" DefaultId="DataItem5" />
+        <Dimension DataMember="DNKompEM" DefaultId="DataItem6" />
+        <Measure DataMember="DNKompPlaniranaVrednostDN" DefaultId="DataItem7">
+          <NumericFormat FormatType="Currency" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="DNKompRealiziranaVrednostDN" DefaultId="DataItem8">
+          <NumericFormat FormatType="Currency" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="DNKompPlaniranaVrednostOK" DefaultId="DataItem1">
+          <NumericFormat FormatType="Currency" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="DNKompPlaniranaKoličinaOK" DefaultId="DataItem9">
+          <NumericFormat FormatType="Number" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="DNKompPlaniranaKoličinaVK" DefaultId="DataItem10">
+          <NumericFormat FormatType="Number" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="DNKompPlaniranaVrednostVK" DefaultId="DataItem11">
+          <NumericFormat FormatType="Currency" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="RazlikaVVrednosti" DefaultId="DataItem12">
+          <NumericFormat FormatType="Currency" Precision="4" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+      </DataItems>
+      <GridColumns>
+        <GridDimensionColumn Name="številka DN">
+          <Dimension DefaultId="DataItem0" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="ID">
+          <Dimension DefaultId="DataItem4" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Naziv komponente">
+          <Dimension DefaultId="DataItem5" />
+        </GridDimensionColumn>
+        <GridMeasureColumn Name="Količina OK">
+          <Measure DefaultId="DataItem9" />
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Količina VK">
+          <Measure DefaultId="DataItem10" />
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Plan.količina DN">
+          <Measure DefaultId="DataItem2" />
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Realizirana količina">
+          <Measure DefaultId="DataItem3" />
+        </GridMeasureColumn>
+        <GridDimensionColumn Name="EM">
+          <Dimension DefaultId="DataItem6" />
+        </GridDimensionColumn>
+        <GridMeasureColumn Name="Planirana vrednost DN">
+          <Measure DefaultId="DataItem7" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Vrednost OK">
+          <Measure DefaultId="DataItem1" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Vrednost VK">
+          <Measure DefaultId="DataItem11" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Realizirana vrednost">
+          <Measure DefaultId="DataItem8" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Razika v vrednosti">
+          <Measure DefaultId="DataItem12" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+      </GridColumns>
+      <GridOptions EnableBandedRows="true" />
+    </Grid>
+    <Grid ComponentName="gridDashboardItem1" Name="Pregled po delovnih nalogih" ParentContainer="dashboardTabPage1" DataSource="sqlDataSource1" DataMember="uTN_DB_ProizvodnjaDN" IsMasterFilterCrossDataSource="true">
+      <InteractivityOptions MasterFilterMode="Multiple" />
+      <DataItems>
+        <Dimension DataMember="DNŠtevilkaDN" DefaultId="DataItem0" />
+        <Dimension DataMember="DNDatumDDN" DateTimeGroupInterval="DayMonthYear" DefaultId="DataItem1" />
+        <Measure DataMember="DNIzdelekPlaniranaKoličina" SummaryType="Max" DefaultId="DataItem2">
+          <NumericFormat FormatType="Number" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="DNIzdelekRealiziranaKoličina" SummaryType="Max" DefaultId="DataItem3">
+          <NumericFormat FormatType="Number" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Dimension DataMember="DNIzdelekIdent" DefaultId="DataItem4" />
+        <Dimension DataMember="DNIzdelekIdentNaziv" DefaultId="DataItem5" />
+        <Dimension DataMember="DNIzdelekEM" DefaultId="DataItem6" />
+        <Measure DataMember="DNKompPlaniranaVrednostDN" DefaultId="DataItem7">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="DNKompRealiziranaVrednostDN" DefaultId="DataItem8">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="RazlikaVVrednosti" DefaultId="DataItem9">
+          <NumericFormat FormatType="Number" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="RazlikaVVrednostiNaEnoto" DefaultId="DataItem10">
+          <NumericFormat FormatType="Number" Precision="4" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="RealiziranaVrednostNaEnoto" SummaryType="Max" DefaultId="DataItem11" />
+      </DataItems>
+      <HiddenMeasures>
+        <Measure DefaultId="DataItem11" />
+      </HiddenMeasures>
+      <FormatRules>
+        <GridItemFormatRule Name="Format Rule 1" DataItem="DataItem8" DataItemApplyTo="DataItem8">
+          <FormatConditionExpression Expression="[DataItem8] &lt;= [DataItem7] And [DataItem8] &lt;&gt; 0 And [DataItem7] &lt;&gt; 0">
+            <IconSettings IconType="IndicatorGreenFlag" />
+          </FormatConditionExpression>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 2" DataItem="DataItem8" DataItemApplyTo="DataItem8">
+          <FormatConditionExpression Expression="[DataItem8] &gt; [DataItem7] And [DataItem8] &lt;&gt; 0 And [DataItem7] &lt;&gt; 0">
+            <IconSettings IconType="IndicatorRedFlag" />
+          </FormatConditionExpression>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 3" DataItem="DataItem7" DataItemApplyTo="DataItem7">
+          <FormatConditionExpression Expression="abs([DataItem10]) &gt; abs([DataItem11]*2)">
+            <AppearanceSettings AppearanceType="Red" />
+          </FormatConditionExpression>
+        </GridItemFormatRule>
+      </FormatRules>
+      <GridColumns>
+        <GridDimensionColumn Name="številka DN">
+          <Dimension DefaultId="DataItem0" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Datum">
+          <Dimension DefaultId="DataItem1" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="ID">
+          <Dimension DefaultId="DataItem4" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Naziv izdelka">
+          <Dimension DefaultId="DataItem5" />
+        </GridDimensionColumn>
+        <GridMeasureColumn Name="Planirana količina">
+          <Measure DefaultId="DataItem2" />
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Realizirana količina">
+          <Measure DefaultId="DataItem3" />
+        </GridMeasureColumn>
+        <GridDimensionColumn Name="EM">
+          <Dimension DefaultId="DataItem6" />
+        </GridDimensionColumn>
+        <GridMeasureColumn Name="Planirana vrednost DN">
+          <Measure DefaultId="DataItem7" />
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Realizirana vrednost">
+          <Measure DefaultId="DataItem8" />
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Razlika v vrednosti">
+          <Measure DefaultId="DataItem9" />
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Razlika v vrednosti na enoto">
+          <Measure DefaultId="DataItem10" />
+        </GridMeasureColumn>
+      </GridColumns>
+      <GridOptions />
+    </Grid>
+    <Pie ComponentName="pieDashboardItem1" Name="Status naloga" DataSource="sqlDataSource1" DataMember="uTN_DB_ProizvodnjaDN" IsMasterFilterCrossDataSource="true" PieType="Donut" ShowPieCaptions="false">
+      <InteractivityOptions MasterFilterMode="Multiple" />
+      <DataItems>
+        <Dimension DataMember="DNStatus" Name="Status" DefaultId="DataItem0" />
+        <Measure DataMember="DNŠtevilkaDN" Name="Število nalogov" SummaryType="CountDistinct" DefaultId="DataItem1">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+      </DataItems>
+      <Arguments>
+        <Argument DefaultId="DataItem0" />
+      </Arguments>
+      <Values>
+        <Value DefaultId="DataItem1" />
+      </Values>
+    </Pie>
+    <DateFilter ComponentName="dateFilterDashboardItem1" Name="Datum DN" ShowCaption="false" DataSource="sqlDataSource1" DataMember="uTN_DB_ProizvodnjaDN" SelectedDateTimePeriodIndex="Tekoče leto">
+      <DataItems>
+        <Dimension DataMember="DNDatumDDN" Name="Datum DN" DateTimeGroupInterval="DayMonthYear" DefaultId="DataItem0" />
+      </DataItems>
+      <Dimension DefaultId="DataItem0" />
+      <DateTimePeriods>
+        <DateTimePeriod Name="Tekoči mesec">
+          <StartLimit>
+            <FlowDateTimePeriodLimit Interval="Month" />
+          </StartLimit>
+        </DateTimePeriod>
+        <DateTimePeriod Name="Zadnje tromesečje">
+          <StartLimit>
+            <FlowDateTimePeriodLimit Interval="Month" Offset="-2" />
+          </StartLimit>
+        </DateTimePeriod>
+        <DateTimePeriod Name="Tekoče leto">
+          <StartLimit>
+            <FlowDateTimePeriodLimit />
+          </StartLimit>
+        </DateTimePeriod>
+        <DateTimePeriod Name="Preteklo leto">
+          <StartLimit>
+            <FlowDateTimePeriodLimit Offset="-1" />
+          </StartLimit>
+          <EndLimit>
+            <FlowDateTimePeriodLimit />
+          </EndLimit>
+        </DateTimePeriod>
+      </DateTimePeriods>
+    </DateFilter>
+  </Items>
+  <LayoutTree>
+    <LayoutGroup>
+      <LayoutGroup Orientation="Vertical" Weight="1.7804968740422513">
+        <LayoutGroup Weight="0.79562043795620441">
+          <LayoutGroup Orientation="Vertical" Weight="1.3165947845118418">
+            <LayoutItem DashboardItem="listBoxDashboardItem1" Weight="1.2104896455878227" />
+            <LayoutItem DashboardItem="dateFilterDashboardItem1" Weight="0.40548583031385116" />
+          </LayoutGroup>
+          <LayoutItem DashboardItem="pieDashboardItem1" Weight="0.92041979282625674" />
+          <LayoutItem DashboardItem="pieDashboardItem6" Weight="0.890577722503876" />
+          <LayoutItem DashboardItem="pieDashboardItem5" Weight="1.0043738289489128" />
+          <LayoutItem DashboardItem="pieDashboardItem3" Weight="0.89418351233854676" />
+          <LayoutItem DashboardItem="pieDashboardItem2" Weight="0.96547492248626887" />
+        </LayoutGroup>
+        <LayoutTabContainer DashboardItem="tabContainerDashboardItem1" Weight="1.2043795620437958">
+          <LayoutTabPage DashboardItem="dashboardTabPage3">
+            <LayoutItem DashboardItem="gridDashboardItem2" />
+          </LayoutTabPage>
+          <LayoutTabPage Orientation="Vertical" DashboardItem="dashboardTabPage1">
+            <LayoutItem DashboardItem="gridDashboardItem1" />
+          </LayoutTabPage>
+          <LayoutTabPage DashboardItem="dashboardTabPage2">
+            <LayoutItem DashboardItem="gridDashboardItem3" Weight="1.5085158150851581" />
+          </LayoutTabPage>
+        </LayoutTabContainer>
+      </LayoutGroup>
+    </LayoutGroup>
+  </LayoutTree>
+</Dashboard>

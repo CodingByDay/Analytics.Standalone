@@ -1,0 +1,558 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Dashboard>
+  <Title Text="DB SETCCE - 3" />
+  <DataSources>
+    <SqlDataSource Name="CustomSqlQuery" ComponentName="sqlDataSource1">
+      <Connection Name="SETCCE" FromAppConfig="true" />
+      <Query Type="CustomSqlQuery" Name="CustomSqlQuery">
+        <Sql>SELECT * FROM uTN_DB_PrerezPoslovanja;</Sql>
+      </Query>
+      <ConnectionOptions CloseConnection="true" />
+      <CalculatedFields>
+        <CalculatedField Name="Vrednost" Expression="iif([TipZapisa]='1 Prihodek',[VrednostPrihodki],iif([TipZapisa]='2 Strošek',[VrednostStroški],iif([TipZapisa]='3 Režija',[VrednostRežija],iif([TipZapisa]='4 Rezultat',[RezultatZRežijo],0))))" DataType="Auto" DataMember="CustomSqlQuery" />
+      </CalculatedFields>
+    </SqlDataSource>
+  </DataSources>
+  <Items>
+    <Grid ComponentName="gridDashboardItem1" Name="Pregled po SN in Oddelkih" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" FilterString="[DataItem5] &lt;&gt; '0 Plan'">
+      <DataItems>
+        <Dimension DataMember="StroškovniNosilec" DefaultId="DataItem0" />
+        <Dimension DataMember="StroškovniNosilecNaziv" DefaultId="DataItem1" />
+        <Dimension DataMember="Naročnik" DefaultId="DataItem2" />
+        <Dimension DataMember="OddelekNaziv" DefaultId="DataItem4" />
+        <Dimension DataMember="OdgovornaOsebaSETCCE" DefaultId="DataItem7" />
+        <Dimension DataMember="TipZapisa" DefaultId="DataItem5" />
+        <Dimension DataMember="Skupina" DefaultId="DataItem6" />
+        <Measure DataMember="Vrednost" FilterString="[DataItem21] = 'Realizacija'" DefaultId="DataItem3">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="Vrednost" FilterString="[DataItem9] = '1' And [DataItem21] = 'Realizacija'" DefaultId="DataItem8">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Dimension DataMember="Mesec" DefaultId="DataItem9" />
+        <Measure DataMember="Vrednost" FilterString="[DataItem9] = '2' And [DataItem21] = 'Realizacija'" DefaultId="DataItem10">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="Vrednost" FilterString="[DataItem9] = '3' And [DataItem21] = 'Realizacija'" DefaultId="DataItem11">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="Vrednost" FilterString="[DataItem9] = '4' And [DataItem21] = 'Realizacija'" DefaultId="DataItem12">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="Vrednost" FilterString="[DataItem9] = '5' And [DataItem21] = 'Realizacija'" DefaultId="DataItem13">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="Vrednost" FilterString="[DataItem9] = '6' And [DataItem21] = 'Realizacija'" DefaultId="DataItem14">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="Vrednost" FilterString="[DataItem9] = '7' And [DataItem21] = 'Realizacija'" DefaultId="DataItem15">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="Vrednost" FilterString="[DataItem9] = '8' And [DataItem21] = 'Realizacija'" DefaultId="DataItem16">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="Vrednost" FilterString="[DataItem9] = '9' And [DataItem21] = 'Realizacija'" DefaultId="DataItem17">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="Vrednost" FilterString="[DataItem9] = '10' And [DataItem21] = 'Realizacija'" DefaultId="DataItem18">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="Vrednost" FilterString="[DataItem9] = '11' And [DataItem21] = 'Realizacija'" DefaultId="DataItem19">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="Vrednost" FilterString="[DataItem9] = '12' And [DataItem21] = 'Realizacija'" DefaultId="DataItem20">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Dimension DataMember="VrstaZapisa" DefaultId="DataItem21" />
+        <Measure DataMember="Vrednost" FilterString="[DataItem21] = 'Plan'" DefaultId="DataItem22">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="Vrednost" FilterString="[DataItem9] = 1 And [DataItem21] = 'Plan'" DefaultId="DataItem23">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="Vrednost" FilterString="[DataItem9] = 2 And [DataItem21] = 'Plan'" DefaultId="DataItem24">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="Vrednost" FilterString="[DataItem9] = 3 And [DataItem21] = 'Plan'" DefaultId="DataItem25">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="Vrednost" FilterString="[DataItem9] = 4 And [DataItem21] = 'Plan'" DefaultId="DataItem26">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="Vrednost" FilterString="[DataItem9] = 5 And [DataItem21] = 'Plan'" DefaultId="DataItem27">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="Vrednost" FilterString="[DataItem9] = 6 And [DataItem21] = 'Plan'" DefaultId="DataItem28">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="Vrednost" FilterString="[DataItem9] = 7 And [DataItem21] = 'Plan'" DefaultId="DataItem29">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="Vrednost" FilterString="[DataItem9] = 8 And [DataItem21] = 'Plan'" DefaultId="DataItem30">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="Vrednost" FilterString="[DataItem9] = 9 And [DataItem21] = 'Plan'" DefaultId="DataItem31">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="Vrednost" FilterString="[DataItem9] = 10 And [DataItem21] = 'Plan'" DefaultId="DataItem32">
+          <NumericFormat FormatType="Currency" Precision="1" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="Vrednost" FilterString="[DataItem9] = 11 And [DataItem21] = 'Plan'" DefaultId="DataItem33">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="Vrednost" FilterString="[DataItem9] = 12 And [DataItem21] = 'Plan'" DefaultId="DataItem34">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+      </DataItems>
+      <HiddenDimensions>
+        <Dimension DefaultId="DataItem9" />
+        <Dimension DefaultId="DataItem21" />
+      </HiddenDimensions>
+      <FormatRules>
+        <GridItemFormatRule Name="Format Rule 1" DataItem="DataItem22" DataItemApplyTo="DataItem22">
+          <FormatConditionValue Condition="Less">
+            <AppearanceSettings AppearanceType="FontRed" />
+            <Value1 Type="System.Decimal" Value="0" />
+          </FormatConditionValue>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 2" DataItem="DataItem3" DataItemApplyTo="DataItem3">
+          <FormatConditionValue Condition="Less">
+            <AppearanceSettings AppearanceType="FontRed" />
+            <Value1 Type="System.Decimal" Value="0" />
+          </FormatConditionValue>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 3" DataItem="DataItem8" DataItemApplyTo="DataItem8">
+          <FormatConditionValue Condition="Less">
+            <AppearanceSettings AppearanceType="FontRed" />
+            <Value1 Type="System.Decimal" Value="0" />
+          </FormatConditionValue>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 4" DataItem="DataItem10" DataItemApplyTo="DataItem10">
+          <FormatConditionValue Condition="Less">
+            <AppearanceSettings AppearanceType="FontRed" />
+            <Value1 Type="System.Decimal" Value="0" />
+          </FormatConditionValue>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 5" DataItem="DataItem11" DataItemApplyTo="DataItem11">
+          <FormatConditionValue Condition="Less">
+            <AppearanceSettings AppearanceType="FontRed" />
+            <Value1 Type="System.Decimal" Value="0" />
+          </FormatConditionValue>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 6" DataItem="DataItem12" DataItemApplyTo="DataItem12">
+          <FormatConditionValue Condition="Less">
+            <AppearanceSettings AppearanceType="FontRed" />
+            <Value1 Type="System.Decimal" Value="0" />
+          </FormatConditionValue>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 7" DataItem="DataItem13" DataItemApplyTo="DataItem13">
+          <FormatConditionValue Condition="Less">
+            <AppearanceSettings AppearanceType="FontRed" />
+            <Value1 Type="System.Decimal" Value="0" />
+          </FormatConditionValue>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 8" DataItem="DataItem14" DataItemApplyTo="DataItem14">
+          <FormatConditionValue Condition="Less">
+            <AppearanceSettings AppearanceType="FontRed" />
+            <Value1 Type="System.Decimal" Value="0" />
+          </FormatConditionValue>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 9" DataItem="DataItem15" DataItemApplyTo="DataItem15">
+          <FormatConditionValue Condition="Less">
+            <AppearanceSettings AppearanceType="FontRed" />
+            <Value1 Type="System.Decimal" Value="0" />
+          </FormatConditionValue>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 10" DataItem="DataItem16" DataItemApplyTo="DataItem16">
+          <FormatConditionValue Condition="Less">
+            <AppearanceSettings AppearanceType="FontRed" />
+            <Value1 Type="System.Decimal" Value="0" />
+          </FormatConditionValue>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 11" DataItem="DataItem17" DataItemApplyTo="DataItem17">
+          <FormatConditionValue Condition="Less">
+            <AppearanceSettings AppearanceType="FontRed" />
+            <Value1 Type="System.Decimal" Value="0" />
+          </FormatConditionValue>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 12" DataItem="DataItem18" DataItemApplyTo="DataItem18">
+          <FormatConditionValue Condition="Less">
+            <AppearanceSettings AppearanceType="FontRed" />
+            <Value1 Type="System.Decimal" Value="0" />
+          </FormatConditionValue>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 13" DataItem="DataItem19" DataItemApplyTo="DataItem19">
+          <FormatConditionValue Condition="Less">
+            <AppearanceSettings AppearanceType="FontRed" />
+            <Value1 Type="System.Decimal" Value="0" />
+          </FormatConditionValue>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 14" DataItem="DataItem20" DataItemApplyTo="DataItem20">
+          <FormatConditionValue Condition="Less">
+            <AppearanceSettings AppearanceType="FontRed" />
+            <Value1 Type="System.Decimal" Value="0" />
+          </FormatConditionValue>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 15" DataItem="DataItem23" DataItemApplyTo="DataItem23">
+          <FormatConditionValue Condition="Less">
+            <AppearanceSettings AppearanceType="FontRed" />
+            <Value1 Type="System.Decimal" Value="0" />
+          </FormatConditionValue>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 16" DataItem="DataItem24" DataItemApplyTo="DataItem24">
+          <FormatConditionValue Condition="Less">
+            <AppearanceSettings AppearanceType="FontRed" />
+            <Value1 Type="System.Decimal" Value="0" />
+          </FormatConditionValue>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 17" DataItem="DataItem25" DataItemApplyTo="DataItem25">
+          <FormatConditionValue Condition="Less">
+            <AppearanceSettings AppearanceType="FontRed" />
+            <Value1 Type="System.Decimal" Value="0" />
+          </FormatConditionValue>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 18" DataItem="DataItem26" DataItemApplyTo="DataItem26">
+          <FormatConditionValue Condition="Less">
+            <AppearanceSettings AppearanceType="FontRed" />
+            <Value1 Type="System.Decimal" Value="0" />
+          </FormatConditionValue>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 19" DataItem="DataItem27" DataItemApplyTo="DataItem27">
+          <FormatConditionValue Condition="Less">
+            <AppearanceSettings AppearanceType="FontRed" />
+            <Value1 Type="System.Decimal" Value="0" />
+          </FormatConditionValue>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 20" DataItem="DataItem28" DataItemApplyTo="DataItem28">
+          <FormatConditionValue Condition="Less">
+            <AppearanceSettings AppearanceType="FontRed" />
+            <Value1 Type="System.Decimal" Value="0" />
+          </FormatConditionValue>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 21" DataItem="DataItem29" DataItemApplyTo="DataItem29">
+          <FormatConditionValue Condition="Less">
+            <AppearanceSettings AppearanceType="FontRed" />
+            <Value1 Type="System.Decimal" Value="0" />
+          </FormatConditionValue>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 22" DataItem="DataItem30" DataItemApplyTo="DataItem30">
+          <FormatConditionValue Condition="Less">
+            <AppearanceSettings AppearanceType="FontRed" />
+            <Value1 Type="System.Decimal" Value="0" />
+          </FormatConditionValue>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 23" DataItem="DataItem31" DataItemApplyTo="DataItem31">
+          <FormatConditionValue Condition="Less">
+            <AppearanceSettings AppearanceType="FontRed" />
+            <Value1 Type="System.Decimal" Value="0" />
+          </FormatConditionValue>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 24" DataItem="DataItem32" DataItemApplyTo="DataItem32">
+          <FormatConditionValue Condition="Less">
+            <AppearanceSettings AppearanceType="FontRed" />
+            <Value1 Type="System.Decimal" Value="0" />
+          </FormatConditionValue>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 25" DataItem="DataItem33" DataItemApplyTo="DataItem33">
+          <FormatConditionValue Condition="Less">
+            <AppearanceSettings AppearanceType="FontRed" />
+            <Value1 Type="System.Decimal" Value="0" />
+          </FormatConditionValue>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 26" DataItem="DataItem34" DataItemApplyTo="DataItem34">
+          <FormatConditionValue Condition="Less">
+            <AppearanceSettings AppearanceType="FontRed" />
+            <Value1 Type="System.Decimal" Value="0" />
+          </FormatConditionValue>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 27" DataItem="DataItem3" DataItemApplyTo="DataItem3">
+          <FormatConditionExpression>
+            <AppearanceSettings AppearanceType="PaleRed" />
+          </FormatConditionExpression>
+        </GridItemFormatRule>
+      </FormatRules>
+      <GridColumns>
+        <GridDimensionColumn Name="Sponzor">
+          <Dimension DefaultId="DataItem7" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="S N">
+          <Dimension DefaultId="DataItem0" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Skupina">
+          <Dimension DefaultId="DataItem6" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Tip">
+          <Dimension DefaultId="DataItem5" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Oddelek">
+          <Dimension DefaultId="DataItem4" />
+        </GridDimensionColumn>
+        <GridDimensionColumn>
+          <Dimension DefaultId="DataItem2" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Naziv stroškovnega nosilca">
+          <Dimension DefaultId="DataItem1" />
+        </GridDimensionColumn>
+        <GridMeasureColumn Name="Plan SUM">
+          <Measure DefaultId="DataItem22" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Realizacija SUM">
+          <Measure DefaultId="DataItem3" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Jan-P">
+          <Measure DefaultId="DataItem23" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Jan-R" AlwaysShowZeroLevel="true">
+          <Measure DefaultId="DataItem8" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Feb-P">
+          <Measure DefaultId="DataItem24" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Feb-R">
+          <Measure DefaultId="DataItem10" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Mar-P">
+          <Measure DefaultId="DataItem25" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Mar-R">
+          <Measure DefaultId="DataItem11" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Apr-P">
+          <Measure DefaultId="DataItem26" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Apr-R">
+          <Measure DefaultId="DataItem12" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Maj-P">
+          <Measure DefaultId="DataItem27" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Maj-R">
+          <Measure DefaultId="DataItem13" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Jun-P">
+          <Measure DefaultId="DataItem28" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Jun-R">
+          <Measure DefaultId="DataItem14" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Jul-P">
+          <Measure DefaultId="DataItem29" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Jul-R">
+          <Measure DefaultId="DataItem15" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Avg-P">
+          <Measure DefaultId="DataItem30" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Avg-R">
+          <Measure DefaultId="DataItem16" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Sep-P">
+          <Measure DefaultId="DataItem31" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Sep-R">
+          <Measure DefaultId="DataItem17" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Okt-P">
+          <Measure DefaultId="DataItem32" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Okt-R">
+          <Measure DefaultId="DataItem18" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Nov-P">
+          <Measure DefaultId="DataItem33" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Nov-R">
+          <Measure DefaultId="DataItem19" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Dec-P">
+          <Measure DefaultId="DataItem34" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Dec-R">
+          <Measure DefaultId="DataItem20" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+      </GridColumns>
+      <GridOptions ColumnWidthMode="AutoFitToContents" />
+    </Grid>
+    <ListBox ComponentName="listBoxDashboardItem1" Name="Obdobje" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" EnableSearch="true">
+      <InteractivityOptions IgnoreMasterFilters="false" />
+      <DataItems>
+        <Dimension DataMember="Obdobje" Name="Obdobje " DefaultId="DataItem0" />
+      </DataItems>
+      <FilterDimensions>
+        <Dimension DefaultId="DataItem0" />
+      </FilterDimensions>
+    </ListBox>
+    <ListBox ComponentName="listBoxDashboardItem2" Name="Tip" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" FilterString="[DataItem0] &lt;&gt; '0 Plan'" EnableSearch="true">
+      <DataItems>
+        <Dimension DataMember="TipZapisa" DefaultId="DataItem0" />
+      </DataItems>
+      <FilterDimensions>
+        <Dimension DefaultId="DataItem0" />
+      </FilterDimensions>
+    </ListBox>
+    <ListBox ComponentName="listBoxDashboardItem3" Name="Naročnik" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" EnableSearch="true">
+      <InteractivityOptions IgnoreMasterFilters="false" />
+      <DataItems>
+        <Dimension DataMember="Naročnik" DefaultId="DataItem0" />
+      </DataItems>
+      <FilterDimensions>
+        <Dimension DefaultId="DataItem0" />
+      </FilterDimensions>
+    </ListBox>
+    <ListBox ComponentName="listBoxDashboardItem4" Name="Oddelek" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" EnableSearch="true">
+      <InteractivityOptions IgnoreMasterFilters="false" />
+      <DataItems>
+        <Dimension DataMember="Oddelek" DefaultId="DataItem0" />
+        <Dimension DataMember="OddelekNaziv" DefaultId="DataItem1" />
+      </DataItems>
+      <FilterDimensions>
+        <Dimension DefaultId="DataItem0" />
+        <Dimension DefaultId="DataItem1" />
+      </FilterDimensions>
+    </ListBox>
+    <ListBox ComponentName="listBoxDashboardItem5" Name="Stroškovni nosilec" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" EnableSearch="true">
+      <InteractivityOptions IgnoreMasterFilters="false" />
+      <DataItems>
+        <Dimension DataMember="StroškovniNosilec" DefaultId="DataItem0" />
+        <Dimension DataMember="StroškovniNosilecNaziv" DefaultId="DataItem1" />
+      </DataItems>
+      <FilterDimensions>
+        <Dimension DefaultId="DataItem0" />
+        <Dimension DefaultId="DataItem1" />
+      </FilterDimensions>
+    </ListBox>
+    <ListBox ComponentName="listBoxDashboardItem6" Name="Odgovorna oseba SETCCE" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" EnableSearch="true">
+      <InteractivityOptions IgnoreMasterFilters="false" />
+      <DataItems>
+        <Dimension DataMember="OdgovornaOsebaSETCCE" DefaultId="DataItem0" />
+      </DataItems>
+      <FilterDimensions>
+        <Dimension DefaultId="DataItem0" />
+      </FilterDimensions>
+    </ListBox>
+    <ListBox ComponentName="listBoxDashboardItem7" Name="Vodja projekta" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" EnableSearch="true">
+      <InteractivityOptions IgnoreMasterFilters="false" />
+      <DataItems>
+        <Dimension DataMember="VodjaProjekta" DefaultId="DataItem0" />
+      </DataItems>
+      <FilterDimensions>
+        <Dimension DefaultId="DataItem0" />
+      </FilterDimensions>
+    </ListBox>
+    <ListBox ComponentName="listBoxDashboardItem8" Name="Sponzor" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" EnableSearch="true">
+      <InteractivityOptions IgnoreMasterFilters="false" />
+      <DataItems>
+        <Dimension DataMember="Sponzor" DefaultId="DataItem0" />
+      </DataItems>
+      <FilterDimensions>
+        <Dimension DefaultId="DataItem0" />
+      </FilterDimensions>
+    </ListBox>
+    <ListBox ComponentName="listBoxDashboardItem9" Name="Skupina" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" EnableSearch="true">
+      <InteractivityOptions IgnoreMasterFilters="false" />
+      <DataItems>
+        <Dimension DataMember="Skupina" DefaultId="DataItem0" />
+      </DataItems>
+      <FilterDimensions>
+        <Dimension DefaultId="DataItem0" />
+      </FilterDimensions>
+    </ListBox>
+  </Items>
+  <LayoutTree>
+    <LayoutGroup>
+      <LayoutGroup Orientation="Vertical">
+        <LayoutGroup Weight="0.64963503649635035">
+          <LayoutItem DashboardItem="listBoxDashboardItem1" Weight="0.61485459700946843" />
+          <LayoutItem DashboardItem="listBoxDashboardItem2" Weight="0.78237881016174526" />
+          <LayoutItem DashboardItem="listBoxDashboardItem3" Weight="1.378038330280519" />
+          <LayoutItem DashboardItem="listBoxDashboardItem4" Weight="1.1406047453091541" />
+          <LayoutItem DashboardItem="listBoxDashboardItem9" Weight="0.7385233774586667" />
+          <LayoutItem DashboardItem="listBoxDashboardItem5" Weight="1.5427047305656139" />
+          <LayoutItem DashboardItem="listBoxDashboardItem6" Weight="1.0194047307618719" />
+          <LayoutItem DashboardItem="listBoxDashboardItem7" Weight="0.90772625026768372" />
+          <LayoutItem DashboardItem="listBoxDashboardItem8" Weight="0.95798758483686841" />
+        </LayoutGroup>
+        <LayoutItem DashboardItem="gridDashboardItem1" Weight="1.3503649635036497" />
+      </LayoutGroup>
+    </LayoutGroup>
+  </LayoutTree>
+</Dashboard>

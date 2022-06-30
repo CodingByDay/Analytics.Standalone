@@ -76,7 +76,9 @@
         <Measure DataMember="Vrednost" FilterString="[DataItem9] = 3 And [DataItem21] = 'Plan'" DefaultId="DataItem25">
           <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
         </Measure>
-        <Measure DataMember="Vrednost" FilterString="[DataItem9] = 4 And [DataItem21] = 'Plan'" DefaultId="DataItem26" />
+        <Measure DataMember="Vrednost" FilterString="[DataItem9] = 4 And [DataItem21] = 'Plan'" DefaultId="DataItem26">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
         <Measure DataMember="Vrednost" FilterString="[DataItem9] = 5 And [DataItem21] = 'Plan'" DefaultId="DataItem27">
           <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
         </Measure>
@@ -353,56 +355,105 @@
         </GridMeasureColumn>
         <GridMeasureColumn Name="Maj-P">
           <Measure DefaultId="DataItem27" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
         </GridMeasureColumn>
         <GridMeasureColumn Name="Maj-R">
           <Measure DefaultId="DataItem13" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
         </GridMeasureColumn>
         <GridMeasureColumn Name="Jun-P">
           <Measure DefaultId="DataItem28" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
         </GridMeasureColumn>
         <GridMeasureColumn Name="Jun-R">
           <Measure DefaultId="DataItem14" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
         </GridMeasureColumn>
         <GridMeasureColumn Name="Jul-P">
           <Measure DefaultId="DataItem29" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
         </GridMeasureColumn>
         <GridMeasureColumn Name="Jul-R">
           <Measure DefaultId="DataItem15" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
         </GridMeasureColumn>
         <GridMeasureColumn Name="Avg-P">
           <Measure DefaultId="DataItem30" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
         </GridMeasureColumn>
         <GridMeasureColumn Name="Avg-R">
           <Measure DefaultId="DataItem16" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
         </GridMeasureColumn>
         <GridMeasureColumn Name="Sep-P">
           <Measure DefaultId="DataItem31" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
         </GridMeasureColumn>
         <GridMeasureColumn Name="Sep-R">
           <Measure DefaultId="DataItem17" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
         </GridMeasureColumn>
         <GridMeasureColumn Name="Okt-P">
           <Measure DefaultId="DataItem32" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
         </GridMeasureColumn>
         <GridMeasureColumn Name="Okt-R">
           <Measure DefaultId="DataItem18" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
         </GridMeasureColumn>
         <GridMeasureColumn Name="Nov-P">
           <Measure DefaultId="DataItem33" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
         </GridMeasureColumn>
         <GridMeasureColumn Name="Nov-R">
           <Measure DefaultId="DataItem19" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
         </GridMeasureColumn>
         <GridMeasureColumn Name="Dec-P">
           <Measure DefaultId="DataItem34" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
         </GridMeasureColumn>
         <GridMeasureColumn Name="Dec-R">
           <Measure DefaultId="DataItem20" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
         </GridMeasureColumn>
       </GridColumns>
       <GridOptions ColumnWidthMode="AutoFitToContents" />
     </Grid>
-    <ListBox ComponentName="listBoxDashboardItem1" Name="Obdobje" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" EnableSearch="true">
+    <ListBox ComponentName="listBoxDashboardItem1" Name="Obdobje" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" EnableSearch="true">
+      <InteractivityOptions IgnoreMasterFilters="false" />
       <DataItems>
         <Dimension DataMember="Obdobje" Name="Obdobje " DefaultId="DataItem0" />
       </DataItems>
@@ -418,7 +469,8 @@
         <Dimension DefaultId="DataItem0" />
       </FilterDimensions>
     </ListBox>
-    <ListBox ComponentName="listBoxDashboardItem3" Name="Naročnik" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" EnableSearch="true">
+    <ListBox ComponentName="listBoxDashboardItem3" Name="Naročnik" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" EnableSearch="true">
+      <InteractivityOptions IgnoreMasterFilters="false" />
       <DataItems>
         <Dimension DataMember="Naročnik" DefaultId="DataItem0" />
       </DataItems>
@@ -426,7 +478,8 @@
         <Dimension DefaultId="DataItem0" />
       </FilterDimensions>
     </ListBox>
-    <ListBox ComponentName="listBoxDashboardItem4" Name="Oddelek" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" EnableSearch="true">
+    <ListBox ComponentName="listBoxDashboardItem4" Name="Oddelek" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" EnableSearch="true">
+      <InteractivityOptions IgnoreMasterFilters="false" />
       <DataItems>
         <Dimension DataMember="Oddelek" DefaultId="DataItem0" />
         <Dimension DataMember="OddelekNaziv" DefaultId="DataItem1" />
@@ -436,7 +489,8 @@
         <Dimension DefaultId="DataItem1" />
       </FilterDimensions>
     </ListBox>
-    <ListBox ComponentName="listBoxDashboardItem5" Name="Stroškovni nosilec" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" EnableSearch="true">
+    <ListBox ComponentName="listBoxDashboardItem5" Name="Stroškovni nosilec" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" EnableSearch="true">
+      <InteractivityOptions IgnoreMasterFilters="false" />
       <DataItems>
         <Dimension DataMember="StroškovniNosilec" DefaultId="DataItem0" />
         <Dimension DataMember="StroškovniNosilecNaziv" DefaultId="DataItem1" />
@@ -446,7 +500,8 @@
         <Dimension DefaultId="DataItem1" />
       </FilterDimensions>
     </ListBox>
-    <ListBox ComponentName="listBoxDashboardItem6" Name="Odgovorna oseba SETCCE" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" EnableSearch="true">
+    <ListBox ComponentName="listBoxDashboardItem6" Name="Odgovorna oseba SETCCE" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" EnableSearch="true">
+      <InteractivityOptions IgnoreMasterFilters="false" />
       <DataItems>
         <Dimension DataMember="OdgovornaOsebaSETCCE" DefaultId="DataItem0" />
       </DataItems>
@@ -454,7 +509,8 @@
         <Dimension DefaultId="DataItem0" />
       </FilterDimensions>
     </ListBox>
-    <ListBox ComponentName="listBoxDashboardItem7" Name="Vodja projekta" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" EnableSearch="true">
+    <ListBox ComponentName="listBoxDashboardItem7" Name="Vodja projekta" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" EnableSearch="true">
+      <InteractivityOptions IgnoreMasterFilters="false" />
       <DataItems>
         <Dimension DataMember="VodjaProjekta" DefaultId="DataItem0" />
       </DataItems>
@@ -462,7 +518,8 @@
         <Dimension DefaultId="DataItem0" />
       </FilterDimensions>
     </ListBox>
-    <ListBox ComponentName="listBoxDashboardItem8" Name="Sponzor" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" EnableSearch="true">
+    <ListBox ComponentName="listBoxDashboardItem8" Name="Sponzor" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" EnableSearch="true">
+      <InteractivityOptions IgnoreMasterFilters="false" />
       <DataItems>
         <Dimension DataMember="Sponzor" DefaultId="DataItem0" />
       </DataItems>
@@ -470,7 +527,8 @@
         <Dimension DefaultId="DataItem0" />
       </FilterDimensions>
     </ListBox>
-    <ListBox ComponentName="listBoxDashboardItem9" Name="Skupina" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" EnableSearch="true">
+    <ListBox ComponentName="listBoxDashboardItem9" Name="Skupina" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" EnableSearch="true">
+      <InteractivityOptions IgnoreMasterFilters="false" />
       <DataItems>
         <Dimension DataMember="Skupina" DefaultId="DataItem0" />
       </DataItems>

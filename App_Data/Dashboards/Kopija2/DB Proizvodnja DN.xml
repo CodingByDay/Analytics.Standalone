@@ -3,7 +3,7 @@
   <Title Text="DB Proizvodnja DN" />
   <DataSources>
     <SqlDataSource Name="uTN_DB_ProizvodnjaDN" ComponentName="sqlDataSource1">
-      <Connection Name="Skaza nova" FromAppConfig="true" />
+      <Connection Name="PetPakProdukcija" FromAppConfig="true" />
       <Query Type="CustomSqlQuery" Name="uTN_DB_ProizvodnjaDN">
         <Sql>SELECT * FROM uTN_DB_ProizvodnjaDN;</Sql>
       </Query>

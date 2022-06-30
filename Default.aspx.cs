@@ -10,6 +10,7 @@ using System.Data.SqlClient;
 using System.Data;
 using static peptak.SiteMaster;
 using System.Web.UI.HtmlControls;
+using System.IO;
 
 namespace peptak
 {
@@ -21,7 +22,7 @@ namespace peptak
             ASPxDashboard1.DashboardLoading += ASPxDashboard1_DashboardLoading;
             ASPxDashboard1.SetConnectionStringsProvider(new DevExpress.DataAccess.Web.ConfigFileConnectionStringsProvider());
             ASPxDashboard1.WorkingMode = WorkingMode.Viewer;
-
+            ASPxDashboard1.DashboardAdding += ASPxDashboard1_DashboardAdding;
             if (!IsPostBack)
             {
 
@@ -93,7 +94,13 @@ namespace peptak
                 }
                
             }
-           
+
+            rename();
+        }
+
+        private void ASPxDashboard1_DashboardAdding(object sender, DashboardAddingWebEventArgs e)
+        {
+       
         }
 
         private void ASPxDashboard1_DashboardLoading(object sender, DashboardLoadingWebEventArgs e)
@@ -154,8 +161,27 @@ namespace peptak
             Response.Redirect("logon.aspx", true);
 
         }
+        public void rename()
+        {
+            try
+            {
+                string name = Request.Cookies["name"].Value.ToString();
 
+                var path = HttpContext.Current.Server.MapPath($"~/App_Data/Dashboards/");
+                string old = path + "dashboard1.xml";
+                string new_path = path + $"{name}.xml";
 
-       
+                File.Move(old, new_path);
+            }
+            catch (Exception error)
+            {
+                var exception = error;
+                var stop = 4;
+            }
+        }
+        protected void hiddenButton_Click(object sender, EventArgs e)
+        {
+           
+        }    
     }
 }

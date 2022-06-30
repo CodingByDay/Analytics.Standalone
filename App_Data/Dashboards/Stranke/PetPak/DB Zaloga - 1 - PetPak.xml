@@ -1,15 +1,22 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Dashboard>
-  <Title Text="DB Zaloge - 2" />
+  <Title Text="DB Zaloge - 1 - PetPak" />
   <DataSources>
     <SqlDataSource Name="CustomSqlQuery" ComponentName="sqlDataSource1">
-      <Connection Name="eHolding ERFA" FromAppConfig="true" />
+      <Connection Name="PetPakProdukcija" FromAppConfig="true" />
       <Query Type="CustomSqlQuery" Name="CustomSqlQuery">
-        <Sql>select * from dbo.uTN_DB_Zaloge</Sql>
+        <Sql>select za.*,
+	case when isnull(si.acFieldSI,'')&lt;&gt;'' then si.acFieldSI else 'Neopredeljeno' end as FilterNeckFinish,
+	isnull(si.anFieldNB,0) as FilterVolume,
+	case when isnull(si.uTN_acMaterialType,'')&lt;&gt;'' then si.uTN_acMaterialType else 'Neopredeljeno' end as FilterMaterial,
+	case when isnull(si.acFieldSC,'')&lt;&gt;'' then si.acFieldSC else 'Neopredeljeno' end as FilterColour,
+	case when isnull(si.acFieldSE,'')&lt;&gt;'' then si.acFieldSE else 'Neopredeljeno' end as FilterProductShape
+from dbo.uTN_DB_Zaloge za
+left join tHE_SetItem si on si.acIdent=za.ZalogaIdent;</Sql>
       </Query>
       <ConnectionOptions CloseConnection="true" />
       <CalculatedFields>
-        <CalculatedField Name="ZalogaObratDni" Expression="((ZalogaKoličinaEM-ZalogaPrevzemKoličina+ZalogaIzdajaKoličina)*365+ZalogaPrevzemDniDoDanes-ZalogaIzdajaDniDoDanes)/&#xD;&#xA;(ZalogaKoličinaEM-ZalogaPrevzemKoličina+ZalogaIzdajaKoličina+ZalogaPrevzemKoličina)" DataType="Auto" DataMember="CustomSqlQuery" />
+        <CalculatedField Name="ZalogaObratDni" Expression="iif((ZalogaKoličinaEM-ZalogaPrevzemKoličina+ZalogaIzdajaKoličina+ZalogaPrevzemKoličina)&lt;&gt;0,&#xD;&#xA;((ZalogaKoličinaEM-ZalogaPrevzemKoličina+ZalogaIzdajaKoličina)*365+ZalogaPrevzemDniDoDanes-ZalogaIzdajaDniDoDanes)/&#xD;&#xA;(ZalogaKoličinaEM-ZalogaPrevzemKoličina+ZalogaIzdajaKoličina+ZalogaPrevzemKoličina),0)" DataType="Auto" DataMember="CustomSqlQuery" />
         <CalculatedField Name="ZalogaZadostujeDni" Expression="[ZalogaKoličinaEM]/&#xD;&#xA;(Iif([ZalogaIzdajaKoličina]=0,1,[ZalogaIzdajaKoličina])/&#xD;&#xA;Iif(([ZalogaKoličinaEM]-[ZalogaPrevzemKoličina]+[ZalogaIzdajaKoličina])=0,DateDiffDay([ZalogaDatumPrvegaPrevzema],LocalDateTimeNow()), 365))" DataType="Auto" DataMember="CustomSqlQuery" />
         <CalculatedField Name="ZalogaObdobjeZaležanosti" Expression="Iif([ZalogaObratDni]&lt;15, 'Do  15 dni',&#xD;&#xA;Iif([ZalogaObratDni]&lt;30, 'Do  30 dni',&#xD;&#xA;Iif([ZalogaObratDni]&lt;45, 'Do  45 dni',&#xD;&#xA;Iif([ZalogaObratDni]&lt;60, 'Do  60 dni',&#xD;&#xA;Iif([ZalogaObratDni]&lt;90, 'Do  90 dni',&#xD;&#xA;Iif([ZalogaObratDni]&lt;180,'Do 180 dni','Nad 180 dni'))))))" DataType="Auto" DataMember="CustomSqlQuery" />
         <CalculatedField Name="ZalogaZačetnoStanje" Expression="sum([ZalogaKoličinaEM])-sum([ZalogaPrevzemKoličina])+sum([ZalogaIzdajaKoličina])" DataType="Auto" DataMember="CustomSqlQuery" />
@@ -124,10 +131,10 @@
     <Pie ComponentName="pieDashboardItem4" Name="Vrednost trenutne zaloge glede na hitrost obračanja" ShowCaption="false" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" PieType="Donut" LabelContentType="ArgumentValueAndPercent">
       <InteractivityOptions MasterFilterMode="Multiple" IsDrillDownEnabled="true" />
       <DataItems>
-        <Measure DataMember="ZalogaVrednost" Name="Zaloga glede na obrat" DefaultId="DataItem0">
+        <Measure DataMember="ZalogaVrednost" Name="Zaloga glede na obrat " DefaultId="DataItem0">
           <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
         </Measure>
-        <Dimension DataMember="ZalogaObdobjeZaležanosti" Name="Obrat zaloge " DefaultId="DataItem1" />
+        <Dimension DataMember="ZalogaObdobjeZaležanosti" Name="Obrat zaloge" DefaultId="DataItem1" />
         <Dimension DataMember="ZalogaDobavitelj" Name="Dobavitelj" DefaultId="DataItem2" />
         <Dimension DataMember="ZalogaSekundarnaKlasifikacija_naziv" Name="Sekundarna klasifikacija" DefaultId="DataItem3" />
       </DataItems>
@@ -140,7 +147,7 @@
         <Value DefaultId="DataItem0" />
       </Values>
     </Pie>
-    <ListBox ComponentName="listBoxDashboardItem1" Name="Skladišče" DataSource="sqlDataSource1" DataMember="CustomSqlQuery">
+    <ListBox ComponentName="listBoxDashboardItem1" Name="Skladišče" ParentContainer="dashboardTabPage1" DataSource="sqlDataSource1" DataMember="CustomSqlQuery">
       <DataItems>
         <Dimension DataMember="ZalogaSkladišče" Name="Skladišče" DefaultId="DataItem0" />
       </DataItems>
@@ -148,20 +155,107 @@
         <Dimension DefaultId="DataItem0" />
       </FilterDimensions>
     </ListBox>
-    <Image ComponentName="imageDashboardItem1" Name="Zasedenost skladišča" Url="http://wms-petpak.trendnet.si/Services/Image/?wh=Centralno%20skladi%C5%A1%C4%8De" SizeMode="Zoom" />
+    <ListBox ComponentName="listBoxDashboardItem2" Name="Identi" ParentContainer="dashboardTabPage2" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" EnableSearch="true">
+      <InteractivityOptions IgnoreMasterFilters="false" />
+      <DataItems>
+        <Dimension DataMember="ZalogaIdentNaziv" Name="Ident" DefaultId="DataItem0" />
+      </DataItems>
+      <FilterDimensions>
+        <Dimension DefaultId="DataItem0" />
+      </FilterDimensions>
+    </ListBox>
+    <TabContainer ComponentName="tabContainerDashboardItem1" Name="Tab Container 1">
+      <Pages>
+        <Page ComponentName="dashboardTabPage1" Name="Page 1" />
+        <Page ComponentName="dashboardTabPage2" Name="Page 2" />
+        <Page ComponentName="dashboardTabPage3" Name="Page 3" />
+        <Page ComponentName="dashboardTabPage4" Name="Page 4" />
+        <Page ComponentName="dashboardTabPage5" Name="Page 5" />
+        <Page ComponentName="dashboardTabPage6" Name="Page 6" />
+        <Page ComponentName="dashboardTabPage7" Name="Page 7" />
+      </Pages>
+    </TabContainer>
+    <ListBox ComponentName="listBoxDashboardItem3" Name="Neck finish" ParentContainer="dashboardTabPage3" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" EnableSearch="true">
+      <InteractivityOptions IgnoreMasterFilters="false" />
+      <DataItems>
+        <Dimension DataMember="FilterNeckFinish" Name="Neck finish" DefaultId="DataItem0" />
+      </DataItems>
+      <FilterDimensions>
+        <Dimension DefaultId="DataItem0" />
+      </FilterDimensions>
+    </ListBox>
+    <ListBox ComponentName="listBoxDashboardItem4" Name="Volume" ParentContainer="dashboardTabPage4" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" EnableSearch="true">
+      <InteractivityOptions IgnoreMasterFilters="false" />
+      <DataItems>
+        <Dimension DataMember="FilterVolume" Name="Volume" DefaultId="DataItem0">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Dimension>
+      </DataItems>
+      <FilterDimensions>
+        <Dimension DefaultId="DataItem0" />
+      </FilterDimensions>
+    </ListBox>
+    <ListBox ComponentName="listBoxDashboardItem5" Name="Colour" ParentContainer="dashboardTabPage5" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" EnableSearch="true">
+      <InteractivityOptions IgnoreMasterFilters="false" />
+      <DataItems>
+        <Dimension DataMember="FilterColour" Name="Colour" DefaultId="DataItem0" />
+      </DataItems>
+      <FilterDimensions>
+        <Dimension DefaultId="DataItem0" />
+      </FilterDimensions>
+    </ListBox>
+    <ListBox ComponentName="listBoxDashboardItem6" Name="Material" ParentContainer="dashboardTabPage6" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" EnableSearch="true">
+      <InteractivityOptions IgnoreMasterFilters="false" />
+      <DataItems>
+        <Dimension DataMember="FilterMaterial" Name="Material" DefaultId="DataItem0" />
+      </DataItems>
+      <FilterDimensions>
+        <Dimension DefaultId="DataItem0" />
+      </FilterDimensions>
+    </ListBox>
+    <ListBox ComponentName="listBoxDashboardItem7" Name="Product shape" ParentContainer="dashboardTabPage7" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true">
+      <InteractivityOptions IgnoreMasterFilters="false" />
+      <DataItems>
+        <Dimension DataMember="FilterProductShape" Name="Product shape" DefaultId="DataItem0" />
+      </DataItems>
+      <FilterDimensions>
+        <Dimension DefaultId="DataItem0" />
+      </FilterDimensions>
+    </ListBox>
   </Items>
   <LayoutTree>
     <LayoutGroup Orientation="Vertical">
-      <LayoutGroup Weight="0.82276602954510059">
-        <LayoutItem DashboardItem="listBoxDashboardItem1" Weight="0.30169401575094784" />
-        <LayoutItem DashboardItem="pieDashboardItem4" Weight="1.0053088896822526" />
-        <LayoutItem DashboardItem="pieDashboardItem2" Weight="0.99871891424518133" />
-        <LayoutItem DashboardItem="pieDashboardItem1" Weight="0.95417818285192368" />
-        <LayoutItem DashboardItem="pieDashboardItem3" Weight="0.94860388928657258" />
+      <LayoutGroup Weight="0.89233979755690063">
+        <LayoutItem DashboardItem="pieDashboardItem4" Weight="0.9386295743105687" />
+        <LayoutItem DashboardItem="pieDashboardItem2" Weight="1.0284448211134769" />
+        <LayoutItem DashboardItem="pieDashboardItem1" Weight="1.0059020386299513" />
+        <LayoutItem DashboardItem="pieDashboardItem3" Weight="0.97395689013306885" />
       </LayoutGroup>
-      <LayoutGroup Weight="1.1772339704548995">
-        <LayoutItem DashboardItem="gridDashboardItem1" Weight="1.4334704262213487" />
-        <LayoutItem DashboardItem="imageDashboardItem1" Weight="1.4334704262213487" />
+      <LayoutGroup Weight="1.1076602024430993">
+        <LayoutTabContainer DashboardItem="tabContainerDashboardItem1" Weight="0.7185838774638349">
+          <LayoutTabPage DashboardItem="dashboardTabPage1">
+            <LayoutItem DashboardItem="listBoxDashboardItem1" Weight="0.25398140532368119" />
+          </LayoutTabPage>
+          <LayoutTabPage DashboardItem="dashboardTabPage2">
+            <LayoutItem DashboardItem="listBoxDashboardItem2" Weight="0.33746219069112393" />
+          </LayoutTabPage>
+          <LayoutTabPage DashboardItem="dashboardTabPage3">
+            <LayoutItem DashboardItem="listBoxDashboardItem3" />
+          </LayoutTabPage>
+          <LayoutTabPage DashboardItem="dashboardTabPage4">
+            <LayoutItem DashboardItem="listBoxDashboardItem4" />
+          </LayoutTabPage>
+          <LayoutTabPage DashboardItem="dashboardTabPage5">
+            <LayoutItem DashboardItem="listBoxDashboardItem5" />
+          </LayoutTabPage>
+          <LayoutTabPage DashboardItem="dashboardTabPage6">
+            <LayoutItem DashboardItem="listBoxDashboardItem6" />
+          </LayoutTabPage>
+          <LayoutTabPage DashboardItem="dashboardTabPage7">
+            <LayoutItem DashboardItem="listBoxDashboardItem7" />
+          </LayoutTabPage>
+        </LayoutTabContainer>
+        <LayoutItem DashboardItem="gridDashboardItem1" Weight="0.90056549332601465" />
       </LayoutGroup>
     </LayoutGroup>
   </LayoutTree>

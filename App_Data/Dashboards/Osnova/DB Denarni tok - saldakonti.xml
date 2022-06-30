@@ -3,7 +3,7 @@
   <Title Text="DB Denarni tok" />
   <DataSources>
     <SqlDataSource Name="CustomSqlQuery" ComponentName="sqlDataSource1">
-      <Connection Name="eHolding ERFA" FromAppConfig="true" />
+      <Connection Name="TCMOTOSHOP" FromAppConfig="true" />
       <Query Type="CustomSqlQuery" Name="CustomSqlQuery">
         <Sql>SELECT * FROM  dbo.uTN_DB_DenarniTok;</Sql>
       </Query>
@@ -17,13 +17,13 @@
         <CalculatedField Name="Terjatev/Obveznost" Expression="iif([DTVrstaSubjekta]='Kupec','Terjatev','Obveznost')" DataType="Auto" DataMember="CustomSqlQuery" />
         <CalculatedField Name="VrednostTerjatveObveznosti" Expression="sum(iif([DTVrstaSubjekta]='Dobavitelj',[DTKredit],[DTDebit]))" DataType="Auto" DataMember="CustomSqlQuery" />
         <CalculatedField Name="DatumPlačila" Expression="max([DTDatumPoplačila])" DataType="DateTime" DataMember="CustomSqlQuery" />
-        <CalculatedField Name="DniZamude" Expression="IIF(sum([DTPovprečnaZapadlostTeža])&gt;0,sum([DTPovprečnaZapadlost])/sum([DTPovprečnaZapadlostTeža]),sum([DTDniZamudeDokument]))" DataType="Auto" DataMember="CustomSqlQuery" />
         <CalculatedField Name="SaldoVisible" Expression="iif(sum([DTSaldo])&gt;0,'T','F')" DataType="Auto" DataMember="CustomSqlQuery" />
       </CalculatedFields>
     </SqlDataSource>
   </DataSources>
   <Items>
     <Grid ComponentName="gridDashboardItem1" Name="Trenutno stanje terjatev in obveznosti" DataSource="sqlDataSource1" DataMember="CustomSqlQuery">
+      <InteractivityOptions IgnoreMasterFilters="true" />
       <DataItems>
         <Dimension DataMember="DTStatus" DefaultId="DataItem0" />
         <Measure DataMember="Obveznost" DefaultId="DataItem1">
@@ -37,7 +37,7 @@
         </Measure>
       </DataItems>
       <GridColumns>
-        <GridDimensionColumn Name="Status">
+        <GridDimensionColumn Name="Status ">
           <Dimension DefaultId="DataItem0" />
         </GridDimensionColumn>
         <GridMeasureColumn Name="Obveznost">
@@ -62,7 +62,7 @@
       <GridOptions />
     </Grid>
     <Chart ComponentName="chartDashboardItem2" Name="Struktura pričakovanih odlivov po DOBAVITELJIH" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" FilterString="[DataItem3] = 'Dobavitelj' And [DataItem2] &lt;&gt; 'Zaprto'" IsMasterFilterCrossDataSource="true" Rotated="true">
-      <InteractivityOptions MasterFilterMode="Multiple" />
+      <InteractivityOptions IgnoreMasterFilters="true" MasterFilterMode="Multiple" />
       <DataItems>
         <Measure DataMember="DTSaldo" DefaultId="DataItem0">
           <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
@@ -84,7 +84,7 @@
         <Pane Name="Pane 1">
           <AxisY Visible="false" />
           <Series>
-            <Simple Name="Obveznost" SeriesType="StackedBar">
+            <Simple Name="Obveznost " SeriesType="StackedBar">
               <Value DefaultId="DataItem0" />
             </Simple>
           </Series>
@@ -92,8 +92,8 @@
       </Panes>
       <AxisX EnableZooming="true" VisiblePointsCount="15" />
     </Chart>
-    <Chart ComponentName="chartDashboardItem3" Name="Struktura pričakovanih prilivov po KUPCIH" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" FilterString="[DataItem3] = 'Kupec'" IsMasterFilterCrossDataSource="true" Rotated="true">
-      <InteractivityOptions MasterFilterMode="Multiple" />
+    <Chart ComponentName="chartDashboardItem3" Name="Struktura pričakovanih prilivov po KUPCIH" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" FilterString="[DataItem3] = 'Kupec' And [DataItem2] &lt;&gt; 'Zaprto'" IsMasterFilterCrossDataSource="true" Rotated="true">
+      <InteractivityOptions IgnoreMasterFilters="true" MasterFilterMode="Multiple" />
       <DataItems>
         <Measure DataMember="DTDebit" DefaultId="DataItem0">
           <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
@@ -115,7 +115,7 @@
         <Pane Name="Pane 1">
           <AxisY Visible="false" />
           <Series>
-            <Simple Name="Terjatev" SeriesType="StackedBar">
+            <Simple Name="Terjatev " SeriesType="StackedBar">
               <Value DefaultId="DataItem0" />
             </Simple>
           </Series>
@@ -123,7 +123,8 @@
       </Panes>
       <AxisX EnableZooming="true" VisiblePointsCount="15" />
     </Chart>
-    <Grid ComponentName="gridDashboardItem2" Name="Terjatve/Obveznosti po Subjektih" ParentContainer="dashboardTabPage1" DataSource="sqlDataSource1" DataMember="CustomSqlQuery">
+    <Grid ComponentName="gridDashboardItem2" Name="Terjatve/Obveznosti po Subjektih" ParentContainer="dashboardTabPage1" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true">
+      <InteractivityOptions IgnoreMasterFilters="true" MasterFilterMode="Multiple" />
       <DataItems>
         <Dimension DataMember="DTSubjekt" DefaultId="DataItem1" />
         <Dimension DataMember="DTDokument" DefaultId="DataItem5" />
@@ -136,9 +137,9 @@
         <Dimension DataMember="DTStatus" DefaultId="DataItem8" />
         <Dimension DataMember="DTStatus" DefaultId="DataItem9" />
         <Dimension DataMember="Terjatev/Obveznost" DefaultId="DataItem10" />
-        <Measure DataMember="DniZamude" SummaryType="Count" DefaultId="DataItem11" />
-        <Dimension DataMember="DTTehtanaPovprečnaZapadlostSum" DefaultId="DataItem2" />
-        <Dimension DataMember="DTPovprečnaZapadlostSum" DefaultId="DataItem0" />
+        <Measure DataMember="DTDniZamudeDokument" SummaryType="Count" DefaultId="DataItem11" />
+        <Dimension DataMember="DTTehtanaPovprečnaZapadlost" DefaultId="DataItem2" />
+        <Dimension DataMember="DTPovprečnaZapadlost" DefaultId="DataItem0" />
       </DataItems>
       <HiddenDimensions>
         <Dimension DefaultId="DataItem8" />
@@ -222,7 +223,7 @@
         <Dimension DataMember="DTStatus" DefaultId="DataItem9" />
         <Dimension DataMember="Terjatev/Obveznost" DefaultId="DataItem10" />
         <Measure DataMember="DTDatumPoplačila" SummaryType="Max" DefaultId="DataItem0" />
-        <Measure DataMember="DniZamude" SummaryType="Count" DefaultId="DataItem11" />
+        <Measure DataMember="DTDniZamudeDokument" SummaryType="Count" DefaultId="DataItem11" />
       </DataItems>
       <HiddenDimensions>
         <Dimension DefaultId="DataItem8" />

@@ -1,0 +1,481 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Dashboard>
+  <Title Text="SETCCE TEST 2" />
+  <DataSources>
+    <SqlDataSource Name="CustomSqlQuery" ComponentName="sqlDataSource1" DataProcessingMode="Client">
+      <Connection Name="SETCCE" FromAppConfig="true" />
+      <Query Type="CustomSqlQuery" Name="CustomSqlQuery">
+        <Sql>select * from uTN_DB_ReportSUMARNO where Obdobje&gt;='2021-01';</Sql>
+      </Query>
+      <ConnectionOptions CloseConnection="true" />
+      <CalculatedFields>
+        <CalculatedField Name="Leto" Expression="substring([Obdobje],0,4)" DataType="Auto" DataMember="CustomSqlQuery" />
+        <CalculatedField Name="IndexPrihodki" Expression="iif(sum([SUMVrednostPlanPrihodki])=0,0,sum([SUMVrednostRealizacijaPrihodki])/sum([SUMVrednostPlanPrihodki]))" DataType="Auto" DataMember="CustomSqlQuery" />
+        <CalculatedField Name="IndexStroški" Expression="iif(sum([SUMVrednostPlanStroški])=0,0,sum([SUMVrednostRealizacijaStroški])/sum([SUMVrednostPlanStroški]))" DataType="Auto" DataMember="CustomSqlQuery" />
+        <CalculatedField Name="IndexRežija" Expression="iif(sum([SUMVrednostPlanRežija])=0,0,sum([SUMVrednostRealizacijaRežija])/sum([SUMVrednostPlanRežija]))" DataType="Auto" DataMember="CustomSqlQuery" />
+        <CalculatedField Name="IndexRezultat" Expression="iif(sum([SUMVrednostPlanRezultat])=0,0,sum([SUMVrednostRealizacijaRezultat])/sum([SUMVrednostPlanRezultat]))" DataType="Auto" DataMember="CustomSqlQuery" />
+        <CalculatedField Name="Priodki1" Expression="iif([Leto]=?P1Leto,[SUMVrednostRealizacijaPrihodki],0)" DataType="Auto" DataMember="CustomSqlQuery" />
+        <CalculatedField Name="Priodki2" Expression="iif([Leto] = ?P1Leto-1,[SUMVrednostRealizacijaPrihodki],0)" DataType="Auto" DataMember="CustomSqlQuery" />
+      </CalculatedFields>
+    </SqlDataSource>
+  </DataSources>
+  <Parameters>
+    <Parameter Name="P1Leto" Value="2022" Description="Leto glede na obdobje">
+      <DynamicListLookUpSettings DataSourceName="sqlDataSource1" DataMember="CustomSqlQuery" ValueMember="Leto" DisplayMember="Leto" SortByMember="Leto" SortOrder="Descending" />
+    </Parameter>
+  </Parameters>
+  <Items>
+    <Grid ComponentName="gridDashboardItem1" Name="Pregled po stroškovnh nosilcih" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" FilterString="[Leto] = ?P1Leto">
+      <InteractivityOptions MasterFilterMode="Multiple" />
+      <DataItems>
+        <Dimension DataMember="StroškovniNosilec" DefaultId="DataItem0" />
+        <Dimension DataMember="Oddelek" DefaultId="DataItem1" />
+        <Dimension DataMember="Sponzor" DefaultId="DataItem2" />
+        <Measure DataMember="SUMVrednostPlanPrihodki" DefaultId="DataItem3">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="SUMVrednostRealizacijaPrihodki" DefaultId="DataItem4">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="SUMVrednostPlanStroški" DefaultId="DataItem5">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="SUMVrednostRealizacijaStroški" DefaultId="DataItem6">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="SUMVrednostPlanRežija" DefaultId="DataItem7">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="SUMVrednostRealizacijaRežija" DefaultId="DataItem8">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="SUMVrednostPlanRezultat" DefaultId="DataItem9">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="SUMVrednostRealizacijaRezultat" DefaultId="DataItem10">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="SUMVrednostPlanPrihodki" DefaultId="DataItem12" />
+        <Measure DataMember="IndexPrihodki" DefaultId="DataItem11">
+          <NumericFormat FormatType="Percent" />
+        </Measure>
+        <Measure DataMember="IndexStroški" DefaultId="DataItem13">
+          <NumericFormat FormatType="Percent" />
+        </Measure>
+        <Measure DataMember="IndexRežija" DefaultId="DataItem14">
+          <NumericFormat FormatType="Percent" />
+        </Measure>
+        <Measure DataMember="IndexRezultat" DefaultId="DataItem15">
+          <NumericFormat FormatType="Percent" />
+        </Measure>
+      </DataItems>
+      <GridColumns>
+        <GridDimensionColumn Weight="84.125942932108771">
+          <Dimension DefaultId="DataItem2" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Weight="73.794686782551551">
+          <Dimension DefaultId="DataItem0" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Weight="42.062971466054385">
+          <Dimension DefaultId="DataItem1" />
+        </GridDimensionColumn>
+        <GridMeasureColumn Name="Plan PRIHODKI" Weight="87.07773040341084">
+          <Measure DefaultId="DataItem3" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Realizacija PRIHODKI" Weight="92.243358478189435">
+          <Measure DefaultId="DataItem4" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Index PLA" Weight="52.3942276156116">
+          <Measure DefaultId="DataItem11" />
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Plan STROŠKI" Weight="83.387996064283257">
+          <Measure DefaultId="DataItem5" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Realizacija STROŠKI" Weight="87.815677271236339">
+          <Measure DefaultId="DataItem6" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Index STR" Weight="49.442440144309543">
+          <Measure DefaultId="DataItem13" />
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Plan REŽIJA" Weight="85.6018366677598">
+          <Measure DefaultId="DataItem7" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Realizacija REŽIJA" Weight="83.387996064283257">
+          <Measure DefaultId="DataItem8" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Index REŽ" Weight="52.3942276156116">
+          <Measure DefaultId="DataItem14" />
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Plan REZULTAT" Weight="84.863889799934284">
+          <Measure DefaultId="DataItem9" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Realizacija REZULTAT" Weight="82.650049196457744">
+          <Measure DefaultId="DataItem10" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Index REZ" Weight="83.756969498196014">
+          <Measure DefaultId="DataItem15" />
+        </GridMeasureColumn>
+      </GridColumns>
+      <GridOptions />
+    </Grid>
+    <ListBox ComponentName="listBoxDashboardItem1" Name="Stroškovni nosilec" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" FilterString="[Leto] = ?P1Leto" EnableSearch="true">
+      <DataItems>
+        <Dimension DataMember="StroškovniNosilec" DefaultId="DataItem0" />
+        <Dimension DataMember="StroškovniNosilecNaziv" DefaultId="DataItem1" />
+      </DataItems>
+      <FilterDimensions>
+        <Dimension DefaultId="DataItem0" />
+        <Dimension DefaultId="DataItem1" />
+      </FilterDimensions>
+    </ListBox>
+    <Grid ComponentName="gridDashboardItem2" Name="PLAN - detajl" ParentContainer="dashboardTabPage1" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" FilterString="Not([DataItem5] Is Null)">
+      <DataItems>
+        <Dimension DataMember="StroškovniNosilec" DefaultId="DataItem0" />
+        <Dimension DataMember="StroškovniNosilecNaziv" DefaultId="DataItem1" />
+        <Dimension DataMember="Oddelek" DefaultId="DataItem2" />
+        <Dimension DataMember="OddelekNaziv" DefaultId="DataItem3" />
+        <Dimension DataMember="Obdobje" DefaultId="DataItem4" />
+        <Dimension DataMember="PlanTip" DefaultId="DataItem5" />
+        <Dimension DataMember="PlanDokument" DefaultId="DataItem6" />
+        <Dimension DataMember="PlanDokumentPoz" DefaultId="DataItem7" />
+        <Dimension DataMember="PlanIdent" DefaultId="DataItem8" />
+        <Dimension DataMember="PlanIdentNaziv" DefaultId="DataItem9" />
+        <Measure DataMember="PlanKoličina" DefaultId="DataItem10">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Dimension DataMember="PlanCena" DefaultId="DataItem11">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Dimension>
+        <Measure DataMember="PlanVrednost" FilterString="[DataItem5] = 'Prihodki'" DefaultId="DataItem12">
+          <NumericFormat FormatType="Currency" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Dimension DataMember="PlanNaročnik" DefaultId="DataItem13" />
+        <Dimension DataMember="PlanEM" DefaultId="DataItem14" />
+        <Measure DataMember="PlanVrednost" FilterString="[DataItem5] = 'Stroški'" DefaultId="DataItem15">
+          <NumericFormat FormatType="Currency" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+      </DataItems>
+      <GridColumns>
+        <GridDimensionColumn Name="SN">
+          <Dimension DefaultId="DataItem0" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Naziv SN">
+          <Dimension DefaultId="DataItem1" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Naročnik">
+          <Dimension DefaultId="DataItem13" />
+        </GridDimensionColumn>
+        <GridDimensionColumn>
+          <Dimension DefaultId="DataItem2" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Naziv oddelka">
+          <Dimension DefaultId="DataItem3" />
+        </GridDimensionColumn>
+        <GridDimensionColumn>
+          <Dimension DefaultId="DataItem4" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Dokument">
+          <Dimension DefaultId="DataItem6" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="POZ">
+          <Dimension DefaultId="DataItem7" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Tip">
+          <Dimension DefaultId="DataItem5" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Ident">
+          <Dimension DefaultId="DataItem8" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Naziv identa">
+          <Dimension DefaultId="DataItem9" />
+        </GridDimensionColumn>
+        <GridMeasureColumn Name="Količina">
+          <Measure DefaultId="DataItem10" />
+        </GridMeasureColumn>
+        <GridDimensionColumn Name="EM">
+          <Dimension DefaultId="DataItem14" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Cena">
+          <Dimension DefaultId="DataItem11" />
+        </GridDimensionColumn>
+        <GridMeasureColumn Name="Vrednost prihodkov">
+          <Measure DefaultId="DataItem12" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Vrednost stroškov">
+          <Measure DefaultId="DataItem15" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+      </GridColumns>
+      <GridOptions />
+    </Grid>
+    <TabContainer ComponentName="tabContainerDashboardItem1" Name="Tab Container 1">
+      <Pages>
+        <Page ComponentName="dashboardTabPage1" Name="Page 1" />
+        <Page ComponentName="dashboardTabPage2" Name="Page 2" />
+        <Page ComponentName="dashboardTabPage3" Name="Page 3" />
+        <Page ComponentName="dashboardTabPage4" Name="Page 4" />
+      </Pages>
+    </TabContainer>
+    <Grid ComponentName="gridDashboardItem3" Name="REALIZACIJA detajl" ParentContainer="dashboardTabPage2" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" FilterString="[Leto] = ?P1Leto And [RealizacijaTip] Is Not Null">
+      <DataItems>
+        <Dimension DataMember="StroškovniNosilec" DefaultId="DataItem0" />
+        <Dimension DataMember="StroškovniNosilecNaziv" DefaultId="DataItem1" />
+        <Dimension DataMember="Oddelek" DefaultId="DataItem2" />
+        <Dimension DataMember="OddelekNaziv" DefaultId="DataItem3" />
+        <Dimension DataMember="Obdobje" DefaultId="DataItem4" />
+        <Dimension DataMember="RealizacijaNaročnik" DefaultId="DataItem5" />
+        <Dimension DataMember="RealizacijaDokument" DefaultId="DataItem6" />
+        <Dimension DataMember="RealizacijaPoz" DefaultId="DataItem7" />
+        <Dimension DataMember="RealizacijaTip" DefaultId="DataItem8" />
+        <Dimension DataMember="RealizacijaIdent" DefaultId="DataItem9" />
+        <Measure DataMember="RealizacijaKoličina" DefaultId="DataItem10">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="RealizacijaVrednost" FilterString="[DataItem8] = 'Prevzem'" DefaultId="DataItem11">
+          <NumericFormat FormatType="Currency" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Dimension DataMember="RealizacijaEM" DefaultId="DataItem12" />
+        <Dimension DataMember="RealizacijaIdentNaziv" DefaultId="DataItem13" />
+        <Dimension DataMember="RealizacijaDatumDokumenta" DateTimeGroupInterval="DayMonthYear" DefaultId="DataItem14" />
+        <Dimension DataMember="RealizacijaDatumZapadlosti" DateTimeGroupInterval="DayMonthYear" DefaultId="DataItem15" />
+        <Measure DataMember="RealizacijaVrednost" FilterString="[DataItem8] = 'Izdaja'" DefaultId="DataItem16">
+          <NumericFormat FormatType="Currency" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+      </DataItems>
+      <GridColumns>
+        <GridDimensionColumn Name="SN">
+          <Dimension DefaultId="DataItem0" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Naziv SN">
+          <Dimension DefaultId="DataItem1" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Naročnik">
+          <Dimension DefaultId="DataItem5" />
+        </GridDimensionColumn>
+        <GridDimensionColumn>
+          <Dimension DefaultId="DataItem2" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Naziv oddelka">
+          <Dimension DefaultId="DataItem3" />
+        </GridDimensionColumn>
+        <GridDimensionColumn>
+          <Dimension DefaultId="DataItem4" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Dokument">
+          <Dimension DefaultId="DataItem6" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="POZ">
+          <Dimension DefaultId="DataItem7" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Tip">
+          <Dimension DefaultId="DataItem8" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Ident">
+          <Dimension DefaultId="DataItem9" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Naziv identa">
+          <Dimension DefaultId="DataItem13" />
+        </GridDimensionColumn>
+        <GridMeasureColumn Name="Količina">
+          <Measure DefaultId="DataItem10" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridDimensionColumn Name="EM">
+          <Dimension DefaultId="DataItem12" />
+        </GridDimensionColumn>
+        <GridMeasureColumn Name="Vrednost IZDAJA">
+          <Measure DefaultId="DataItem16" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Vrednost PREVZEM">
+          <Measure DefaultId="DataItem11" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridDimensionColumn Name="Datum dokumenta">
+          <Dimension DefaultId="DataItem14" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Datum zapadlosti">
+          <Dimension DefaultId="DataItem15" />
+        </GridDimensionColumn>
+      </GridColumns>
+      <GridOptions />
+    </Grid>
+    <Grid ComponentName="gridDashboardItem4" Name="REŽIJSKO DELO detajl" ParentContainer="dashboardTabPage3" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" FilterString="[Leto] = ?P1Leto And [DataItem5] Is Not Null">
+      <DataItems>
+        <Dimension DataMember="StroškovniNosilec" DefaultId="DataItem0" />
+        <Dimension DataMember="StroškovniNosilecNaziv" DefaultId="DataItem1" />
+        <Dimension DataMember="Oddelek" DefaultId="DataItem2" />
+        <Dimension DataMember="OddelekNaziv" DefaultId="DataItem3" />
+        <Dimension DataMember="Obdobje" DefaultId="DataItem4" />
+        <Dimension DataMember="DeloKonto" DefaultId="DataItem5" />
+        <Dimension DataMember="DeloKontoNaziv" DefaultId="DataItem6" />
+        <Measure DataMember="DeloVrednostRežija" DefaultId="DataItem7">
+          <NumericFormat FormatType="Currency" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+      </DataItems>
+      <GridColumns>
+        <GridDimensionColumn Name="SN">
+          <Dimension DefaultId="DataItem0" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Naziv SN">
+          <Dimension DefaultId="DataItem1" />
+        </GridDimensionColumn>
+        <GridDimensionColumn>
+          <Dimension DefaultId="DataItem2" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Naziv oddelka">
+          <Dimension DefaultId="DataItem3" />
+        </GridDimensionColumn>
+        <GridDimensionColumn>
+          <Dimension DefaultId="DataItem4" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Konto">
+          <Dimension DefaultId="DataItem5" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Naziv konta">
+          <Dimension DefaultId="DataItem6" />
+        </GridDimensionColumn>
+        <GridMeasureColumn Name="Vrednost">
+          <Measure DefaultId="DataItem7" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+      </GridColumns>
+      <GridOptions />
+    </Grid>
+    <Grid ComponentName="gridDashboardItem5" Name="KNJIŽBE detajl" ParentContainer="dashboardTabPage4" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" FilterString="[Leto] = ?P1Leto And [DataItem5] Is Not Null">
+      <DataItems>
+        <Dimension DataMember="StroškovniNosilec" DefaultId="DataItem0" />
+        <Dimension DataMember="StroškovniNosilecNaziv" DefaultId="DataItem1" />
+        <Dimension DataMember="Oddelek" DefaultId="DataItem2" />
+        <Dimension DataMember="OddelekNaziv" DefaultId="DataItem3" />
+        <Dimension DataMember="Obdobje" DefaultId="DataItem4" />
+        <Dimension DataMember="TransTip" DefaultId="DataItem5" />
+        <Dimension DataMember="TransDokument" DefaultId="DataItem6" />
+        <Dimension DataMember="TransIdent" DefaultId="DataItem8" />
+        <Dimension DataMember="TransKonto" DefaultId="DataItem9" />
+        <Dimension DataMember="TransKontoOpis" DefaultId="DataItem10" />
+        <Dimension DataMember="TransSubjekt" DefaultId="DataItem11" />
+        <Measure DataMember="TransVrednost" DefaultId="DataItem12">
+          <NumericFormat FormatType="Currency" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Dimension DataMember="TransDokumentPoz" DefaultId="DataItem7">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" />
+        </Dimension>
+      </DataItems>
+      <GridColumns>
+        <GridDimensionColumn Name="SN">
+          <Dimension DefaultId="DataItem0" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Naziv SN">
+          <Dimension DefaultId="DataItem1" />
+        </GridDimensionColumn>
+        <GridDimensionColumn>
+          <Dimension DefaultId="DataItem2" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Naziv oddelka">
+          <Dimension DefaultId="DataItem3" />
+        </GridDimensionColumn>
+        <GridDimensionColumn>
+          <Dimension DefaultId="DataItem4" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Tip">
+          <Dimension DefaultId="DataItem5" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Dokument">
+          <Dimension DefaultId="DataItem6" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="POZ">
+          <Dimension DefaultId="DataItem7" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Ident">
+          <Dimension DefaultId="DataItem8" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Konto">
+          <Dimension DefaultId="DataItem9" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Opis konta">
+          <Dimension DefaultId="DataItem10" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Subjekt">
+          <Dimension DefaultId="DataItem11" />
+        </GridDimensionColumn>
+        <GridMeasureColumn Name="Vrednost">
+          <Measure DefaultId="DataItem12" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+      </GridColumns>
+      <GridOptions />
+    </Grid>
+    <ListBox ComponentName="listBoxDashboardItem2" Name="Obdobje" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" FilterString="[Leto] = ?P1Leto" IsMasterFilterCrossDataSource="true">
+      <InteractivityOptions IgnoreMasterFilters="false" />
+      <DataItems>
+        <Dimension DataMember="Obdobje" DefaultId="DataItem0" />
+      </DataItems>
+      <FilterDimensions>
+        <Dimension DefaultId="DataItem0" />
+      </FilterDimensions>
+    </ListBox>
+  </Items>
+  <LayoutTree>
+    <LayoutGroup Orientation="Vertical">
+      <LayoutGroup Weight="0.91970802919708028">
+        <LayoutItem DashboardItem="listBoxDashboardItem2" Weight="0.13630200943327747" />
+        <LayoutItem DashboardItem="listBoxDashboardItem1" Weight="0.33410775104746987" />
+        <LayoutItem DashboardItem="gridDashboardItem1" Weight="1.8356223369182567" />
+      </LayoutGroup>
+      <LayoutTabContainer DashboardItem="tabContainerDashboardItem1" Weight="1.0802919708029197">
+        <LayoutTabPage DashboardItem="dashboardTabPage1">
+          <LayoutItem DashboardItem="gridDashboardItem2" Weight="1.0802919708029197" />
+        </LayoutTabPage>
+        <LayoutTabPage DashboardItem="dashboardTabPage2">
+          <LayoutItem DashboardItem="gridDashboardItem3" />
+        </LayoutTabPage>
+        <LayoutTabPage DashboardItem="dashboardTabPage3">
+          <LayoutItem DashboardItem="gridDashboardItem4" />
+        </LayoutTabPage>
+        <LayoutTabPage DashboardItem="dashboardTabPage4">
+          <LayoutItem DashboardItem="gridDashboardItem5" />
+        </LayoutTabPage>
+      </LayoutTabContainer>
+    </LayoutGroup>
+  </LayoutTree>
+</Dashboard>

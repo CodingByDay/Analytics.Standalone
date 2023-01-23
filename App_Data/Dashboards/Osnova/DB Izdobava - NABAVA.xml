@@ -3,7 +3,7 @@
   <Title Text="DB Izdobava - NABAVA" />
   <DataSources>
     <SqlDataSource Name="uTN_DB_NaročilaIzdobavaZaloga" ComponentName="sqlDataSource1">
-      <Connection Name="eHolding ERFA" FromAppConfig="true" />
+      <Connection Name="PetPak" FromAppConfig="true" />
       <Query Type="CustomSqlQuery" Name="CustomSqlQuery">
         <Sql>SELECT * FROM dbo.uTN_DB_NaročilaIzdobavaZaloga
 WHERE NARTipNAročila='Prevzem';</Sql>
@@ -115,6 +115,9 @@ WHERE NARTipNAročila='Prevzem';</Sql>
         <Dimension DataMember="NARDobaviteljAliPlačnik" DefaultId="DataItem11" />
         <Measure DataMember="NARNaročiloDatumDostave" SummaryType="Min" DefaultId="DataItem12" />
         <Dimension DataMember="NARNaročiloDatumDostave" DateTimeGroupInterval="DayMonthYear" DefaultId="DataItem13" />
+        <Measure DataMember="NARZalogaEMTrenutna" SummaryType="Max" DefaultId="DataItem14">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
       </DataItems>
       <HiddenDimensions>
         <Dimension DefaultId="DataItem3" />
@@ -162,6 +165,9 @@ WHERE NARTipNAročila='Prevzem';</Sql>
         <GridDimensionColumn Name="Predviden datum dostave">
           <Dimension DefaultId="DataItem5" />
         </GridDimensionColumn>
+        <GridMeasureColumn Name="Skupna trenutna zaloga">
+          <Measure DefaultId="DataItem14" />
+        </GridMeasureColumn>
         <GridMeasureColumn Name="Naročena količina">
           <Measure DefaultId="DataItem6" />
         </GridMeasureColumn>
@@ -199,15 +205,37 @@ WHERE NARTipNAročila='Prevzem';</Sql>
         <Value DefaultId="DataItem1" />
       </Values>
     </Pie>
+    <ListBox ComponentName="listBoxDashboardItem1" Name="Ident" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" EnableSearch="true">
+      <DataItems>
+        <Dimension DataMember="NARIdent" Name="Ident" DefaultId="DataItem0" />
+        <Dimension DataMember="NARIdentNaziv" Name="Naziv identa" DefaultId="DataItem1" />
+      </DataItems>
+      <FilterDimensions>
+        <Dimension DefaultId="DataItem0" />
+        <Dimension DefaultId="DataItem1" />
+      </FilterDimensions>
+    </ListBox>
+    <ListBox ComponentName="listBoxDashboardItem2" Name="Vrsta materialnega sredstva" DataSource="sqlDataSource1" DataMember="CustomSqlQuery">
+      <DataItems>
+        <Dimension DataMember="NARVrstaMS" Name="VMS" DefaultId="DataItem0" />
+        <Dimension DataMember="NARVrstaMSNaziv" Name="Naziv VMS" DefaultId="DataItem1" />
+      </DataItems>
+      <FilterDimensions>
+        <Dimension DefaultId="DataItem0" />
+        <Dimension DefaultId="DataItem1" />
+      </FilterDimensions>
+    </ListBox>
   </Items>
   <LayoutTree>
     <LayoutGroup>
       <LayoutGroup Orientation="Vertical">
         <LayoutGroup Weight="0.82681169791517606">
           <LayoutItem DashboardItem="dateFilterDashboardItem1" Weight="0.60435581577848152" />
-          <LayoutItem DashboardItem="pieDashboardItem1" Weight="1.5942796610169492" />
-          <LayoutItem DashboardItem="pieDashboardItem4" />
-          <LayoutItem DashboardItem="pieDashboardItem2" />
+          <LayoutItem DashboardItem="listBoxDashboardItem1" Weight="0.95617494521805135" />
+          <LayoutItem DashboardItem="listBoxDashboardItem2" Weight="0.60435581577848152" />
+          <LayoutItem DashboardItem="pieDashboardItem1" Weight="1.7186903456919984" />
+          <LayoutItem DashboardItem="pieDashboardItem4" Weight="1.0231506680479308" />
+          <LayoutItem DashboardItem="pieDashboardItem2" Weight="1.0694520041437929" />
         </LayoutGroup>
         <LayoutItem DashboardItem="gridDashboardItem1" Weight="1.1731883020848242" />
       </LayoutGroup>

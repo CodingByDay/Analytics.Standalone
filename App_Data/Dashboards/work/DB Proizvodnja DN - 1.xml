@@ -1,0 +1,155 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Dashboard>
+  <Title Text="DB Proizvodnja DN - 1" />
+  <DataSources>
+    <SqlDataSource Name="uTN_DB_ProizvodnjaDN1" ComponentName="sqlDataSource1">
+      <Connection Name="Soltec" FromAppConfig="true" />
+      <Query Type="CustomSqlQuery" Name="uTN_DB_ProizvodnjaDN1">
+        <Sql>select * from dbo.uTN_DB_ProizvodnjaDN1;</Sql>
+      </Query>
+      <ConnectionOptions CloseConnection="true" />
+    </SqlDataSource>
+  </DataSources>
+  <Items>
+    <ListBox ComponentName="listBoxDashboardItem1" Name="Stroškoni nosilci" DataSource="sqlDataSource1" DataMember="uTN_DB_ProizvodnjaDN1" IsMasterFilterCrossDataSource="true" EnableSearch="true">
+      <DataItems>
+        <Dimension DataMember="DNStroškovniNosilec" Name="Stroškovni nosilec" DefaultId="DataItem0" />
+        <Dimension DataMember="DNStroškovniNosilecNaziv" Name="Naziv stroškovnega nosilca" DefaultId="DataItem1" />
+      </DataItems>
+      <FilterDimensions>
+        <Dimension DefaultId="DataItem0" />
+        <Dimension DefaultId="DataItem1" />
+      </FilterDimensions>
+    </ListBox>
+    <ListBox ComponentName="listBoxDashboardItem2" Name="Status krovnega DN" DataSource="sqlDataSource1" DataMember="uTN_DB_ProizvodnjaDN1" IsMasterFilterCrossDataSource="true">
+      <DataItems>
+        <Dimension DataMember="DNNadrejenStatus" Name="Status nosilnega DN" DefaultId="DataItem0" />
+      </DataItems>
+      <FilterDimensions>
+        <Dimension DefaultId="DataItem0" />
+      </FilterDimensions>
+    </ListBox>
+    <Grid ComponentName="gridDashboardItem1" Name="Grid 1" DataSource="sqlDataSource1" DataMember="uTN_DB_ProizvodnjaDN1">
+      <DataItems>
+        <Dimension DataMember="DNPodrejenDN" DefaultId="DataItem0" />
+        <Dimension DataMember="DNPodrejenIdent" DefaultId="DataItem1" />
+        <Dimension DataMember="DNPodrejenIdentNaziv" DefaultId="DataItem2" />
+        <Measure DataMember="DNPodrejenPlaniranaKoličina" DefaultId="DataItem3" />
+        <Measure DataMember="DNPodrejenRealiziranaKoličina" DefaultId="DataItem4" />
+        <Measure DataMember="DNPodrejenOdprtaKoličina" DefaultId="DataItem5" />
+        <Dimension DataMember="DNPodrejenVMSNaziv" DefaultId="DataItem6" />
+      </DataItems>
+      <GridColumns>
+        <GridDimensionColumn Name="Podrejen DN">
+          <Dimension DefaultId="DataItem0" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Ident">
+          <Dimension DefaultId="DataItem1" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Naziv identa">
+          <Dimension DefaultId="DataItem2" />
+        </GridDimensionColumn>
+        <GridMeasureColumn Name="Razpisana količina">
+          <Measure DefaultId="DataItem3" />
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Realizirana količina">
+          <Measure DefaultId="DataItem4" />
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Odprta količina">
+          <Measure DefaultId="DataItem5" />
+        </GridMeasureColumn>
+        <GridDimensionColumn>
+          <Dimension DefaultId="DataItem6" />
+        </GridDimensionColumn>
+      </GridColumns>
+      <GridOptions />
+    </Grid>
+    <Grid ComponentName="gridDashboardItem2" Name="Krovni delovni nalog" DataSource="sqlDataSource1" DataMember="uTN_DB_ProizvodnjaDN1" IsMasterFilterCrossDataSource="true">
+      <InteractivityOptions MasterFilterMode="Multiple" />
+      <DataItems>
+        <Dimension DataMember="DNNadrejenDN" DefaultId="DataItem0" />
+        <Dimension DataMember="DNŠtevilkaNaročila" DefaultId="DataItem1" />
+        <Dimension DataMember="DNStroškovniNosilecNaročnik" DefaultId="DataItem2" />
+        <Dimension DataMember="DNNadrejenStatus" DefaultId="DataItem3" />
+        <Measure DataMember="DNPodrejenStrošek" DefaultId="DataItem4">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="DNNadrejenVrednostNaročila" SummaryType="Max" DefaultId="DataItem5">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="DNPodrejenOdprtaKoličina" SummaryType="Max" DefaultId="DataItem6">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="DNPodrejenRealiziranaKoličina" SummaryType="Max" DefaultId="DataItem7">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="DNPodrejenPlaniranaKoličina" SummaryType="Max" DefaultId="DataItem8">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+      </DataItems>
+      <GridColumns>
+        <GridDimensionColumn Name="Krovni DN">
+          <Dimension DefaultId="DataItem0" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Naročilo">
+          <Dimension DefaultId="DataItem1" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Naročnik">
+          <Dimension DefaultId="DataItem2" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Status">
+          <Dimension DefaultId="DataItem3" />
+        </GridDimensionColumn>
+        <GridMeasureColumn Name="Razpisanih DN">
+          <Measure DefaultId="DataItem8" />
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Realiziranih DN">
+          <Measure DefaultId="DataItem7" />
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Odprtih DN">
+          <Measure DefaultId="DataItem6" />
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Vrednost naročila">
+          <Measure DefaultId="DataItem5" />
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Strošek">
+          <Measure DefaultId="DataItem4" />
+        </GridMeasureColumn>
+      </GridColumns>
+      <GridOptions />
+    </Grid>
+    <ListBox ComponentName="listBoxDashboardItem3" Name="Status podrejenega DN" DataSource="sqlDataSource1" DataMember="uTN_DB_ProizvodnjaDN1" IsMasterFilterCrossDataSource="true">
+      <DataItems>
+        <Dimension DataMember="DNPodrejenStatus" DefaultId="DataItem0" />
+      </DataItems>
+      <FilterDimensions>
+        <Dimension DefaultId="DataItem0" />
+      </FilterDimensions>
+    </ListBox>
+    <ListBox ComponentName="listBoxDashboardItem4" Name="Naročniki" DataSource="sqlDataSource1" DataMember="uTN_DB_ProizvodnjaDN1" EnableSearch="true">
+      <DataItems>
+        <Dimension DataMember="DNStroškovniNosilecNaročnik" Name="Naročnik" DefaultId="DataItem0" />
+      </DataItems>
+      <FilterDimensions>
+        <Dimension DefaultId="DataItem0" />
+      </FilterDimensions>
+    </ListBox>
+  </Items>
+  <LayoutTree>
+    <LayoutGroup Orientation="Vertical">
+      <LayoutGroup Weight="0.8070996395229928">
+        <LayoutGroup Orientation="Vertical" Weight="0.55838406198118451">
+          <LayoutItem DashboardItem="listBoxDashboardItem1" Weight="0.84170114589833867" />
+          <LayoutItem DashboardItem="listBoxDashboardItem4" Weight="0.909583276559853" />
+        </LayoutGroup>
+        <LayoutItem DashboardItem="listBoxDashboardItem4" Weight="0.909583276559853" />
+        <LayoutGroup Orientation="Vertical" Weight="0.25622578859988954">
+          <LayoutItem DashboardItem="listBoxDashboardItem2" Weight="0.257962401667136" />
+          <LayoutItem DashboardItem="listBoxDashboardItem3" Weight="0.25448917553264305" />
+        </LayoutGroup>
+        <LayoutItem DashboardItem="gridDashboardItem2" Weight="2.1853901494189261" />
+      </LayoutGroup>
+      <LayoutItem DashboardItem="gridDashboardItem1" Weight="1.1929003604770072" />
+    </LayoutGroup>
+  </LayoutTree>
+</Dashboard>

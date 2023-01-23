@@ -2,8 +2,8 @@
 <Dashboard>
   <Title Text="DB Prodaja - 5 Od-Do" />
   <DataSources>
-    <SqlDataSource Name="Prodaja" ComponentName="sqlDataSource1">
-      <Connection Name="TCMOTOSHOP" FromAppConfig="true" />
+    <SqlDataSource Name="Prodaja" ComponentName="sqlDataSource1" DataProcessingMode="Client">
+      <Connection Name="PetPak" FromAppConfig="true" />
       <Query Type="CustomSqlQuery" Name="CustomSqlQuery">
         <Sql>SELECT	--ProdajaPoslovniDogodekDobavnice,
 				ProdajaDatumDobavnice,
@@ -87,9 +87,7 @@
 				end as ProdajaSkladiščeTip
   FROM dbo.uTN_DB_ProdajaPoRealizaciji_DET ppr
 	LEFT JOIN (SELECT ZalogaIdent, SUM(ZalogaKoličinaEM) AS ProdajaZalogaSUM FROM uTN_DB_Zaloge GROUP BY ZalogaIdent) za ON za.ZalogaIdent=ppr.ProdajaIdent
-left join dbo.tHE_SetSubj ss on ss.acsubject=ppr.ProdajaSkladišče
-	WHERE year(ProdajaDatumDobavnice)&gt;=(year(getdate())-3)
-		AND ss.acFieldSJ='Champion';</Sql>
+left join dbo.tHE_SetSubj ss on ss.acsubject=ppr.ProdajaSkladišče;</Sql>
       </Query>
       <ConnectionOptions CloseConnection="true" />
       <CalculatedFields>
@@ -103,7 +101,7 @@ left join dbo.tHE_SetSubj ss on ss.acsubject=ppr.ProdajaSkladišče
         <CalculatedField Name="SUMProdajnaVrednost" Expression="Iif([ProdajaDatumDobavnice]&gt;=?DatumOd and [ProdajaDatumDobavnice]&lt;=?DatumDo)" DataType="Auto" DataMember="CustomSqlQuery" />
       </CalculatedFields>
     </SqlDataSource>
-    <SqlDataSource Name="Zaloga" ComponentName="sqlDataSource2">
+    <SqlDataSource Name="Zaloga" ComponentName="sqlDataSource2" DataProcessingMode="Client">
       <Connection Name="eHolding ERFA" FromAppConfig="true" />
       <Query Type="CustomSqlQuery" Name="Zaloga">
         <Sql>SELECT ZalogaIdent AS ProdajaIdent, 
@@ -175,6 +173,9 @@ GROUP BY ZalogaIdent, ZalogaSkladišče, ZalogaIdentNaziv;</Sql>
       </Arguments>
       <Panes>
         <Pane Name="Pane 1">
+          <AxisY Title="Vrednost">
+            <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+          </AxisY>
           <Series>
             <Simple Name="Skladiščna vrednost" SeriesType="StackedBar">
               <Value DefaultId="DataItem1" />
@@ -211,7 +212,7 @@ GROUP BY ZalogaIdent, ZalogaSkladišče, ZalogaIdentNaziv;</Sql>
       <HiddenDimensions>
         <Dimension DefaultId="DataItem0" />
       </HiddenDimensions>
-      <ViewArea TopLatitude="54.144282143122496" BottomLatitude="43.747479444773404" LeftLongitude="3.6310291047969847" RightLongitude="24.956836873698816" CenterPointLatitude="49.218324246849086" CenterPointLongitude="14.288484392475059" CreateViewerPaddings="false" />
+      <ViewArea TopLatitude="53.057720929052159" BottomLatitude="37.357055960047482" LeftLongitude="-0.52875059186251361" RightLongitude="27.161446776558559" CenterPointLatitude="45.7560232418764" CenterPointLongitude="13.287038881821708" CreateViewerPaddings="false" />
       <MapLegend Visible="true" />
       <WeightedLegend />
       <Latitude DefaultId="DataItem2" />
@@ -265,7 +266,7 @@ GROUP BY ZalogaIdent, ZalogaSkladišče, ZalogaIdentNaziv;</Sql>
         <Value DefaultId="DataItem5" />
       </Values>
     </PieMap>
-    <Pivot ComponentName="pivotDashboardItem1" Name="Prodaja po prodajalnah" DataSource="sqlDataSource1" DataMember="CustomSqlQuery">
+    <Pivot ComponentName="pivotDashboardItem1" Name="Prodaja po državah  vs. primarna in sekundarna klasifikacija v obdobju od 01.01.2018  do 31.12.2022" DataSource="sqlDataSource1" DataMember="CustomSqlQuery">
       <DataItems>
         <Measure DataMember="YTDProdajnaVrednost" Name="Prodajna vrednost" DefaultId="DataItem0">
           <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
@@ -273,9 +274,9 @@ GROUP BY ZalogaIdent, ZalogaSkladišče, ZalogaIdentNaziv;</Sql>
         <Measure DataMember="YTDRVC" Name="RVC" DefaultId="DataItem1">
           <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
         </Measure>
-        <Dimension DataMember="ProdajaPrimarnaKlasifikacija" TopNEnabled="true" TopNShowOthers="true" TopNCount="10" TopNMeasure="DataItem0" DefaultId="DataItem2" />
+        <Dimension DataMember="ProdajaPrimarnaKlasifikacijaNaziv" TopNEnabled="true" TopNShowOthers="true" TopNCount="10" TopNMeasure="DataItem0" DefaultId="DataItem2" />
         <Dimension DataMember="ProdajaSekundarnaKlasifikacijaNaziv" TopNEnabled="true" TopNShowOthers="true" TopNCount="20" TopNMeasure="DataItem0" DefaultId="DataItem3" />
-        <Dimension DataMember="ProdajaSkladišče" Name="Skladišče/prodajalna" DefaultId="DataItem4" />
+        <Dimension DataMember="ProdajaDržava" Name="Skladišče/prodajalna" DefaultId="DataItem4" />
       </DataItems>
       <FormatRules>
         <PivotItemFormatRule Name="Format Rule 1" DataItem="DataItem0" DataItemApplyTo="DataItem0" IntersectionLevelMode="FirstLevel">

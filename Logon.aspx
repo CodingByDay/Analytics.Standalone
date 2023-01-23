@@ -1,13 +1,36 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Logon.aspx.cs" Inherits="peptak.Logon" %>
 
 <!DOCTYPE html>
+    <link href="/css/custom.css" rel="stylesheet" type="text/css" />
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <link href="~/css/custom.css" rel="stylesheet" type="text/css" />
     <title></title>
 </head>
+
+
+
 <body>
+
+
+
+         <style>
+         /* Smartphones (portrait and landscape) ----------- */
+
+.login {
+    text-align: center!important;
+    min-width: 60%!important;
+    max-width: 60%!important;
+}
+
+     #form1 {
+         width: 100%!important;
+         height: 100%!important;
+     }
+
+    </style>
+
+
     <div class="wrapper fadeInDown">
         <div id="formContent">
             <form id="form1" runat="server">

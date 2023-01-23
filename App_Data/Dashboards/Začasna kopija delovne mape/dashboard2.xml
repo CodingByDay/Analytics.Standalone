@@ -1,0 +1,211 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Dashboard>
+  <Title Text="SETCCE Oštir test - 2" />
+  <DataSources>
+    <SqlDataSource Name="Test 2" ComponentName="sqlDataSource1" DataProcessingMode="Client">
+      <Connection Name="SETCCE" FromAppConfig="true" />
+      <Query Type="SelectQuery" Name="Test 2">
+        <Tables>
+          <Table Name="uTN_DB_ReportDISTINCT" />
+          <Table Name="uTN_DB_ReportTrans" />
+          <Relation Type="Inner" Parent="uTN_DB_ReportDISTINCT" Nested="uTN_DB_ReportTrans">
+            <KeyColumn Parent="StroškovniNosilec" Nested="StroškovniNosilec" />
+            <KeyColumn Parent="Oddelek" Nested="Oddelek" />
+            <KeyColumn Parent="Obdobje" Nested="Obdobje" />
+          </Relation>
+        </Tables>
+        <Columns>
+          <Column Table="uTN_DB_ReportDISTINCT" Name="StroškovniNosilec" />
+          <Column Table="uTN_DB_ReportDISTINCT" Name="Oddelek" />
+          <Column Table="uTN_DB_ReportDISTINCT" Name="Obdobje" />
+          <Column Table="uTN_DB_ReportDISTINCT" Name="StroškovniNosilecNaziv" />
+          <Column Table="uTN_DB_ReportDISTINCT" Name="OddelekNaziv" />
+          <Column Table="uTN_DB_ReportDISTINCT" Name="Pogodba" />
+          <Column Table="uTN_DB_ReportDISTINCT" Name="Klasifikacija" />
+          <Column Table="uTN_DB_ReportDISTINCT" Name="OdgovornaOsebaSETCCE" />
+          <Column Table="uTN_DB_ReportDISTINCT" Name="OdgovornaOsebaStranke" />
+          <Column Table="uTN_DB_ReportDISTINCT" Name="Sponzor" />
+          <Column Table="uTN_DB_ReportDISTINCT" Name="VodjaProjekta" />
+          <Column Table="uTN_DB_ReportTrans" Name="TransDokument" />
+          <Column Table="uTN_DB_ReportTrans" Name="TransDokumentPoz" />
+          <Column Table="uTN_DB_ReportTrans" Name="TransDatum" />
+          <Column Table="uTN_DB_ReportTrans" Name="TransIdent" />
+          <Column Table="uTN_DB_ReportTrans" Name="TransTip" />
+          <Column Table="uTN_DB_ReportTrans" Name="TransKonto" />
+          <Column Table="uTN_DB_ReportTrans" Name="TransKontoOpis" />
+          <Column Table="uTN_DB_ReportTrans" Name="TransKoličina" />
+          <Column Table="uTN_DB_ReportTrans" Name="TransDtaumDokumenta" />
+          <Column Table="uTN_DB_ReportTrans" Name="TransDatumZapadlosti" />
+          <Column Table="uTN_DB_ReportTrans" Name="TransSubjekt" />
+          <Column Table="uTN_DB_ReportTrans" Name="TransVrednost" />
+        </Columns>
+        <Sorting>
+          <Column Table="uTN_DB_ReportDISTINCT" Name="StroškovniNosilec" />
+          <Column Table="uTN_DB_ReportTrans" Name="Obdobje" />
+        </Sorting>
+      </Query>
+      <ConnectionOptions CloseConnection="true" />
+      <CalculatedFields>
+        <CalculatedField Name="Leto" Expression="substring([Obdobje],0,4)" DataType="Auto" DataMember="Test 2" />
+      </CalculatedFields>
+    </SqlDataSource>
+  </DataSources>
+  <Parameters>
+    <Parameter Name="P1Leto" Value="2022" Description="Leto obdobja">
+      <DynamicListLookUpSettings DataSourceName="sqlDataSource1" DataMember="Test 2" ValueMember="Leto" DisplayMember="Leto" SortByMember="Leto" />
+    </Parameter>
+  </Parameters>
+  <Items>
+    <ListBox ComponentName="listBoxDashboardItem1" Name="Stroškovni nosilci" DataSource="sqlDataSource1" DataMember="Test 2" FilterString="[Leto] = ?P1Leto" EnableSearch="true">
+      <DataItems>
+        <Dimension DataMember="StroškovniNosilec" DefaultId="DataItem0" />
+        <Dimension DataMember="StroškovniNosilecNaziv" DefaultId="DataItem1" />
+        <Dimension DataMember="Datum" DefaultId="DataItem2" />
+      </DataItems>
+      <HiddenDimensions>
+        <Dimension DefaultId="DataItem2" />
+      </HiddenDimensions>
+      <FilterDimensions>
+        <Dimension DefaultId="DataItem0" />
+        <Dimension DefaultId="DataItem1" />
+      </FilterDimensions>
+    </ListBox>
+    <Grid ComponentName="gridDashboardItem1" Name="Pregled Report trans" DataSource="sqlDataSource1" DataMember="Test 2" FilterString="[Leto] = ?P1Leto">
+      <DataItems>
+        <Dimension DataMember="TransDatum" DateTimeGroupInterval="DayMonthYear" DefaultId="DataItem1" />
+        <Dimension DataMember="StroškovniNosilec" DefaultId="DataItem0" />
+        <Dimension DataMember="TransDokument" DefaultId="DataItem2" />
+        <Dimension DataMember="TransIdent" DefaultId="DataItem4" />
+        <Measure DataMember="TransKoličina" DefaultId="DataItem5">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Dimension DataMember="TransKonto" DefaultId="DataItem6" />
+        <Dimension DataMember="TransKontoOpis" DefaultId="DataItem7" />
+        <Measure DataMember="TransVrednost" DefaultId="DataItem8">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Dimension DataMember="Obdobje" DefaultId="DataItem9" />
+        <Dimension DataMember="Oddelek" DefaultId="DataItem10" />
+        <Dimension DataMember="VodjaProjekta" DefaultId="DataItem11" />
+        <Dimension DataMember="TransDokumentPoz" DefaultId="DataItem3">
+          <NumericFormat FormatType="General" />
+        </Dimension>
+      </DataItems>
+      <HiddenDimensions>
+        <Dimension DefaultId="DataItem11" />
+      </HiddenDimensions>
+      <FormatRules>
+        <GridItemFormatRule Name="Format Rule 1" DataItem="DataItem0" DataItemApplyTo="DataItem0">
+          <FormatConditionExpression>
+            <AppearanceSettings AppearanceType="PaleRed" />
+          </FormatConditionExpression>
+        </GridItemFormatRule>
+      </FormatRules>
+      <GridColumns>
+        <GridDimensionColumn>
+          <Dimension DefaultId="DataItem0" />
+        </GridDimensionColumn>
+        <GridDimensionColumn>
+          <Dimension DefaultId="DataItem9" />
+        </GridDimensionColumn>
+        <GridDimensionColumn>
+          <Dimension DefaultId="DataItem10" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Datum">
+          <Dimension DefaultId="DataItem1" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Dokument">
+          <Dimension DefaultId="DataItem2" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="POZ">
+          <Dimension DefaultId="DataItem3" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Ident">
+          <Dimension DefaultId="DataItem4" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Konto">
+          <Dimension DefaultId="DataItem6" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Opis konta">
+          <Dimension DefaultId="DataItem7" />
+        </GridDimensionColumn>
+        <GridMeasureColumn Name="Količina">
+          <Measure DefaultId="DataItem5" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Vrednost">
+          <Measure DefaultId="DataItem8" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+      </GridColumns>
+      <GridOptions />
+    </Grid>
+    <Pivot ComponentName="pivotDashboardItem1" Name="Strukturni pregled report po sponzorjih in oddelkih" DataSource="sqlDataSource1" DataMember="Test 2" FilterString="[Leto] = ?P1Leto">
+      <DataItems>
+        <Measure DataMember="TransKoličina" Name="Količina" DefaultId="DataItem0">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="TransVrednost" Name="Vrednost" DefaultId="DataItem1">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Dimension DataMember="Sponzor" DefaultId="DataItem2" />
+        <Dimension DataMember="Oddelek" DefaultId="DataItem3" />
+        <Dimension DataMember="StroškovniNosilec" Name="Stroškovni nosilec" DefaultId="DataItem4" />
+        <Dimension DataMember="Obdobje" DefaultId="DataItem5" />
+        <Dimension DataMember="TransDokument" Name="Dokument" DefaultId="DataItem6" />
+        <Dimension DataMember="TransDokumentPoz" Name="POZ" DefaultId="DataItem7">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Dimension>
+        <Dimension DataMember="Leto" DefaultId="DataItem8" />
+      </DataItems>
+      <HiddenDimensions>
+        <Dimension DefaultId="DataItem8" />
+      </HiddenDimensions>
+      <Columns>
+        <Column DefaultId="DataItem2" />
+        <Column DefaultId="DataItem3" />
+      </Columns>
+      <Rows>
+        <Row DefaultId="DataItem4" />
+        <Row DefaultId="DataItem5" />
+        <Row DefaultId="DataItem6" />
+        <Row DefaultId="DataItem7" />
+      </Rows>
+      <Values>
+        <Value DefaultId="DataItem0" />
+        <Value DefaultId="DataItem1" />
+      </Values>
+    </Pivot>
+    <ListBox ComponentName="listBoxDashboardItem2" Name="Obdobje" DataSource="sqlDataSource1" DataMember="Test 2" FilterString="[Leto] = ?P1Leto" EnableSearch="true">
+      <DataItems>
+        <Dimension DataMember="Obdobje" DefaultId="DataItem0" />
+      </DataItems>
+      <FilterDimensions>
+        <Dimension DefaultId="DataItem0" />
+      </FilterDimensions>
+    </ListBox>
+    <ListBox ComponentName="listBoxDashboardItem3" Name="Sponzor" DataSource="sqlDataSource1" DataMember="Test 2" FilterString="[Leto] = ?P1Leto" EnableSearch="true">
+      <DataItems>
+        <Dimension DataMember="Sponzor" DefaultId="DataItem0" />
+      </DataItems>
+      <FilterDimensions>
+        <Dimension DefaultId="DataItem0" />
+      </FilterDimensions>
+    </ListBox>
+  </Items>
+  <LayoutTree>
+    <LayoutGroup Orientation="Vertical">
+      <LayoutGroup Weight="0.86861313868613144">
+        <LayoutItem DashboardItem="listBoxDashboardItem2" Weight="0.33101663301237005" />
+        <LayoutItem DashboardItem="listBoxDashboardItem3" Weight="0.49692495590029029" />
+        <LayoutItem DashboardItem="listBoxDashboardItem1" Weight="0.687542569075555" />
+        <LayoutItem DashboardItem="gridDashboardItem1" Weight="3.2025103402930029" />
+      </LayoutGroup>
+      <LayoutItem DashboardItem="pivotDashboardItem1" Weight="1.1313868613138687" />
+    </LayoutGroup>
+  </LayoutTree>
+</Dashboard>

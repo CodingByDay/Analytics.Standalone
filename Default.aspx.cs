@@ -11,6 +11,10 @@ using System.Data;
 using static peptak.SiteMaster;
 using System.Web.UI.HtmlControls;
 using System.IO;
+using DevExpress.DashboardCommon;
+using System.Web.Services;
+using System.Web.Script.Serialization;
+using Storages;
 
 namespace peptak
 {
@@ -21,6 +25,7 @@ namespace peptak
         {
             ASPxDashboard1.DashboardLoading += ASPxDashboard1_DashboardLoading;
             ASPxDashboard1.SetConnectionStringsProvider(new DevExpress.DataAccess.Web.ConfigFileConnectionStringsProvider());
+       
             ASPxDashboard1.WorkingMode = WorkingMode.Viewer;
             ASPxDashboard1.DashboardAdding += ASPxDashboard1_DashboardAdding;
             if (!IsPostBack)
@@ -62,7 +67,14 @@ namespace peptak
                 else
                 {
                     string id = Request.Cookies["dashboard"].Value;
-                    ASPxDashboard1.InitialDashboardId = id;
+                    string p = Request.QueryString["p"];
+                    
+                    if(!String.IsNullOrEmpty(p))
+                    {
+                        ASPxDashboard1.InitialDashboardId = p;
+                    } else {
+                        ASPxDashboard1.InitialDashboardId = id;
+                    }
                     ASPxDashboard1.SetConnectionStringsProvider(new DevExpress.DataAccess.Web.ConfigFileConnectionStringsProvider());
                     ASPxDashboard1.WorkingMode = WorkingMode.Viewer;
 
@@ -103,10 +115,26 @@ namespace peptak
        
         }
 
+
+        [WebMethod]
+        public static void DeleteItem(string id)
+        {
+            string ID = id;
+           
+
+        }
+
+
         private void ASPxDashboard1_DashboardLoading(object sender, DashboardLoadingWebEventArgs e)
         {
+           
+            Dashboard dashboard = new Dashboard();
+            dashboard.LoadFromXDocument(e.DashboardXml);
+            dashboard.DataSources.OfType<DashboardSqlDataSource>().ToList().ForEach(dataSource => {
+                dataSource.DataProcessingMode = DataProcessingMode.Client;
+            });
             Response.Cookies["dashboard"].Value = e.DashboardId;
- 
+            e.DashboardXml = dashboard.SaveToXDocument();
         }
 
         private void Toggle_CheckedChanged1(object sender, EventArgs e)
@@ -182,6 +210,17 @@ namespace peptak
         protected void hiddenButton_Click(object sender, EventArgs e)
         {
            
-        }    
+        }
+
+        protected void ASPxDashboard1_CustomDataCallback(object sender, DevExpress.Web.CustomDataCallbackEventArgs e)
+        {
+            Dictionary<string, string> parameters = new JavaScriptSerializer().Deserialize<Dictionary<string, string>>(e.Parameter);
+            if (!parameters.ContainsKey("ExtensionName"))
+                return;
+
+            CustomDashboardFileStorage newDashboardStorage = new CustomDashboardFileStorage(@"~/App_Data/Dashboards");
+            if (parameters["ExtensionName"] == "dxdde-delete-dashboard" && parameters.ContainsKey("DashboardID"))
+                newDashboardStorage.DeleteDashboard(parameters["DashboardID"]);
+        }
     }
 }

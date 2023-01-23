@@ -3,7 +3,7 @@
   <Title Text="DB HR - 1" />
   <DataSources>
     <SqlDataSource Name="Plače_Osnova" ComponentName="sqlDataSource1">
-      <Connection Name="Skaza nova" FromAppConfig="true" />
+      <Connection Name="PetPak" FromAppConfig="true" />
       <Query Type="CustomSqlQuery" Name="uTN_Analitika_Plače_Skupna">
         <Sql>select * from dbo.uTN_DB_HRPlače</Sql>
       </Query>

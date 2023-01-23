@@ -1,0 +1,216 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Dashboard>
+  <Title Text="DB SETCCE - 2" />
+  <DataSources>
+    <SqlDataSource Name="CustomSqlQuery" ComponentName="sqlDataSource1" DataProcessingMode="Client">
+      <Connection Name="SETCCE" FromAppConfig="true" />
+      <Query Type="CustomSqlQuery" Name="CustomSqlQuery">
+        <Sql>SELECT [Stroškovni nosilec]			AS StroškovniNosilec,
+      [Naziv]						AS StroškovniNosilecNaziv,
+      [Naročnik]					AS Naročnik,
+			arcd.acWorker			AS OdgovornaOsebaSETCCE,
+			arcd.acContactPrsn		AS OdgovornaOsebaStranke,
+			arcd.acClassif			AS Klasifikacija,
+			arcd.acFieldSD			AS VodjaProjekta,
+      [Obdobje]						AS Obdobje,
+      [Oddelek]						AS Oddelek,
+			arcd.acName2			AS OddelekNaziv,
+      [Plan +]						AS PlanPlus,
+      [Plan -]						AS PlanMinus,
+      [Real +]						AS RealizacijaPlus,
+      [Real -]						AS RealizacijaMinus,
+      [Prejeti računi]				AS PrejetiRačuni,
+      [Delo]						AS Delo,
+      [Drugi stroški]				AS DrugiStroški,
+      [Režija]						AS Režija,
+      [Rezultat brez režije]		AS RezultatBrezRežije,
+      [Rezultat z režijo]			AS RezultatZRežijo,
+      SUBSTRING(arcd.acName2,1,CHARINDEX(' ',arcd.acName2)-1) AS Produkt
+  FROM dbo.uTN_AnaReport ar
+	LEFT JOIN uTN_ReportCostDrv arcd ON ar.[Stroškovni nosilec]=arcd.acCostDrv</Sql>
+      </Query>
+      <ConnectionOptions CloseConnection="true" />
+    </SqlDataSource>
+  </DataSources>
+  <Items>
+    <Pie ComponentName="pieDashboardItem1" Name="Po vodjih projekta" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" PieType="Donut">
+      <InteractivityOptions MasterFilterMode="Multiple" />
+      <DataItems>
+        <Measure DataMember="RezultatBrezRežije" Name="Rezultat (brez režije)" DefaultId="DataItem0">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Dimension DataMember="VodjaProjekta" Name="Vodja projekta" DefaultId="DataItem1" />
+      </DataItems>
+      <Arguments>
+        <Argument DefaultId="DataItem1" />
+      </Arguments>
+      <Values>
+        <Value DefaultId="DataItem0" />
+      </Values>
+    </Pie>
+    <Pie ComponentName="pieDashboardItem2" Name="Po naročnikih" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" PieType="Donut">
+      <InteractivityOptions MasterFilterMode="Multiple" />
+      <DataItems>
+        <Measure DataMember="RezultatBrezRežije" Name="Rezultat (brez režije)" DefaultId="DataItem0">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Dimension DataMember="Naročnik" DefaultId="DataItem1" />
+      </DataItems>
+      <Arguments>
+        <Argument DefaultId="DataItem1" />
+      </Arguments>
+      <Values>
+        <Value DefaultId="DataItem0" />
+      </Values>
+    </Pie>
+    <Pie ComponentName="pieDashboardItem3" Name="Po oddelkih" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" PieType="Donut">
+      <InteractivityOptions MasterFilterMode="Multiple" />
+      <DataItems>
+        <Measure DataMember="RezultatBrezRežije" Name="Rezultat (brez režije)" DefaultId="DataItem0">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Dimension DataMember="Oddelek" DefaultId="DataItem1" />
+      </DataItems>
+      <Arguments>
+        <Argument DefaultId="DataItem1" />
+      </Arguments>
+      <Values>
+        <Value DefaultId="DataItem0" />
+      </Values>
+    </Pie>
+    <Pie ComponentName="pieDashboardItem4" Name="Po klasifikaciji" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" PieType="Donut">
+      <InteractivityOptions MasterFilterMode="Multiple" />
+      <DataItems>
+        <Measure DataMember="RezultatBrezRežije" Name="Rezultat (brez režije)" DefaultId="DataItem0">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Dimension DataMember="Klasifikacija" DefaultId="DataItem1" />
+      </DataItems>
+      <Arguments>
+        <Argument DefaultId="DataItem1" />
+      </Arguments>
+      <Values>
+        <Value DefaultId="DataItem0" />
+      </Values>
+    </Pie>
+    <Pie ComponentName="pieDashboardItem5" Name="Po produktih" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" PieType="Donut">
+      <InteractivityOptions MasterFilterMode="Multiple" />
+      <DataItems>
+        <Measure DataMember="RezultatBrezRežije" Name="Rezultat (brez režije)" DefaultId="DataItem0">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Dimension DataMember="Produkt" Name="Odgovorna oseba" DefaultId="DataItem1" />
+      </DataItems>
+      <Arguments>
+        <Argument DefaultId="DataItem1" />
+      </Arguments>
+      <Values>
+        <Value DefaultId="DataItem0" />
+      </Values>
+    </Pie>
+    <ListBox ComponentName="listBoxDashboardItem1" Name="Obdobje" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" EnableSearch="true">
+      <DataItems>
+        <Dimension DataMember="Obdobje" Name="Obdobje" DefaultId="DataItem0" />
+      </DataItems>
+      <FilterDimensions>
+        <Dimension DefaultId="DataItem0" />
+      </FilterDimensions>
+    </ListBox>
+    <Grid ComponentName="gridDashboardItem2" Name="Pregled po SN in Oddelkih" DataSource="sqlDataSource1" DataMember="CustomSqlQuery">
+      <DataItems>
+        <Dimension DataMember="StroškovniNosilec" DefaultId="DataItem0" />
+        <Dimension DataMember="StroškovniNosilecNaziv" DefaultId="DataItem1" />
+        <Dimension DataMember="Naročnik" DefaultId="DataItem2" />
+        <Measure DataMember="RealizacijaPlus" DefaultId="DataItem5">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="RealizacijaMinus" DefaultId="DataItem6">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="Režija" DefaultId="DataItem12">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="RezultatBrezRežije" DefaultId="DataItem13">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="RezultatZRežijo" DefaultId="DataItem14">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Dimension DataMember="Produkt" DefaultId="DataItem7" />
+        <Dimension DataMember="Oddelek" DefaultId="DataItem3" />
+      </DataItems>
+      <GridColumns>
+        <GridDimensionColumn>
+          <Dimension DefaultId="DataItem2" />
+        </GridDimensionColumn>
+        <GridDimensionColumn>
+          <Dimension DefaultId="DataItem3" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="S N">
+          <Dimension DefaultId="DataItem0" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Produkt">
+          <Dimension DefaultId="DataItem7" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Naziv stroškovnega nosilca">
+          <Dimension DefaultId="DataItem1" />
+        </GridDimensionColumn>
+        <GridMeasureColumn Name="Prihodki">
+          <Measure DefaultId="DataItem5" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Stroški">
+          <Measure DefaultId="DataItem6" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Režija">
+          <Measure DefaultId="DataItem12" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Rezultat (brez režije)">
+          <Measure DefaultId="DataItem13" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Rezultat (z režijo)">
+          <Measure DefaultId="DataItem14" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+      </GridColumns>
+      <GridOptions ColumnWidthMode="AutoFitToContents" WordWrap="true" />
+    </Grid>
+    <ListBox ComponentName="listBoxDashboardItem2" Name="S N" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" EnableSearch="true">
+      <DataItems>
+        <Dimension DataMember="StroškovniNosilec" DefaultId="DataItem0" />
+      </DataItems>
+      <FilterDimensions>
+        <Dimension DefaultId="DataItem0" />
+      </FilterDimensions>
+    </ListBox>
+  </Items>
+  <LayoutTree>
+    <LayoutGroup>
+      <LayoutGroup Orientation="Vertical">
+        <LayoutGroup Weight="0.68919481108883951">
+          <LayoutItem DashboardItem="listBoxDashboardItem1" Weight="0.40754104817121162" />
+          <LayoutItem DashboardItem="listBoxDashboardItem2" Weight="0.45023427003576166" />
+          <LayoutItem DashboardItem="pieDashboardItem2" Weight="1.0664084117321522" />
+          <LayoutItem DashboardItem="pieDashboardItem3" Weight="1.0830105146651914" />
+          <LayoutItem DashboardItem="pieDashboardItem4" Weight="1.0996126175982295" />
+          <LayoutItem DashboardItem="pieDashboardItem5" Weight="1.1527393469839504" />
+          <LayoutItem DashboardItem="pieDashboardItem1" Weight="1.1693414499169899" />
+        </LayoutGroup>
+        <LayoutItem DashboardItem="gridDashboardItem2" Weight="1.3108051889111607" />
+      </LayoutGroup>
+    </LayoutGroup>
+  </LayoutTree>
+</Dashboard>

@@ -2,12 +2,11 @@
 <Dashboard>
   <Title Text="DB MNGMT report - 1" />
   <DataSources>
-    <SqlDataSource Name="DB MNGMT report" ComponentName="sqlDataSource1">
-      <Connection Name="eHolding ERFA" FromAppConfig="true" />
+    <SqlDataSource Name="DB MNGMT report" ComponentName="sqlDataSource1" DataProcessingMode="Client">
+      <Connection Name="PetPak" FromAppConfig="true" />
       <Query Type="CustomSqlQuery" Name="DB MNGMT report">
         <Sql>select *
-FROM dbo.uTN_DB_MNGMTDetalj
-WHERE DATEPART(YEAR,MNGMTDatumTemeljnice)&gt;=DATEPART(YEAR, GETDATE())-1;</Sql>
+FROM dbo.uTN_DB_MNGMTDetalj;</Sql>
       </Query>
       <ConnectionOptions CloseConnection="true" />
       <CalculatedFields>

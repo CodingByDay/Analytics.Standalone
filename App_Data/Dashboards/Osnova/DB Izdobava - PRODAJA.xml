@@ -3,7 +3,7 @@
   <Title Text="DB Izdobava - PRODAJA" />
   <DataSources>
     <SqlDataSource Name="CustomSqlQuery" ComponentName="sqlDataSource1">
-      <Connection Name="eHolding ERFA" FromAppConfig="true" />
+      <Connection Name="PetPak" FromAppConfig="true" />
       <Query Type="CustomSqlQuery" Name="CustomSqlQuery">
         <Sql>SELECT * FROM dbo.uTN_DB_NaročilaIzdobavaZaloga
 WHERE NARTipNAročila='Izdaja';</Sql>
@@ -217,13 +217,24 @@ WHERE NARTipNAročila='Izdaja';</Sql>
         <Value DefaultId="DataItem1" />
       </Values>
     </Pie>
+    <ListBox ComponentName="listBoxDashboardItem1" Name="Vrsta materialnega sredstva" DataSource="sqlDataSource1" DataMember="CustomSqlQuery">
+      <DataItems>
+        <Dimension DataMember="NARVrstaMS" Name="VMS" DefaultId="DataItem0" />
+        <Dimension DataMember="NARVrstaMSNaziv" Name="Naziv VMS" DefaultId="DataItem1" />
+      </DataItems>
+      <FilterDimensions>
+        <Dimension DefaultId="DataItem0" />
+        <Dimension DefaultId="DataItem1" />
+      </FilterDimensions>
+    </ListBox>
   </Items>
   <LayoutTree>
     <LayoutGroup>
       <LayoutGroup Orientation="Vertical">
         <LayoutGroup Weight="0.76482038070702774">
           <LayoutItem DashboardItem="dateFilterDashboardItem1" Weight="0.60435581577848152" />
-          <LayoutItem DashboardItem="pieDashboardItem3" Weight="1.0033109952240342" />
+          <LayoutItem DashboardItem="listBoxDashboardItem1" Weight="0.83847847810854559" />
+          <LayoutItem DashboardItem="pieDashboardItem3" Weight="1.168143512339523" />
           <LayoutItem DashboardItem="pieDashboardItem1" Weight="1.5942796610169492" />
           <LayoutItem DashboardItem="pieDashboardItem4" />
           <LayoutItem DashboardItem="pieDashboardItem2" />

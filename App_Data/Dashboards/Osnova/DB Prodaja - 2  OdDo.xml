@@ -2,8 +2,8 @@
 <Dashboard>
   <Title Text="DB Prodaja - 2 Od-Do" />
   <DataSources>
-    <SqlDataSource Name="CustomSqlQuery" ComponentName="sqlDataSource1">
-      <Connection Name="Skaza nova" FromAppConfig="true" />
+    <SqlDataSource Name="CustomSqlQuery" ComponentName="sqlDataSource1" DataProcessingMode="Client">
+      <Connection Name="PetPak" FromAppConfig="true" />
       <Query Type="CustomSqlQuery" Name="CustomSqlQuery">
         <Sql>SELECT	--ProdajaPoslovniDogodekDobavnice,
 				ProdajaDatumDobavnice,
@@ -80,11 +80,10 @@
 --			ProdajaAnFieldNH,
 --			ProdajaAnFieldNI,
 --			ProdajaAnFieldNJ
-				ISNULL(ProdajaZalogaSUM,0),
-				ISNULL(ProdajaZalogaVrednost,0)
+				ISNULL(ProdajaZalogaSUM,0) as ProdajaZalogaSUM,
+				ISNULL(ProdajaZalogaVrednost,0) as ProdajaZalogaVrednost
   FROM dbo.uTN_DB_ProdajaPoRealizaciji_DET ppr
-	LEFT JOIN (SELECT ZalogaIdent, SUM(ZalogaKoličinaEM) AS ProdajaZalogaSUM, SUM(ZalogaVrednost) AS ProdajaZalogaVrednost FROM uTN_DB_Zaloge GROUP BY ZalogaIdent) za ON za.ZalogaIdent=ppr.ProdajaIdent
-	WHERE year(ProdajaDatumDobavnice)&gt;=(year(getdate())-3);</Sql>
+	LEFT JOIN (SELECT ZalogaIdent, SUM(ZalogaKoličinaEM) AS ProdajaZalogaSUM, SUM(ZalogaVrednost) AS ProdajaZalogaVrednost FROM uTN_DB_Zaloge GROUP BY ZalogaIdent) za ON za.ZalogaIdent=ppr.ProdajaIdent;</Sql>
       </Query>
       <ConnectionOptions CloseConnection="true" />
       <CalculatedFields>
@@ -111,7 +110,7 @@
     <Parameter Name="DatumDo1" Type="System.DateTime" Value="2021-12-31T00:00:00" Description="Obdobje-2 Do" />
   </Parameters>
   <Items>
-    <PieMap ComponentName="pieMapDashboardItem1" Name="Prodaja #DatumOd-#DatumDo" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" EnableClustering="true">
+    <PieMap ComponentName="pieMapDashboardItem1" Name="Prodaja 01.01.2022-31.12.2022" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" EnableClustering="true">
       <InteractivityOptions MasterFilterMode="Multiple" />
       <DataItems>
         <Dimension DataMember="YTDProdajnaVrednost" DefaultId="DataItem0" />
@@ -145,7 +144,7 @@
         <Value DefaultId="DataItem5" />
       </Values>
     </PieMap>
-    <Grid ComponentName="gridDashboardItem1" Name="Realizacija po dostavnih mestih - primerjalno #DatumOd-#DatumDo vs #DatumOd1-#DatumDo1" ParentContainer="dashboardTabPage4" DataSource="sqlDataSource1" DataMember="CustomSqlQuery">
+    <Grid ComponentName="gridDashboardItem1" Name="Realizacija po dostavnih mestih - primerjalno 01.01.2022-31.12.2022 vs 01.01.2021-31.12.2021" ParentContainer="dashboardTabPage4" DataSource="sqlDataSource1" DataMember="CustomSqlQuery">
       <DataItems>
         <Dimension DataMember="ProdajaDostavnoMesto" SortOrder="Descending" SortByMeasure="DataItem1" DefaultId="DataItem0" />
         <Measure DataMember="YTDProdajnaVrednost" DefaultId="DataItem1">
@@ -230,7 +229,7 @@
       </GridColumns>
       <GridOptions EnableBandedRows="true" WordWrap="true" />
     </Grid>
-    <Chart ComponentName="chartDashboardItem2" Name="Prodaja po tipu kupca #DatumOd-#DatumDo" DataSource="sqlDataSource1" DataMember="CustomSqlQuery">
+    <Chart ComponentName="chartDashboardItem2" Name="Prodaja po tipu kupca 01.01.2022-31.12.2022" DataSource="sqlDataSource1" DataMember="CustomSqlQuery">
       <InteractivityOptions IgnoreMasterFilters="true" MasterFilterMode="Multiple" />
       <DataItems>
         <Dimension DataMember="ProdajaTipKupca" DefaultId="DataItem0" />
@@ -307,7 +306,7 @@
         <Page ComponentName="dashboardTabPage2" Name="Page 2" />
       </Pages>
     </TabContainer>
-    <Chart ComponentName="chartDashboardItem3" Name="Realizacija po mesecih - #DatumOd-#DatumDo vs #DatumOd1-#DatumDo1" ParentContainer="dashboardTabPage1" DataSource="sqlDataSource1" DataMember="CustomSqlQuery">
+    <Chart ComponentName="chartDashboardItem3" Name="Realizacija po mesecih - 01.01.2022-31.12.2022 vs 01.01.2021-31.12.2021" ParentContainer="dashboardTabPage1" DataSource="sqlDataSource1" DataMember="CustomSqlQuery">
       <DataItems>
         <Dimension DataMember="ProdajaDatumDobavnice" Name="Mesec" DateTimeGroupInterval="Month" DefaultId="DataItem0">
           <DateTimeFormat MonthFormat="Abbreviated" />
@@ -331,16 +330,16 @@
       <Panes>
         <Pane Name="Pane 1">
           <Series>
-            <Simple Name="Prodaja Obdobje-1" SeriesType="Line">
+            <Simple Name="Prodaja #DatumOd-#DatumDo" SeriesType="Line">
               <Value DefaultId="DataItem1" />
             </Simple>
-            <Simple Name="RVC Obdobje-1" SeriesType="Line">
+            <Simple Name="RVC #DatumOd-#DatumDo" SeriesType="Line">
               <Value DefaultId="DataItem3" />
             </Simple>
-            <Simple Name="Prodaja Obdobje-2">
+            <Simple Name="Prodaja #DatumOd1-#DatumDo1">
               <Value DefaultId="DataItem2" />
             </Simple>
-            <Simple Name="RVC Obdobje-2">
+            <Simple Name="RVC #DatumOd1-#DatumDo1">
               <Value DefaultId="DataItem4" />
             </Simple>
           </Series>
@@ -353,7 +352,7 @@
         <Page ComponentName="dashboardTabPage4" Name="Page 2" />
       </Pages>
     </TabContainer>
-    <Grid ComponentName="gridDashboardItem3" Name="Realizacija po kupcih - primerjalno #DatumOd-#DatumDo vs #DatumOd1-#DatumDo1" ParentContainer="dashboardTabPage3" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true">
+    <Grid ComponentName="gridDashboardItem3" Name="Realizacija po kupcih - primerjalno 01.01.2022-31.12.2022 vs 01.01.2021-31.12.2021" ParentContainer="dashboardTabPage3" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true">
       <InteractivityOptions MasterFilterMode="Multiple" />
       <DataItems>
         <Dimension DataMember="ProdajaPlačnik" SortOrder="Descending" SortByMeasure="DataItem1" DefaultId="DataItem0" />

@@ -2,8 +2,8 @@
 <Dashboard>
   <Title Text="DB Prodaja - 1 YTD" />
   <DataSources>
-    <SqlDataSource Name="CustomSqlQuery" ComponentName="sqlDataSource1">
-      <Connection Name="eHolding ERFA" FromAppConfig="true" />
+    <SqlDataSource Name="CustomSqlQuery" ComponentName="sqlDataSource1" DataProcessingMode="Client">
+      <Connection Name="PetPak" FromAppConfig="true" />
       <Query Type="CustomSqlQuery" Name="CustomSqlQuery">
         <Sql>SELECT	--ProdajaPoslovniDogodekDobavnice,
 				ProdajaDatumDobavnice,
@@ -58,7 +58,7 @@
 --			ProdajaSkladišče,
 --			ProdajaDobaviteljevaŠifra,
 --			ProdajaEANKoda,
-				ProdajaTipKupca
+				ProdajaTipKupca,
 --			ProdajaReferent,
 --			ProdajaAcFieldSA,
 --			ProdajaAcFieldSB,
@@ -79,9 +79,10 @@
 --			ProdajaAnFieldNG,
 --			ProdajaAnFieldNH,
 --			ProdajaAnFieldNI,
---			ProdajaAnFieldNJ
-  FROM dbo.uTN_DB_ProdajaPoRealizaciji_DET 
-	WHERE year(ProdajaDatumDobavnice)&gt;=(year(getdate())-2)</Sql>
+--			ProdajaAnFieldNJ,
+			ProdajaVrstaMS,
+			ProdajaVrstaMSNaziv
+  FROM dbo.uTN_DB_ProdajaPoRealizaciji_DET;</Sql>
       </Query>
       <ConnectionOptions CloseConnection="true" />
       <CalculatedFields>
@@ -434,11 +435,21 @@
         <Dimension DefaultId="DataItem0" />
       </FilterDimensions>
     </ListBox>
+    <ListBox ComponentName="listBoxDashboardItem3" Name="Vrsta materialnega sredstva" DataSource="sqlDataSource1" DataMember="CustomSqlQuery">
+      <DataItems>
+        <Dimension DataMember="ProdajaVrstaMS" Name="VMS" DefaultId="DataItem0" />
+        <Dimension DataMember="ProdajaVrstaMSNaziv" Name="Naziv VMS" DefaultId="DataItem1" />
+      </DataItems>
+      <FilterDimensions>
+        <Dimension DefaultId="DataItem0" />
+        <Dimension DefaultId="DataItem1" />
+      </FilterDimensions>
+    </ListBox>
   </Items>
   <LayoutTree>
     <LayoutGroup>
       <LayoutGroup Orientation="Vertical" Weight="1.1294377796328778">
-        <LayoutGroup Weight="1.4427153759611884">
+        <LayoutGroup Weight="1.4019940590330646">
           <LayoutItem DashboardItem="gridDashboardItem1" Weight="1.8661151193421894" />
           <LayoutTabContainer DashboardItem="tabContainerDashboardItem1" Weight="1.085048111167783">
             <LayoutTabPage DashboardItem="dashboardTabPage1">
@@ -452,9 +463,12 @@
             </LayoutTabPage>
           </LayoutTabContainer>
         </LayoutGroup>
-        <LayoutGroup Weight="1.0132890512662602">
+        <LayoutGroup Weight="1.054010368194384">
           <LayoutItem DashboardItem="listBoxDashboardItem1" Weight="0.38442741774978995" />
-          <LayoutItem DashboardItem="listBoxDashboardItem2" Weight="0.83647449123202833" />
+          <LayoutGroup Orientation="Vertical" Weight="0.83647449123202833">
+            <LayoutItem DashboardItem="listBoxDashboardItem2" Weight="1.0436583727837394" />
+            <LayoutItem DashboardItem="listBoxDashboardItem3" Weight="0.62929060968031725" />
+          </LayoutGroup>
           <LayoutTabContainer DashboardItem="tabContainerDashboardItem2" Weight="2.3635843103634708">
             <LayoutTabPage DashboardItem="dashboardTabPage4">
               <LayoutItem DashboardItem="chartDashboardItem2" Weight="2.5950764094060026" />

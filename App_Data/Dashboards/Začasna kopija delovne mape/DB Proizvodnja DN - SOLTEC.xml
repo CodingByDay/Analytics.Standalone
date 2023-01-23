@@ -1,0 +1,154 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Dashboard>
+  <Title Text="SETCCE Oštir test - 1" />
+  <DataSources>
+    <SqlDataSource Name="Realizacija" ComponentName="sqlDataSource1" DataProcessingMode="Client">
+      <Connection Name="SETCCE" FromAppConfig="true" />
+      <Query Type="CustomSqlQuery" Name="Realizacija">
+        <Sql>select "uTN_DB_ReportDISTINCT"."StroškovniNosilec","uTN_DB_ReportDISTINCT"."Oddelek","uTN_DB_ReportDISTINCT"."Obdobje","uTN_DB_ReportDISTINCT"."StroškovniNosilecNaziv","uTN_DB_ReportDISTINCT"."OddelekNaziv","uTN_DB_ReportDISTINCT"."Pogodba","uTN_DB_ReportDISTINCT"."Klasifikacija","uTN_DB_ReportDISTINCT"."OdgovornaOsebaSETCCE","uTN_DB_ReportDISTINCT"."OdgovornaOsebaStranke","uTN_DB_ReportDISTINCT"."Sponzor","uTN_DB_ReportDISTINCT"."VodjaProjekta","uTN_DB_ReportMove"."RealizacijaNaročnik","uTN_DB_ReportMove"."RealizacijaDokument","uTN_DB_ReportMove"."RealizacijaPoz","uTN_DB_ReportMove"."RealizacijaDatum","uTN_DB_ReportMove"."RealizacijaTip","uTN_DB_ReportMove"."RealizacijaIzdajatelj","uTN_DB_ReportMove"."RealizacijaPrejemnik","uTN_DB_ReportMove"."RealizacijaIdent","uTN_DB_ReportMove"."RealizacijaIdentNaziv","uTN_DB_ReportMove"."RealizacijaKoličina","uTN_DB_ReportMove"."RealizacijaEM","uTN_DB_ReportMove"."RealizacijaDatumDokumenta","uTN_DB_ReportMove"."RealizacijaDatumZapadlosti","uTN_DB_ReportMove"."RealizacijaVrednost" 
+from ("dbo"."uTN_DB_ReportMove" "uTN_DB_ReportMove"
+ inner join "dbo"."uTN_DB_ReportDISTINCT" "uTN_DB_ReportDISTINCT" on (("uTN_DB_ReportDISTINCT"."StroškovniNosilec" = "uTN_DB_ReportMove"."StroškovniNosilec") and ("uTN_DB_ReportDISTINCT"."Oddelek" = "uTN_DB_ReportMove"."Oddelek") and ("uTN_DB_ReportDISTINCT"."Obdobje" = "uTN_DB_ReportMove"."Obdobje")))</Sql>
+      </Query>
+      <ConnectionOptions CloseConnection="true" />
+      <CalculatedFields>
+        <CalculatedField Name="Leto" Expression="Substring([Obdobje], 0, 4)" DataType="Auto" DataMember="Realizacija" />
+      </CalculatedFields>
+    </SqlDataSource>
+  </DataSources>
+  <Parameters>
+    <Parameter Name="P1Leto" Value="2022" Description="Leto obdelave">
+      <DynamicListLookUpSettings DataSourceName="sqlDataSource1" DataMember="Realizacija" ValueMember="Leto" DisplayMember="Leto" SortByMember="Leto" SortOrder="Descending" />
+    </Parameter>
+    <Parameter Name="P2Sponzor" Value="Svetlana Šaljić" Description="Sponzor">
+      <DynamicListLookUpSettings DataSourceName="sqlDataSource1" DataMember="Realizacija" ValueMember="Sponzor" DisplayMember="Sponzor" SortByMember="Sponzor" />
+    </Parameter>
+  </Parameters>
+  <Items>
+    <Grid ComponentName="gridDashboardItem1" Name="Report Move po Stroškovnih nosilcih, oddelkih in obdobju" DataSource="sqlDataSource1" DataMember="Realizacija" FilterString="[DataItem1] = ?P1Leto And [Sponzor] = ?P2Sponzor" VisibleDataFilterString="[DataItem1] = ?P1Leto">
+      <InteractivityOptions MasterFilterMode="Multiple" />
+      <DataItems>
+        <Dimension DataMember="StroškovniNosilec" DefaultId="DataItem0" />
+        <Dimension DataMember="Oddelek" DefaultId="DataItem2" />
+        <Dimension DataMember="Obdobje" DefaultId="DataItem4" />
+        <Dimension DataMember="RealizacijaDatum" DateTimeGroupInterval="DayMonthYear" DefaultId="DataItem5" />
+        <Dimension DataMember="RealizacijaIdent" DefaultId="DataItem7" />
+        <Dimension DataMember="RealizacijaIdentNaziv" DefaultId="DataItem8" />
+        <Measure DataMember="RealizacijaKoličina" DefaultId="DataItem9">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="RealizacijaVrednost" DefaultId="DataItem11">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Dimension DataMember="Leto" DefaultId="DataItem1" />
+      </DataItems>
+      <HiddenDimensions>
+        <Dimension DefaultId="DataItem1" />
+      </HiddenDimensions>
+      <GridColumns>
+        <GridDimensionColumn Weight="65.5895496734273">
+          <Dimension DefaultId="DataItem0" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Weight="89.7215537985562">
+          <Dimension DefaultId="DataItem2" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Weight="42.076314884840151">
+          <Dimension DefaultId="DataItem4" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Datum realizacije" Weight="64.352011000343765">
+          <Dimension DefaultId="DataItem5" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Weight="60.020625644551394">
+          <Dimension DefaultId="DataItem7" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Weight="165.83018219319354">
+          <Dimension DefaultId="DataItem8" />
+        </GridDimensionColumn>
+        <GridMeasureColumn Name="Količina" Weight="84.1526297696803">
+          <Measure DefaultId="DataItem9" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Vrednost" Weight="87.555861120660026">
+          <Measure DefaultId="DataItem11" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+      </GridColumns>
+      <GridOptions ColumnWidthMode="AutoFitToContents" />
+    </Grid>
+    <ListBox ComponentName="listBoxDashboardItem1" Name="Filter Stroškovni nosilec" DataSource="sqlDataSource1" DataMember="Realizacija" FilterString="[DataItem2] = ?P1Leto And [Sponzor] = ?P2Sponzor" IsMasterFilterCrossDataSource="true" EnableSearch="true">
+      <InteractivityOptions IgnoreMasterFilters="false" />
+      <DataItems>
+        <Dimension DataMember="StroškovniNosilec" DefaultId="DataItem0" />
+        <Dimension DataMember="StroškovniNosilecNaziv" DefaultId="DataItem1" />
+        <Dimension DataMember="Leto" DefaultId="DataItem2" />
+      </DataItems>
+      <HiddenDimensions>
+        <Dimension DefaultId="DataItem2" />
+      </HiddenDimensions>
+      <FilterDimensions>
+        <Dimension DefaultId="DataItem0" />
+        <Dimension DefaultId="DataItem1" />
+      </FilterDimensions>
+    </ListBox>
+    <Pivot ComponentName="pivotDashboardItem1" Name="Report Move - strukturiran" DataSource="sqlDataSource1" DataMember="Realizacija" FilterString="[DataItem6] = ?P1Leto And [Sponzor] = ?P2Sponzor">
+      <DataItems>
+        <Measure DataMember="RealizacijaKoličina" Name="Količina" DefaultId="DataItem0">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="RealizacijaVrednost" Name="Vrednost" DefaultId="DataItem1">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Dimension DataMember="Oddelek" DefaultId="DataItem2" />
+        <Dimension DataMember="StroškovniNosilec" DefaultId="DataItem3" />
+        <Dimension DataMember="Obdobje" DefaultId="DataItem4" />
+        <Dimension DataMember="RealizacijaDokument" Name="Dokument" DefaultId="DataItem5" />
+        <Dimension DataMember="Leto" DefaultId="DataItem6" />
+        <Measure DataMember="Leto" SummaryType="Count" DefaultId="DataItem7" />
+        <Dimension DataMember="RealizacijaPoz" Name="POZ" DefaultId="DataItem8" />
+      </DataItems>
+      <HiddenDimensions>
+        <Dimension DefaultId="DataItem6" />
+      </HiddenDimensions>
+      <HiddenMeasures>
+        <Measure DefaultId="DataItem7" />
+      </HiddenMeasures>
+      <Columns>
+        <Column DefaultId="DataItem2" />
+      </Columns>
+      <Rows>
+        <Row DefaultId="DataItem3" />
+        <Row DefaultId="DataItem4" />
+        <Row DefaultId="DataItem5" />
+        <Row DefaultId="DataItem8" />
+      </Rows>
+      <Values>
+        <Value DefaultId="DataItem0" />
+        <Value DefaultId="DataItem1" />
+      </Values>
+    </Pivot>
+    <ListBox ComponentName="listBoxDashboardItem2" Name="Naročnik" DataSource="sqlDataSource1" DataMember="Realizacija" FilterString="[Leto] = ?P1Leto And [Sponzor] = ?P2Sponzor" IsMasterFilterCrossDataSource="true" EnableSearch="true">
+      <InteractivityOptions IgnoreMasterFilters="false" />
+      <DataItems>
+        <Dimension DataMember="RealizacijaNaročnik" DefaultId="DataItem0" />
+      </DataItems>
+      <FilterDimensions>
+        <Dimension DefaultId="DataItem0" />
+      </FilterDimensions>
+    </ListBox>
+  </Items>
+  <LayoutTree>
+    <LayoutGroup>
+      <LayoutGroup Orientation="Vertical" Weight="1.6164914222468179">
+        <LayoutGroup Weight="1.3293773740131982">
+          <LayoutItem DashboardItem="listBoxDashboardItem1" Weight="0.38350857775318209" />
+          <LayoutItem DashboardItem="listBoxDashboardItem2" Weight="0.38350857775318209" />
+          <LayoutItem DashboardItem="gridDashboardItem1" Weight="1.6164914222468179" />
+        </LayoutGroup>
+        <LayoutItem DashboardItem="pivotDashboardItem1" Weight="1.9036054704804375" />
+      </LayoutGroup>
+    </LayoutGroup>
+  </LayoutTree>
+</Dashboard>

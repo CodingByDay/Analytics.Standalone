@@ -25,7 +25,7 @@ namespace peptak
             ASPxWebControl.CallbackError += Application_Error;
         }
 
-
+        
         protected void Application_Error(object sender, EventArgs e)
         {
             Exception exception = HttpContext.Current.Server.GetLastError();

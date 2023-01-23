@@ -2,8 +2,8 @@
 <Dashboard>
   <Title Text="DB Prodaja - 3 Od-Do" />
   <DataSources>
-    <SqlDataSource Name="CustomSqlQuery" ComponentName="sqlDataSource1">
-      <Connection Name="eHolding ERFA" FromAppConfig="true" />
+    <SqlDataSource Name="CustomSqlQuery" ComponentName="sqlDataSource1" DataProcessingMode="Client">
+      <Connection Name="PetPak" FromAppConfig="true" />
       <Query Type="CustomSqlQuery" Name="CustomSqlQuery">
         <Sql>SELECT	--ProdajaPoslovniDogodekDobavnice,
 				ProdajaDatumDobavnice,
@@ -59,7 +59,7 @@
 --			ProdajaDobaviteljevaŠifra,
 --			ProdajaEANKoda,
 				ProdajaTipKupca,
-			    ProdajaReferent
+			    ProdajaReferent,
 --			ProdajaAcFieldSA,
 --			ProdajaAcFieldSB,
 --			ProdajaAcFieldSC,
@@ -79,9 +79,10 @@
 --			ProdajaAnFieldNG,
 --			ProdajaAnFieldNH,
 --			ProdajaAnFieldNI,
---			ProdajaAnFieldNJ
-  FROM dbo.uTN_DB_ProdajaPoRealizaciji_DET 
-	WHERE year(ProdajaDatumDobavnice)&gt;=(year(getdate())-5)</Sql>
+--			ProdajaAnFieldNJ,
+			ProdajaVrstaMS,
+			ProdajaVrstaMSNaziv
+  FROM dbo.uTN_DB_ProdajaPoRealizaciji_DET;</Sql>
       </Query>
       <ConnectionOptions CloseConnection="true" />
       <CalculatedFields>
@@ -110,7 +111,7 @@
     <Parameter Name="DatumDo3" Type="System.DateTime" Value="2020-12-31T00:00:00" Description="Obdobje-3 Do" />
   </Parameters>
   <Items>
-    <PieMap ComponentName="pieMapDashboardItem1" Name="Prodajapo regijah v Sloveniji #DatumOd1-#DatumDo1" ParentContainer="dashboardTabPage8" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" ShapefileArea="Europe" EnableClustering="true">
+    <PieMap ComponentName="pieMapDashboardItem1" Name="Prodajapo regijah v Sloveniji 01.01.2022-31.12.2022" ParentContainer="dashboardTabPage8" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" ShapefileArea="Europe" EnableClustering="true">
       <InteractivityOptions MasterFilterMode="Multiple" />
       <DataItems>
         <Dimension DataMember="YTDProdajnaVrednost" DefaultId="DataItem0" />
@@ -144,7 +145,7 @@
         <Value DefaultId="DataItem5" />
       </Values>
     </PieMap>
-    <Chart ComponentName="chartDashboardItem2" Name="Prodaja po tipu kupca #DatumOd1-#DatumDo1" DataSource="sqlDataSource1" DataMember="CustomSqlQuery">
+    <Chart ComponentName="chartDashboardItem2" Name="Prodaja po tipu kupca 01.01.2022-31.12.2022" DataSource="sqlDataSource1" DataMember="CustomSqlQuery">
       <InteractivityOptions MasterFilterMode="Multiple" />
       <DataItems>
         <Dimension DataMember="ProdajaTipKupca" DefaultId="DataItem0" />
@@ -216,7 +217,7 @@
         <Page ComponentName="dashboardTabPage10" Name="Page 2" />
       </Pages>
     </TabContainer>
-    <Grid ComponentName="gridDashboardItem3" Name="Realizacija po sekundarni klasifikaciji #DatumOd1-#DatumDo1 vs #DatumOd2-#DatumDo2" ParentContainer="dashboardTabPage3" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true">
+    <Grid ComponentName="gridDashboardItem3" Name="Realizacija po sekundarni klasifikaciji 01.01.2022-31.12.2022 vs 01.01.2021-31.12.2021" ParentContainer="dashboardTabPage3" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true">
       <InteractivityOptions MasterFilterMode="Multiple" />
       <DataItems>
         <Dimension DataMember="ProdajaSekundarnaKlasifikacija" SortOrder="Descending" SortByMeasure="DataItem1" DefaultId="DataItem0" />
@@ -314,7 +315,7 @@
         <Dimension DefaultId="DataItem0" />
       </FilterDimensions>
     </ListBox>
-    <Grid ComponentName="gridDashboardItem6" Name="Realizacija po tipu kupca #DatumOd1-#DatumDo1 vs #DatumOd2-#DatumDo2" ParentContainer="dashboardTabPage2" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true">
+    <Grid ComponentName="gridDashboardItem6" Name="Realizacija po tipu kupca 01.01.2022-31.12.2022 vs 01.01.2021-31.12.2021" ParentContainer="dashboardTabPage2" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true">
       <DataItems>
         <Measure DataMember="YTDProdajnaVrednost" DefaultId="DataItem1">
           <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
@@ -399,7 +400,7 @@
       </GridColumns>
       <GridOptions EnableBandedRows="true" WordWrap="true" />
     </Grid>
-    <Grid ComponentName="gridDashboardItem1" Name="Realizacija po komercialistih #DatumOd1-#DatumDo1 vs #DatumOd2-#DatumDo2" ParentContainer="dashboardTabPage9" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true">
+    <Grid ComponentName="gridDashboardItem1" Name="Realizacija po komercialistih 01.01.2022-31.12.2022 vs 01.01.2021-31.12.2021" ParentContainer="dashboardTabPage9" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true">
       <InteractivityOptions MasterFilterMode="Multiple" />
       <DataItems>
         <Measure DataMember="YTDProdajnaVrednost" DefaultId="DataItem1">
@@ -485,7 +486,7 @@
       </GridColumns>
       <GridOptions EnableBandedRows="true" WordWrap="true" />
     </Grid>
-    <Grid ComponentName="gridDashboardItem2" Name="Realizacija po identu #DatumOd1-#DatumDo1 vs #DatumOd2-#DatumDo2" ParentContainer="dashboardTabPage10" DataSource="sqlDataSource1" DataMember="CustomSqlQuery">
+    <Grid ComponentName="gridDashboardItem2" Name="Realizacija po identu 01.01.2022-31.12.2022 vs 01.01.2021-31.12.2021" ParentContainer="dashboardTabPage10" DataSource="sqlDataSource1" DataMember="CustomSqlQuery">
       <DataItems>
         <Dimension DataMember="ProdajaIdent" SortOrder="Descending" SortByMeasure="DataItem1" DefaultId="DataItem0" />
         <Measure DataMember="YTDProdajnaVrednost" DefaultId="DataItem1">
@@ -580,7 +581,7 @@
         <Page ComponentName="dashboardTabPage6" Name="Page 2" />
       </Pages>
     </TabContainer>
-    <Chart ComponentName="chartDashboardItem3" Name="Realizacija po mesecih - #DatumOd1-#DatumDo1 vs #DatumOd2-#DatumDo2 vs #DatumOd3-#DatumDo3" ParentContainer="dashboardTabPage5" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true">
+    <Chart ComponentName="chartDashboardItem3" Name="Realizacija po mesecih - 01.01.2022-31.12.2022 vs 01.01.2021-31.12.2021" ParentContainer="dashboardTabPage5" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true">
       <InteractivityOptions MasterFilterMode="Multiple" />
       <DataItems>
         <Dimension DataMember="ProdajaDatumDobavnice" Name="Mesec" DateTimeGroupInterval="Month" DefaultId="DataItem0">
@@ -640,7 +641,7 @@
         <Page ComponentName="dashboardTabPage8" Name="Page 2" />
       </Pages>
     </TabContainer>
-    <PieMap ComponentName="pieMapDashboardItem2" Name="Prodaja po Državah #DatumOd1-#DatumDo1" ParentContainer="dashboardTabPage7" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" ShapefileArea="Europe" EnableClustering="true">
+    <PieMap ComponentName="pieMapDashboardItem2" Name="Prodaja po Državah 01.01.2022-31.12.2022" ParentContainer="dashboardTabPage7" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" ShapefileArea="Europe" EnableClustering="true">
       <InteractivityOptions MasterFilterMode="Multiple" />
       <DataItems>
         <Dimension DataMember="YTDProdajnaVrednost" DefaultId="DataItem0" />
@@ -674,7 +675,7 @@
         <Value DefaultId="DataItem5" />
       </Values>
     </PieMap>
-    <Grid ComponentName="gridDashboardItem4" Name="Realizacija po dobaviteljih #DatumOd1-#DatumDo1 vs #DatumOd2-#DatumDo2" ParentContainer="dashboardTabPage4" DataSource="sqlDataSource1" DataMember="CustomSqlQuery">
+    <Grid ComponentName="gridDashboardItem4" Name="Realizacija po dobaviteljih 01.01.2022-31.12.2022 vs 01.01.2021-31.12.2021" ParentContainer="dashboardTabPage4" DataSource="sqlDataSource1" DataMember="CustomSqlQuery">
       <DataItems>
         <Measure DataMember="YTDProdajnaVrednost" DefaultId="DataItem1">
           <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
@@ -759,7 +760,7 @@
       </GridColumns>
       <GridOptions EnableBandedRows="true" WordWrap="true" />
     </Grid>
-    <Grid ComponentName="gridDashboardItem5" Name="Realizacija po primarni klasifikaciji #DatumOd1-#DatumDo1 vs #DatumOd2-#DatumDo2" ParentContainer="dashboardTabPage1" DataSource="sqlDataSource1" DataMember="CustomSqlQuery">
+    <Grid ComponentName="gridDashboardItem5" Name="Realizacija po primarni klasifikaciji 01.01.2022-31.12.2022 vs 01.01.2021-31.12.2021" ParentContainer="dashboardTabPage1" DataSource="sqlDataSource1" DataMember="CustomSqlQuery">
       <DataItems>
         <Dimension DataMember="ProdajaPrimarnaKlasifikacija" SortOrder="Descending" SortByMeasure="DataItem1" DefaultId="DataItem0" />
         <Measure DataMember="YTDProdajnaVrednost" DefaultId="DataItem1">
@@ -848,6 +849,16 @@
       </GridColumns>
       <GridOptions EnableBandedRows="true" WordWrap="true" />
     </Grid>
+    <ListBox ComponentName="listBoxDashboardItem2" Name="Vrsta materialnega sredstva" DataSource="sqlDataSource1" DataMember="CustomSqlQuery">
+      <DataItems>
+        <Dimension DataMember="ProdajaVrstaMS" Name="VMS" DefaultId="DataItem0" />
+        <Dimension DataMember="ProdajaVrstaMSNaziv" Name="Naziv VMS" DefaultId="DataItem1" />
+      </DataItems>
+      <FilterDimensions>
+        <Dimension DefaultId="DataItem0" />
+        <Dimension DefaultId="DataItem1" />
+      </FilterDimensions>
+    </ListBox>
   </Items>
   <LayoutTree>
     <LayoutGroup>
@@ -873,8 +884,11 @@
           </LayoutTabPage>
         </LayoutTabContainer>
         <LayoutGroup Weight="1.1387783285698525">
-          <LayoutItem DashboardItem="listBoxDashboardItem1" Weight="0.19103336642157442" />
-          <LayoutTabContainer DashboardItem="tabContainerDashboardItem2" Weight="1.4044478997951935">
+          <LayoutGroup Orientation="Vertical" Weight="0.26581031625778173">
+            <LayoutItem DashboardItem="listBoxDashboardItem1" Weight="0.9132561803084539" />
+            <LayoutItem DashboardItem="listBoxDashboardItem2" Weight="0.66978023460692393" />
+          </LayoutGroup>
+          <LayoutTabContainer DashboardItem="tabContainerDashboardItem2" Weight="1.3296709499589863">
             <LayoutTabPage DashboardItem="dashboardTabPage5">
               <LayoutItem DashboardItem="chartDashboardItem3" Weight="1.2574006182566047" />
             </LayoutTabPage>

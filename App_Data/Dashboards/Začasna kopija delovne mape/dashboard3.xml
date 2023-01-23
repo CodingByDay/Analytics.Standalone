@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Dashboard>
+  <Title Text="SETCCE Janez test -3" />
+  <DataSources>
+    <SqlDataSource Name="uTN_DB_ReportDISTINCT" ComponentName="sqlDataSource1" DataProcessingMode="Client">
+      <Connection Name="SETCCE" FromAppConfig="true" />
+      <Query Type="CustomSqlQuery" Name="uTN_DB_ReportDISTINCT">
+        <Sql>select "uTN_DB_ReportDISTINCT"."StroškovniNosilec","uTN_DB_ReportDISTINCT"."Oddelek","uTN_DB_ReportDISTINCT"."Obdobje","uTN_DB_ReportDISTINCT"."StroškovniNosilecNaziv","uTN_DB_ReportDISTINCT"."OddelekNaziv","uTN_DB_ReportDISTINCT"."Pogodba","uTN_DB_ReportDISTINCT"."Klasifikacija","uTN_DB_ReportDISTINCT"."OdgovornaOsebaSETCCE","uTN_DB_ReportDISTINCT"."OdgovornaOsebaStranke","uTN_DB_ReportDISTINCT"."Sponzor","uTN_DB_ReportDISTINCT"."VodjaProjekta","uTN_DB_ReportOrder"."PlanNaročnik","uTN_DB_ReportOrder"."PlanDokument","uTN_DB_ReportOrder"."PlanDokumentPoz","uTN_DB_ReportOrder"."PlanIdent","uTN_DB_ReportOrder"."PlanIdentNaziv","uTN_DB_ReportOrder"."PlanKoličina","uTN_DB_ReportOrder"."PlanEM","uTN_DB_ReportOrder"."PlanCena","uTN_DB_ReportOrder"."PlanVrednost","uTN_DB_ReportOrder"."PlanRokDObave","uTN_DB_ReportMove"."RealizacijaNaročnik","uTN_DB_ReportMove"."RealizacijaDokument","uTN_DB_ReportMove"."RealizacijaPoz","uTN_DB_ReportMove"."RealizacijaDatum","uTN_DB_ReportMove"."RealizacijaTip","uTN_DB_ReportMove"."RealizacijaIzdajatelj","uTN_DB_ReportMove"."RealizacijaPrejemnik","uTN_DB_ReportMove"."RealizacijaIdent","uTN_DB_ReportMove"."RealizacijaIdentNaziv","uTN_DB_ReportMove"."RealizacijaKoličina","uTN_DB_ReportMove"."RealizacijaEM","uTN_DB_ReportMove"."RealizacijaDatumDokumenta","uTN_DB_ReportMove"."RealizacijaDatumZapadlosti","uTN_DB_ReportMove"."RealizacijaVrednost" from (("dbo"."uTN_DB_ReportOrder" "uTN_DB_ReportOrder"
+ inner join "dbo"."uTN_DB_ReportDISTINCT" "uTN_DB_ReportDISTINCT" on (("uTN_DB_ReportDISTINCT"."StroškovniNosilec" = "uTN_DB_ReportOrder"."StroškovniNosilec") and ("uTN_DB_ReportDISTINCT"."Oddelek" = "uTN_DB_ReportOrder"."Oddelek") and ("uTN_DB_ReportDISTINCT"."Obdobje" = "uTN_DB_ReportOrder"."Obdobje")))
+ inner join "dbo"."uTN_DB_ReportMove" "uTN_DB_ReportMove" on (("uTN_DB_ReportMove"."StroškovniNosilec" = "uTN_DB_ReportDISTINCT"."StroškovniNosilec") and ("uTN_DB_ReportMove"."Oddelek" = "uTN_DB_ReportDISTINCT"."Oddelek") and ("uTN_DB_ReportMove"."Obdobje" = "uTN_DB_ReportDISTINCT"."Obdobje"))) where "uTN_DB_ReportDISTINCT"."Obdobje"&gt;='2021'</Sql>
+      </Query>
+      <ConnectionOptions CloseConnection="true" />
+      <CalculatedFields>
+        <CalculatedField Name="Leto" Expression="substring([Obdobje],0,4)" DataType="Auto" DataMember="uTN_DB_ReportDISTINCT" />
+        <CalculatedField Name="IndexRealPlan" Expression="sum([RealizacijaVrednost])/sum([PlanVrednost])" DataType="Auto" DataMember="uTN_DB_ReportDISTINCT" />
+      </CalculatedFields>
+    </SqlDataSource>
+  </DataSources>
+  <Parameters>
+    <Parameter Name="P1Leto" Value="2022" Description="Leto iz Obdobja">
+      <DynamicListLookUpSettings DataSourceName="sqlDataSource1" DataMember="uTN_DB_ReportDISTINCT" ValueMember="Leto" DisplayMember="Leto" SortByMember="Leto" SortOrder="Descending" />
+    </Parameter>
+  </Parameters>
+  <Items>
+    <Grid ComponentName="gridDashboardItem1" Name="Grid 1" DataSource="sqlDataSource1" DataMember="uTN_DB_ReportDISTINCT">
+      <DataItems>
+        <Dimension DataMember="StroškovniNosilec" DefaultId="DataItem0" />
+        <Dimension DataMember="Obdobje" DefaultId="DataItem1" />
+        <Measure DataMember="PlanVrednost" DefaultId="DataItem2">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="RealizacijaVrednost" DefaultId="DataItem3">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+      </DataItems>
+      <GridColumns>
+        <GridDimensionColumn>
+          <Dimension DefaultId="DataItem0" />
+        </GridDimensionColumn>
+        <GridDimensionColumn>
+          <Dimension DefaultId="DataItem1" />
+        </GridDimensionColumn>
+        <GridMeasureColumn Name="Planirana vrednost">
+          <Measure DefaultId="DataItem2" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Realizirana vrednost">
+          <Measure DefaultId="DataItem3" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+      </GridColumns>
+      <GridOptions />
+    </Grid>
+    <ListBox ComponentName="listBoxDashboardItem2" Name="Stroškovni nosilci" DataSource="sqlDataSource1" DataMember="uTN_DB_ReportDISTINCT" FilterString="[Leto] = ?P1Leto" EnableSearch="true">
+      <DataItems>
+        <Dimension DataMember="StroškovniNosilec" DefaultId="DataItem0" />
+        <Dimension DataMember="StroškovniNosilecNaziv" DefaultId="DataItem1" />
+      </DataItems>
+      <FilterDimensions>
+        <Dimension DefaultId="DataItem0" />
+        <Dimension DefaultId="DataItem1" />
+      </FilterDimensions>
+    </ListBox>
+  </Items>
+  <LayoutTree>
+    <LayoutGroup>
+      <LayoutItem DashboardItem="listBoxDashboardItem2" Weight="0.61649142224681819" />
+      <LayoutItem DashboardItem="gridDashboardItem1" />
+    </LayoutGroup>
+  </LayoutTree>
+</Dashboard>

@@ -1,0 +1,226 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Dashboard>
+  <Title Text="DB MNGMT report - 3" />
+  <DataSources>
+    <SqlDataSource Name="DB MNGMT report" ComponentName="sqlDataSource1">
+      <Connection Name="SETCCE" FromAppConfig="true" />
+      <Query Type="CustomSqlQuery" Name="DB MNGMT report">
+        <Sql>select *
+FROM dbo.uTN_DB_MNGMTDetalj
+WHERE DATEPART(YEAR,MNGMTDatumTemeljnice)&gt;=DATEPART(YEAR, GETDATE())-1
+AND MngmtOznaka='T';</Sql>
+      </Query>
+      <ConnectionOptions CloseConnection="true" />
+      <CalculatedFields>
+        <CalculatedField Name="Nivo3" Expression="iif([MngmtIDNivo3]='T',[MngmtID]+' '+[MngmtIDNaziv],'')" DataType="Auto" DataMember="DB MNGMT report" />
+        <CalculatedField Name="Nivo2" Expression="iif([MngmtIDNivo2]='T',[MngmtID]+' '+[MngmtIDNaziv],'')" DataType="Auto" DataMember="DB MNGMT report" />
+        <CalculatedField Name="Nivo1" Expression="[MngmtID]+' '+[MngmtIDNaziv]" DataType="Auto" DataMember="DB MNGMT report" />
+        <CalculatedField Name="Nivo1Filter" Expression="iif([MngmtIDNivo1]='T',[MngmtID]+' '+[MngmtIDNaziv],'')" DataType="Auto" DataMember="DB MNGMT report" />
+        <CalculatedField Name="Debet" Expression="filter(sum(MngmtDebet) ,MngmtOznaka='T' )" DataType="Auto" DataMember="DB MNGMT report" />
+        <CalculatedField Name="Kredit" Expression="filter(sum(MngmtKredit) ,MngmtOznaka='T' )" DataType="Auto" DataMember="DB MNGMT report" />
+        <CalculatedField Name="Saldo" Expression="filter(sum(MngmtSaldo) ,MngmtOznaka='T' )" DataType="Auto" DataMember="DB MNGMT report" />
+        <CalculatedField Name="Nivo1Prihodek" Expression="iif([MngmtIDNivo1]='T' and [MngmtIDOznaka]='Prihodek',[MngmtID]+' '+[MngmtIDNaziv],'')" DataType="Auto" DataMember="DB MNGMT report" />
+        <CalculatedField Name="Nivo1StrošekOstalo" Expression="iif([MngmtIDNivo1]='T' and [MngmtIDOznaka]='Strošek ostalo',[MngmtID]+' '+[MngmtIDNaziv],'')" DataType="Auto" DataMember="DB MNGMT report" />
+        <CalculatedField Name="Nivo1StrošekProdaja" Expression="iif([MngmtIDNivo1]='T' and [MngmtIDOznaka]='Strošek prodaja',[MngmtID]+' '+[MngmtIDNaziv],'')" DataType="Auto" DataMember="DB MNGMT report" />
+      </CalculatedFields>
+    </SqlDataSource>
+  </DataSources>
+  <Items>
+    <Pie ComponentName="pieDashboardItem2" Name="Ostali stroški" DataSource="sqlDataSource1" DataMember="DB MNGMT report" FilterString="[DataItem0] = 'Strošek ostalo'" IsMasterFilterCrossDataSource="true" PieType="Donut" ShowPieCaptions="false">
+      <InteractivityOptions MasterFilterMode="Multiple" IsDrillDownEnabled="true" />
+      <DataItems>
+        <Dimension DataMember="MngmtIDOznaka" DefaultId="DataItem0" />
+        <Dimension DataMember="Nivo1StrošekOstalo" Name="Ostali stroški" DefaultId="DataItem1" />
+        <Measure DataMember="MngmtSaldo" Name="Saldo" FilterString="Not IsNullOrEmpty([DataItem1])" DefaultId="DataItem2">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+      </DataItems>
+      <HiddenDimensions>
+        <Dimension DefaultId="DataItem0" />
+      </HiddenDimensions>
+      <Arguments>
+        <Argument DefaultId="DataItem1" />
+      </Arguments>
+      <Values>
+        <Value DefaultId="DataItem2" />
+      </Values>
+    </Pie>
+    <Pie ComponentName="pieDashboardItem1" Name="Prihodki" DataSource="sqlDataSource1" DataMember="DB MNGMT report" FilterString="[DataItem2] = 'Prihodek'" IsMasterFilterCrossDataSource="true" PieType="Donut" ShowPieCaptions="false">
+      <InteractivityOptions MasterFilterMode="Multiple" IsDrillDownEnabled="true" />
+      <DataItems>
+        <Dimension DataMember="MngmtIDOznaka" DefaultId="DataItem2" />
+        <Dimension DataMember="Nivo1Prihodek" Name="Prihodki" DefaultId="DataItem3" />
+        <Measure DataMember="MngmtSaldo" Name="Saldo" FilterString="Not IsNullOrEmpty([DataItem3])" DefaultId="DataItem4">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+      </DataItems>
+      <HiddenDimensions>
+        <Dimension DefaultId="DataItem2" />
+      </HiddenDimensions>
+      <Arguments>
+        <Argument DefaultId="DataItem3" />
+      </Arguments>
+      <Values>
+        <Value DefaultId="DataItem4" />
+      </Values>
+    </Pie>
+    <ListBox ComponentName="listBoxDashboardItem1" Name="Leto" DataSource="sqlDataSource1" DataMember="DB MNGMT report">
+      <DataItems>
+        <Dimension DataMember="MngmtDatumTemeljnice" Name="Leto" DefaultId="DataItem0">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" />
+        </Dimension>
+      </DataItems>
+      <FilterDimensions>
+        <Dimension DefaultId="DataItem0" />
+      </FilterDimensions>
+    </ListBox>
+    <Grid ComponentName="gridDashboardItem4" Name="Knjižbe v GK po temeljnicah in pozicijah" ShowCaption="false" DataSource="sqlDataSource1" DataMember="DB MNGMT report" FilterString="[DataItem7] = 'T' And [DataItem5] &lt;&gt; 'Default'">
+      <DataItems>
+        <Dimension DataMember="MngmtŠtevilkaTemeljnice" DefaultId="DataItem0" />
+        <Dimension DataMember="MngmtDatumTemeljnice" DateTimeGroupInterval="DayMonthYear" DefaultId="DataItem3" />
+        <Dimension DataMember="MngmtKonto" DefaultId="DataItem4" />
+        <Dimension DataMember="MngmtKontoNaziv" DefaultId="DataItem5" />
+        <Dimension DataMember="MngmtSubjekt" DefaultId="DataItem6" />
+        <Dimension DataMember="MngmtIDNivo1" Name="Nivo1" DefaultId="DataItem7" />
+        <Measure DataMember="MngmtDebet" DefaultId="DataItem8">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="MngmtKredit" DefaultId="DataItem9">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="MngmtSaldo" DefaultId="DataItem10">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Dimension DataMember="MngmtPozicijaTemeljnice" DefaultId="DataItem1">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" />
+        </Dimension>
+        <Dimension DataMember="MngmtOddelek" DefaultId="DataItem2" />
+      </DataItems>
+      <HiddenDimensions>
+        <Dimension DefaultId="DataItem7" />
+      </HiddenDimensions>
+      <FormatRules>
+        <GridItemFormatRule Name="Format Rule 1" DataItem="DataItem3" DataItemApplyTo="DataItem3">
+          <FormatConditionValue>
+            <AppearanceSettings AppearanceType="FontGrayed" />
+            <Value1 Type="System.DateTime" Value="1900-01-01T00:00:00.0000000" />
+          </FormatConditionValue>
+        </GridItemFormatRule>
+      </FormatRules>
+      <GridColumns>
+        <GridDimensionColumn Name="Št.temeljnice" Weight="55.199856734634977">
+          <Dimension DefaultId="DataItem0" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="POZ" Weight="28.551650035156019">
+          <Dimension DefaultId="DataItem1" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Datum" Weight="39.972310049218429">
+          <Dimension DefaultId="DataItem3" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Konto" Weight="33.786119208267955">
+          <Dimension DefaultId="DataItem4" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Opis" Weight="174.640926048371">
+          <Dimension DefaultId="DataItem5" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Subjekt" Weight="98.979053455207548">
+          <Dimension DefaultId="DataItem6" />
+        </GridDimensionColumn>
+        <GridMeasureColumn Name="Debet" Weight="62.813630077343241">
+          <Measure DefaultId="DataItem8" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Kredit" Weight="60.91018674166618">
+          <Measure DefaultId="DataItem9" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Saldo" Weight="60.91018674166618">
+          <Measure DefaultId="DataItem10" />
+        </GridMeasureColumn>
+        <GridDimensionColumn Name="Oddelek" Weight="93.506653865135959">
+          <Dimension DefaultId="DataItem2" />
+        </GridDimensionColumn>
+      </GridColumns>
+      <GridOptions EnableBandedRows="true" ColumnWidthMode="Manual" />
+    </Grid>
+    <ListBox ComponentName="listBoxDashboardItem3" Name="Mesec" DataSource="sqlDataSource1" DataMember="DB MNGMT report">
+      <DataItems>
+        <Dimension DataMember="MngmtDatumTemeljnice" Name="Mesec" DateTimeGroupInterval="Month" DefaultId="DataItem0" />
+      </DataItems>
+      <FilterDimensions>
+        <Dimension DefaultId="DataItem0" />
+      </FilterDimensions>
+    </ListBox>
+    <Pie ComponentName="pieDashboardItem3" Name="Stroški prodaje" DataSource="sqlDataSource1" DataMember="DB MNGMT report" IsMasterFilterCrossDataSource="true" PieType="Donut" ShowPieCaptions="false">
+      <InteractivityOptions MasterFilterMode="Multiple" IsDrillDownEnabled="true" />
+      <DataItems>
+        <Dimension DataMember="MngmtIDOznaka" DefaultId="DataItem0" />
+        <Dimension DataMember="Nivo1StrošekProdaja" Name="Strošek prodaje" DefaultId="DataItem1" />
+        <Measure DataMember="MngmtSaldo" Name="Saldo" FilterString="Not(IsNullOrEmpty([DataItem1]))" DefaultId="DataItem2">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+      </DataItems>
+      <HiddenDimensions>
+        <Dimension DefaultId="DataItem0" />
+      </HiddenDimensions>
+      <Arguments>
+        <Argument DefaultId="DataItem1" />
+      </Arguments>
+      <Values>
+        <Value DefaultId="DataItem2" />
+      </Values>
+    </Pie>
+    <Pie ComponentName="pieDashboardItem5" Name="Subjekt" DataSource="sqlDataSource1" DataMember="DB MNGMT report" IsMasterFilterCrossDataSource="true" PieType="Donut" ShowPieCaptions="false">
+      <InteractivityOptions MasterFilterMode="Multiple" />
+      <DataItems>
+        <Measure DataMember="MngmtSaldo" Name="Saldo" DefaultId="DataItem0">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Dimension DataMember="MngmtSubjekt" Name="Subjekt" DefaultId="DataItem1" />
+      </DataItems>
+      <Arguments>
+        <Argument DefaultId="DataItem1" />
+      </Arguments>
+      <Values>
+        <Value DefaultId="DataItem0" />
+      </Values>
+    </Pie>
+    <Pie ComponentName="pieDashboardItem4" Name="Oddelek" DataSource="sqlDataSource1" DataMember="DB MNGMT report" IsMasterFilterCrossDataSource="true" PieType="Donut" ShowPieCaptions="false">
+      <InteractivityOptions MasterFilterMode="Multiple" />
+      <DataItems>
+        <Measure DataMember="MngmtSaldo" Name="Saldo" DefaultId="DataItem0">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Dimension DataMember="MngmtOddelek" Name="Oddelek" DefaultId="DataItem1" />
+      </DataItems>
+      <Arguments>
+        <Argument DefaultId="DataItem1" />
+      </Arguments>
+      <Values>
+        <Value DefaultId="DataItem0" />
+      </Values>
+    </Pie>
+  </Items>
+  <LayoutTree>
+    <LayoutGroup Orientation="Vertical">
+      <LayoutGroup Weight="0.78295159386068469">
+        <LayoutItem DashboardItem="pieDashboardItem4" Weight="0.875876178770407" />
+        <LayoutItem DashboardItem="pieDashboardItem5" Weight="1.0058961082236459" />
+        <LayoutItem DashboardItem="pieDashboardItem1" Weight="1.0058961082236459" />
+        <LayoutItem DashboardItem="pieDashboardItem3" Weight="1.0418140094830433" />
+        <LayoutItem DashboardItem="pieDashboardItem2" Weight="1.0418140094830433" />
+      </LayoutGroup>
+      <LayoutGroup Weight="1.3625029515938607">
+        <LayoutGroup Orientation="Vertical" Weight="0.21593954886508085">
+          <LayoutItem DashboardItem="listBoxDashboardItem1" Weight="0.36737172610647267" />
+          <LayoutItem DashboardItem="listBoxDashboardItem3" Weight="0.8110546363736082" />
+        </LayoutGroup>
+        <LayoutItem DashboardItem="gridDashboardItem4" Weight="2.7289869779213434" />
+      </LayoutGroup>
+    </LayoutGroup>
+  </LayoutTree>
+</Dashboard>

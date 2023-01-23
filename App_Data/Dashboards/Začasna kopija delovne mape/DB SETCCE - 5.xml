@@ -1,0 +1,173 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Dashboard>
+  <Title Text="DB SETCCE - 5" />
+  <DataSources>
+    <SqlDataSource Name="CustomSqlQuery" ComponentName="sqlDataSource1">
+      <Connection Name="SETCCE" FromAppConfig="true" />
+      <Query Type="CustomSqlQuery" Name="CustomSqlQuery">
+        <Sql>select * from uTN_DB_SFO;</Sql>
+      </Query>
+      <ConnectionOptions CloseConnection="true" />
+      <CalculatedFields>
+        <CalculatedField Name="UteženaVrednost" Expression="iif([SFOProjektStatus]='Inquiry',[SFOProjektVrednost]*0.25,iif([SFOProjektStatus]='Offer sent',[SFOProjektVrednost]*0.50,iif([SFOProjektStatus]='Shortlist',[SFOProjektVrednost]*0.75,[SFOProjektVrednost])))" DataType="Auto" DataMember="CustomSqlQuery" />
+      </CalculatedFields>
+    </SqlDataSource>
+  </DataSources>
+  <Items>
+    <Grid ComponentName="gridDashboardItem1" Name="Pregled stanja v SalesForce - tetajl" DataSource="sqlDataSource1" DataMember="CustomSqlQuery">
+      <DataItems>
+        <Dimension DataMember="SFOProjektNaziv" DefaultId="DataItem0" />
+        <Dimension DataMember="SFOPodročje" DefaultId="DataItem1" />
+        <Measure DataMember="SFOProjektVrednost" DefaultId="DataItem2">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Dimension DataMember="SFODržava" DefaultId="DataItem3" />
+        <Dimension DataMember="SFOPoslovniPartner" DefaultId="DataItem4" />
+        <Dimension DataMember="SFOOdgovornaOseba" DefaultId="DataItem5" />
+        <Dimension DataMember="SFOProjektDatumZaključka" DateTimeGroupInterval="DayMonthYear" DefaultId="DataItem6" />
+        <Dimension DataMember="SFOProjektStatus" DefaultId="DataItem7" />
+        <Measure DataMember="UteženaVrednost" DefaultId="DataItem8">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+      </DataItems>
+      <GridColumns>
+        <GridDimensionColumn Name="Področje">
+          <Dimension DefaultId="DataItem1" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Poslovni partner">
+          <Dimension DefaultId="DataItem4" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Naziv projekta">
+          <Dimension DefaultId="DataItem0" />
+        </GridDimensionColumn>
+        <GridMeasureColumn Name="Vrednost projekta">
+          <Measure DefaultId="DataItem2" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridDimensionColumn Name="Država">
+          <Dimension DefaultId="DataItem3" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Status">
+          <Dimension DefaultId="DataItem7" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Odgovorna oseba">
+          <Dimension DefaultId="DataItem5" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Datum zaključka">
+          <Dimension DefaultId="DataItem6" />
+        </GridDimensionColumn>
+        <GridMeasureColumn Name="Utežena vrednost">
+          <Measure DefaultId="DataItem8" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+      </GridColumns>
+      <GridOptions />
+    </Grid>
+    <Pie ComponentName="pieDashboardItem1" Name="Po področjih" ShowCaption="false" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" PieType="Donut" LabelContentType="ArgumentValueAndPercent">
+      <InteractivityOptions MasterFilterMode="Multiple" />
+      <DataItems>
+        <Measure DataMember="SFOProjektVrednost" Name="Vrednost projektov po področjih" DefaultId="DataItem0">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Dimension DataMember="SFOPodročje" Name="Področje" TopNEnabled="true" TopNShowOthers="true" TopNCount="4" TopNMeasure="DataItem0" DefaultId="DataItem1" />
+      </DataItems>
+      <Arguments>
+        <Argument DefaultId="DataItem1" />
+      </Arguments>
+      <Values>
+        <Value DefaultId="DataItem0" />
+      </Values>
+    </Pie>
+    <Pie ComponentName="pieDashboardItem2" Name="Po državah" ShowCaption="false" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" PieType="Donut" LabelContentType="ArgumentValueAndPercent">
+      <InteractivityOptions MasterFilterMode="Multiple" />
+      <DataItems>
+        <Measure DataMember="SFOProjektVrednost" Name="Vrednost projektov po državah" DefaultId="DataItem0">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Dimension DataMember="SFODržava" Name="Država" DefaultId="DataItem1" />
+      </DataItems>
+      <Arguments>
+        <Argument DefaultId="DataItem1" />
+      </Arguments>
+      <Values>
+        <Value DefaultId="DataItem0" />
+      </Values>
+    </Pie>
+    <Pie ComponentName="pieDashboardItem3" Name="Po statusih" ShowCaption="false" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" PieType="Donut" LabelContentType="ArgumentValueAndPercent">
+      <InteractivityOptions MasterFilterMode="Multiple" />
+      <DataItems>
+        <Measure DataMember="SFOProjektVrednost" Name="Vrednost projektov po statusih" DefaultId="DataItem0">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Dimension DataMember="SFOProjektStatus" Name="Status" DefaultId="DataItem1" />
+      </DataItems>
+      <Arguments>
+        <Argument DefaultId="DataItem1" />
+      </Arguments>
+      <Values>
+        <Value DefaultId="DataItem0" />
+      </Values>
+    </Pie>
+    <Pie ComponentName="pieDashboardItem4" Name="Po odgovornih osebah" ShowCaption="false" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" PieType="Donut" LabelContentType="ArgumentValueAndPercent">
+      <InteractivityOptions MasterFilterMode="Multiple" />
+      <DataItems>
+        <Measure DataMember="SFOProjektVrednost" Name="Vrednost projektov po odgovornih osebah" DefaultId="DataItem0">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Dimension DataMember="SFOOdgovornaOseba" Name="Odgovorna oseba" DefaultId="DataItem1" />
+      </DataItems>
+      <Arguments>
+        <Argument DefaultId="DataItem1" />
+      </Arguments>
+      <Values>
+        <Value DefaultId="DataItem0" />
+      </Values>
+    </Pie>
+    <DateFilter ComponentName="dateFilterDashboardItem1" Name="Filter po datum zaključka" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" SelectedDateTimePeriodIndex="Zadnji kvartal">
+      <InteractivityOptions IgnoreMasterFilters="false" />
+      <DataItems>
+        <Dimension DataMember="SFOProjektDatumZaključka" Name="Datum zaključka" DateTimeGroupInterval="DayMonthYear" DefaultId="DataItem0" />
+      </DataItems>
+      <Dimension DefaultId="DataItem0" />
+      <DateTimePeriods>
+        <DateTimePeriod Name="Zadnji kvartal">
+          <StartLimit>
+            <FlowDateTimePeriodLimit Interval="Quarter" />
+          </StartLimit>
+        </DateTimePeriod>
+        <DateTimePeriod Name="Tekoče leto">
+          <StartLimit>
+            <FlowDateTimePeriodLimit />
+          </StartLimit>
+        </DateTimePeriod>
+        <DateTimePeriod Name="Preteklo leto">
+          <StartLimit>
+            <FlowDateTimePeriodLimit Offset="-1" />
+          </StartLimit>
+          <EndLimit>
+            <FlowDateTimePeriodLimit />
+          </EndLimit>
+        </DateTimePeriod>
+        <DateTimePeriod Name="Celotno obdobje" />
+      </DateTimePeriods>
+    </DateFilter>
+  </Items>
+  <LayoutTree>
+    <LayoutGroup>
+      <LayoutGroup Orientation="Vertical">
+        <LayoutGroup Weight="0.76885644768856443">
+          <LayoutItem DashboardItem="dateFilterDashboardItem1" Weight="0.71223021582733814" />
+          <LayoutItem DashboardItem="pieDashboardItem1" Weight="1.0608743774211402" />
+          <LayoutItem DashboardItem="pieDashboardItem2" Weight="1.0664084117321524" />
+          <LayoutItem DashboardItem="pieDashboardItem3" Weight="1.0276701715550638" />
+          <LayoutItem DashboardItem="pieDashboardItem4" Weight="1.1328168234643055" />
+        </LayoutGroup>
+        <LayoutItem DashboardItem="gridDashboardItem1" Weight="1.2311435523114356" />
+      </LayoutGroup>
+    </LayoutGroup>
+  </LayoutTree>
+</Dashboard>

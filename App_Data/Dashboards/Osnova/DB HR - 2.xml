@@ -2,10 +2,10 @@
 <Dashboard>
   <Title Text="DB HR - 2" />
   <DataSources>
-    <SqlDataSource Name="tHE_Analitika_Plače_Skupna" ComponentName="sqlDataSource1">
-      <Connection Name="Skaza nova" FromAppConfig="true" />
+    <SqlDataSource Name="tHE_Analitika_Plače_Skupna" ComponentName="sqlDataSource1" DataProcessingMode="Client">
+      <Connection Name="PetPak" FromAppConfig="true" />
       <Query Type="CustomSqlQuery" Name="tHE_Analitika_Plače_Skupna">
-        <Sql>select * from dbo.uTN_DB_HRPlače</Sql>
+        <Sql>select * from dbo.uTN_DB_HRPlače;</Sql>
       </Query>
       <ConnectionOptions CloseConnection="true" />
       <CalculatedFields>

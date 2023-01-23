@@ -3,7 +3,7 @@
   <Title Text="DB Odmiki cen NABAVA - 1" />
   <DataSources>
     <SqlDataSource Name="CustomSqlQuery" ComponentName="sqlDataSource1">
-      <Connection Name="Skaza nova" FromAppConfig="true" />
+      <Connection Name="PetPak" FromAppConfig="true" />
       <Query Type="CustomSqlQuery" Name="CustomSqlQuery">
         <Sql>select * from dbo.utn_DB_OdmikiCen where OdmikiCenOdmik='DA'  and OdmikiCenVrstaPrometa='N';</Sql>
       </Query>
@@ -184,11 +184,26 @@
         <Value DefaultId="DataItem0" />
       </Values>
     </Pie>
+    <Pie ComponentName="pieDashboardItem3" Name="Odmiki po vrsti materialnega sredstva" ShowCaption="false" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" PieType="Donut">
+      <DataItems>
+        <Measure DataMember="OdmikiCenVrednostOdmikov" Name="Odmiki po vrsti materialnega sredstva" DefaultId="DataItem0" />
+        <Dimension DataMember="OdmikiCenVrstaMS" Name="VMS" DefaultId="DataItem1" />
+        <Dimension DataMember="OdmikiCenVrstaMSNaziv" Name="NAziv VMS" DefaultId="DataItem2" />
+      </DataItems>
+      <Arguments>
+        <Argument DefaultId="DataItem1" />
+        <Argument DefaultId="DataItem2" />
+      </Arguments>
+      <Values>
+        <Value DefaultId="DataItem0" />
+      </Values>
+    </Pie>
   </Items>
   <LayoutTree>
     <LayoutGroup>
       <LayoutGroup Orientation="Vertical">
         <LayoutGroup Weight="0.84692597239648681">
+          <LayoutItem DashboardItem="pieDashboardItem3" Weight="0.70780298837852818" />
           <LayoutItem DashboardItem="pieDashboardItem2" Weight="0.70780298837852818" />
           <LayoutItem DashboardItem="pieDashboardItem1" Weight="0.96513558384061937" />
           <LayoutItem DashboardItem="chartDashboardItem1" Weight="1.3270614277808526" />

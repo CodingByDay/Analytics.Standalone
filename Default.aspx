@@ -1,8 +1,8 @@
 ﻿<%@ Page Title="Home Page" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="peptak._Default" %>
 
-<%@ Register assembly="DevExpress.Dashboard.v20.2.Web.WebForms, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" namespace="DevExpress.DashboardWeb" tagprefix="dx" %>
+<%@ Register assembly="DevExpress.Dashboard.v21.1.Web.WebForms, Version=21.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" namespace="DevExpress.DashboardWeb" tagprefix="dx" %>
 
-<%@ Register assembly="DevExpress.Web.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" namespace="DevExpress.Web" tagprefix="dx" %>
+<%@ Register assembly="DevExpress.Web.v21.1, Version=21.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" namespace="DevExpress.Web" tagprefix="dx" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 
@@ -11,6 +11,8 @@
              <webopt:bundlereference runat="server" path="~/css/graphs.css" />
 <link href= "~/css/graphs.css" rel="stylesheet" runat="server" type="text/css" />
            <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+                <script src="js/DeleteExtension.js"></script>
+
 <style>
     .dx-widget{  
     color: #333!important;  
@@ -19,6 +21,27 @@
 } 
 </style>
         <script>
+
+            var contextMenu = false;
+            window.oncontextmenu = function (e) {
+                var x = e.pageX;
+                var y = e.pageY;
+
+                var frompoint = document.elementsFromPoint(x, y);
+                var dash = frompoint[1].textContent.trim();
+                if (dash.length < 50 && x <= 250) {
+                    if (confirm(`Odpri ${dash} v novi kartici?`)) {
+                        setCookie("tab", dash, 365);
+                        NewTab(dash);
+                    }
+                    e.preventDefault();
+                }
+            }
+            function NewTab(dash) {
+                window.open(
+                    `http://dashboard.in-sist.si:81/Default.aspx?p=${dash}`, "_blank");
+            }
+
 
             function onItemCaptionToolbarUpdated(s, e) {
 
@@ -58,14 +81,14 @@ function regex_return(text_to_search) {
 
 
 
-            function onBeforeRender(sender) {
+            //function onBeforeRender(sender) {
 
-              var dashboardControl = sender.GetDashboardControl();
-              extension = new DevExpress.Dashboard.DashboardPanelExtension(dashboardControl);                
-              dashboardControl.surfaceLeft(extension.panelWidth);
-              dashboardControl.registerExtension(extension);
+            //  var dashboardControl = sender.GetDashboardControl();
+            //  extension = new DevExpress.Dashboard.DashboardPanelExtension(dashboardControl);                
+            //  dashboardControl.surfaceLeft(extension.panelWidth);
+            //  dashboardControl.registerExtension(extension);
 
-            }
+            //}
             /**
              * Setting the cookie value.
              * @param cname
@@ -322,12 +345,12 @@ function regex_return(text_to_search) {
                             }
                             var splited = window.item_caption.split(" ");
                             splited_removed = removeItemOnce(splited)
-                            let replaced = splited_removed.join(" ");
+                            let replaced = splited_removed.join("");
 
 
 
                             return {
-                                text: `${replaced}: ${arg.valueText}`,
+                                text: `${window.item_caption}: ${arg.valueText}`,
                             };
                         }
 
@@ -362,7 +385,7 @@ function regex_return(text_to_search) {
                             }
 
                         }
-                        var splited = window.item_caption.split(" ");
+                        var splited = window.item_caption.split("series__");
                         splited_removed = removeItemOnce(splited)
                         return splited_removed.join(" ");
                     }
@@ -484,7 +507,22 @@ function regex_return(text_to_search) {
                 }
             }
 
-
+            function PerformDelete(dashboardid) {
+                setCookie("temp", dashboardid, 365);
+                $.ajax({
+                    type: "POST",
+                    url: 'Default.aspx/DeleteItem',
+                    data: `{id: ${dashboardid}}`,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (msg) {
+                       // window.location.reload();
+                    },
+                    error: function (e) {
+                        //window.location.reload();
+                    }
+                });
+            }
 
 
             payload = [];
@@ -503,6 +541,8 @@ function regex_return(text_to_search) {
                 dashboardControl.surfaceLeft(extension.panelWidth);
                 dashboardControl.registerExtension(extension);
                 dashboardControl.registerExtension(new SaveAsDashboardExtension(dashboardControl));
+                dashboardControl.registerExtension(new DeleteDashboardExtension(sender));
+
 
             }
 
@@ -718,11 +758,11 @@ function regex_return(text_to_search) {
      <asp:Button ID="hiddenButton" runat="server"  OnClick ="hiddenButton_Click" />
 </div>
 <div style="position: absolute; left: 0; right: 0; top:35px; bottom:0;">
-    <dx:ASPxDashboard ID="ASPxDashboard1" runat="server" AllowCreateNewJsonConnection="True"  ClientInstanceName="dashboard"  AllowExecutingCustomSql="True" AllowInspectAggregatedData="True"    MobileLayoutEnabled="Auto" AllowInspectRawData="True" DashboardStorageFolder="~/App_Data/Dashboards" EnableCustomSql="True" EnableTextBoxItemEditor="True" >
+    <dx:ASPxDashboard ID="ASPxDashboard1" runat="server" OnCustomDataCallback="ASPxDashboard1_CustomDataCallback" AllowCreateNewJsonConnection="True"  ClientInstanceName="dashboard"  AllowExecutingCustomSql="True" AllowInspectAggregatedData="True"    MobileLayoutEnabled="Auto" AllowInspectRawData="True" DashboardStorageFolder="~/App_Data/Dashboards" EnableCustomSql="True" EnableTextBoxItemEditor="True" >
         <ClientSideEvents BeforeRender="onBeforeRender" 
 			                ItemCaptionToolbarUpdated="onItemCaptionToolbarUpdated" 
                           ItemWidgetCreated="customizeWidgets"
-                           
+                          
                           ItemWidgetUpdated="updatecustomizeWidgets"                   
                           DashboardInitialized="correctTheLoadingState" 
                        

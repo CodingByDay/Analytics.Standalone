@@ -102,18 +102,18 @@
     </SqlDataSource>
   </DataSources>
   <Parameters>
-    <Parameter Name="LetoPrimerjano" Type="System.Int16" Value="2022" Description="Leto, ki ga primerjamo">
+    <Parameter Name="LetoPrimerjano" Type="System.Int16" Value="2023" Description="Leto, ki ga primerjamo">
       <DynamicListLookUpSettings DataSourceName="sqlDataSource1" DataMember="CustomSqlQuery" ValueMember="ParameterLeto" DisplayMember="ParameterLeto" SortOrder="Descending" />
     </Parameter>
-    <Parameter Name="LetoPrimerjave1" Type="System.Int16" Value="2021" Description="Prvo leto, s katerim ga primerjamo">
+    <Parameter Name="LetoPrimerjave1" Type="System.Int16" Value="2022" Description="Prvo leto, s katerim ga primerjamo">
       <DynamicListLookUpSettings DataSourceName="sqlDataSource1" DataMember="CustomSqlQuery" ValueMember="ParameterLeto" DisplayMember="ParameterLeto" SortOrder="Descending" />
     </Parameter>
-    <Parameter Name="LetoPrimerjave2" Type="System.Int16" Value="2020" Description="Drugo leto, sa katerim ga primerjamo">
+    <Parameter Name="LetoPrimerjave2" Type="System.Int16" Value="2021" Description="Drugo leto, sa katerim ga primerjamo">
       <DynamicListLookUpSettings DataSourceName="sqlDataSource1" DataMember="CustomSqlQuery" ValueMember="ParameterLeto" DisplayMember="ParameterLeto" SortOrder="Descending" />
     </Parameter>
   </Parameters>
   <Items>
-    <PieMap ComponentName="pieMapDashboardItem1" Name="Prodaja v primerjanem letu po krajih v Sloveniji" ParentContainer="dashboardTabPage3" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" ShapefileArea="Europe" EnableClustering="true">
+    <PieMap ComponentName="pieMapDashboardItem1" Name="Prodaja v letu 2023 po krajih v Sloveniji" ParentContainer="dashboardTabPage3" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" ShapefileArea="Europe" EnableClustering="true">
       <InteractivityOptions MasterFilterMode="Multiple" />
       <DataItems>
         <Dimension DataMember="YTDProdajnaVrednost" DefaultId="DataItem0" />
@@ -147,7 +147,7 @@
         <Value DefaultId="DataItem5" />
       </Values>
     </PieMap>
-    <Grid ComponentName="gridDashboardItem1" Name="Realizacija po identih primerjalno glede na vnešene parametre" DataSource="sqlDataSource1" DataMember="CustomSqlQuery">
+    <Grid ComponentName="gridDashboardItem1" Name="Realizacija po identih primerjalno 2023 vs 2022" DataSource="sqlDataSource1" DataMember="CustomSqlQuery">
       <DataItems>
         <Dimension DataMember="ProdajaIdentNaziv" SortOrder="Descending" SortByMeasure="DataItem1" DefaultId="DataItem0" />
         <Measure DataMember="YTDProdajnaVrednost" DefaultId="DataItem1">
@@ -183,48 +183,48 @@
         <GridDimensionColumn Name="Artikel " Weight="167.19528772088825">
           <Dimension DefaultId="DataItem0" />
         </GridDimensionColumn>
-        <GridMeasureColumn Name="Količina" Weight="55.867693701857775">
+        <GridMeasureColumn Name="Količina #LetoPrimerjano" Weight="55.867693701857775">
           <Measure DefaultId="DataItem4" />
           <Totals>
             <Total Type="Sum" />
           </Totals>
         </GridMeasureColumn>
-        <GridMeasureColumn Name="Prodaja" Weight="60.761214318078892">
+        <GridMeasureColumn Name="Prodaja #LetoPrimerjano" Weight="60.761214318078892">
           <Measure DefaultId="DataItem1" />
           <Totals>
             <Total Type="Sum" />
           </Totals>
         </GridMeasureColumn>
-        <GridMeasureColumn Name="Količina-1" Weight="75.000000000000057">
+        <GridMeasureColumn Name="Količina #LetoPrimerjave1" Weight="75.000000000000057">
           <Measure DefaultId="DataItem10" />
           <Totals>
             <Total Type="Sum" />
           </Totals>
         </GridMeasureColumn>
-        <GridMeasureColumn Name="Prodaja-1" Weight="75.000000000000057">
+        <GridMeasureColumn Name="Prodaja #LetoPrimerjave1" Weight="75.000000000000057">
           <Measure DefaultId="DataItem11" />
           <Totals>
             <Total Type="Sum" />
           </Totals>
         </GridMeasureColumn>
-        <GridDeltaColumn Name="Primerjava prodaja-1" Weight="51.38196647032175">
+        <GridDeltaColumn Name="Prodaja #LetoPrimerjano vs #LetoPrimerjave1" Weight="51.38196647032175">
           <ActualValue DefaultId="DataItem2" />
           <TargetValue DefaultId="DataItem3" />
           <DeltaOptions ResultIndicationThreshold="1" ValueType="PercentVariation" />
         </GridDeltaColumn>
-        <GridMeasureColumn Name="RVC" Weight="57.498867240598152">
+        <GridMeasureColumn Name="RVC #LetoPrimerjano" Weight="57.498867240598152">
           <Measure DefaultId="DataItem5" />
           <Totals>
             <Total Type="Sum" />
           </Totals>
         </GridMeasureColumn>
-        <GridMeasureColumn Name="RVC-1" Weight="75.000000000000071">
+        <GridMeasureColumn Name="RVC #LetoPrimerjave1" Weight="75.000000000000071">
           <Measure DefaultId="DataItem12" />
           <Totals>
             <Total Type="Sum" />
           </Totals>
         </GridMeasureColumn>
-        <GridDeltaColumn Name="Primerjava RVC-1" Weight="57.294970548255606">
+        <GridDeltaColumn Name="RVC #LetoPrimerjano vs #LetoPrimerjave1" Weight="57.294970548255606">
           <ActualValue DefaultId="DataItem6" />
           <TargetValue DefaultId="DataItem7" />
           <DeltaOptions ResultIndicationThreshold="1" ValueType="PercentVariation" />
@@ -232,7 +232,7 @@
       </GridColumns>
       <GridOptions EnableBandedRows="true" ColumnWidthMode="Manual" WordWrap="true" />
     </Grid>
-    <Pie ComponentName="pieDashboardItem2" Name="Prodaja po tipu kupca" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" PieType="Donut" ShowPieCaptions="false">
+    <Pie ComponentName="pieDashboardItem2" Name="Prodaja po tipu kupca 2023" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" PieType="Donut" ShowPieCaptions="false">
       <InteractivityOptions MasterFilterMode="Multiple" TargetDimensions="Points" />
       <DataItems>
         <Dimension DataMember="ProdajaTipKupca" Name="Tip kupca" DefaultId="DataItem0" />
@@ -271,7 +271,7 @@
             <Simple Name="Skladiščna/nabavna vrednost" SeriesType="StackedBar">
               <Value DefaultId="DataItem1" />
             </Simple>
-            <Simple Name="RVC tekoče leto" SeriesType="StackedBar">
+            <Simple Name="RVC" SeriesType="StackedBar">
               <Value DefaultId="DataItem3" />
             </Simple>
             <Simple Name="Prodajna vrednost" SeriesType="Line">
@@ -282,7 +282,7 @@
       </Panes>
       <AxisX EnableZooming="true" />
     </Chart>
-    <Pie ComponentName="pieDashboardItem4" Name="Prodaja po dobaviteljih" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" PieType="Donut" ShowPieCaptions="false">
+    <Pie ComponentName="pieDashboardItem4" Name="Prodaja po dobaviteljih 2023" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" PieType="Donut" ShowPieCaptions="false">
       <InteractivityOptions MasterFilterMode="Multiple" />
       <DataItems>
         <Dimension DataMember="ProdajaDobavitelj" Name="Dobavitelj" DefaultId="DataItem0" />
@@ -303,7 +303,7 @@
         <Dimension DefaultId="DataItem0" />
       </FilterDimensions>
     </ListBox>
-    <PieMap ComponentName="pieMapDashboardItem2" Name="Prodaja v primerjanem letu po Državah" ParentContainer="dashboardTabPage1" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" ShapefileArea="Europe" EnableClustering="true">
+    <PieMap ComponentName="pieMapDashboardItem2" Name="Prodaja v letu 2023 po Državah" ParentContainer="dashboardTabPage1" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" ShapefileArea="Europe" EnableClustering="true">
       <InteractivityOptions MasterFilterMode="Multiple" />
       <DataItems>
         <Dimension DataMember="YTDProdajnaVrednost" DefaultId="DataItem0" />
@@ -344,7 +344,7 @@
         <Page ComponentName="dashboardTabPage3" Name="Page 3" />
       </Pages>
     </TabContainer>
-    <PieMap ComponentName="pieMapDashboardItem3" Name="Prodaja v primerjanem letu po regijah v Sloveniji" ParentContainer="dashboardTabPage2" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" ShapefileArea="Europe" EnableClustering="true">
+    <PieMap ComponentName="pieMapDashboardItem3" Name="Prodaja v letu 2023 po regijah v Sloveniji" ParentContainer="dashboardTabPage2" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" ShapefileArea="Europe" EnableClustering="true">
       <InteractivityOptions MasterFilterMode="Multiple" />
       <DataItems>
         <Dimension DataMember="YTDProdajnaVrednost" DefaultId="DataItem0" />
@@ -414,22 +414,22 @@
       <Panes>
         <Pane Name="Pane 1">
           <Series>
-            <Simple Name="Prodaja primerjano leto" SeriesType="Line">
+            <Simple Name="Prodaja #LetoPrimerjano" SeriesType="Line">
               <Value DefaultId="DataItem1" />
             </Simple>
-            <Simple Name="RVC primerjano leto" SeriesType="Line">
+            <Simple Name="RVC #LetoPrimerjano" SeriesType="Line">
               <Value DefaultId="DataItem3" />
             </Simple>
-            <Simple Name="Prodaja leto-1">
+            <Simple Name="Prodaja #LetoPrimerjave1">
               <Value DefaultId="DataItem2" />
             </Simple>
-            <Simple Name="RVC leto-1">
+            <Simple Name="RVC #LetoPrimerjave1">
               <Value DefaultId="DataItem4" />
             </Simple>
-            <Simple Name="Prodaja leto-2">
+            <Simple Name="Prodaja #LetoPrimerjave2">
               <Value DefaultId="DataItem5" />
             </Simple>
-            <Simple Name="RVC leto-2">
+            <Simple Name="RVC #LetoPrimerjave2">
               <Value DefaultId="DataItem6" />
             </Simple>
           </Series>

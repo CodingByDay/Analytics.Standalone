@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Dashboard>
-  <Title Text="DB Prodaja - 2" />
+  <Title Text="DB Prodaja - 2 YTD" />
   <DataSources>
     <SqlDataSource Name="CustomSqlQuery" ComponentName="sqlDataSource1" DataProcessingMode="Client">
       <Connection Name="PetPak" FromAppConfig="true" />
@@ -87,31 +87,19 @@
       <ConnectionOptions CloseConnection="true" />
       <CalculatedFields>
         <CalculatedField Name="RVC" Expression="[ProdajaOsnovaZaDDV]-[ProdajaSkladiščnaVrednost]" DataType="Auto" DataMember="CustomSqlQuery" />
-        <CalculatedField Name="YTDProdajnaVrednost" Expression="Iif(GetYear([ProdajaDatumDobavnice])=?LetoPrimerjano,[ProdajaOsnovaZaDDV],0)" DataType="Auto" DataMember="CustomSqlQuery" />
-        <CalculatedField Name="YTDSkladiščnaVrednost" Expression="Iif(GetYear([ProdajaDatumDobavnice])=?LetoPrimerjano,[ProdajaSkladiščnaVrednost],0)" DataType="Auto" DataMember="CustomSqlQuery" />
-        <CalculatedField Name="YTDRVC" Expression="Iif(GetYear([ProdajaDatumDobavnice])=?LetoPrimerjano,[ProdajaOsnovaZaDDV]-[ProdajaSkladiščnaVrednost],0)" DataType="Auto" DataMember="CustomSqlQuery" />
-        <CalculatedField Name="YTD1ProdajnaVrednost" Expression="Iif(GetYear([ProdajaDatumDobavnice])=?LetoPrimerjave1,[ProdajaOsnovaZaDDV],0)" DataType="Auto" DataMember="CustomSqlQuery" />
-        <CalculatedField Name="YTD1RVC" Expression="Iif(GetYear([ProdajaDatumDobavnice])=?LetoPrimerjave1,[ProdajaOsnovaZaDDV]-[ProdajaSkladiščnaVrednost],0)" DataType="Auto" DataMember="CustomSqlQuery" />
-        <CalculatedField Name="YTD1SkladiščnaVrednost" Expression="Iif(GetYear([ProdajaDatumDobavnice])=?LetoPrimerjave1,[ProdajaSkladiščnaVrednost],0)" DataType="Auto" DataMember="CustomSqlQuery" />
-        <CalculatedField Name="YTD Količina" Expression="Iif(GetYear([ProdajaDatumDobavnice])=?LetoPrimerjano,[ProdajaKoličina],0)" DataType="Auto" DataMember="CustomSqlQuery" />
-        <CalculatedField Name="YTD1Količina" Expression="Iif(GetYear([ProdajaDatumDobavnice])=?LetoPrimerjave1,[ProdajaKoličina],0)" DataType="Auto" DataMember="CustomSqlQuery" />
-        <CalculatedField Name="ParameterLeto" Expression="GetYear([ProdajaDatumDobavnice])" DataType="Auto" DataMember="CustomSqlQuery" />
+        <CalculatedField Name="YTDProdajnaVrednost" Expression="Iif(GetYear([ProdajaDatumDobavnice])=GetYear(LocalDateTimeNow()),[ProdajaOsnovaZaDDV],0)" DataType="Auto" DataMember="CustomSqlQuery" />
+        <CalculatedField Name="YTDSkladiščnaVrednost" Expression="Iif(GetYear([ProdajaDatumDobavnice])=GetYear(LocalDateTimeNow()),[ProdajaSkladiščnaVrednost],0)" DataType="Auto" DataMember="CustomSqlQuery" />
+        <CalculatedField Name="YTDRVC" Expression="Iif(GetYear([ProdajaDatumDobavnice])=GetYear(LocalDateTimeNow()),[ProdajaOsnovaZaDDV]-[ProdajaSkladiščnaVrednost],0)" DataType="Auto" DataMember="CustomSqlQuery" />
+        <CalculatedField Name="YTD1ProdajnaVrednost" Expression="Iif(IsLastYear([ProdajaDatumDobavnice])=True and [ProdajaDatumDobavnice]&lt;=AddYears(LocalDateTimeNow(),-1 ),[ProdajaOsnovaZaDDV],0)" DataType="Auto" DataMember="CustomSqlQuery" />
+        <CalculatedField Name="YTD1RVC" Expression="Iif(IsLastYear([ProdajaDatumDobavnice])=True and [ProdajaDatumDobavnice]&lt;=AddYears(LocalDateTimeNow(),-1 ),[ProdajaOsnovaZaDDV]-[ProdajaSkladiščnaVrednost],0)" DataType="Auto" DataMember="CustomSqlQuery" />
+        <CalculatedField Name="YTD1SkladiščnaVrednost" Expression="Iif(IsLastYear([ProdajaDatumDobavnice])=True and [ProdajaDatumDobavnice]&lt;=AddYears(LocalDateTimeNow(),-1 ),[ProdajaSkladiščnaVrednost],0)" DataType="Auto" DataMember="CustomSqlQuery" />
+        <CalculatedField Name="YTD Količina" Expression="Iif(GetYear([ProdajaDatumDobavnice])=GetYear(LocalDateTimeNow()),[ProdajaKoličina],0)" DataType="Auto" DataMember="CustomSqlQuery" />
+        <CalculatedField Name="YTD1Količina" Expression="Iif(IsLastYear([ProdajaDatumDobavnice])=True and [ProdajaDatumDobavnice]&lt;=AddYears(LocalDateTimeNow(),-1 ),[ProdajaKoličina],0)" DataType="Auto" DataMember="CustomSqlQuery" />
       </CalculatedFields>
     </SqlDataSource>
   </DataSources>
-  <Parameters>
-    <Parameter Name="LetoPrimerjano" Type="System.Int16" Value="2023" Description="Leto, ki ga primerjamo">
-      <DynamicListLookUpSettings DataSourceName="sqlDataSource1" DataMember="CustomSqlQuery" ValueMember="ParameterLeto" DisplayMember="ParameterLeto" SortOrder="Descending" />
-    </Parameter>
-    <Parameter Name="LetoPrimerjave1" Type="System.Int16" Value="2022" Description="Prvo leto, s katerim ga primerjamo">
-      <DynamicListLookUpSettings DataSourceName="sqlDataSource1" DataMember="CustomSqlQuery" ValueMember="ParameterLeto" DisplayMember="ParameterLeto" SortOrder="Descending" />
-    </Parameter>
-    <Parameter Name="LetoPrimerjave2" Type="System.Int16" Value="2021" Description="Drugo leto, s katerim ga primerjamo">
-      <DynamicListLookUpSettings DataSourceName="sqlDataSource1" DataMember="CustomSqlQuery" ValueMember="ParameterLeto" DisplayMember="ParameterLeto" SortOrder="Descending" />
-    </Parameter>
-  </Parameters>
   <Items>
-    <PieMap ComponentName="pieMapDashboardItem1" Name="Prodaja v letu #LetoPrimerjano" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" EnableClustering="true">
+    <PieMap ComponentName="pieMapDashboardItem1" Name="Prodaja v tekočem letu" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" EnableClustering="true">
       <InteractivityOptions MasterFilterMode="Multiple" />
       <DataItems>
         <Dimension DataMember="YTDProdajnaVrednost" DefaultId="DataItem0" />
@@ -145,7 +133,7 @@
         <Value DefaultId="DataItem5" />
       </Values>
     </PieMap>
-    <Grid ComponentName="gridDashboardItem1" Name="Realizacija po dostavnih mestih  #LetoPrimerjano vs #LetoPrimerjave1" ParentContainer="dashboardTabPage4" DataSource="sqlDataSource1" DataMember="CustomSqlQuery">
+    <Grid ComponentName="gridDashboardItem1" Name="Realizacija po dostavnih mestih - primerjalno" ParentContainer="dashboardTabPage4" DataSource="sqlDataSource1" DataMember="CustomSqlQuery">
       <DataItems>
         <Dimension DataMember="ProdajaDostavnoMesto" SortOrder="Descending" SortByMeasure="DataItem1" DefaultId="DataItem0" />
         <Measure DataMember="YTDProdajnaVrednost" DefaultId="DataItem1">
@@ -181,48 +169,48 @@
         <GridDimensionColumn Name="Kupec - dostavno mesto" Weight="145.17444494789322">
           <Dimension DefaultId="DataItem0" />
         </GridDimensionColumn>
-        <GridMeasureColumn Name="Količina  #LetoPrimerjano" Weight="57.906660625283259">
+        <GridMeasureColumn Name="Količina tekoče leto" Weight="57.906660625283259">
           <Measure DefaultId="DataItem4" />
           <Totals>
             <Total Type="Sum" />
           </Totals>
         </GridMeasureColumn>
-        <GridMeasureColumn Name="Prodaja  #LetoPrimerjano " Weight="66.06252831898513">
+        <GridMeasureColumn Name="Prodaja tekoće leto" Weight="66.06252831898513">
           <Measure DefaultId="DataItem1" />
           <Totals>
             <Total Type="Sum" />
           </Totals>
         </GridMeasureColumn>
-        <GridMeasureColumn Name="Količina #LetoPrimerjave1" Weight="75.000000000000057">
+        <GridMeasureColumn Name="Količina preteklo leto" Weight="75.000000000000057">
           <Measure DefaultId="DataItem10" />
           <Totals>
             <Total Type="Sum" />
           </Totals>
         </GridMeasureColumn>
-        <GridMeasureColumn Name="Prodaja #LetoPrimerjave1" Weight="75.000000000000071">
+        <GridMeasureColumn Name="Prodaja preteklo leto" Weight="75.000000000000071">
           <Measure DefaultId="DataItem11" />
           <Totals>
             <Total Type="Sum" />
           </Totals>
         </GridMeasureColumn>
-        <GridDeltaColumn Name="Prodaja  #LetoPrimerjano vs #LetoPrimerjave1" Weight="56.275487086542881">
+        <GridDeltaColumn Name="Primerjava s preteklim letom" Weight="56.275487086542881">
           <ActualValue DefaultId="DataItem2" />
           <TargetValue DefaultId="DataItem3" />
           <DeltaOptions ResultIndicationThreshold="1" ValueType="PercentVariation" />
         </GridDeltaColumn>
-        <GridMeasureColumn Name="RVC  #LetoPrimerjano" Weight="67.6937018577255">
+        <GridMeasureColumn Name="RVC tekoče leto" Weight="67.6937018577255">
           <Measure DefaultId="DataItem5" />
           <Totals>
             <Total Type="Sum" />
           </Totals>
         </GridMeasureColumn>
-        <GridMeasureColumn Name="RVC #LetoPrimerjave1" Weight="75.000000000000071">
+        <GridMeasureColumn Name="RVC preteklo leto" Weight="75.000000000000071">
           <Measure DefaultId="DataItem12" />
           <Totals>
             <Total Type="Sum" />
           </Totals>
         </GridMeasureColumn>
-        <GridDeltaColumn Name="RVC  #LetoPrimerjano vs #LetoPrimerjave1" Weight="56.88717716357052">
+        <GridDeltaColumn Name="Primerjava s preteklim letom" Weight="56.88717716357052">
           <ActualValue DefaultId="DataItem6" />
           <TargetValue DefaultId="DataItem7" />
           <DeltaOptions ResultIndicationThreshold="1" ValueType="PercentVariation" />
@@ -230,7 +218,7 @@
       </GridColumns>
       <GridOptions EnableBandedRows="true" ColumnWidthMode="AutoFitToContents" WordWrap="true" />
     </Grid>
-    <Chart ComponentName="chartDashboardItem2" Name="Prodaja po tipu kupca #LetoPrimerjano" DataSource="sqlDataSource1" DataMember="CustomSqlQuery">
+    <Chart ComponentName="chartDashboardItem2" Name="Prodaja po tipu kupca - tekoče leto" DataSource="sqlDataSource1" DataMember="CustomSqlQuery">
       <InteractivityOptions IgnoreMasterFilters="true" MasterFilterMode="Multiple" />
       <DataItems>
         <Dimension DataMember="ProdajaTipKupca" DefaultId="DataItem0" />
@@ -293,14 +281,6 @@
       </Panes>
       <AxisX EnableZooming="true" />
     </Chart>
-    <ListBox ComponentName="listBoxDashboardItem1" Name="Mesec" DataSource="sqlDataSource1" DataMember="CustomSqlQuery">
-      <DataItems>
-        <Dimension DataMember="ProdajaDatumDobavnice" Name="Mesec" DateTimeGroupInterval="Month" DefaultId="DataItem0" />
-      </DataItems>
-      <FilterDimensions>
-        <Dimension DefaultId="DataItem0" />
-      </FilterDimensions>
-    </ListBox>
     <TabContainer ComponentName="tabContainerDashboardItem1" Name="Tab Container 1">
       <Pages>
         <Page ComponentName="dashboardTabPage1" Name="Page 1" />
@@ -331,16 +311,16 @@
       <Panes>
         <Pane Name="Pane 1">
           <Series>
-            <Simple Name="Prodaja  #LetoPrimerjano" SeriesType="Line">
+            <Simple Name="Prodaja tekoče leto" SeriesType="Line">
               <Value DefaultId="DataItem1" />
             </Simple>
-            <Simple Name="RVC #LetoPrimerjano" SeriesType="Line">
+            <Simple Name="RVC tekoče leto" SeriesType="Line">
               <Value DefaultId="DataItem3" />
             </Simple>
-            <Simple Name="Prodaja  #LetoPrimerjave1">
+            <Simple Name="Prodaja preteklo leto">
               <Value DefaultId="DataItem2" />
             </Simple>
-            <Simple Name="RVC  #LetoPrimerjave1">
+            <Simple Name="RVC preteklo leto">
               <Value DefaultId="DataItem4" />
             </Simple>
           </Series>
@@ -353,7 +333,7 @@
         <Page ComponentName="dashboardTabPage4" Name="Page 2" />
       </Pages>
     </TabContainer>
-    <Grid ComponentName="gridDashboardItem3" Name="Realizacija po kupcih #LetoPrimerjano vs #LetoPrimerjave1" ParentContainer="dashboardTabPage3" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true">
+    <Grid ComponentName="gridDashboardItem3" Name="Realizacija po kupcih - primerjalno" ParentContainer="dashboardTabPage3" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true">
       <InteractivityOptions MasterFilterMode="Multiple" />
       <DataItems>
         <Dimension DataMember="ProdajaPlačnik" SortOrder="Descending" SortByMeasure="DataItem1" DefaultId="DataItem0" />
@@ -390,48 +370,48 @@
         <GridDimensionColumn Name="Kupec - plačnik" Weight="145.17444494789322">
           <Dimension DefaultId="DataItem0" />
         </GridDimensionColumn>
-        <GridMeasureColumn Name="Količina #LetoPrimerjano" Weight="57.906660625283259">
+        <GridMeasureColumn Name="Količina tekoče leto" Weight="57.906660625283259">
           <Measure DefaultId="DataItem4" />
           <Totals>
             <Total Type="Sum" />
           </Totals>
         </GridMeasureColumn>
-        <GridMeasureColumn Name="Prodaja #LetoPrimerjano" Weight="66.06252831898513">
+        <GridMeasureColumn Name="Prodaja tekoče leto" Weight="66.06252831898513">
           <Measure DefaultId="DataItem1" />
           <Totals>
             <Total Type="Sum" />
           </Totals>
         </GridMeasureColumn>
-        <GridMeasureColumn Name="Količina #LetoPrimerjave1" Weight="75.000000000000057">
+        <GridMeasureColumn Name="Količina preteklo leto" Weight="75.000000000000057">
           <Measure DefaultId="DataItem10" />
           <Totals>
             <Total Type="Sum" />
           </Totals>
         </GridMeasureColumn>
-        <GridMeasureColumn Name="Prodaja #LetoPrimerjave1" Weight="75.000000000000071">
+        <GridMeasureColumn Name="Prodaja preteklo leto" Weight="75.000000000000071">
           <Measure DefaultId="DataItem11" />
           <Totals>
             <Total Type="Sum" />
           </Totals>
         </GridMeasureColumn>
-        <GridDeltaColumn Name="Prodaja  #LetoPrimerjano vs #LetoPrimerjave1" Weight="56.275487086542881">
+        <GridDeltaColumn Name="Primerjava s preteklim letom" Weight="56.275487086542881">
           <ActualValue DefaultId="DataItem2" />
           <TargetValue DefaultId="DataItem3" />
           <DeltaOptions ResultIndicationThreshold="1" ValueType="PercentVariation" />
         </GridDeltaColumn>
-        <GridMeasureColumn Name="RVC #LetoPrimerjano" Weight="67.6937018577255">
+        <GridMeasureColumn Name="RVC tekoče leto" Weight="67.6937018577255">
           <Measure DefaultId="DataItem5" />
           <Totals>
             <Total Type="Sum" />
           </Totals>
         </GridMeasureColumn>
-        <GridMeasureColumn Name="RVC #LetoPrimerjave1" Weight="75.000000000000071">
+        <GridMeasureColumn Name="RVC preteklo leto" Weight="75.000000000000071">
           <Measure DefaultId="DataItem12" />
           <Totals>
             <Total Type="Sum" />
           </Totals>
         </GridMeasureColumn>
-        <GridDeltaColumn Name="RVC   #LetoPrimerjano vs #LetoPrimerjave1" Weight="56.88717716357052">
+        <GridDeltaColumn Name="Primerjava s preteklim letom" Weight="56.88717716357052">
           <ActualValue DefaultId="DataItem6" />
           <TargetValue DefaultId="DataItem7" />
           <DeltaOptions ResultIndicationThreshold="1" ValueType="PercentVariation" />
@@ -439,29 +419,53 @@
       </GridColumns>
       <GridOptions EnableBandedRows="true" ColumnWidthMode="AutoFitToContents" WordWrap="true" />
     </Grid>
-    <ListBox ComponentName="listBoxDashboardItem3" Name="Artikel" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" EnableSearch="true">
+    <ComboBox ComponentName="comboBoxDashboardItem1" Name="Kupci" ParentContainer="groupDashboardItem1" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" EnableSearch="true" ComboBoxType="Checked">
+      <InteractivityOptions IgnoreMasterFilters="false" />
+      <DataItems>
+        <Dimension DataMember="ProdajaPlačnik" Name="Kupec" DefaultId="DataItem0" />
+      </DataItems>
+      <FilterDimensions>
+        <Dimension DefaultId="DataItem0" />
+      </FilterDimensions>
+    </ComboBox>
+    <ComboBox ComponentName="comboBoxDashboardItem3" Name="Vrsta materialnega sredstva" ParentContainer="groupDashboardItem1" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" EnableSearch="true" ComboBoxType="Checked">
+      <InteractivityOptions IgnoreMasterFilters="false" />
+      <DataItems>
+        <Dimension DataMember="ProdajaVrstaMS" Name="VMS" DefaultId="DataItem0" />
+        <Dimension DataMember="ProdajaVrstaMSNaziv" Name="Naziv" DefaultId="DataItem1" />
+      </DataItems>
+      <FilterDimensions>
+        <Dimension DefaultId="DataItem0" />
+        <Dimension DefaultId="DataItem1" />
+      </FilterDimensions>
+    </ComboBox>
+    <ComboBox ComponentName="comboBoxDashboardItem4" Name="Artikel" ParentContainer="groupDashboardItem1" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" EnableSearch="true" ComboBoxType="Checked">
+      <InteractivityOptions IgnoreMasterFilters="false" />
       <DataItems>
         <Dimension DataMember="ProdajaIdentNaziv" Name="Ident" DefaultId="DataItem0" />
       </DataItems>
       <FilterDimensions>
         <Dimension DefaultId="DataItem0" />
       </FilterDimensions>
-    </ListBox>
-    <ListBox ComponentName="listBoxDashboardItem2" Name="Vrsta materialnega sredstva" DataSource="sqlDataSource1" DataMember="CustomSqlQuery">
+    </ComboBox>
+    <ComboBox ComponentName="comboBoxDashboardItem5" Name="Mesec" ParentContainer="groupDashboardItem1" DataSource="sqlDataSource1" DataMember="CustomSqlQuery">
       <DataItems>
-        <Dimension DataMember="ProdajaVrstaMS" Name="VMS" DefaultId="DataItem0" />
-        <Dimension DataMember="ProdajaVrstaMSNaziv" Name="Naziv VMS" DefaultId="DataItem1" />
+        <Dimension DataMember="ProdajaDatumDobavnice" Name="Mesec" DateTimeGroupInterval="Month" DefaultId="DataItem0" />
       </DataItems>
       <FilterDimensions>
         <Dimension DefaultId="DataItem0" />
-        <Dimension DefaultId="DataItem1" />
       </FilterDimensions>
-    </ListBox>
+    </ComboBox>
   </Items>
+  <Groups>
+    <Group ComponentName="groupDashboardItem1" Name="Filtri" ShowCaption="false">
+      <InteractivityOptions IgnoreMasterFilters="false" IsMasterFilter="true" />
+    </Group>
+  </Groups>
   <LayoutTree>
     <LayoutGroup>
       <LayoutGroup Orientation="Vertical" Weight="1.2280022136137243">
-        <LayoutTabContainer DashboardItem="tabContainerDashboardItem2" Weight="1.4576545756401871">
+        <LayoutTabContainer DashboardItem="tabContainerDashboardItem2" Weight="1.3684879786613495">
           <LayoutTabPage DashboardItem="dashboardTabPage3">
             <LayoutItem DashboardItem="gridDashboardItem3" Weight="1.4576545756401871" />
           </LayoutTabPage>
@@ -469,12 +473,14 @@
             <LayoutItem DashboardItem="gridDashboardItem1" Weight="1.4576545756401871" />
           </LayoutTabPage>
         </LayoutTabContainer>
-        <LayoutGroup Weight="0.99834985158726153">
-          <LayoutGroup Orientation="Vertical" Weight="0.41526674764084831">
-            <LayoutItem DashboardItem="listBoxDashboardItem3" Weight="0.49360573448246303" />
-            <LayoutItem DashboardItem="listBoxDashboardItem2" Weight="0.33692776079923359" />
+        <LayoutGroup Weight="1.0875164485660991">
+          <LayoutGroup Orientation="Vertical" DashboardItem="groupDashboardItem1" Weight="0.488626317056712">
+            <LayoutItem DashboardItem="comboBoxDashboardItem1" Weight="0.72786800857985123" />
+            <LayoutItem DashboardItem="comboBoxDashboardItem3" Weight="0.73392506773801758" />
+            <LayoutItem DashboardItem="comboBoxDashboardItem4" Weight="0.73392506773801758" />
+            <LayoutItem DashboardItem="comboBoxDashboardItem5" Weight="0.73392506773801758" />
           </LayoutGroup>
-          <LayoutTabContainer DashboardItem="tabContainerDashboardItem1" Weight="1.5814329555336748">
+          <LayoutTabContainer DashboardItem="tabContainerDashboardItem1" Weight="1.9673781101707364">
             <LayoutTabPage DashboardItem="dashboardTabPage1">
               <LayoutItem DashboardItem="chartDashboardItem3" Weight="2.3509863063964183" />
             </LayoutTabPage>
@@ -485,10 +491,7 @@
         </LayoutGroup>
       </LayoutGroup>
       <LayoutGroup Orientation="Vertical" Weight="0.77199778638627581">
-        <LayoutGroup Weight="0.47360121892496004">
-          <LayoutItem DashboardItem="listBoxDashboardItem1" Weight="0.15748320686263803" />
-          <LayoutItem DashboardItem="chartDashboardItem2" Weight="0.80888646819081889" />
-        </LayoutGroup>
+        <LayoutItem DashboardItem="chartDashboardItem2" Weight="0.47360121892496004" />
         <LayoutItem DashboardItem="pieMapDashboardItem1" Weight="0.73392506773801758" />
       </LayoutGroup>
     </LayoutGroup>

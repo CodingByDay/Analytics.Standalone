@@ -2,8 +2,8 @@
 <Dashboard>
   <Title Text="DB Prodaja - 2" />
   <DataSources>
-    <SqlDataSource Name="CustomSqlQuery" ComponentName="sqlDataSource1">
-      <Connection Name="Skaza nova" FromAppConfig="true" />
+    <SqlDataSource Name="CustomSqlQuery" ComponentName="sqlDataSource1" DataProcessingMode="Client">
+      <Connection Name="PetPak" FromAppConfig="true" />
       <Query Type="CustomSqlQuery" Name="CustomSqlQuery">
         <Sql>SELECT	--ProdajaPoslovniDogodekDobavnice,
 				ProdajaDatumDobavnice,
@@ -58,7 +58,7 @@
 --			ProdajaSkladišče,
 --			ProdajaDobaviteljevaŠifra,
 --			ProdajaEANKoda,
-				ProdajaTipKupca
+				ProdajaTipKupca,
 --			ProdajaReferent,
 --			ProdajaAcFieldSA,
 --			ProdajaAcFieldSB,
@@ -79,9 +79,10 @@
 --			ProdajaAnFieldNG,
 --			ProdajaAnFieldNH,
 --			ProdajaAnFieldNI,
---			ProdajaAnFieldNJ
-  FROM dbo.uTN_DB_ProdajaPoRealizaciji_DET 
-	WHERE year(ProdajaDatumDobavnice)&gt;=(year(getdate())-3)</Sql>
+--			ProdajaAnFieldNJ,
+			ProdajaVrstaMS,
+			ProdajaVrstaMSNaziv
+  FROM dbo.uTN_DB_ProdajaPoRealizaciji_DET;</Sql>
       </Query>
       <ConnectionOptions CloseConnection="true" />
       <CalculatedFields>
@@ -99,13 +100,13 @@
     </SqlDataSource>
   </DataSources>
   <Parameters>
-    <Parameter Name="LetoPrimerjano" Type="System.Int16" Value="2021" Description="Leto, ki ga primerjamo">
+    <Parameter Name="LetoPrimerjano" Type="System.Int16" Value="2023" Description="Leto, ki ga primerjamo">
       <DynamicListLookUpSettings DataSourceName="sqlDataSource1" DataMember="CustomSqlQuery" ValueMember="ParameterLeto" DisplayMember="ParameterLeto" SortOrder="Descending" />
     </Parameter>
-    <Parameter Name="LetoPrimerjave1" Type="System.Int16" Value="2020" Description="Prvo leto, s katerim ga primerjamo">
+    <Parameter Name="LetoPrimerjave1" Type="System.Int16" Value="2022" Description="Prvo leto, s katerim ga primerjamo">
       <DynamicListLookUpSettings DataSourceName="sqlDataSource1" DataMember="CustomSqlQuery" ValueMember="ParameterLeto" DisplayMember="ParameterLeto" SortOrder="Descending" />
     </Parameter>
-    <Parameter Name="LetoPrimerjave2" Type="System.Int16" Value="2019" Description="Drugo leto, s katerim ga primerjamo">
+    <Parameter Name="LetoPrimerjave2" Type="System.Int16" Value="2021" Description="Drugo leto, s katerim ga primerjamo">
       <DynamicListLookUpSettings DataSourceName="sqlDataSource1" DataMember="CustomSqlQuery" ValueMember="ParameterLeto" DisplayMember="ParameterLeto" SortOrder="Descending" />
     </Parameter>
   </Parameters>
@@ -446,6 +447,16 @@
         <Dimension DefaultId="DataItem0" />
       </FilterDimensions>
     </ListBox>
+    <ListBox ComponentName="listBoxDashboardItem2" Name="Vrsta materialnega sredstva" DataSource="sqlDataSource1" DataMember="CustomSqlQuery">
+      <DataItems>
+        <Dimension DataMember="ProdajaVrstaMS" Name="VMS" DefaultId="DataItem0" />
+        <Dimension DataMember="ProdajaVrstaMSNaziv" Name="Naziv VMS" DefaultId="DataItem1" />
+      </DataItems>
+      <FilterDimensions>
+        <Dimension DefaultId="DataItem0" />
+        <Dimension DefaultId="DataItem1" />
+      </FilterDimensions>
+    </ListBox>
   </Items>
   <LayoutTree>
     <LayoutGroup>
@@ -459,7 +470,10 @@
           </LayoutTabPage>
         </LayoutTabContainer>
         <LayoutGroup Weight="0.99834985158726153">
-          <LayoutItem DashboardItem="listBoxDashboardItem3" Weight="0.41526674764084831" />
+          <LayoutGroup Orientation="Vertical" Weight="0.41526674764084831">
+            <LayoutItem DashboardItem="listBoxDashboardItem3" Weight="0.49360573448246303" />
+            <LayoutItem DashboardItem="listBoxDashboardItem2" Weight="0.33692776079923359" />
+          </LayoutGroup>
           <LayoutTabContainer DashboardItem="tabContainerDashboardItem1" Weight="1.5814329555336748">
             <LayoutTabPage DashboardItem="dashboardTabPage1">
               <LayoutItem DashboardItem="chartDashboardItem3" Weight="2.3509863063964183" />

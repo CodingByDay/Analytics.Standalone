@@ -149,6 +149,7 @@
     <Content Include="Default.aspx" />
     <Content Include="Emulator.aspx" />
     <Content Include="favicon.ico" />
+    <Content Include="filter.png" />
     <Content Include="Global.asax" />
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />

@@ -22,6 +22,11 @@
 </style>
         <script>
 
+
+
+           
+
+
             var contextMenu = false;
             window.oncontextmenu = function (e) {
                 var x = e.pageX;
@@ -84,7 +89,7 @@ function regex_return(text_to_search) {
             //function onBeforeRender(sender) {
 
             //  var dashboardControl = sender.GetDashboardControl();
-            //  extension = new DevExpress.Dashboard.DashboardPanelExtension(dashboardControl);                
+            //  extension = new DevExpress.Dashboard.DashboardPanelExtension(dashboardControl);
             //  dashboardControl.surfaceLeft(extension.panelWidth);
             //  dashboardControl.registerExtension(extension);
 
@@ -95,6 +100,9 @@ function regex_return(text_to_search) {
              * @param cvalue
              * @param exdays
              */
+
+
+
             function setCookie(cname, cvalue, exdays) {
                 const d = new Date();
                 d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
@@ -156,6 +164,9 @@ function regex_return(text_to_search) {
             /* Jquery function to handle hamburger clicked */
 
             $(document).ready(function () {
+      
+               
+          
                 $("#pic").mouseover(function () {
 
                     var expand = getCookie("expand");
@@ -255,7 +266,7 @@ function regex_return(text_to_search) {
 
 
 
-
+            var global_test = 0;
 
 
             function regex_return(text_to_search) {
@@ -269,16 +280,12 @@ function regex_return(text_to_search) {
 
                 var parName = []
                 var collection = dashboard.GetParameters().GetParameterList();
-
-                if (args.ItemName.startsWith("gridDashboardItem") && collection.length > 3) {
-                    initialPayload.push(dashboard.GetParameters().GetParameterList()[0].Value);
-                    initialPayload.push(dashboard.GetParameters().GetParameterList()[1].Value);
-                    initialPayload.push(dashboard.GetParameters().GetParameterList()[2].Value);
-                    initialPayload.push(dashboard.GetParameters().GetParameterList()[3].Value);
-                    parName.push(dashboard.GetParameters().GetParameterList()[0].Name);
-                    parName.push(dashboard.GetParameters().GetParameterList()[1].Name);
-                    parName.push(dashboard.GetParameters().GetParameterList()[2].Name);
-                    parName.push(dashboard.GetParameters().GetParameterList()[3].Name);
+                console.log(args.ItemName + "Item name");
+                if (args.ItemName.startsWith("gridDashboardItem") && collection.length > 0) {
+                    for (var j = 0; j < collection.length; j++) {
+                        initialPayload.push(dashboard.GetParameters().GetParameterList()[j].Value);
+                        parName.push(dashboard.GetParameters().GetParameterList()[j].Name);
+                    }
                     var grid = args.GetWidget();
                     var columns = grid.option("columns");
                     for (var i = 0; i < columns.length; i++) {
@@ -356,7 +363,7 @@ function regex_return(text_to_search) {
 
                     };
                     chart.option("tooltip", tip);
-        
+
 
 
                     var legend = chart.option("legend");
@@ -386,15 +393,53 @@ function regex_return(text_to_search) {
 
                         }
                         var splited = window.item_caption.split("series__");
-                        splited_removed = removeItemOnce(splited)
-                        return splited_removed.join(" ");
+                        splited_removed = removeItemOnce(splited);
+                        var f = window.item_caption.replace("__legend__series__", "")
+                        return f;
                     }
                     chart.option("legend", legend);
 
+                } else if (args.ItemName.startsWith("pieMap")) {
+                    try {
+                        var elms = document.getElementsByClassName("dxm-legend")
+                        var texts = elms[0].getElementsByTagName("text")
+                        for (var i = 0; i < texts.length; i++) {
+                            var inner = texts[i];
+
+
+                            var list = dashboard.GetParameters().GetParameterList();
+                            if (list.length > 0) {
+
+                                var parameterized_values = regex_return(inner.innerHTML);
+                                if (parameterized_values.length != 0) {
+                                    parameterized_values.forEach((singular) => {
+                                        const found = list.find(element => element.Name == singular)
+                                        indexOfElement = list.indexOf(found)
+                                        if (found != null && indexOfElement != -1) {
+                                            text_to_replace = "#" + found.Name
+                                            try {
+                                                text_replace = dashboard.GetParameters().GetParameterList()[indexOfElement].Value.toLocaleDateString("uk-Uk")
+                                            } catch (err) {
+                                                text_replace = dashboard.GetParameters().GetParameterList()[indexOfElement].Value
+                                            }
+                                            inner.innerHTML = inner.innerHTML.replace(text_to_replace, text_replace);
+
+                                        }
+                                    })
+                                }
+
+                            }
+                        }
+
+                    } catch (err) {
+
+                    }
+
                 }
             }
-            function removeItemOnce(arr) {
 
+            function removeItemOnce(arr) {
+                console.log(arr + "is array")
                 arr.splice(0, 1);
 
                 return arr;
@@ -409,16 +454,12 @@ function regex_return(text_to_search) {
                 setCookie('new', JSON.stringify(collection))
 
 
-                if (args.ItemName.startsWith("gridDashboardItem") && collection.length > 2) {
+                if (args.ItemName.startsWith("gridDashboardItem") && collection.length > 0) {
                     initialPayload = [];
-                    initialPayload.push(dashboard.GetParameters().GetParameterList()[0].Value);
-                    initialPayload.push(dashboard.GetParameters().GetParameterList()[1].Value);
-                    initialPayload.push(dashboard.GetParameters().GetParameterList()[2].Value);
-                    initialPayload.push(dashboard.GetParameters().GetParameterList()[3].Value);
-                    parName.push(dashboard.GetParameters().GetParameterList()[0].Name);
-                    parName.push(dashboard.GetParameters().GetParameterList()[1].Name);
-                    parName.push(dashboard.GetParameters().GetParameterList()[2].Name);
-                    parName.push(dashboard.GetParameters().GetParameterList()[3].Name);
+                    for (var j = 0; j < collection.length; j++) {
+                        initialPayload.push(dashboard.GetParameters().GetParameterList()[j].Value);
+                        parName.push(dashboard.GetParameters().GetParameterList()[j].Name);
+                    }
                     var grid = args.GetWidget();
                     var columns = grid.option("columns");
                     for (var i = 0; i < columns.length; i++) {
@@ -453,17 +494,29 @@ function regex_return(text_to_search) {
                 d_new = JSON.parse(getCookie('new'));
                 console.log(d_old);
                 console.log(d_new);
+
                 for (var i = 0; i < items.length; i++) {
                     var iCurrent = items[i];
                     item_caption = iCurrent.name();
                     for (var j = 0; j < collection.length; j++) {
-                        var sDate = new Date(d_old[j].Value).toLocaleDateString("uk-Uk");
-                        if (iCurrent.name().includes(sDate)) {
-                            old_v = new Date(d_old[j].Value).toLocaleDateString("uk-Uk");
-                            new_v = new Date(d_new[j].Value).toLocaleDateString("uk-Uk");
-                            var nName = iCurrent.name().replace(old_v, new_v);
-                            iCurrent.name(nName);
+                        try {
+                            var sDate = new Date(d_old[j].Value).toLocaleDateString("uk-Uk");
+                            if (iCurrent.name().includes(sDate)) {
+                                old_v = new Date(d_old[j].Value).toLocaleDateString("uk-Uk");
+                                new_v = new Date(d_new[j].Value).toLocaleDateString("uk-Uk");
+                                var nName = iCurrent.name().replace(old_v, new_v);
+                                iCurrent.name(nName);
+                            }
+                        } catch {
+                            var valField = d_old[j].Value;
+                            if (iCurrent.name().includes(valField)) {
+                                old_v = d_old[j].Value
+                                new_v = new d_new[j].Value;
+                                var nName = iCurrent.name().replace(old_v, new_v);
+                                iCurrent.name(nName);
+                            }
                         }
+
                     }
                 }
 
@@ -498,11 +551,48 @@ function regex_return(text_to_search) {
                             }
 
                         }
-                        var splited = window.item_caption.split(" ");
-                        splited_removed = removeItemOnce(splited)
-                        return splited_removed.join(" ");
+                        var splited = window.item_caption.split("series__");
+                        splited_removed = removeItemOnce(splited);
+                        var f = window.item_caption.replace("__legend__series__", "")
+                        return f;
                     }
                     chart.option("legend", legend);
+
+                } else if (args.ItemName.startsWith("pieMap")) {
+                    try {
+                        var elms = document.getElementsByClassName("dxm-legend")
+                        var texts = elms[0].getElementsByTagName("text")
+                        for (var i = 0; i < texts.length; i++) {
+                            var inner = texts[i];
+
+
+                            var list = dashboard.GetParameters().GetParameterList();
+                            if (list.length > 0) {
+
+                                var parameterized_values = regex_return(inner.innerHTML);
+                                if (parameterized_values.length != 0) {
+                                    parameterized_values.forEach((singular) => {
+                                        const found = list.find(element => element.Name == singular)
+                                        indexOfElement = list.indexOf(found)
+                                        if (found != null && indexOfElement != -1) {
+                                            text_to_replace = "#" + found.Name
+                                            try {
+                                                text_replace = dashboard.GetParameters().GetParameterList()[indexOfElement].Value.toLocaleDateString("uk-Uk")
+                                            } catch (err) {
+                                                text_replace = dashboard.GetParameters().GetParameterList()[indexOfElement].Value
+                                            }
+                                            inner.innerHTML = inner.innerHTML.replace(text_to_replace, text_replace);
+
+                                        }
+                                    })
+                                }
+
+                            }
+                        }
+
+                    } catch (err) {
+
+                    }
 
                 }
             }
@@ -528,7 +618,7 @@ function regex_return(text_to_search) {
             payload = [];
 
             var extension;
-
+            var controlMain;
             /**
              *  
              * @param sender
@@ -543,6 +633,7 @@ function regex_return(text_to_search) {
                 dashboardControl.registerExtension(new SaveAsDashboardExtension(dashboardControl));
                 dashboardControl.registerExtension(new DeleteDashboardExtension(sender));
 
+                controlMain = dashboardControl;
 
             }
 
@@ -668,6 +759,9 @@ function regex_return(text_to_search) {
             }
 
             function correctTheLoadingState(s, e) {
+
+
+           
                 var control = dashboard.GetDashboardControl();
 
                 design = control.isDesignMode();
@@ -736,6 +830,38 @@ function regex_return(text_to_search) {
             }
 
 
+            function onDashboardTitleToolbarUpdated(sender, e) {
+                e.Options.actionItems.unshift({
+                    type: "button",
+                    icon: "dx-dashboard-clear-master-filter",
+                    hint: "Clear all filters",
+                    click: function (element) {
+                        ClearMasterFilterState();
+                    }
+                });
+            }  
+            function ClearMasterFilterState() {
+
+                var state = JSON.parse(dashboard.GetDashboardState());
+                $.each(state.Items, function (index, element) {
+                    var startState = JSON.parse(initialState);
+                    debugger;
+                    if (startState.Items[index]) {
+                        element.MasterFilterValues = startState.Items[index].MasterFilterValues;
+                    }
+                    else
+                        element.MasterFilterValues = [];
+                });
+                var newState = JSON.stringify(state);
+                dashboard.SetDashboardState(newState);
+            }
+            var initialState = '';
+            function onDashboardEndUpdate(s, e) {
+                if (initialState == '') {
+                    initialState = s.GetDashboardState();
+                }
+            }
+
         </script>
      <script type="text/html" id="dx-save-as-form">
 
@@ -760,10 +886,12 @@ function regex_return(text_to_search) {
 <div style="position: absolute; left: 0; right: 0; top:35px; bottom:0;">
     <dx:ASPxDashboard ID="ASPxDashboard1" runat="server" OnCustomDataCallback="ASPxDashboard1_CustomDataCallback" AllowCreateNewJsonConnection="True"  ClientInstanceName="dashboard"  AllowExecutingCustomSql="True" AllowInspectAggregatedData="True"    MobileLayoutEnabled="Auto" AllowInspectRawData="True" DashboardStorageFolder="~/App_Data/Dashboards" EnableCustomSql="True" EnableTextBoxItemEditor="True" >
         <ClientSideEvents BeforeRender="onBeforeRender" 
-			                ItemCaptionToolbarUpdated="onItemCaptionToolbarUpdated" 
+             
+			              ItemCaptionToolbarUpdated="onItemCaptionToolbarUpdated" 
                           ItemWidgetCreated="customizeWidgets"
-                          
-                          ItemWidgetUpdated="updatecustomizeWidgets"                   
+                          DashboardTitleToolbarUpdated ="onDashboardTitleToolbarUpdated"
+                          ItemWidgetUpdated="updatecustomizeWidgets"   
+                          DashboardEndUpdate="onDashboardEndUpdate"
                           DashboardInitialized="correctTheLoadingState" 
                        
                               />

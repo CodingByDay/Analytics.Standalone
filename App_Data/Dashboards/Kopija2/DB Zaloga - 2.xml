@@ -2,10 +2,10 @@
 <Dashboard>
   <Title Text="DB Zaloge - 2" />
   <DataSources>
-    <SqlDataSource Name="CustomSqlQuery" ComponentName="sqlDataSource1">
-      <Connection Name="eHolding ERFA" FromAppConfig="true" />
+    <SqlDataSource Name="CustomSqlQuery" ComponentName="sqlDataSource1" DataProcessingMode="Client">
+      <Connection Name="PetPak" FromAppConfig="true" />
       <Query Type="CustomSqlQuery" Name="CustomSqlQuery">
-        <Sql>select * from dbo.uTN_DB_Zaloge</Sql>
+        <Sql>select * from dbo.uTN_DB_Zaloge;</Sql>
       </Query>
       <ConnectionOptions CloseConnection="true" />
       <CalculatedFields>
@@ -152,19 +152,34 @@
     <ListBox ComponentName="listBoxDashboardItem2" Name="Ident" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" EnableSearch="true">
       <InteractivityOptions IgnoreMasterFilters="false" />
       <DataItems>
-        <Dimension DataMember="ZalogaIdentNaziv" Name="Ident" DefaultId="DataItem0" />
+        <Dimension DataMember="ZalogaIdent" Name="Ident" DefaultId="DataItem0" />
+        <Dimension DataMember="ZalogaIdentNaziv" Name="Naziv identa" DefaultId="DataItem1" />
       </DataItems>
       <FilterDimensions>
         <Dimension DefaultId="DataItem0" />
+        <Dimension DefaultId="DataItem1" />
+      </FilterDimensions>
+    </ListBox>
+    <ListBox ComponentName="listBoxDashboardItem3" Name="Vrsta materialnega sredstva" DataSource="sqlDataSource1" DataMember="CustomSqlQuery">
+      <DataItems>
+        <Dimension DataMember="ZalogaVrstaMS" Name="VMS" DefaultId="DataItem0" />
+        <Dimension DataMember="ZalogaVrstaMSNaziv" Name="Naziv VMS" DefaultId="DataItem1" />
+      </DataItems>
+      <FilterDimensions>
+        <Dimension DefaultId="DataItem0" />
+        <Dimension DefaultId="DataItem1" />
       </FilterDimensions>
     </ListBox>
   </Items>
   <LayoutTree>
     <LayoutGroup Orientation="Vertical">
       <LayoutGroup Weight="0.82276602954510059">
-        <LayoutItem DashboardItem="listBoxDashboardItem1" Weight="0.30169401575094784" />
-        <LayoutItem DashboardItem="listBoxDashboardItem2" Weight="0.86104179556218818" />
-        <LayoutItem DashboardItem="pieDashboardItem4" Weight="1.0659010692126794" />
+        <LayoutGroup Orientation="Vertical" Weight="0.38825427222298653">
+          <LayoutItem DashboardItem="listBoxDashboardItem1" Weight="0.362826054497547" />
+          <LayoutItem DashboardItem="listBoxDashboardItem3" Weight="0.41368248994842605" />
+        </LayoutGroup>
+        <LayoutItem DashboardItem="listBoxDashboardItem2" Weight="0.84372974426778036" />
+        <LayoutItem DashboardItem="pieDashboardItem4" Weight="0.99665286403504849" />
         <LayoutItem DashboardItem="pieDashboardItem2" Weight="1.0419990424812007" />
         <LayoutItem DashboardItem="pieDashboardItem1" Weight="0.994572969205542" />
         <LayoutItem DashboardItem="pieDashboardItem3" Weight="0.94860388928657258" />

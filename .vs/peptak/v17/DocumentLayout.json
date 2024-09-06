@@ -1,0 +1,117 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\jankoj\\Desktop\\Analytics.Standalone\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{F261F01B-7819-436D-9CDD-6B49F8A2BC37}|peptak.csproj|C:\\Users\\jankoj\\Desktop\\Analytics.Standalone\\default.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F261F01B-7819-436D-9CDD-6B49F8A2BC37}|peptak.csproj|solutionrelative:default.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F261F01B-7819-436D-9CDD-6B49F8A2BC37}|peptak.csproj|c:\\users\\jankoj\\desktop\\analytics.standalone\\default.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
+      "RelativeMoniker": "D:0:0:{F261F01B-7819-436D-9CDD-6B49F8A2BC37}|peptak.csproj|solutionrelative:default.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F261F01B-7819-436D-9CDD-6B49F8A2BC37}|peptak.csproj|C:\\Users\\jankoj\\Desktop\\Analytics.Standalone\\site.master.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F261F01B-7819-436D-9CDD-6B49F8A2BC37}|peptak.csproj|solutionrelative:site.master.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F261F01B-7819-436D-9CDD-6B49F8A2BC37}|peptak.csproj|C:\\Users\\jankoj\\Desktop\\Analytics.Standalone\\logon.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F261F01B-7819-436D-9CDD-6B49F8A2BC37}|peptak.csproj|solutionrelative:logon.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F261F01B-7819-436D-9CDD-6B49F8A2BC37}|peptak.csproj|C:\\Users\\jankoj\\Desktop\\Analytics.Standalone\\web.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "RelativeMoniker": "D:0:0:{F261F01B-7819-436D-9CDD-6B49F8A2BC37}|peptak.csproj|solutionrelative:web.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 4,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Site.Master.cs",
+              "DocumentMoniker": "C:\\Users\\jankoj\\Desktop\\Analytics.Standalone\\Site.Master.cs",
+              "RelativeDocumentMoniker": "Site.Master.cs",
+              "ToolTip": "C:\\Users\\jankoj\\Desktop\\Analytics.Standalone\\Site.Master.cs",
+              "RelativeToolTip": "Site.Master.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001384|",
+              "WhenOpened": "2024-09-06T09:59:34.584Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Default.aspx",
+              "DocumentMoniker": "C:\\Users\\jankoj\\Desktop\\Analytics.Standalone\\Default.aspx",
+              "RelativeDocumentMoniker": "Default.aspx",
+              "ToolTip": "C:\\Users\\jankoj\\Desktop\\Analytics.Standalone\\Default.aspx*",
+              "RelativeToolTip": "Default.aspx*",
+              "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
+              "WhenOpened": "2024-09-06T09:59:34.81Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Logon.aspx.cs",
+              "DocumentMoniker": "C:\\Users\\jankoj\\Desktop\\Analytics.Standalone\\Logon.aspx.cs",
+              "RelativeDocumentMoniker": "Logon.aspx.cs",
+              "ToolTip": "C:\\Users\\jankoj\\Desktop\\Analytics.Standalone\\Logon.aspx.cs",
+              "RelativeToolTip": "Logon.aspx.cs",
+              "ViewState": "AQIAABMAAAAAAAAAAAA1wBYAAAAbAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001384|",
+              "WhenOpened": "2024-09-06T09:59:34.832Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Default.aspx.cs",
+              "DocumentMoniker": "C:\\Users\\jankoj\\Desktop\\Analytics.Standalone\\Default.aspx.cs",
+              "RelativeDocumentMoniker": "Default.aspx.cs",
+              "ToolTip": "C:\\Users\\jankoj\\Desktop\\Analytics.Standalone\\Default.aspx.cs*",
+              "RelativeToolTip": "Default.aspx.cs*",
+              "ViewState": "AQIAAF4AAAAAAAAAAAAEwHUAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-06T09:59:34.834Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Web.config",
+              "DocumentMoniker": "C:\\Users\\jankoj\\Desktop\\Analytics.Standalone\\Web.config",
+              "RelativeDocumentMoniker": "Web.config",
+              "ToolTip": "C:\\Users\\jankoj\\Desktop\\Analytics.Standalone\\Web.config",
+              "RelativeToolTip": "Web.config",
+              "ViewState": "AQIAAFsAAAAAAAAAAIAwwBoAAAByAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000601|",
+              "WhenOpened": "2024-09-06T09:59:34.835Z",
+              "EditorCaption": ""
+            }
+          ]
+        },
+        {
+          "DockedWidth": 34,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

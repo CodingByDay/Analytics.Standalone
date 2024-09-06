@@ -1,0 +1,264 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Dashboard>
+  <Title Text="30 NOK Pregled" />
+  <DataSources>
+    <SqlDataSource Name="CustomSqlQuery" ComponentName="sqlDataSource1" DataProcessingMode="Client">
+      <Connection Name="Metal product - produkcija" FromAppConfig="true" />
+      <Query Type="CustomSqlQuery" Name="CustomSqlQuery">
+        <Sql>SELECT
+    wiw.adDate AS Datum,
+		DATEADD(DAY,-30,GETDATE()) AS Datum_30,
+		DATEADD(DAY,-7,GETDATE()) AS Datum_7,
+    concat(right('0' + convert(varchar(4), datepart(year, wiw.adDate)), 4), '.', right('0' + convert(varchar(2), datepart(month, wiw.adDate)), 2)) as Period,
+    wiw.acKey AS RN,
+    wiw.acIdent AS Operacija,
+    ss.acKey AS Skart_ID,
+    ss.acName AS Skart_Opis,
+    wis.anQty AS Skart_kol,
+    wiw.acWorker AS Radnik,
+    w.acIdent AS Ident,
+    CASE 
+        WHEN CHARINDEX('-X', w.acIdent) &gt; 0 THEN SUBSTRING(w.acIdent, 1, CHARINDEX('-X', w.acIdent) - 1)
+        ELSE w.acIdent
+    END AS Glavni_Ident,
+    si.acName,
+		w.acIdent+' '+si.acname AS Ident_Opis,
+    si.anRTPrice AS CijenaDom,
+    si.anWSPrice AS CijenaIno,
+    si.anWSPrice2 AS CijenaPlan,
+    si.anPrStPrice AS CijenaSast,
+    wiw.ucResource as Resurs,
+    sr.acName as Resurs_Naziv,
+    sr.acDept as Resurs_Odjel,
+		CASE
+			WHEN si.anRTPrice&gt;0 AND si.anRTPrice&gt;si.anWSPrice AND si.anRTPrice&gt;si.anWSPrice2 AND si.anRTPrice&gt;si.anPrStPrice THEN si.anRTPrice
+			WHEN si.anWSPrice&gt;0 AND si.anWSPrice&gt;si.anWSPrice2 AND si.anWSPrice&gt;si.anPrStPrice THEN si.anWSPrice
+			WHEN si.anWSPrice2&gt;0 AND si.anWSPrice2&gt;si.anPrStPrice THEN anWSPrice2
+																			ELSE si.anPrStPrice
+		END AS MAX,
+				CASE
+			WHEN si.anRTPrice&gt;0 AND si.anWSPrice&gt;0 AND si.anWSPrice2&gt;0 AND si.anPrStPrice&gt;0 AND si.anRTPrice&lt;si.anWSPrice AND si.anRTPrice&lt;si.anWSPrice2 AND si.anRTPrice&lt;si.anPrStPrice THEN si.anRTPrice
+			WHEN si.anWSPrice&gt;0 AND si.anWSPrice2&gt;0 AND si.anPrStPrice&gt;0 AND si.anWSPrice&lt;si.anWSPrice2 AND si.anWSPrice&lt;si.anPrStPrice THEN si.anWSPrice
+			WHEN si.anWSPrice2&gt;0 AND si.anPrStPrice&gt;0 AND si.anWSPrice2&lt;si.anPrStPrice THEN anWSPrice2
+																			ELSE si.anPrStPrice
+		END AS MIN
+FROM
+    tHF_WOExItemWorkScraps wis
+    JOIN tHF_WOExItemWork wiw ON wis.anWorkID = wiw.anQId
+    JOIN tHF_SetScraps ss ON wis.anScrapID = ss.anQId
+    JOIN thf_woex w ON wiw.acKey = w.acKey
+    JOIN tHE_SetItem si ON  
+    	CASE
+           WHEN CHARINDEX('-X', w.acIdent) &gt; 0 THEN SUBSTRING(w.acIdent, 1, CHARINDEX('-X', w.acIdent) - 1)
+        ELSE w.acIdent
+        END = si.acIdent 
+    JOIN tHF_SetResurs sr on wiw.ucResource = sr.acKey</Sql>
+      </Query>
+      <ConnectionOptions CloseConnection="true" />
+      <CalculatedFields>
+        <CalculatedField Name="UkupnaVrijednostSkarta" Expression="SUM([Skart_kol] * [MAX])" DataType="Auto" DataMember="CustomSqlQuery" />
+        <CalculatedField Name="DanašnjiDan" Expression="LocalDateTimeNow() " DataType="Auto" DataMember="CustomSqlQuery" />
+      </CalculatedFields>
+    </SqlDataSource>
+  </DataSources>
+  <Items>
+    <Pie ComponentName="pieDashboardItem1" Name="Razlog nastanka NOK komada - kumulativno" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" PieType="Donut" LabelContentType="ArgumentValueAndPercent">
+      <InteractivityOptions MasterFilterMode="Multiple" />
+      <DataItems>
+        <Measure DataMember="Skart_kol" Name="Količina" DefaultId="DataItem0" />
+        <Dimension DataMember="Skart_Opis" Name="Razlog" DefaultId="DataItem1" />
+      </DataItems>
+      <Arguments>
+        <Argument DefaultId="DataItem1" />
+      </Arguments>
+      <Values>
+        <Value DefaultId="DataItem0" />
+      </Values>
+    </Pie>
+    <Chart ComponentName="chartDashboardItem1" Name="Pojava NOK komada po mesecih" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true">
+      <InteractivityOptions MasterFilterMode="Multiple" />
+      <DataItems>
+        <Measure DataMember="UkupnaVrijednostSkarta" DefaultId="DataItem0">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="Skart_kol" DefaultId="DataItem1">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Dimension DataMember="Period" DefaultId="DataItem2" />
+      </DataItems>
+      <Arguments>
+        <Argument DefaultId="DataItem2" />
+      </Arguments>
+      <Panes>
+        <Pane Name="Pane 1">
+          <Series>
+            <Simple Name="Ukupna vrijednost NOK komada" SeriesType="StackedLine">
+              <Value DefaultId="DataItem0" />
+            </Simple>
+            <Simple Name="Ukupno NOK komada" SeriesType="Line">
+              <Value DefaultId="DataItem1" />
+            </Simple>
+          </Series>
+        </Pane>
+      </Panes>
+      <AxisX EnableZooming="true" LimitVisiblePoints="true" VisiblePointsCount="12" />
+    </Chart>
+    <Grid ComponentName="gridDashboardItem1" Name="Pregled NOK komada - poslednjih 7 dana" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" FilterString="[DataItem6] &gt;= [DataItem4] And [DataItem0] &lt;= [DataItem5]" IsMasterFilterCrossDataSource="true">
+      <InteractivityOptions MasterFilterMode="Multiple" />
+      <DataItems>
+        <Dimension DataMember="Ident_Opis" DefaultId="DataItem0" />
+        <Measure DataMember="Skart_kol" DefaultId="DataItem1">
+          <NumericFormat FormatType="Number" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="UkupnaVrijednostSkarta" DefaultId="DataItem2">
+          <NumericFormat FormatType="Currency" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Dimension DataMember="Datum_30" DateTimeGroupInterval="None" DefaultId="DataItem3" />
+        <Dimension DataMember="Datum_7" DateTimeGroupInterval="None" DefaultId="DataItem4" />
+        <Dimension DataMember="DanašnjiDan" DateTimeGroupInterval="None" DefaultId="DataItem5" />
+        <Dimension DataMember="Datum" DateTimeGroupInterval="None" DefaultId="DataItem6" />
+        <Dimension DataMember="Datum" DateTimeGroupInterval="None" DefaultId="DataItem7" />
+      </DataItems>
+      <HiddenDimensions>
+        <Dimension DefaultId="DataItem5" />
+        <Dimension DefaultId="DataItem6" />
+        <Dimension DefaultId="DataItem4" />
+        <Dimension DefaultId="DataItem3" />
+      </HiddenDimensions>
+      <GridColumns>
+        <GridDimensionColumn Name="Ident">
+          <Dimension DefaultId="DataItem0" />
+        </GridDimensionColumn>
+        <GridMeasureColumn Name="Škart">
+          <Measure DefaultId="DataItem1" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Vrijednost škarta">
+          <Measure DefaultId="DataItem2" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridDimensionColumn>
+          <Dimension DefaultId="DataItem7" />
+        </GridDimensionColumn>
+      </GridColumns>
+      <GridOptions EnableBandedRows="true" />
+    </Grid>
+    <Grid ComponentName="gridDashboardItem2" Name="Pregled NOK komada - detaljno" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true">
+      <InteractivityOptions MasterFilterMode="Multiple" />
+      <DataItems>
+        <Dimension DataMember="Ident_Opis" DefaultId="DataItem0" />
+        <Measure DataMember="Skart_kol" DefaultId="DataItem1">
+          <NumericFormat FormatType="Number" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="UkupnaVrijednostSkarta" DefaultId="DataItem2">
+          <NumericFormat FormatType="Currency" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+      </DataItems>
+      <GridColumns>
+        <GridDimensionColumn Name="Ident" Weight="130.38309114927341">
+          <Dimension DefaultId="DataItem0" />
+        </GridDimensionColumn>
+        <GridMeasureColumn Name="Škart" Weight="43.196829590488768">
+          <Measure DefaultId="DataItem1" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Vrijednost škarta" Weight="51.420079260237777">
+          <Measure DefaultId="DataItem2" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+      </GridColumns>
+      <GridOptions EnableBandedRows="true" ColumnWidthMode="Manual" />
+    </Grid>
+    <Grid ComponentName="gridDashboardItem3" Name="Pregled NOK komada - poslednjih 30 dana" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" FilterString="[DataItem6] &gt;= [DataItem3] And [DataItem0] &lt;= [DataItem5]" IsMasterFilterCrossDataSource="true">
+      <InteractivityOptions MasterFilterMode="Multiple" />
+      <DataItems>
+        <Dimension DataMember="Ident_Opis" DefaultId="DataItem0" />
+        <Measure DataMember="Skart_kol" DefaultId="DataItem1">
+          <NumericFormat FormatType="Number" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="UkupnaVrijednostSkarta" DefaultId="DataItem2">
+          <NumericFormat FormatType="Currency" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Dimension DataMember="Datum_30" DateTimeGroupInterval="None" DefaultId="DataItem3" />
+        <Dimension DataMember="Datum_7" DateTimeGroupInterval="None" DefaultId="DataItem4" />
+        <Dimension DataMember="DanašnjiDan" DateTimeGroupInterval="None" DefaultId="DataItem5" />
+        <Dimension DataMember="Datum" DateTimeGroupInterval="None" DefaultId="DataItem6" />
+        <Dimension DataMember="Datum" DateTimeGroupInterval="None" DefaultId="DataItem7" />
+      </DataItems>
+      <HiddenDimensions>
+        <Dimension DefaultId="DataItem5" />
+        <Dimension DefaultId="DataItem6" />
+        <Dimension DefaultId="DataItem4" />
+        <Dimension DefaultId="DataItem3" />
+      </HiddenDimensions>
+      <GridColumns>
+        <GridDimensionColumn Name="Ident">
+          <Dimension DefaultId="DataItem0" />
+        </GridDimensionColumn>
+        <GridMeasureColumn Name="Škart">
+          <Measure DefaultId="DataItem1" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Vrijednost škarta">
+          <Measure DefaultId="DataItem2" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridDimensionColumn>
+          <Dimension DefaultId="DataItem7" />
+        </GridDimensionColumn>
+      </GridColumns>
+      <GridOptions EnableBandedRows="true" />
+    </Grid>
+    <TreeView ComponentName="treeViewDashboardItem1" Name="Obdobje" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" AutoExpand="true">
+      <InteractivityOptions IgnoreMasterFilters="false" />
+      <DataItems>
+        <Dimension DataMember="Datum" DefaultId="DataItem0" />
+        <Dimension DataMember="Datum" DateTimeGroupInterval="Quarter" DefaultId="DataItem1" />
+        <Dimension DataMember="Datum" DateTimeGroupInterval="Month" DefaultId="DataItem2" />
+      </DataItems>
+      <FilterDimensions>
+        <Dimension DefaultId="DataItem0" />
+        <Dimension DefaultId="DataItem1" />
+        <Dimension DefaultId="DataItem2" />
+      </FilterDimensions>
+    </TreeView>
+  </Items>
+  <ColorScheme>
+    <Entry DataSource="sqlDataSource1" DataMember="CustomSqlQuery" Color="-11292502">
+      <MeasureKey>
+        <Definition DataMember="UkupnaVrijednostSkarta" />
+      </MeasureKey>
+    </Entry>
+    <Entry DataSource="sqlDataSource1" DataMember="CustomSqlQuery" Color="-11119696">
+      <MeasureKey>
+        <Definition DataMember="Skart_kol" />
+      </MeasureKey>
+    </Entry>
+  </ColorScheme>
+  <LayoutTree>
+    <LayoutGroup Orientation="Vertical">
+      <LayoutGroup>
+        <LayoutItem DashboardItem="pieDashboardItem1" />
+        <LayoutItem DashboardItem="chartDashboardItem1" />
+      </LayoutGroup>
+      <LayoutGroup>
+        <LayoutItem DashboardItem="treeViewDashboardItem1" Weight="0.39568345323741005" />
+        <LayoutItem DashboardItem="gridDashboardItem2" Weight="1.2700608743774211" />
+        <LayoutItem DashboardItem="gridDashboardItem3" Weight="1.2722744881018262" />
+        <LayoutItem DashboardItem="gridDashboardItem1" Weight="1.0619811842833426" />
+      </LayoutGroup>
+    </LayoutGroup>
+  </LayoutTree>
+</Dashboard>

@@ -1,0 +1,218 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Dashboard>
+  <Title Text="53 Ide - Ne ide" />
+  <DataSources>
+    <SqlDataSource Name="CustomSqlQuery" ComponentName="sqlDataSource1" DataProcessingMode="Client">
+      <Connection Name="Metal product - produkcija" FromAppConfig="true" />
+      <Query Type="CustomSqlQuery" Name="CustomSqlQuery">
+        <Sql>SELECT * FROM BI_Lista_Isporuka</Sql>
+      </Query>
+      <ConnectionOptions CloseConnection="true" />
+      <CalculatedFields>
+        <CalculatedField Name="ŠteviloDokumentovTekočiTeden" Expression="Iif([Tjedan]=[Tekuci_Tjedan], CountDistinct([Dokument]),0)" DataType="Auto" DataMember="CustomSqlQuery" />
+      </CalculatedFields>
+    </SqlDataSource>
+  </DataSources>
+  <Items>
+    <Grid ComponentName="gridDashboardItem1" Name="Pregled" ShowCaption="false" DataSource="sqlDataSource1" DataMember="CustomSqlQuery">
+      <DataItems>
+        <Dimension DataMember="Kasnjenje" DefaultId="DataItem0" />
+        <Dimension DataMember="Dokument" DefaultId="DataItem1" />
+        <Dimension DataMember="Poz" DefaultId="DataItem2" />
+        <Dimension DataMember="Nar_Kupca" DefaultId="DataItem3" />
+        <Dimension DataMember="Kupac" DefaultId="DataItem4" />
+        <Dimension DataMember="Ident" DefaultId="DataItem5" />
+        <Dimension DataMember="IdentKupac" DefaultId="DataItem6" />
+        <Dimension DataMember="Naziv" DefaultId="DataItem7" />
+        <Measure DataMember="Vrijednost" DefaultId="DataItem8">
+          <NumericFormat FormatType="Currency" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="Neisp" DefaultId="DataItem9">
+          <NumericFormat FormatType="Number" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="Težina" DefaultId="DataItem10">
+          <NumericFormat FormatType="Number" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Dimension DataMember="Rok_isporuke" DefaultId="DataItem11" />
+        <Dimension DataMember="Tjedan" DefaultId="DataItem12" />
+        <Dimension DataMember="Odjel" DefaultId="DataItem13" />
+        <Dimension DataMember="Ide" DefaultId="DataItem14" />
+        <Dimension DataMember="NeIde" DefaultId="DataItem15" />
+        <Dimension DataMember="Paritet" DefaultId="DataItem16" />
+      </DataItems>
+      <GridColumns>
+        <GridDimensionColumn Name="Kasni">
+          <Dimension DefaultId="DataItem0" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Dokument">
+          <Dimension DefaultId="DataItem1" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Poz">
+          <Dimension DefaultId="DataItem2" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Narudžba kupca">
+          <Dimension DefaultId="DataItem3" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Kupac">
+          <Dimension DefaultId="DataItem4" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Ident">
+          <Dimension DefaultId="DataItem5" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Ident - kupac">
+          <Dimension DefaultId="DataItem6" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Naziv identa">
+          <Dimension DefaultId="DataItem7" />
+        </GridDimensionColumn>
+        <GridMeasureColumn Name="Vrijednost">
+          <Measure DefaultId="DataItem8" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Za isporuku">
+          <Measure DefaultId="DataItem9" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Težina">
+          <Measure DefaultId="DataItem10" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridDimensionColumn Name="Rok isporuke">
+          <Dimension DefaultId="DataItem11" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Tjedan">
+          <Dimension DefaultId="DataItem12" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Odjel">
+          <Dimension DefaultId="DataItem13" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Ide">
+          <Dimension DefaultId="DataItem14" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Ne ide">
+          <Dimension DefaultId="DataItem15" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Paritet">
+          <Dimension DefaultId="DataItem16" />
+        </GridDimensionColumn>
+      </GridColumns>
+      <GridOptions EnableBandedRows="true" />
+    </Grid>
+    <Card ComponentName="cardDashboardItem1" Name="Tjedan" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" ContentArrangementMode="FixedRowCount" ContentLineCount="1">
+      <InteractivityOptions MasterFilterMode="Multiple" />
+      <DataItems>
+        <Dimension DataMember="Tjedan" DefaultId="DataItem0" />
+        <Measure DataMember="Dokument" SummaryType="Count" DefaultId="DataItem1" />
+      </DataItems>
+      <SeriesDimensions>
+        <SeriesDimension DefaultId="DataItem0" />
+      </SeriesDimensions>
+      <Card>
+        <ActualValue DefaultId="DataItem1" />
+        <AbsoluteVariationNumericFormat />
+        <PercentVariationNumericFormat />
+        <PercentOfTargetNumericFormat />
+        <LayoutTemplate Type="Stretched">
+          <TopValue Visible="true" ValueType="ActualValue" DimensionIndex="0" />
+          <MainValue Visible="true" ValueType="Title" DimensionIndex="0" />
+          <SubValue Visible="true" ValueType="Subtitle" DimensionIndex="0" />
+          <BottomValue1 Visible="true" ValueType="PercentVariation" DimensionIndex="0" />
+          <BottomValue2 Visible="true" ValueType="AbsoluteVariation" DimensionIndex="0" />
+          <DeltaIndicator Visible="true" />
+          <Sparkline Visible="true" />
+        </LayoutTemplate>
+      </Card>
+    </Card>
+    <Card ComponentName="cardDashboardItem2" Name="Tekući tjedan" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true">
+      <DataItems>
+        <Measure DataMember="Dokument" SummaryType="Count" DefaultId="DataItem0">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Dimension DataMember="Tekuci_Tjedan" Name="Teden" DefaultId="DataItem1" />
+      </DataItems>
+      <FormatRules>
+        <CardItemFormatRule Name="Format Rule 1" DataItem="DataItem1">
+          <FormatConditionExpression Expression="[DataItem1] &lt;&gt; ?">
+            <AppearanceSettings AppearanceType="PaleGreen" />
+          </FormatConditionExpression>
+          <CardFormatRuleLayoutElement />
+        </CardItemFormatRule>
+      </FormatRules>
+      <SeriesDimensions>
+        <SeriesDimension DefaultId="DataItem1" />
+      </SeriesDimensions>
+      <Card Name="Broj narudžbi">
+        <ActualValue DefaultId="DataItem0" />
+        <AbsoluteVariationNumericFormat />
+        <PercentVariationNumericFormat />
+        <PercentOfTargetNumericFormat />
+        <LayoutTemplate Type="Stretched">
+          <TopValue Visible="true" ValueType="ActualValue" DimensionIndex="0" />
+          <MainValue Visible="true" ValueType="Title" DimensionIndex="0" />
+          <SubValue Visible="true" ValueType="Subtitle" DimensionIndex="0" />
+          <BottomValue1 Visible="true" ValueType="PercentVariation" DimensionIndex="0" />
+          <BottomValue2 Visible="true" ValueType="AbsoluteVariation" DimensionIndex="0" />
+          <DeltaIndicator Visible="true" />
+          <Sparkline Visible="true" />
+        </LayoutTemplate>
+      </Card>
+    </Card>
+    <Card ComponentName="cardDashboardItem3" Name="Status kupca" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" ContentArrangementMode="FixedRowCount" ContentLineCount="1">
+      <InteractivityOptions MasterFilterMode="Multiple" />
+      <DataItems>
+        <Measure DataMember="Dokument" SummaryType="Count" DefaultId="DataItem0" />
+        <Dimension DataMember="Status_Kup" DefaultId="DataItem1" />
+      </DataItems>
+      <FormatRules>
+        <CardItemFormatRule Name="Format Rule 1" DataItem="DataItem1">
+          <FormatConditionValue>
+            <AppearanceSettings AppearanceType="PaleBlue" />
+            <Value1 Type="System.String" Value="Domaći" />
+          </FormatConditionValue>
+          <CardFormatRuleLayoutElement />
+        </CardItemFormatRule>
+        <CardItemFormatRule Name="Format Rule 2" DataItem="DataItem1">
+          <FormatConditionValue>
+            <AppearanceSettings AppearanceType="PalePurple" />
+            <Value1 Type="System.String" Value="Inozemni" />
+          </FormatConditionValue>
+          <CardFormatRuleLayoutElement />
+        </CardItemFormatRule>
+      </FormatRules>
+      <SeriesDimensions>
+        <SeriesDimension DefaultId="DataItem1" />
+      </SeriesDimensions>
+      <Card>
+        <ActualValue DefaultId="DataItem0" />
+        <AbsoluteVariationNumericFormat />
+        <PercentVariationNumericFormat />
+        <PercentOfTargetNumericFormat />
+        <LayoutTemplate Type="Stretched">
+          <TopValue Visible="true" ValueType="ActualValue" DimensionIndex="0" />
+          <MainValue Visible="true" ValueType="Title" DimensionIndex="0" />
+          <SubValue Visible="true" ValueType="Subtitle" DimensionIndex="0" />
+          <BottomValue1 Visible="true" ValueType="PercentVariation" DimensionIndex="0" />
+          <BottomValue2 Visible="true" ValueType="AbsoluteVariation" DimensionIndex="0" />
+          <DeltaIndicator Visible="true" />
+          <Sparkline Visible="true" />
+        </LayoutTemplate>
+      </Card>
+    </Card>
+  </Items>
+  <LayoutTree>
+    <LayoutGroup Orientation="Vertical">
+      <LayoutGroup Weight="0.345771144278607">
+        <LayoutItem DashboardItem="cardDashboardItem2" Weight="0.0931057326707741" />
+        <LayoutItem DashboardItem="cardDashboardItem3" Weight="0.20508690041935512" />
+        <LayoutItem DashboardItem="cardDashboardItem1" Weight="0.48385864896115294" />
+      </LayoutGroup>
+      <LayoutItem DashboardItem="gridDashboardItem1" Weight="1.6542288557213929" />
+    </LayoutGroup>
+  </LayoutTree>
+</Dashboard>

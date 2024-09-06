@@ -1,0 +1,512 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Dashboard>
+  <Title Text="C Prodaja - 5 Od-Do" />
+  <DataSources>
+    <SqlDataSource Name="Prodaja" ComponentName="sqlDataSource1" DataProcessingMode="Client">
+      <Connection Name="Metal product - produkcija" FromAppConfig="true" />
+      <Query Type="CustomSqlQuery" Name="CustomSqlQuery">
+        <Sql>SELECT	--ProdajaPoslovniDogodekDobavnice,
+				ProdajaDatumDobavnice,
+--			ProdajaDatumDatumKupčevegaNaročila,
+--			ProdajaŠtevilkaDobavnice,
+--			ProdajaPozicija,
+				ProdajaDostavnoMesto,
+				ProdajaDostavnoMestoPošta,
+				ProdajaDostavnoMestoŠirina,
+				ProdajaDostavnoMestoDolžina,
+				ProdajaRegija,
+				ProdajaRegijaŠirina,
+				ProdjaRegijaDolžina,
+				ProdajaPlačnik,
+				ProdajaDržava,
+				ProdajaDržavaŠirina,
+				ProdajaDržavaDolžina,
+--			ProdajaStroškovniNosilec,
+				ProdajaIdent,
+				ProdajaNazivIdenta,
+				ProdajaIdentNaziv,
+				ProdajaPrimarnaKlasifikacija,
+				ProdajaPrimarnaKlasifikacijaNaziv,
+				ProdajaSekundarnaKlasifikacija,
+				ProdajaSekundarnaKlasifikacijaNaziv,
+				ProdajaEM,
+--			ProdajaNetoTeža,
+--			ProdajaBrutoTeža,
+				ProdajaKoličina,
+--			ProdajaVrstaCenika,
+--			ProdajaProdajnaCenaPolna,
+--			ProdajaProdajnaVrednostPolna,
+				ProdajaOsnovaZaDDV,
+--			ProdajaProdajnaCena,
+--			ProdajaProdajnaVrednost,
+--			ProdajaDobaviteljevaCena,
+--			ProdajaNabavnaVrednost,
+--			ProdajaSkladiščnaCena,
+				ProdajaSkladiščnaVrednost,
+--			ProdajaOdvisniStroški,
+--			ProdajaRabatVrednost,
+--			ProdajaRabat,
+--			ProdajaRabat1,
+--			ProdajaRabat2,
+--			ProdajaRabat3,
+--			ProdajaVrednostDobavnice,
+--			ProdajaŠtevilkaRačuna,
+--			ProdajaDatumRačuna,
+--			ProdajaPoslovniDogodekRačuna,
+				ProdajaDobavitelj,
+--			ProdajaOddelek,
+			ProdajaSkladišče,
+--			ProdajaDobaviteljevaŠifra,
+--			ProdajaEANKoda,
+				ProdajaTipKupca,
+--			ProdajaReferent,
+--			ProdajaAcFieldSA,
+--			ProdajaAcFieldSB,
+--			ProdajaAcFieldSC,
+--			ProdajaAcFieldSD,
+--			ProdajaAcFieldSE,
+--			ProdajaAcFieldSF,
+--			ProdajaAcFieldSG,
+--			ProdajaAcFieldSH,
+--			ProdajaAcFieldSI,
+--			ProdajaAcFieldSJ,
+--			ProdajaAnFieldNA,
+--			ProdajaAnFieldNB,
+--			ProdajaAnFieldNC,
+--			ProdajaAnFieldND,
+--			ProdajaAnFieldNE,
+--			ProdajaAnFieldNF,
+--			ProdajaAnFieldNG,
+--			ProdajaAnFieldNH,
+--			ProdajaAnFieldNI,ac
+--			ProdajaAnFieldNJ,
+				ProdajaZalogaSUM,
+				case
+					when isnull(ss.acFieldSJ,'') = ''	THEN 'Neopredeljeno'
+																						ELSE isnull(ss.acFieldSJ,'')
+				end as ProdajaSkladiščeTip
+  FROM dbo.uTN_DB_ProdajaPoRealizaciji_DET ppr
+	LEFT JOIN (SELECT ZalogaIdent, SUM(ZalogaKoličinaEM) AS ProdajaZalogaSUM FROM uTN_DB_Zaloge GROUP BY ZalogaIdent) za ON za.ZalogaIdent=ppr.ProdajaIdent
+left join dbo.tHE_SetSubj ss on ss.acsubject=ppr.ProdajaSkladišče;</Sql>
+      </Query>
+      <ConnectionOptions CloseConnection="true" />
+      <CalculatedFields>
+        <CalculatedField Name="YTDProdajnaVrednost" Expression="Iif([ProdajaDatumDobavnice]&gt;=?DatumOd and [ProdajaDatumDobavnice]&lt;=?DatumDo,[ProdajaOsnovaZaDDV],0)" DataType="Auto" DataMember="CustomSqlQuery" />
+        <CalculatedField Name="YTDSkladiščnaVrednost" Expression="Iif([ProdajaDatumDobavnice]&gt;=?DatumOd and [ProdajaDatumDobavnice]&lt;=?DatumDo,[ProdajaSkladiščnaVrednost],0)" DataType="Auto" DataMember="CustomSqlQuery" />
+        <CalculatedField Name="YTDRVC" Expression="Iif([ProdajaDatumDobavnice]&gt;=?DatumOd and [ProdajaDatumDobavnice]&lt;=?DatumDo,[ProdajaOsnovaZaDDV]-[ProdajaSkladiščnaVrednost],0)" DataType="Auto" DataMember="CustomSqlQuery" />
+        <CalculatedField Name="YTD Količina" Expression="Iif([ProdajaDatumDobavnice]&gt;=?DatumOd and [ProdajaDatumDobavnice]&lt;=?DatumDo,[ProdajaKoličina],0)" DataType="Auto" DataMember="CustomSqlQuery" />
+        <CalculatedField Name="ParameterLeto" Expression="GetYear([ProdajaDatumDobavnice])" DataType="Auto" DataMember="CustomSqlQuery" />
+        <CalculatedField Name="SUMSkladiščnaVrednost" Expression="Iif([ProdajaDatumDobavnice]&gt;=?DatumOd and [ProdajaDatumDobavnice]&lt;=?DatumDo)" DataType="Auto" DataMember="CustomSqlQuery" />
+        <CalculatedField Name="SUMRVC" Expression="Iif([ProdajaDatumDobavnice]&gt;=?DatumOd and [ProdajaDatumDobavnice]&lt;=?DatumDo)" DataType="Auto" DataMember="CustomSqlQuery" />
+        <CalculatedField Name="SUMProdajnaVrednost" Expression="Iif([ProdajaDatumDobavnice]&gt;=?DatumOd and [ProdajaDatumDobavnice]&lt;=?DatumDo)" DataType="Auto" DataMember="CustomSqlQuery" />
+      </CalculatedFields>
+    </SqlDataSource>
+    <SqlDataSource Name="Zaloga" ComponentName="sqlDataSource2" DataProcessingMode="Client">
+      <Connection Name="eHolding ERFA" FromAppConfig="true" />
+      <Query Type="CustomSqlQuery" Name="Zaloga">
+        <Sql>SELECT ZalogaIdent AS ProdajaIdent, 
+       ZalogaIdentNaziv AS ProdajaIdentNaziv,
+       ZalogaSkladišče AS ProdajaSkladišče, 
+			 SUM(ZalogaKoličinaEM) AS ProdajaZaloga FROM uTN_DB_Zaloge 
+GROUP BY ZalogaIdent, ZalogaSkladišče, ZalogaIdentNaziv;</Sql>
+      </Query>
+      <ConnectionOptions CloseConnection="true" />
+    </SqlDataSource>
+  </DataSources>
+  <Parameters>
+    <Parameter Name="DatumOd" Type="System.DateTime" Value="2023-01-01T00:00:00" Description="Obdobje-1 Od" />
+    <Parameter Name="DatumDo" Type="System.DateTime" Value="2023-12-31T00:00:00" Description="Obdobje-1 Do" />
+  </Parameters>
+  <Items>
+    <PieMap ComponentName="pieMapDashboardItem1" Name="Po gradovima u HR" ParentContainer="dashboardTabPage3" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" ShapefileArea="Europe" EnableClustering="true">
+      <InteractivityOptions MasterFilterMode="Multiple" />
+      <DataItems>
+        <Dimension DataMember="YTDProdajnaVrednost" DefaultId="DataItem0" />
+        <Dimension DataMember="ProdajaDostavnoMestoPošta" Name="Pošta" DefaultId="DataItem1" />
+        <Dimension DataMember="ProdajaDostavnoMestoŠirina" Name="Zemljepisna širina" DefaultId="DataItem2">
+          <NumericFormat FormatType="Number" Precision="6" Unit="Ones" />
+        </Dimension>
+        <Dimension DataMember="ProdajaDostavnoMestoDolžina" Name="Zemplepisna dolžina" DefaultId="DataItem3">
+          <NumericFormat FormatType="Number" Precision="6" Unit="Ones" />
+        </Dimension>
+        <Measure DataMember="YTDProdajnaVrednost" Name="Prodajna vrednost" DefaultId="DataItem4">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="YTDRVC" Name="RVC" DefaultId="DataItem5">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+      </DataItems>
+      <HiddenDimensions>
+        <Dimension DefaultId="DataItem0" />
+      </HiddenDimensions>
+      <ViewArea TopLatitude="46.916609672085791" BottomLatitude="45.540944536672782" LeftLongitude="13.202310262489599" RightLongitude="16.173498190179757" CenterPointLatitude="46.233087227006358" CenterPointLongitude="14.687052883088922" CreateViewerPaddings="false" />
+      <MapLegend Visible="true" />
+      <WeightedLegend />
+      <Latitude DefaultId="DataItem2" />
+      <Longitude DefaultId="DataItem3" />
+      <TooltipDimensions>
+        <TooltipDimension DefaultId="DataItem1" />
+      </TooltipDimensions>
+      <Values>
+        <Value DefaultId="DataItem4" />
+        <Value DefaultId="DataItem5" />
+      </Values>
+    </PieMap>
+    <Chart ComponentName="chartDashboardItem1" Name="Realizacija po mjesecima" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true">
+      <InteractivityOptions MasterFilterMode="Multiple" />
+      <DataItems>
+        <Dimension DataMember="ProdajaDatumDobavnice" Name="Mesec " DateTimeGroupInterval="MonthYear" DefaultId="DataItem0">
+          <DateTimeFormat MonthFormat="Abbreviated" />
+        </Dimension>
+        <Measure DataMember="YTDSkladiščnaVrednost" DefaultId="DataItem1">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="YTDRVC" DefaultId="DataItem2">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="YTDProdajnaVrednost" DefaultId="DataItem3">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+      </DataItems>
+      <Arguments>
+        <Argument DefaultId="DataItem0" />
+      </Arguments>
+      <Panes>
+        <Pane Name="Pane 1">
+          <AxisY Title="Vrednost">
+            <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+          </AxisY>
+          <Series>
+            <Simple Name="Skladiščna vrednost" SeriesType="StackedBar">
+              <Value DefaultId="DataItem1" />
+            </Simple>
+            <Simple Name="RVC" SeriesType="StackedBar">
+              <Value DefaultId="DataItem2" />
+            </Simple>
+            <Simple Name="Prodajna vrednost" SeriesType="Line">
+              <Value DefaultId="DataItem3" />
+            </Simple>
+          </Series>
+        </Pane>
+      </Panes>
+      <AxisX EnableZooming="true" />
+    </Chart>
+    <PieMap ComponentName="pieMapDashboardItem2" Name="Po državama" ParentContainer="dashboardTabPage1" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" EnableClustering="true">
+      <InteractivityOptions MasterFilterMode="Multiple" />
+      <DataItems>
+        <Dimension DataMember="YTDProdajnaVrednost" DefaultId="DataItem0" />
+        <Dimension DataMember="ProdajaDržava" Name="Regija " DefaultId="DataItem1" />
+        <Dimension DataMember="ProdajaDržavaŠirina" Name="Zemljepisna širina" DefaultId="DataItem2">
+          <NumericFormat FormatType="Number" Precision="6" Unit="Ones" />
+        </Dimension>
+        <Dimension DataMember="ProdajaDržavaDolžina" Name="Zemlepisna dolžina" DefaultId="DataItem3">
+          <NumericFormat FormatType="Number" Precision="6" Unit="Ones" />
+        </Dimension>
+        <Measure DataMember="YTDProdajnaVrednost" Name="Prodajna vrednost" DefaultId="DataItem4">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="YTDRVC" Name="RVC" DefaultId="DataItem5">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+      </DataItems>
+      <HiddenDimensions>
+        <Dimension DefaultId="DataItem0" />
+      </HiddenDimensions>
+      <ViewArea TopLatitude="53.057720929052159" BottomLatitude="37.357055960047482" LeftLongitude="-0.52875059186251361" RightLongitude="27.161446776558559" CenterPointLatitude="45.7560232418764" CenterPointLongitude="13.287038881821708" CreateViewerPaddings="false" />
+      <MapLegend Visible="true" />
+      <WeightedLegend />
+      <Latitude DefaultId="DataItem2" />
+      <Longitude DefaultId="DataItem3" />
+      <TooltipDimensions>
+        <TooltipDimension DefaultId="DataItem1" />
+      </TooltipDimensions>
+      <Values>
+        <Value DefaultId="DataItem4" />
+        <Value DefaultId="DataItem5" />
+      </Values>
+    </PieMap>
+    <TabContainer ComponentName="tabContainerDashboardItem1" Name="Tab Container 1">
+      <Pages>
+        <Page ComponentName="dashboardTabPage1" Name="Po državama" />
+        <Page ComponentName="dashboardTabPage2" Name="Po regijama" />
+        <Page ComponentName="dashboardTabPage3" Name="Po gradovima" />
+      </Pages>
+    </TabContainer>
+    <PieMap ComponentName="pieMapDashboardItem3" Name="Po regijama u HR" ParentContainer="dashboardTabPage2" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" ShapefileArea="Europe" EnableClustering="true">
+      <InteractivityOptions MasterFilterMode="Multiple" />
+      <DataItems>
+        <Dimension DataMember="YTDProdajnaVrednost" DefaultId="DataItem0" />
+        <Dimension DataMember="ProdajaRegija" Name="Regija" DefaultId="DataItem1" />
+        <Dimension DataMember="ProdajaRegijaŠirina" Name="Zemljepisna širina" DefaultId="DataItem2">
+          <NumericFormat FormatType="Number" Precision="6" Unit="Ones" />
+        </Dimension>
+        <Dimension DataMember="ProdjaRegijaDolžina" Name="Zemljepisna dolžina" DefaultId="DataItem3">
+          <NumericFormat FormatType="Number" Precision="6" Unit="Ones" />
+        </Dimension>
+        <Measure DataMember="YTDProdajnaVrednost" Name="Prodajna vrednost" DefaultId="DataItem4">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="YTDRVC" Name="RVC" DefaultId="DataItem5">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+      </DataItems>
+      <HiddenDimensions>
+        <Dimension DefaultId="DataItem0" />
+      </HiddenDimensions>
+      <ViewArea TopLatitude="46.962434027634885" BottomLatitude="45.008491739725351" LeftLongitude="12.809880465783991" RightLongitude="16.579786287701797" CenterPointLatitude="45.994085510534731" CenterPointLongitude="14.693870191811387" CreateViewerPaddings="false" />
+      <MapLegend Visible="true" />
+      <WeightedLegend />
+      <Latitude DefaultId="DataItem2" />
+      <Longitude DefaultId="DataItem3" />
+      <TooltipDimensions>
+        <TooltipDimension DefaultId="DataItem1" />
+      </TooltipDimensions>
+      <Values>
+        <Value DefaultId="DataItem4" />
+        <Value DefaultId="DataItem5" />
+      </Values>
+    </PieMap>
+    <Pivot ComponentName="pivotDashboardItem1" Name="Prodaja po zemljama u odnosu na primarnu i sekundarnu klasifikaciju u razdoblju od #DatumOd do #DatumDo" DataSource="sqlDataSource1" DataMember="CustomSqlQuery">
+      <DataItems>
+        <Measure DataMember="YTDProdajnaVrednost" Name="Prodajna vrijednost" DefaultId="DataItem0">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="YTDRVC" Name="RUC" DefaultId="DataItem1">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Dimension DataMember="ProdajaPrimarnaKlasifikacijaNaziv" TopNEnabled="true" TopNShowOthers="true" TopNCount="10" TopNMeasure="DataItem0" DefaultId="DataItem2" />
+        <Dimension DataMember="ProdajaSekundarnaKlasifikacijaNaziv" TopNEnabled="true" TopNShowOthers="true" TopNCount="20" TopNMeasure="DataItem0" DefaultId="DataItem3" />
+        <Dimension DataMember="ProdajaDržava" Name="Država" DefaultId="DataItem4" />
+        <Dimension DataMember="ProdajaDatumDobavnice" Name="Leto" DefaultId="DataItem5" />
+        <Dimension DataMember="ProdajaDatumDobavnice" Name="Mesec" DateTimeGroupInterval="Month" DefaultId="DataItem6" />
+      </DataItems>
+      <FormatRules>
+        <PivotItemFormatRule Name="Format Rule 1" DataItem="DataItem0" DataItemApplyTo="DataItem0" IntersectionLevelMode="FirstLevel">
+          <FormatConditionRangeGradient ValueType="Percent">
+            <RangeSet>
+              <Ranges>
+                <RangeInfo>
+                  <Value Type="System.Decimal" Value="0" />
+                  <AppearanceSettings AppearanceType="GradientTransparent" />
+                </RangeInfo>
+                <RangeInfo>
+                  <Value Type="System.Decimal" Value="5" />
+                </RangeInfo>
+                <RangeInfo>
+                  <Value Type="System.Decimal" Value="10" />
+                </RangeInfo>
+                <RangeInfo>
+                  <Value Type="System.Decimal" Value="15" />
+                </RangeInfo>
+                <RangeInfo>
+                  <Value Type="System.Decimal" Value="20" />
+                </RangeInfo>
+                <RangeInfo>
+                  <Value Type="System.Decimal" Value="25" />
+                </RangeInfo>
+                <RangeInfo>
+                  <Value Type="System.Decimal" Value="30" />
+                </RangeInfo>
+                <RangeInfo>
+                  <Value Type="System.Decimal" Value="35" />
+                </RangeInfo>
+                <RangeInfo>
+                  <Value Type="System.Decimal" Value="40" />
+                </RangeInfo>
+                <RangeInfo>
+                  <Value Type="System.Decimal" Value="45" />
+                </RangeInfo>
+                <RangeInfo>
+                  <Value Type="System.Decimal" Value="50" />
+                </RangeInfo>
+                <RangeInfo>
+                  <Value Type="System.Decimal" Value="55" />
+                </RangeInfo>
+                <RangeInfo>
+                  <Value Type="System.Decimal" Value="60" />
+                </RangeInfo>
+                <RangeInfo>
+                  <Value Type="System.Decimal" Value="65" />
+                </RangeInfo>
+                <RangeInfo>
+                  <Value Type="System.Decimal" Value="70" />
+                </RangeInfo>
+                <RangeInfo>
+                  <Value Type="System.Decimal" Value="75" />
+                </RangeInfo>
+                <RangeInfo>
+                  <Value Type="System.Decimal" Value="80" />
+                </RangeInfo>
+                <RangeInfo>
+                  <Value Type="System.Decimal" Value="85" />
+                </RangeInfo>
+                <RangeInfo>
+                  <Value Type="System.Decimal" Value="90" />
+                </RangeInfo>
+                <RangeInfo>
+                  <Value Type="System.Decimal" Value="95" />
+                  <AppearanceSettings AppearanceType="GradientBlue" />
+                </RangeInfo>
+              </Ranges>
+            </RangeSet>
+          </FormatConditionRangeGradient>
+          <PivotItemFormatRuleLevel />
+        </PivotItemFormatRule>
+        <PivotItemFormatRule Name="Format Rule 2" DataItem="DataItem0" DataItemApplyTo="DataItem0" IntersectionLevelMode="LastLevel">
+          <FormatConditionRangeGradient ValueType="Percent">
+            <RangeSet>
+              <Ranges>
+                <RangeInfo>
+                  <Value Type="System.Decimal" Value="0" />
+                  <AppearanceSettings AppearanceType="GradientTransparent" />
+                </RangeInfo>
+                <RangeInfo>
+                  <Value Type="System.Decimal" Value="10" />
+                </RangeInfo>
+                <RangeInfo>
+                  <Value Type="System.Decimal" Value="20" />
+                </RangeInfo>
+                <RangeInfo>
+                  <Value Type="System.Decimal" Value="30" />
+                </RangeInfo>
+                <RangeInfo>
+                  <Value Type="System.Decimal" Value="40" />
+                </RangeInfo>
+                <RangeInfo>
+                  <Value Type="System.Decimal" Value="50" />
+                </RangeInfo>
+                <RangeInfo>
+                  <Value Type="System.Decimal" Value="60" />
+                </RangeInfo>
+                <RangeInfo>
+                  <Value Type="System.Decimal" Value="70" />
+                </RangeInfo>
+                <RangeInfo>
+                  <Value Type="System.Decimal" Value="80" />
+                </RangeInfo>
+                <RangeInfo>
+                  <Value Type="System.Decimal" Value="90" />
+                  <AppearanceSettings AppearanceType="GradientGreen" />
+                </RangeInfo>
+              </Ranges>
+            </RangeSet>
+          </FormatConditionRangeGradient>
+          <PivotItemFormatRuleLevel />
+        </PivotItemFormatRule>
+        <PivotItemFormatRule Name="Format Rule 3" DataItem="DataItem0" DataItemApplyTo="DataItem0" IntersectionLevelMode="SpecificLevel">
+          <FormatConditionRangeGradient ValueType="Percent">
+            <RangeSet>
+              <Ranges>
+                <RangeInfo>
+                  <Value Type="System.Decimal" Value="0" />
+                  <AppearanceSettings AppearanceType="GradientYellow" />
+                </RangeInfo>
+                <RangeInfo>
+                  <Value Type="System.Decimal" Value="6" />
+                </RangeInfo>
+                <RangeInfo>
+                  <Value Type="System.Decimal" Value="11" />
+                </RangeInfo>
+                <RangeInfo>
+                  <Value Type="System.Decimal" Value="17" />
+                </RangeInfo>
+                <RangeInfo>
+                  <Value Type="System.Decimal" Value="22" />
+                </RangeInfo>
+                <RangeInfo>
+                  <Value Type="System.Decimal" Value="28" />
+                </RangeInfo>
+                <RangeInfo>
+                  <Value Type="System.Decimal" Value="33" />
+                </RangeInfo>
+                <RangeInfo>
+                  <Value Type="System.Decimal" Value="39" />
+                </RangeInfo>
+                <RangeInfo>
+                  <Value Type="System.Decimal" Value="44" />
+                </RangeInfo>
+                <RangeInfo>
+                  <Value Type="System.Decimal" Value="50" />
+                </RangeInfo>
+                <RangeInfo>
+                  <Value Type="System.Decimal" Value="56" />
+                </RangeInfo>
+                <RangeInfo>
+                  <Value Type="System.Decimal" Value="61" />
+                </RangeInfo>
+                <RangeInfo>
+                  <Value Type="System.Decimal" Value="67" />
+                </RangeInfo>
+                <RangeInfo>
+                  <Value Type="System.Decimal" Value="72" />
+                </RangeInfo>
+                <RangeInfo>
+                  <Value Type="System.Decimal" Value="78" />
+                </RangeInfo>
+                <RangeInfo>
+                  <Value Type="System.Decimal" Value="83" />
+                </RangeInfo>
+                <RangeInfo>
+                  <Value Type="System.Decimal" Value="89" />
+                </RangeInfo>
+                <RangeInfo>
+                  <Value Type="System.Decimal" Value="94" />
+                  <AppearanceSettings AppearanceType="GradientOrange" />
+                </RangeInfo>
+              </Ranges>
+            </RangeSet>
+          </FormatConditionRangeGradient>
+          <PivotItemFormatRuleLevel Row="DataItem4" />
+        </PivotItemFormatRule>
+      </FormatRules>
+      <Columns>
+        <Column DefaultId="DataItem2" />
+        <Column DefaultId="DataItem3" />
+      </Columns>
+      <Rows>
+        <Row DefaultId="DataItem4" />
+        <Row DefaultId="DataItem5" />
+        <Row DefaultId="DataItem6" />
+      </Rows>
+      <Values>
+        <Value DefaultId="DataItem0" />
+        <Value DefaultId="DataItem1" />
+      </Values>
+    </Pivot>
+    <Pie ComponentName="pieDashboardItem1" Name="Realizacija po primarnoj klasifikaciji" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" PieType="Donut" ShowPieCaptions="false">
+      <InteractivityOptions MasterFilterMode="Multiple" />
+      <DataItems>
+        <Measure DataMember="YTDProdajnaVrednost" Name="Prodajna vrijednost" DefaultId="DataItem0">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Dimension DataMember="ProdajaPrimarnaKlasifikacija" Name="Primarna klasifikacija" DefaultId="DataItem1" />
+      </DataItems>
+      <Arguments>
+        <Argument DefaultId="DataItem1" />
+      </Arguments>
+      <Values>
+        <Value DefaultId="DataItem0" />
+      </Values>
+    </Pie>
+  </Items>
+  <LayoutTree>
+    <LayoutGroup>
+      <LayoutGroup Orientation="Vertical" Weight="0.37802691491397283">
+        <LayoutTabContainer DashboardItem="tabContainerDashboardItem1" Weight="1.0218350566960237">
+          <LayoutTabPage DashboardItem="dashboardTabPage1">
+            <LayoutItem DashboardItem="pieMapDashboardItem2" Weight="0.51999369864889811" />
+          </LayoutTabPage>
+          <LayoutTabPage DashboardItem="dashboardTabPage2">
+            <LayoutItem DashboardItem="pieMapDashboardItem3" Weight="0.87056222036712227" />
+          </LayoutTabPage>
+          <LayoutTabPage Orientation="Vertical" DashboardItem="dashboardTabPage3">
+            <LayoutItem DashboardItem="pieMapDashboardItem1" Weight="0.87056222036712227" />
+          </LayoutTabPage>
+        </LayoutTabContainer>
+        <LayoutItem DashboardItem="chartDashboardItem1" Weight="1.0301849403110481" />
+        <LayoutItem DashboardItem="pieDashboardItem1" Weight="1.0301849403110481" />
+      </LayoutGroup>
+      <LayoutItem DashboardItem="pivotDashboardItem1" Weight="1.9725416068042516" />
+    </LayoutGroup>
+  </LayoutTree>
+</Dashboard>

@@ -1,0 +1,266 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Dashboard>
+  <Title Text="64 Zatvaranje RN" />
+  <DataSources>
+    <SqlDataSource Name="CustomSqlQuery" ComponentName="sqlDataSource1" DataProcessingMode="Client">
+      <Connection Name="Metal product - produkcija" FromAppConfig="true" />
+      <Query Type="CustomSqlQuery" Name="CustomSqlQuery">
+        <Sql>SELECT
+   rn.acKey AS ID_RN,
+   rn.anNo AS POZ,
+   rn.acDocType AS ID_odjela,
+   rn.adDate AS Datum_otvaranja,
+   rn.acConsignee AS Narucitelj,
+   rn.acIdent AS Ident,
+   rn.acUM AS EM,
+   rn.anPlanQty AS Planirana_količina,
+   rn.anProducedQty AS Izdana_količina,
+   rn.adSchedEndTime AS Krajnji_termin,
+   rn.acStatus AS STATUS,
+   rn.acLnkKey AS ID_narudžbe,
+   rn.anLnkNo AS VPOZ,
+   rn.adLnkDate AS VDATUM,
+   rn.adTimeIns AS DATUMZAP,
+   rn.anUserIns AS USERZAP,
+   rn.adTimeChg AS DATUMSPRE,
+   rn.anUserChg AS USERSPRE,
+   rn.acReceiver AS Primatelj,
+   rn.acDept AS ODDELEK,
+   rn.anQtySeries AS KOLICSARZA,
+   rn.anPlanWasteQty AS POTKALO,
+   rn.anWasteQty AS KALO,
+   rn.anFieldNA AS FIELDNA,
+   rn.adSchedStartTime AS Početni_termin,
+   rn.acReversal AS Storno,
+   rn.acStatusMF AS Status_RN,
+   rn.acParentWO AS Sljedeći_RN,
+   rn.anParentWOQty AS NPOTKOLICINA,
+   rn.anPlanScrapQty AS POTODPADEK,
+   rn.anScrapQty AS ODPADEK,
+   rn.acScrapIdent AS MSODPADEK,
+   rn.acBuyOrdID AS NAROCILO,
+   rn.adWOFinishDate AS Datum_zatvaranja,
+   rn.acReceiveFinished AS Konačno_preuzimanje,
+   rn.acPlanID AS PLANID,
+   rn.acName AS Naziv_identa,
+   rn.acCostDrv AS STRN,
+   rn.acCreateFrom AS NACINKREIRANJA,
+   rn.anSNTransfer AS SNPRENOS,
+   rn.anWorkTime AS Planirano_vrijeme_izrade,
+   rn.anThroTime AS THROTIME,
+   rn.anLnkPrStNo AS VKOSPOZ,
+   rn.acLnkPrStIdentParent AS VKOSIDENTNAD,
+   rn.anLnkPrStSubNo AS VKOSZAP,
+   rn.anLnkPrStNoParent AS VKOSNADZAP,
+   rn.acNote AS OPOMBA,
+	 DATEDIFF(DAY,rnw.DatumZadnjePromene,GETDATE()) AS Dana_od_zadnje_promjene,
+	 CASE
+			WHEN CHARINDEX('-',rn.acIdent)=0	THEN rn.acIdent
+																		ELSE LEFT(rn.acIdent,CHARINDEX('-',rn.acIdent)-1)
+		END AS Glavni_ident,
+		odj.Skraceno,
+		CASE
+			WHEN acStatusMF  = 'D'	THEN 'U Radu'
+			WHEN acStatusMF  = 'O'	THEN 'Otvoren'
+			WHEN acStatusMF  = 'R'	THEN 'Raspisan'
+			WHEN acStatusMF  = 'E'	THEN 'Djel. Zatvoren'
+			WHEN acStatusMF  = 'Z'	THEN 'Zatvoren'
+			WHEN acStatusMF  = 'P'	THEN 'Planiran'
+															ELSE acStatusMF 
+	END AS Status_Naziv
+FROM tHF_WOEx rn
+LEFT JOIN (SELECT acKey, MAX(adDate) AS DatumZadnjePromene FROM tHF_WOExItemWork GROUP BY acKey) rnw ON rnw.acKey=rn.ackey
+LEFT JOIN (SELECT acDocType, acShortDocName as Skraceno FROM vPA_SetDocType) odj ON odj.acDocType=rn.acDocType
+WHERE ISNULL(rn.acIdent,'')&lt;&gt;'' --AND rn.acStatusMF&lt;&gt;'Z'</Sql>
+      </Query>
+      <ConnectionOptions CloseConnection="true" />
+    </SqlDataSource>
+  </DataSources>
+  <Items>
+    <ListBox ComponentName="listBoxDashboardItem1" Name="Status" DataSource="sqlDataSource1" DataMember="CustomSqlQuery">
+      <DataItems>
+        <Dimension DataMember="Status_Naziv" DefaultId="DataItem0" />
+      </DataItems>
+      <FilterDimensions>
+        <Dimension DefaultId="DataItem0" />
+      </FilterDimensions>
+    </ListBox>
+    <ListBox ComponentName="listBoxDashboardItem2" Name="Odjel" DataSource="sqlDataSource1" DataMember="CustomSqlQuery">
+      <DataItems>
+        <Dimension DataMember="Skraceno" Name="Odjel skraćeno" DefaultId="DataItem0" />
+      </DataItems>
+      <FilterDimensions>
+        <Dimension DefaultId="DataItem0" />
+      </FilterDimensions>
+    </ListBox>
+    <Grid ComponentName="gridDashboardItem1" Name="Pregled radnih naloga" DataSource="sqlDataSource1" DataMember="CustomSqlQuery">
+      <DataItems>
+        <Dimension DataMember="ID_RN" DefaultId="DataItem0" />
+        <Dimension DataMember="Skraceno" DefaultId="DataItem1" />
+        <Dimension DataMember="Glavni_ident" DefaultId="DataItem2" />
+        <Dimension DataMember="Naziv_identa" DefaultId="DataItem3" />
+        <Measure DataMember="Dana_od_zadnje_promjene" DefaultId="DataItem4">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="Planirana_količina" DefaultId="DataItem5">
+          <NumericFormat FormatType="Number" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="Izdana_količina" DefaultId="DataItem6">
+          <NumericFormat FormatType="Number" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Dimension DataMember="Datum_otvaranja" DateTimeGroupInterval="DayMonthYear" DefaultId="DataItem7" />
+        <Dimension DataMember="Krajnji_termin" DateTimeGroupInterval="DayMonthYear" DefaultId="DataItem8" />
+        <Measure DataMember="Planirano_vrijeme_izrade" DefaultId="DataItem9">
+          <NumericFormat FormatType="Number" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Dimension DataMember="Status_Naziv" DefaultId="DataItem10" />
+        <Dimension DataMember="Status_RN" DefaultId="DataItem11" />
+        <Measure DataMember="Status_RN" SummaryType="Min" DefaultId="DataItem12" />
+      </DataItems>
+      <HiddenDimensions>
+        <Dimension DefaultId="DataItem11" />
+      </HiddenDimensions>
+      <HiddenMeasures>
+        <Measure DefaultId="DataItem12" />
+      </HiddenMeasures>
+      <FormatRules>
+        <GridItemFormatRule Name="Format Rule 1" DataItem="DataItem4" DataItemApplyTo="DataItem4">
+          <FormatConditionValue Condition="Less">
+            <AppearanceSettings AppearanceType="Green" />
+            <Value1 Type="System.Decimal" Value="14" />
+          </FormatConditionValue>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 2" DataItem="DataItem4" DataItemApplyTo="DataItem4">
+          <FormatConditionValue Condition="Between">
+            <AppearanceSettings AppearanceType="Yellow" />
+            <Value1 Type="System.Decimal" Value="13" />
+            <Value2 Type="System.Decimal" Value="21" />
+          </FormatConditionValue>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 3" DataItem="DataItem4" DataItemApplyTo="DataItem4">
+          <FormatConditionValue Condition="GreaterOrEqual">
+            <AppearanceSettings AppearanceType="Red" />
+            <Value1 Type="System.Decimal" Value="21" />
+          </FormatConditionValue>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 4" DataItem="DataItem10" DataItemApplyTo="DataItem0">
+          <FormatConditionValue>
+            <AppearanceSettings AppearanceType="PaleRed" />
+            <Value1 Type="System.String" Value="" />
+          </FormatConditionValue>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 5" DataItem="DataItem0" DataItemApplyTo="DataItem0">
+          <FormatConditionExpression Expression="[DataItem12] = 'E'">
+            <AppearanceSettings AppearanceType="PalePurple" />
+          </FormatConditionExpression>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 6" DataItem="DataItem10" DataItemApplyTo="DataItem10">
+          <FormatConditionExpression Expression="[DataItem12] = 'E'">
+            <AppearanceSettings AppearanceType="PalePurple" />
+          </FormatConditionExpression>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 7" DataItem="DataItem0" DataItemApplyTo="DataItem0">
+          <FormatConditionExpression Expression="[DataItem12] = 'D'">
+            <AppearanceSettings AppearanceType="PaleOrange" />
+          </FormatConditionExpression>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 8" DataItem="DataItem10" DataItemApplyTo="DataItem10">
+          <FormatConditionExpression Expression="[DataItem12] = 'D'">
+            <AppearanceSettings AppearanceType="PaleOrange" />
+          </FormatConditionExpression>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 9" DataItem="DataItem0" DataItemApplyTo="DataItem0">
+          <FormatConditionExpression Expression="[DataItem12] = 'R'">
+            <AppearanceSettings AppearanceType="PaleBlue" />
+          </FormatConditionExpression>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 10" DataItem="DataItem10" DataItemApplyTo="DataItem10">
+          <FormatConditionExpression Expression="[DataItem12] = 'R'">
+            <AppearanceSettings AppearanceType="PaleBlue" />
+          </FormatConditionExpression>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 11" DataItem="DataItem0" DataItemApplyTo="DataItem0">
+          <FormatConditionExpression Expression="[DataItem12] = 'O'">
+            <AppearanceSettings AppearanceType="PaleGreen" />
+          </FormatConditionExpression>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 12" DataItem="DataItem10" DataItemApplyTo="DataItem10">
+          <FormatConditionExpression Expression="[DataItem12] = 'O'">
+            <AppearanceSettings AppearanceType="PaleGreen" />
+          </FormatConditionExpression>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 13" DataItem="DataItem0" DataItemApplyTo="DataItem0">
+          <FormatConditionExpression Expression="[DataItem12] = 'Z'">
+            <AppearanceSettings AppearanceType="PaleRed" />
+          </FormatConditionExpression>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 14" DataItem="DataItem10" DataItemApplyTo="DataItem10">
+          <FormatConditionExpression Expression="[DataItem12] = 'Z'">
+            <AppearanceSettings AppearanceType="PaleRed" />
+          </FormatConditionExpression>
+        </GridItemFormatRule>
+      </FormatRules>
+      <GridColumns>
+        <GridDimensionColumn Name="Radni nalog">
+          <Dimension DefaultId="DataItem0" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Odjel">
+          <Dimension DefaultId="DataItem1" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Ident">
+          <Dimension DefaultId="DataItem2" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Naziv identa">
+          <Dimension DefaultId="DataItem3" />
+        </GridDimensionColumn>
+        <GridMeasureColumn Name="Dana">
+          <Measure DefaultId="DataItem4" />
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Planirano">
+          <Measure DefaultId="DataItem5" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Realizirano">
+          <Measure DefaultId="DataItem6" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridDimensionColumn Name="Otvoren">
+          <Dimension DefaultId="DataItem7" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Rok">
+          <Dimension DefaultId="DataItem8" />
+        </GridDimensionColumn>
+        <GridMeasureColumn Name="Virij.izrade">
+          <Measure DefaultId="DataItem9" />
+          <Totals>
+            <Total Type="Avg" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridDimensionColumn Name="Status RN">
+          <Dimension DefaultId="DataItem10" />
+        </GridDimensionColumn>
+      </GridColumns>
+      <GridOptions EnableBandedRows="true" />
+    </Grid>
+    <DateFilter ComponentName="dateFilterDashboardItem1" Name="Obdobje - krajnji termin" DataSource="sqlDataSource1" DataMember="CustomSqlQuery">
+      <DataItems>
+        <Dimension DataMember="Krajnji_termin" DateTimeGroupInterval="None" DefaultId="DataItem0" />
+      </DataItems>
+      <Dimension DefaultId="DataItem0" />
+    </DateFilter>
+  </Items>
+  <LayoutTree>
+    <LayoutGroup>
+      <LayoutGroup Orientation="Vertical" Weight="0.25023156181703915">
+        <LayoutItem DashboardItem="listBoxDashboardItem1" Weight="1.0874315472994736" />
+        <LayoutItem DashboardItem="listBoxDashboardItem2" Weight="0.91256845270052644" />
+        <LayoutItem DashboardItem="dateFilterDashboardItem1" Weight="1.8345323741007196" />
+      </LayoutGroup>
+      <LayoutItem DashboardItem="gridDashboardItem1" Weight="1.749768438182961" />
+    </LayoutGroup>
+  </LayoutTree>
+</Dashboard>

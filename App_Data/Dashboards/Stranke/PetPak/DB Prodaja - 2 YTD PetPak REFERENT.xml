@@ -60,6 +60,7 @@
 --			ProdajaEANKoda,
 				ProdajaTipKupca,
 				ProdajaReferent,
+				ProdajaKomercialist,
 --			ProdajaAcFieldSA,
 --			ProdajaAcFieldSB,
 --			ProdajaAcFieldSC,

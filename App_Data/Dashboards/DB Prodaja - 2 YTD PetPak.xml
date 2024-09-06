@@ -60,6 +60,7 @@
 --			ProdajaEANKoda,
 				ProdajaTipKupca,
     			ProdajaReferent,
+					ProdajaKomercialist,
 --			ProdajaAcFieldSA,
 --			ProdajaAcFieldSB,
 --			ProdajaAcFieldSC,
@@ -275,7 +276,7 @@
     <Grid ComponentName="gridDashboardItem3" Name="Realizacija po referentih - primerjalno" ParentContainer="dashboardTabPage5" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" VisibleDataFilterString="[DataItem8] &lt;&gt; 0 Or [DataItem9] &lt;&gt; 0" IsMasterFilterCrossDataSource="true">
       <InteractivityOptions MasterFilterMode="Multiple" />
       <DataItems>
-        <Dimension DataMember="ProdajaReferent" SortOrder="Descending" SortByMeasure="DataItem1" DefaultId="DataItem0" />
+        <Dimension DataMember="ProdajaKomercialist" SortOrder="Descending" SortByMeasure="DataItem1" DefaultId="DataItem0" />
         <Measure DataMember="YTDProdajnaVrednost" DefaultId="DataItem1">
           <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
         </Measure>
@@ -306,7 +307,7 @@
         <Dimension DefaultId="DataItem9" />
       </HiddenDimensions>
       <GridColumns>
-        <GridDimensionColumn Name="Referent" Weight="145.17444494789322">
+        <GridDimensionColumn Name="Komercialist" Weight="145.17444494789322">
           <Dimension DefaultId="DataItem0" />
         </GridDimensionColumn>
         <GridMeasureColumn Name="Količina tekoče leto" Weight="57.906660625283259">

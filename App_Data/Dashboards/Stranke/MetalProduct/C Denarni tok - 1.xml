@@ -1,0 +1,230 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Dashboard>
+  <Title Text="C Denarni tok - 1" />
+  <DataSources>
+    <SqlDataSource Name="CustomSqlQuery" ComponentName="sqlDataSource1" DataProcessingMode="Client">
+      <Connection Name="PetPak" FromAppConfig="true" />
+      <Query Type="CustomSqlQuery" Name="CustomSqlQuery">
+        <Sql>SELECT * FROM uTN_DB_DenarniTok;</Sql>
+      </Query>
+      <ConnectionOptions CloseConnection="true" />
+    </SqlDataSource>
+  </DataSources>
+  <Items>
+    <Grid ComponentName="gridDashboardItem1" Name="Stanje terjatev do Kupca / od Dobavitelja - SUMARNO" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" FilterString="[DataItem4] = 'Zapadlo' And [DataItem6] &lt;&gt; 'Denar'" IsMasterFilterCrossDataSource="true">
+      <InteractivityOptions MasterFilterMode="Multiple" />
+      <DataItems>
+        <Dimension DataMember="DTSubjekt" DefaultId="DataItem0" />
+        <Measure DataMember="DTDebit" DefaultId="DataItem1">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="DTKredit" DefaultId="DataItem2">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="DTSaldo" DefaultId="DataItem3">
+          <NumericFormat FormatType="Currency" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Dimension DataMember="DTStatus" DefaultId="DataItem4" />
+        <Measure DataMember="DTDniZamudeDokument" SummaryType="Average" DefaultId="DataItem5">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" />
+        </Measure>
+        <Dimension DataMember="DTVrstaSubjekta" DefaultId="DataItem6" />
+        <Measure DataMember="DTSaldo" FilterString="[DataItem8] &lt;= 7" DefaultId="DataItem7">
+          <NumericFormat FormatType="Currency" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Dimension DataMember="DTDniZamudeDokument" DefaultId="DataItem8" />
+        <Measure DataMember="DTSaldo" FilterString="[DataItem8] &gt; 7 And [DataItem8] &lt;= 15" DefaultId="DataItem9">
+          <NumericFormat FormatType="Currency" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="DTSaldo" FilterString="[DataItem8] &gt; 15 And [DataItem8] &lt;= 30" DefaultId="DataItem10">
+          <NumericFormat FormatType="Currency" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="DTSaldo" FilterString="[DataItem8] &gt; 30 And [DataItem8] &lt;= 60" DefaultId="DataItem11">
+          <NumericFormat FormatType="Currency" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="DTSaldo" FilterString="[DataItem8] &gt; 60" DefaultId="DataItem12">
+          <NumericFormat FormatType="Currency" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+      </DataItems>
+      <HiddenDimensions>
+        <Dimension DefaultId="DataItem4" />
+        <Dimension DefaultId="DataItem6" />
+        <Dimension DefaultId="DataItem8" />
+      </HiddenDimensions>
+      <GridColumns>
+        <GridDimensionColumn Name="Kupec / Dobavitelj">
+          <Dimension DefaultId="DataItem0" />
+        </GridDimensionColumn>
+        <GridMeasureColumn Name="Debit">
+          <Measure DefaultId="DataItem1" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Kredit">
+          <Measure DefaultId="DataItem2" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Saldo">
+          <Measure DefaultId="DataItem3" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="do 7 dni">
+          <Measure DefaultId="DataItem7" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="do 15 dni">
+          <Measure DefaultId="DataItem9" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="do 30 dni">
+          <Measure DefaultId="DataItem10" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="do 60 dni">
+          <Measure DefaultId="DataItem11" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="nad 60 dni">
+          <Measure DefaultId="DataItem12" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Povprečna zamuda dni">
+          <Measure DefaultId="DataItem5" />
+          <Totals>
+            <Total Type="Avg" />
+          </Totals>
+        </GridMeasureColumn>
+      </GridColumns>
+      <GridOptions />
+    </Grid>
+    <ListBox ComponentName="listBoxDashboardItem1" Name="Vrsta subjekta" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" FilterString="[DataItem0] &lt;&gt; 'Denar'">
+      <DataItems>
+        <Dimension DataMember="DTVrstaSubjekta" Name="Vrsta subjekta" DefaultId="DataItem0" />
+      </DataItems>
+      <FilterDimensions>
+        <Dimension DefaultId="DataItem0" />
+      </FilterDimensions>
+    </ListBox>
+    <ListBox ComponentName="listBoxDashboardItem2" Name="Status" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" FilterString="[DataItem1] &lt;&gt; 'Denar'">
+      <DataItems>
+        <Dimension DataMember="DTStatus" Name="Status" DefaultId="DataItem0" />
+        <Dimension DataMember="DTVrstaSubjekta" DefaultId="DataItem1" />
+      </DataItems>
+      <HiddenDimensions>
+        <Dimension DefaultId="DataItem1" />
+      </HiddenDimensions>
+      <FilterDimensions>
+        <Dimension DefaultId="DataItem0" />
+      </FilterDimensions>
+    </ListBox>
+    <Grid ComponentName="gridDashboardItem2" Name="Stanje po subjektih in dokumentih" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" FilterString="[DataItem4] &lt;&gt; 'Denar'" IsMasterFilterCrossDataSource="true">
+      <InteractivityOptions MasterFilterMode="Multiple" />
+      <DataItems>
+        <Dimension DataMember="DTSubjekt" DefaultId="DataItem0" />
+        <Dimension DataMember="DTDokument" DefaultId="DataItem1" />
+        <Dimension DataMember="DTDatumDokumenta" DateTimeGroupInterval="DayMonthYear" DefaultId="DataItem2" />
+        <Dimension DataMember="DTDatumZapadlosti" DateTimeGroupInterval="DayMonthYear" DefaultId="DataItem3" />
+        <Measure DataMember="DTDniZamudeDokument" SummaryType="Average" DefaultId="DataItem5" />
+        <Dimension DataMember="DTStatus" DefaultId="DataItem6" />
+        <Measure DataMember="DTSaldo" DefaultId="DataItem9">
+          <NumericFormat FormatType="Currency" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Dimension DataMember="DTVrstaSubjekta" DefaultId="DataItem4" />
+        <Dimension DataMember="DTDatumPoplačila" DateTimeGroupInterval="DayMonthYear" DefaultId="DataItem7" />
+        <Measure DataMember="DTDebit" DefaultId="DataItem8">
+          <NumericFormat FormatType="Currency" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="DTKredit" DefaultId="DataItem10">
+          <NumericFormat FormatType="Currency" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+      </DataItems>
+      <HiddenDimensions>
+        <Dimension DefaultId="DataItem4" />
+      </HiddenDimensions>
+      <GridColumns>
+        <GridDimensionColumn Name="Kupec / Dobavitelj">
+          <Dimension DefaultId="DataItem0" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Dokument">
+          <Dimension DefaultId="DataItem1" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Datum dokumenta">
+          <Dimension DefaultId="DataItem2" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Datum zapadlosti">
+          <Dimension DefaultId="DataItem3" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Datum plačila">
+          <Dimension DefaultId="DataItem7" />
+        </GridDimensionColumn>
+        <GridMeasureColumn Name="Dni zamude">
+          <Measure DefaultId="DataItem5" />
+          <Totals>
+            <Total Type="Avg" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridDimensionColumn>
+          <Dimension DefaultId="DataItem6" />
+        </GridDimensionColumn>
+        <GridMeasureColumn Name="Saldo">
+          <Measure DefaultId="DataItem9" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Debit">
+          <Measure DefaultId="DataItem8" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Kredit">
+          <Measure DefaultId="DataItem10" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+      </GridColumns>
+      <GridOptions />
+    </Grid>
+    <ListBox ComponentName="listBoxDashboardItem3" Name="Kupec / Dobavitelj" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" FilterString="[DataItem1] &lt;&gt; 'Denar'" IsMasterFilterCrossDataSource="true" EnableSearch="true">
+      <InteractivityOptions IgnoreMasterFilters="false" />
+      <DataItems>
+        <Dimension DataMember="DTSubjekt" Name="Kupec / Dobavitelj" DefaultId="DataItem0" />
+        <Dimension DataMember="DTVrstaSubjekta" DefaultId="DataItem1" />
+      </DataItems>
+      <HiddenDimensions>
+        <Dimension DefaultId="DataItem1" />
+      </HiddenDimensions>
+      <FilterDimensions>
+        <Dimension DefaultId="DataItem0" />
+      </FilterDimensions>
+    </ListBox>
+  </Items>
+  <LayoutTree>
+    <LayoutGroup Orientation="Vertical">
+      <LayoutGroup Weight="1.1243824704413896">
+        <LayoutItem DashboardItem="listBoxDashboardItem1" Weight="0.37614710612625329" />
+        <LayoutItem DashboardItem="listBoxDashboardItem2" Weight="0.49625827523766003" />
+        <LayoutItem DashboardItem="listBoxDashboardItem3" Weight="0.85055822591529062" />
+        <LayoutItem DashboardItem="gridDashboardItem1" Weight="3.6345870293365259" />
+      </LayoutGroup>
+      <LayoutItem DashboardItem="gridDashboardItem2" Weight="1.7156839379703426" />
+    </LayoutGroup>
+  </LayoutTree>
+</Dashboard>

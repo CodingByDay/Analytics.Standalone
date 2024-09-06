@@ -8,8 +8,8 @@
         <Sql>SELECT	--ProdajaPoslovniDogodekDobavnice,
 				ProdajaDatumDobavnice,
 --			ProdajaDatumDatumKupčevegaNaročila,
---			ProdajaŠtevilkaDobavnice,
---			ProdajaPozicija,
+			ProdajaŠtevilkaDobavnice,
+			ProdajaPozicija,
 				ProdajaDostavnoMesto,
 				ProdajaDostavnoMestoPošta,
 				ProdajaDostavnoMestoŠirina,
@@ -59,7 +59,8 @@
 --			ProdajaDobaviteljevaŠifra,
 --			ProdajaEANKoda,
 				ProdajaTipKupca,
-			    ProdajaReferent,
+				ProdajaReferent,
+				ProdajaKomercialist,
 --			ProdajaAcFieldSA,
 --			ProdajaAcFieldSB,
 --			ProdajaAcFieldSC,
@@ -400,7 +401,7 @@
       </GridColumns>
       <GridOptions EnableBandedRows="true" WordWrap="true" />
     </Grid>
-    <Grid ComponentName="gridDashboardItem1" Name="Realizacija po komercialistih 01.01.2023-31.12.2023 vs 01.01.2022-31.12.2022" ParentContainer="dashboardTabPage9" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true">
+    <Grid ComponentName="gridDashboardItem1" Name="Realizacija po komercijalistima 01.01.2023-31.12.2023 vs 01.01.2022-31.12.2022" ParentContainer="dashboardTabPage9" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true">
       <InteractivityOptions MasterFilterMode="Multiple" />
       <DataItems>
         <Measure DataMember="YTDProdajnaVrednost" DefaultId="DataItem1">
@@ -434,7 +435,7 @@
         <Dimension DefaultId="DataItem9" />
       </HiddenDimensions>
       <GridColumns>
-        <GridDimensionColumn Name="Komercialist" Weight="145.10647938377909">
+        <GridDimensionColumn Name="Komercijalist" Weight="145.10647938377909">
           <Dimension DefaultId="DataItem10" />
         </GridDimensionColumn>
         <GridMeasureColumn Name="Količina #DatumOd1-#DatumDo1" Weight="64.227458087902221">
@@ -466,13 +467,13 @@
           <TargetValue DefaultId="DataItem3" />
           <DeltaOptions ResultIndicationThreshold="1" ValueType="PercentVariation" />
         </GridDeltaColumn>
-        <GridMeasureColumn Name="RVC #DatumOd1-#DatumDo1" Weight="67.082011780697883">
+        <GridMeasureColumn Name="RUC #DatumOd1-#DatumDo1" Weight="67.082011780697883">
           <Measure DefaultId="DataItem5" />
           <Totals>
             <Total Type="Sum" />
           </Totals>
         </GridMeasureColumn>
-        <GridMeasureColumn Name="RVC #DatumOd2-#DatumDo2" Weight="75.0000000000001">
+        <GridMeasureColumn Name="RUC #DatumOd2-#DatumDo2" Weight="75.0000000000001">
           <Measure DefaultId="DataItem13" />
           <Totals>
             <Total Type="Sum" />

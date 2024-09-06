@@ -239,6 +239,10 @@ function regex_return(text_to_search) {
 
             function onItemCaptionToolbarUpdated(s, e) {
 
+                // Way to solve the issue. Save the original string with the parameters somewhere
+                // and then before save return it from that object in that way changed value will
+                // only appear to the user.
+
                 var list = dashboard.GetParameters().GetParameterList();
                 setCookie("params", JSON.stringify(list), 365);
                 if (list.length > 0) {
@@ -280,7 +284,6 @@ function regex_return(text_to_search) {
 
                 var parName = []
                 var collection = dashboard.GetParameters().GetParameterList();
-                console.log(args.ItemName + "Item name");
                 if (args.ItemName.startsWith("gridDashboardItem") && collection.length > 0) {
                     for (var j = 0; j < collection.length; j++) {
                         initialPayload.push(dashboard.GetParameters().GetParameterList()[j].Value);
@@ -893,7 +896,7 @@ function regex_return(text_to_search) {
                           ItemWidgetUpdated="updatecustomizeWidgets"   
                           DashboardEndUpdate="onDashboardEndUpdate"
                           DashboardInitialized="correctTheLoadingState" 
-                       
+                          
                               />
     </dx:ASPxDashboard>
 </div>

@@ -1,0 +1,269 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Dashboard>
+  <Title Text="62 OEE" />
+  <DataSources>
+    <SqlDataSource Name="CustomSqlQuery" ComponentName="sqlDataSource1" DataProcessingMode="Client">
+      <Connection Name="Metal product - produkcija" FromAppConfig="true" />
+      <Query Type="CustomSqlQuery" Name="CustomSqlQuery">
+        <Sql>SELECT
+    WOEI.acKeyView as Radni_Nalog,
+    isnull(WOEIW.acWorker,'') as Radnik,
+    format(WOEIW.adDate,'dd.MM.yyyy') as Datum,
+    WOEIW.adDate AS Dat_Prometa,
+		DATEPART(YEAR,WOEIW.adDate) AS Leto,
+		DATEPART(QUARTER,WOEIW.adDate) AS Kvartal,
+		DATEPART(MONTH,WOEIW.adDate) AS Mesec,
+		DATEPART(DAY,WOEIW.adDate) AS Dan,
+    CASE 
+    	when WOEIW.unShift is not null then WOEIW.unShift
+    	else 0
+    END as Smjena,
+    WOEIW.anqty as Dobri,
+    WOEIW.anScrapPcs as Loši,
+    WOEIW.anTime ,
+    WOEIR.anQty2 as Tpz0,
+    WOEIW.anTpf  as Tpz,
+    WOEIR.anQty1 as Vrijeme_kom_Plan,
+    WOEIR.anQty1 * WOEIW.anQty as Vrijeme_Plan,
+    WOEIW.anTime as Vrijeme_radnik0,
+    WOEIW.anTn as Vrijeme_radnik,
+    WOEIW.anHoldUp as Vrijeme_Zastoj,
+    WOEIW.acResursID as Resurs,
+		ISNULL(wo.GAP,'') AS GAP,
+		ISNULL(wo.GAP_Naziv,'') AS GAP_Naziv,
+		ISNULL(wo.Odjel,'') AS Odjel,
+		ISNULL(wo.Vrsta,'') AS Vrsta
+from
+	tHF_WOExItemWork WOEIW
+	LEFT JOIN tHF_WOExItem WOEI on WOEIW.acKey = WOEI.acKey and WOEIW.anNo = WOEI.anNo
+	LEFT JOIN tHF_WOExItemResources WOEIR on WOEI.anQId = WOEIR.anWOExItemQId
+	LEFT JOIN (SELECT sw.acWorker as Radnik, sw.acJob as Posao, sw.acDept as Odjel,	'GAP' + ss.acFieldSJ as GAP, ss.acFieldSI as Vrsta, trim('GAP ' + SUBSTRING(sw.acDept,7,30)) as GAP_Naziv
+									FROM vHF_SetResursJobWorkers sw
+									JOIN tHE_SetSubj ss on ss.acSubject = sw.acWorker 
+									WHERE 1 = 1 and sw.acActive = 'T') wo ON wo.Radnik=WOEIW.acWorker
+WHERE 1=1
+	  and SUBSTRING(WOEIW.acKey,3,4) &lt;&gt; '6K00'
+      and WOEIR.anPriority = 0</Sql>
+      </Query>
+      <ConnectionOptions CloseConnection="true" />
+      <CalculatedFields>
+        <CalculatedField Name="Availability" Expression="iif(sum([Vrijeme_radnik])=0,0,(1-( Sum([Vrijeme_Zastoj]) / sum([Vrijeme_radnik]) )))" DataType="Auto" DataMember="CustomSqlQuery" />
+        <CalculatedField Name="OEE" Expression="[Availability] * [Performance] * [Quality]" DataType="Auto" DataMember="CustomSqlQuery" />
+        <CalculatedField Name="Performance" Expression="iif(( sum([anTime]) - sum([Tpz]))=0,0,sum([Vrijeme_Plan]) / ( sum([anTime]) - sum([Tpz])))" DataType="Auto" DataMember="CustomSqlQuery" />
+        <CalculatedField Name="Quality" Expression="iif((SUM([Dobri])+SUM([Loši]))=0,0,sum([Dobri]) / (SUM([Dobri])+SUM([Loši])))" DataType="Auto" DataMember="CustomSqlQuery" />
+      </CalculatedFields>
+    </SqlDataSource>
+  </DataSources>
+  <Items>
+    <ListBox ComponentName="listBoxDashboardItem1" Name="GAP" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" EnableSearch="true">
+      <InteractivityOptions IgnoreMasterFilters="false" />
+      <DataItems>
+        <Dimension DataMember="GAP" Name="GAP" DefaultId="DataItem0" />
+      </DataItems>
+      <FilterDimensions>
+        <Dimension DefaultId="DataItem0" />
+      </FilterDimensions>
+    </ListBox>
+    <ListBox ComponentName="listBoxDashboardItem2" Name="Odjel" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" EnableSearch="true">
+      <InteractivityOptions IgnoreMasterFilters="false" />
+      <DataItems>
+        <Dimension DataMember="Odjel" Name="Odjel" DefaultId="DataItem0" />
+      </DataItems>
+      <FilterDimensions>
+        <Dimension DefaultId="DataItem0" />
+      </FilterDimensions>
+    </ListBox>
+    <ListBox ComponentName="listBoxDashboardItem3" Name="List Box 1" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" />
+    <ListBox ComponentName="listBoxDashboardItem4" Name="Radnik" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" EnableSearch="true">
+      <InteractivityOptions IgnoreMasterFilters="false" />
+      <DataItems>
+        <Dimension DataMember="Radnik" DefaultId="DataItem0" />
+      </DataItems>
+      <FilterDimensions>
+        <Dimension DefaultId="DataItem0" />
+      </FilterDimensions>
+    </ListBox>
+    <ListBox ComponentName="listBoxDashboardItem5" Name="Vrsta" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" EnableSearch="true">
+      <InteractivityOptions IgnoreMasterFilters="false" />
+      <DataItems>
+        <Dimension DataMember="Vrsta" Name="Vrsta" DefaultId="DataItem0" />
+      </DataItems>
+      <FilterDimensions>
+        <Dimension DefaultId="DataItem0" />
+      </FilterDimensions>
+    </ListBox>
+    <DateFilter ComponentName="dateFilterDashboardItem1" Name="Datum" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true">
+      <InteractivityOptions IgnoreMasterFilters="false" />
+      <DataItems>
+        <Dimension DataMember="Dat_Prometa" Name="Datum" DateTimeGroupInterval="None" DefaultId="DataItem0" />
+      </DataItems>
+      <Dimension DefaultId="DataItem0" />
+    </DateFilter>
+    <Pivot ComponentName="pivotDashboardItem1" Name="Pivot 1" ShowCaption="false" DataSource="sqlDataSource1" DataMember="CustomSqlQuery">
+      <DataItems>
+        <Measure DataMember="Vrijeme_Plan" Name="Vrijeme plan" DefaultId="DataItem0">
+          <NumericFormat FormatType="Number" Precision="3" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="Tpz" Name="TPZ" DefaultId="DataItem1">
+          <NumericFormat FormatType="Number" Precision="3" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="Vrijeme_radnik" Name="Vrijeme radnik" DefaultId="DataItem2">
+          <NumericFormat FormatType="Number" Precision="3" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="Vrijeme_Zastoj" Name="Zastoj" DefaultId="DataItem3">
+          <NumericFormat FormatType="Number" Precision="3" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Dimension DataMember="GAP_Naziv" Name="GAP naziv" DefaultId="DataItem4" />
+        <Dimension DataMember="Radnik" DefaultId="DataItem5" />
+        <Dimension DataMember="Datum" DefaultId="DataItem6" />
+        <Dimension DataMember="Radni_Nalog" Name="Radni nalog" DefaultId="DataItem7" />
+        <Measure DataMember="Availability" Name="Availability" DefaultId="DataItem8">
+          <NumericFormat FormatType="Number" Precision="3" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="Performance" DefaultId="DataItem9">
+          <NumericFormat FormatType="Number" Precision="3" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="Quality" DefaultId="DataItem10">
+          <NumericFormat FormatType="Number" Precision="3" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="OEE" Name="OEE" DefaultId="DataItem11">
+          <NumericFormat FormatType="Number" Precision="3" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="Dobri" Name="Dobri" DefaultId="DataItem12">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="Loši" Name="Loši" DefaultId="DataItem13">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+      </DataItems>
+      <FormatRules>
+        <PivotItemFormatRule Name="Format Rule 1" Enabled="false" DataItem="DataItem8" DataItemApplyTo="DataItem8" IntersectionLevelMode="AllLevels">
+          <FormatConditionExpression Expression="[DataItem8] &gt;= 0 And [DataItem8] &lt; '0.5'">
+            <AppearanceSettings AppearanceType="Red" />
+          </FormatConditionExpression>
+          <PivotItemFormatRuleLevel />
+        </PivotItemFormatRule>
+        <PivotItemFormatRule Name="Format Rule 2" DataItem="DataItem8" DataItemApplyTo="DataItem8" IntersectionLevelMode="AllLevels">
+          <FormatConditionExpression Expression="[DataItem8] &gt;= 0.5 And [DataItem8] &lt; 0.8">
+            <AppearanceSettings AppearanceType="Yellow" />
+          </FormatConditionExpression>
+          <PivotItemFormatRuleLevel />
+        </PivotItemFormatRule>
+        <PivotItemFormatRule Name="Format Rule 3" DataItem="DataItem8" DataItemApplyTo="DataItem8" IntersectionLevelMode="AllLevels">
+          <FormatConditionExpression Expression="[DataItem8] &gt;= 0.8 And [DataItem8] &lt; 1.1">
+            <AppearanceSettings AppearanceType="Green" />
+          </FormatConditionExpression>
+          <PivotItemFormatRuleLevel />
+        </PivotItemFormatRule>
+        <PivotItemFormatRule Name="Format Rule 4" DataItem="DataItem8" DataItemApplyTo="DataItem8" IntersectionLevelMode="AllLevels">
+          <FormatConditionExpression Expression="[DataItem8] &gt;= 1.1 And [DataItem8] &lt; 999">
+            <AppearanceSettings AppearanceType="Purple" />
+          </FormatConditionExpression>
+          <PivotItemFormatRuleLevel />
+        </PivotItemFormatRule>
+        <PivotItemFormatRule Name="Format Rule 5" DataItem="DataItem9" DataItemApplyTo="DataItem9" IntersectionLevelMode="AllLevels">
+          <FormatConditionExpression Expression="[DataItem9] &gt;= 0 And [DataItem9] &lt; 0.5">
+            <AppearanceSettings AppearanceType="Red" />
+          </FormatConditionExpression>
+          <PivotItemFormatRuleLevel />
+        </PivotItemFormatRule>
+        <PivotItemFormatRule Name="Format Rule 6" DataItem="DataItem9" DataItemApplyTo="DataItem9" IntersectionLevelMode="AllLevels">
+          <FormatConditionExpression Expression="[DataItem9] &gt;= 0.5 And [DataItem9] &lt; 0.8">
+            <AppearanceSettings AppearanceType="Yellow" />
+          </FormatConditionExpression>
+          <PivotItemFormatRuleLevel />
+        </PivotItemFormatRule>
+        <PivotItemFormatRule Name="Format Rule 7" DataItem="DataItem9" DataItemApplyTo="DataItem9" IntersectionLevelMode="AllLevels">
+          <FormatConditionExpression Expression="[DataItem9] &gt;= 0.8 And [DataItem9] &lt; 1.1">
+            <AppearanceSettings AppearanceType="Green" />
+          </FormatConditionExpression>
+          <PivotItemFormatRuleLevel />
+        </PivotItemFormatRule>
+        <PivotItemFormatRule Name="Format Rule 8" DataItem="DataItem9" DataItemApplyTo="DataItem9" IntersectionLevelMode="AllLevels">
+          <FormatConditionExpression Expression="[DataItem9] &gt;= 1.2 And [DataItem9] &lt; 999">
+            <AppearanceSettings AppearanceType="Purple" />
+          </FormatConditionExpression>
+          <PivotItemFormatRuleLevel />
+        </PivotItemFormatRule>
+        <PivotItemFormatRule Name="Format Rule 9" DataItem="DataItem10" DataItemApplyTo="DataItem10" IntersectionLevelMode="AllLevels">
+          <FormatConditionExpression Expression="[DataItem10] &gt;= 0 And [DataItem10] &lt; 0.6">
+            <AppearanceSettings AppearanceType="Red" />
+          </FormatConditionExpression>
+          <PivotItemFormatRuleLevel />
+        </PivotItemFormatRule>
+        <PivotItemFormatRule Name="Format Rule 10" DataItem="DataItem10" DataItemApplyTo="DataItem10" IntersectionLevelMode="AllLevels">
+          <FormatConditionExpression Expression="[DataItem10] &gt;= 0.6 And [DataItem10] &lt; 0.8">
+            <AppearanceSettings AppearanceType="Yellow" />
+          </FormatConditionExpression>
+          <PivotItemFormatRuleLevel />
+        </PivotItemFormatRule>
+        <PivotItemFormatRule Name="Format Rule 11" DataItem="DataItem10" DataItemApplyTo="DataItem10" IntersectionLevelMode="AllLevels">
+          <FormatConditionExpression Expression="[DataItem10] &gt;= 0.8 And [DataItem10] &lt; 1.1">
+            <AppearanceSettings AppearanceType="Green" />
+          </FormatConditionExpression>
+          <PivotItemFormatRuleLevel />
+        </PivotItemFormatRule>
+        <PivotItemFormatRule Name="Format Rule 12" DataItem="DataItem8" DataItemApplyTo="DataItem8">
+          <FormatConditionExpression>
+            <AppearanceSettings AppearanceType="PaleRed" />
+          </FormatConditionExpression>
+          <PivotItemFormatRuleLevel />
+        </PivotItemFormatRule>
+        <PivotItemFormatRule Name="Format Rule 13" DataItem="DataItem11" DataItemApplyTo="DataItem11" IntersectionLevelMode="AllLevels">
+          <FormatConditionExpression Expression="[DataItem11] &gt;= 0 And [DataItem11] &lt; 0.6">
+            <AppearanceSettings AppearanceType="Red" />
+          </FormatConditionExpression>
+          <PivotItemFormatRuleLevel />
+        </PivotItemFormatRule>
+        <PivotItemFormatRule Name="Format Rule 14" DataItem="DataItem11" DataItemApplyTo="DataItem11" IntersectionLevelMode="AllLevels">
+          <FormatConditionExpression Expression="[DataItem11] &gt;= 0.6 And [DataItem11] &lt; 0.8">
+            <AppearanceSettings AppearanceType="Yellow" />
+          </FormatConditionExpression>
+          <PivotItemFormatRuleLevel />
+        </PivotItemFormatRule>
+        <PivotItemFormatRule Name="Format Rule 15" DataItem="DataItem11" DataItemApplyTo="DataItem11" IntersectionLevelMode="AllLevels">
+          <FormatConditionExpression Expression="[DataItem11] &gt;= 0.8 And [DataItem11] &lt; 1.1">
+            <AppearanceSettings AppearanceType="Green" />
+          </FormatConditionExpression>
+          <PivotItemFormatRuleLevel />
+        </PivotItemFormatRule>
+      </FormatRules>
+      <Rows>
+        <Row DefaultId="DataItem4" />
+        <Row DefaultId="DataItem5" />
+        <Row DefaultId="DataItem6" />
+        <Row DefaultId="DataItem7" />
+      </Rows>
+      <Values>
+        <Value DefaultId="DataItem0" />
+        <Value DefaultId="DataItem1" />
+        <Value DefaultId="DataItem2" />
+        <Value DefaultId="DataItem3" />
+        <Value DefaultId="DataItem8" />
+        <Value DefaultId="DataItem9" />
+        <Value DefaultId="DataItem10" />
+        <Value DefaultId="DataItem11" />
+        <Value DefaultId="DataItem12" />
+        <Value DefaultId="DataItem13" />
+      </Values>
+    </Pivot>
+  </Items>
+  <LayoutTree>
+    <LayoutGroup>
+      <LayoutGroup Orientation="Vertical">
+        <LayoutGroup Weight="0.51990049751243783">
+          <LayoutItem DashboardItem="listBoxDashboardItem4" />
+          <LayoutItem DashboardItem="listBoxDashboardItem5" />
+          <LayoutItem DashboardItem="dateFilterDashboardItem1" />
+        </LayoutGroup>
+        <LayoutGroup Weight="1.4800995024875623">
+          <LayoutGroup Orientation="Vertical" Weight="0.21981508914021566">
+            <LayoutItem DashboardItem="listBoxDashboardItem2" Weight="1.0630879911455449" />
+            <LayoutItem DashboardItem="listBoxDashboardItem1" Weight="0.93691200885445514" />
+          </LayoutGroup>
+          <LayoutItem DashboardItem="pivotDashboardItem1" Weight="1.7170969197142396" />
+        </LayoutGroup>
+      </LayoutGroup>
+    </LayoutGroup>
+  </LayoutTree>
+</Dashboard>

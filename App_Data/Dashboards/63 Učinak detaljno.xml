@@ -1,0 +1,287 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Dashboard>
+  <Title Text="63 Učinak detaljno" />
+  <DataSources>
+    <SqlDataSource Name="CustomSqlQuery" ComponentName="sqlDataSource1" DataProcessingMode="Client">
+      <Connection Name="Metal product - produkcija" FromAppConfig="true" />
+      <Query Type="CustomSqlQuery" Name="CustomSqlQuery">
+        <Sql>SELECT	woiw.*,
+				CASE
+						WHEN anTime&gt;0	THEN anQty/anTime
+													ELSE 0
+				END AS IzradjenoKomH,
+				DATEPART(WEEK,adDate)	AS WEEK_adDate,
+				SUBSTRING(ackey,1,2)+'-'+SUBSTRING(acKey,3,4)+'-'+SUBSTRING(acKey,8,6)+'-'+CONVERT(char,anNo)	AS IDRN_brOp,
+				ISNULL(
+				CASE
+						WHEN woi.NormativKomH&gt;0 AND woiw.anTime&gt;0 THEN IIF(anTime&gt;0,(anQty/anTime)/woi.NormativKomH,0)
+																											ELSE 1
+				END,1) AS Ucinak,
+				ISNULL(rw.acDept,'') AS Odjel,
+				NormativKomH,
+				Opis,
+				wo.Ident AS Ident,
+				wo.NazivIdenta AS NazivIdenta
+FROM PA_METAL_PRODUCT.dbo.tHF_WOExItemWork woiw
+LEFT JOIN (SELECT SUBSTRING(ackey,1,2)+'-'+SUBSTRING(acKey,3,4)+'-'+SUBSTRING(acKey,8,6)+'-'+CONVERT(char,anNo)	AS IDRN_brOp,
+									CASE WHEN anQty1=0	THEN 0 ELSE 1/anQty1 	END AS NormativKomH,
+									acDescr AS Opis FROM tHF_WOExItem) woi ON woi.IDRN_brOp=SUBSTRING(ackey,1,2)+'-'+SUBSTRING(acKey,3,4)+'-'+SUBSTRING(acKey,8,6)+'-'+CONVERT(char,anNo)	-- tole je iz PROIZPOZ tabele
+LEFT JOIN (SELECT SUBSTRING(ackey,1,2)+'-'+SUBSTRING(acKey,3,4)+'-'+SUBSTRING(acKey,8,6)	AS IDRN,
+									acIdent AS Ident,
+									acName AS NazivIdenta FROM tHF_WOEx) wo ON wo.IDRN=SUBSTRING(ackey,1,2)+'-'+SUBSTRING(acKey,3,4)+'-'+SUBSTRING(acKey,8,6)	-- tole je iz PROIZ tabele (RADNINALOZI)
+LEFT JOIN vHF_setResursJobWorkers rw ON rw.acWorker=woiw.acWorker AND rw.acActive='t'</Sql>
+      </Query>
+      <ConnectionOptions CloseConnection="true" />
+      <CalculatedFields>
+        <CalculatedField Name="UkupnoVrijeme" Expression="sum([anTime])+sum([anHoldUp])" DataType="Auto" DataMember="CustomSqlQuery" />
+        <CalculatedField Name="AVGUcinak" Expression="Avg([Ucinak])" DataType="Auto" DataMember="CustomSqlQuery" />
+      </CalculatedFields>
+    </SqlDataSource>
+  </DataSources>
+  <Items>
+    <Grid ComponentName="gridDashboardItem1" Name="Pregled po radnicima" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" FilterString="Not(IsNullOrEmpty([DataItem0]))">
+      <DataItems>
+        <Dimension DataMember="acWorker" DefaultId="DataItem0" />
+        <Measure DataMember="UkupnoVrijeme" DefaultId="DataItem1">
+          <NumericFormat FormatType="Number" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="anTime" DefaultId="DataItem2">
+          <NumericFormat FormatType="Number" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="anHoldUp" DefaultId="DataItem3">
+          <NumericFormat FormatType="Number" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="AVGUcinak" DefaultId="DataItem4">
+          <NumericFormat FormatType="Number" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="anQty" DefaultId="DataItem5">
+          <NumericFormat FormatType="Number" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="anQty" SummaryType="Count" DefaultId="DataItem6">
+          <NumericFormat FormatType="Number" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+      </DataItems>
+      <FormatRules>
+        <GridItemFormatRule Name="Format Rule 1" DataItem="DataItem4" DataItemApplyTo="DataItem4">
+          <FormatConditionExpression Expression="[DataItem4] &gt;= 0 And [DataItem4] &lt; 0.5">
+            <AppearanceSettings AppearanceType="Red" />
+          </FormatConditionExpression>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 2" DataItem="DataItem4" DataItemApplyTo="DataItem4">
+          <FormatConditionExpression Expression="[DataItem4] &gt;= 0.5 And [DataItem4] &lt; 0.8">
+            <AppearanceSettings AppearanceType="Orange" />
+          </FormatConditionExpression>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 3" DataItem="DataItem4" DataItemApplyTo="DataItem4">
+          <FormatConditionExpression Expression="[DataItem4] &gt;= 0.8 And [DataItem4] &lt; 0.95">
+            <AppearanceSettings AppearanceType="Yellow" />
+          </FormatConditionExpression>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 4" DataItem="DataItem4" DataItemApplyTo="DataItem4">
+          <FormatConditionExpression Expression="[DataItem4] &gt;= 0.95">
+            <AppearanceSettings AppearanceType="Green" />
+          </FormatConditionExpression>
+        </GridItemFormatRule>
+      </FormatRules>
+      <GridColumns>
+        <GridDimensionColumn Name="Radnik">
+          <Dimension DefaultId="DataItem0" />
+        </GridDimensionColumn>
+        <GridMeasureColumn Name="Vrijeme">
+          <Measure DefaultId="DataItem1" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Rad">
+          <Measure DefaultId="DataItem2" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Zastoj">
+          <Measure DefaultId="DataItem3" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Učinak">
+          <Measure DefaultId="DataItem4" />
+          <Totals>
+            <Total Type="Avg" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="OK komada">
+          <Measure DefaultId="DataItem5" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="NOK komada">
+          <Measure DefaultId="DataItem6" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+      </GridColumns>
+      <GridOptions />
+    </Grid>
+    <DateFilter ComponentName="dateFilterDashboardItem1" Name="Razdoblje" DataSource="sqlDataSource1" DataMember="CustomSqlQuery">
+      <DataItems>
+        <Dimension DataMember="adDate" Name="Obdobje" DateTimeGroupInterval="None" DefaultId="DataItem0" />
+      </DataItems>
+      <Dimension DefaultId="DataItem0" />
+      <DateTimePeriods>
+        <DateTimePeriod Name="Prošli tjedan">
+          <StartLimit>
+            <FlowDateTimePeriodLimit Interval="Week" />
+          </StartLimit>
+          <EndLimit>
+            <FlowDateTimePeriodLimit Interval="Week" />
+          </EndLimit>
+        </DateTimePeriod>
+        <DateTimePeriod Name="Prošli mjesec">
+          <StartLimit>
+            <FlowDateTimePeriodLimit Interval="Month" Offset="-1" />
+          </StartLimit>
+          <EndLimit>
+            <FlowDateTimePeriodLimit Interval="Month" />
+          </EndLimit>
+        </DateTimePeriod>
+        <DateTimePeriod Name="Prošli kvartal">
+          <StartLimit>
+            <FlowDateTimePeriodLimit Interval="Quarter" Offset="-1" />
+          </StartLimit>
+          <EndLimit>
+            <FlowDateTimePeriodLimit Interval="Quarter" />
+          </EndLimit>
+        </DateTimePeriod>
+        <DateTimePeriod Name="Trenutna godina">
+          <StartLimit>
+            <FlowDateTimePeriodLimit />
+          </StartLimit>
+          <EndLimit>
+            <FlowDateTimePeriodLimit Offset="1" />
+          </EndLimit>
+        </DateTimePeriod>
+        <DateTimePeriod Name="Proteklih 11 dana">
+          <StartLimit>
+            <FlowDateTimePeriodLimit Interval="Day" Offset="-10" />
+          </StartLimit>
+          <EndLimit>
+            <FlowDateTimePeriodLimit Interval="Day" Offset="1" />
+          </EndLimit>
+        </DateTimePeriod>
+      </DateTimePeriods>
+    </DateFilter>
+    <ListBox ComponentName="listBoxDashboardItem1" Name="Odjel " DataSource="sqlDataSource1" DataMember="CustomSqlQuery" EnableSearch="true">
+      <DataItems>
+        <Dimension DataMember="Odjel" Name="Odjel" DefaultId="DataItem0" />
+      </DataItems>
+      <FilterDimensions>
+        <Dimension DefaultId="DataItem0" />
+      </FilterDimensions>
+    </ListBox>
+    <Grid ComponentName="gridDashboardItem2" Name="Pregled po radnim nalozima" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" FilterString="Not(IsNullOrEmpty([DataItem0]))">
+      <DataItems>
+        <Dimension DataMember="acWorker" DefaultId="DataItem0" />
+        <Dimension DataMember="IDRN_brOp" DefaultId="DataItem2" />
+        <Dimension DataMember="Ident" DefaultId="DataItem3" />
+        <Dimension DataMember="NazivIdenta" DefaultId="DataItem4" />
+        <Measure DataMember="anTime" DefaultId="DataItem5">
+          <NumericFormat FormatType="Number" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="anHoldUp" DefaultId="DataItem6">
+          <NumericFormat FormatType="Number" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="anQty" DefaultId="DataItem7">
+          <NumericFormat FormatType="Number" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="anScrapPcs" DefaultId="DataItem8" />
+        <Measure DataMember="IzradjenoKomH" SummaryType="Average" DefaultId="DataItem9">
+          <NumericFormat FormatType="Number" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="NormativKomH" DefaultId="DataItem10">
+          <NumericFormat FormatType="Number" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Dimension DataMember="Opis" DefaultId="DataItem11" />
+        <Measure DataMember="Ucinak" SummaryType="Average" DefaultId="DataItem1">
+          <NumericFormat FormatType="Number" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+      </DataItems>
+      <FormatRules>
+        <GridItemFormatRule Name="Format Rule 1" DataItem="DataItem1" DataItemApplyTo="DataItem1">
+          <FormatConditionExpression Expression="[DataItem1] &gt;= 0 And [DataItem1] &lt; 0.2">
+            <AppearanceSettings AppearanceType="Red" />
+          </FormatConditionExpression>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 2" DataItem="DataItem1" DataItemApplyTo="DataItem1">
+          <FormatConditionExpression Expression="[DataItem1] &gt;= 0.2 And [DataItem1] &lt; 0.5">
+            <AppearanceSettings AppearanceType="Orange" />
+          </FormatConditionExpression>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 3" DataItem="DataItem1" DataItemApplyTo="DataItem1">
+          <FormatConditionExpression Expression="[DataItem1] &gt;= 0.5 And [DataItem1] &lt; 0.8">
+            <AppearanceSettings AppearanceType="Yellow" />
+          </FormatConditionExpression>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 4" DataItem="DataItem1" DataItemApplyTo="DataItem1">
+          <FormatConditionExpression Expression="[DataItem1] &gt;= 0.8">
+            <AppearanceSettings AppearanceType="Green" />
+          </FormatConditionExpression>
+        </GridItemFormatRule>
+      </FormatRules>
+      <GridColumns>
+        <GridDimensionColumn Name="Radnik">
+          <Dimension DefaultId="DataItem0" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Radni nalog">
+          <Dimension DefaultId="DataItem2" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Ident">
+          <Dimension DefaultId="DataItem3" />
+        </GridDimensionColumn>
+        <GridMeasureColumn Name="Učinak">
+          <Measure DefaultId="DataItem1" />
+        </GridMeasureColumn>
+        <GridDimensionColumn Name="Naziv identa">
+          <Dimension DefaultId="DataItem4" />
+        </GridDimensionColumn>
+        <GridMeasureColumn Name="Vrijeme">
+          <Measure DefaultId="DataItem5" />
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Zastoj">
+          <Measure DefaultId="DataItem6" />
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Dobrih">
+          <Measure DefaultId="DataItem7" />
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Loših">
+          <Measure DefaultId="DataItem8" />
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Plan. kom/H">
+          <Measure DefaultId="DataItem10" />
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Odr. kom/H">
+          <Measure DefaultId="DataItem9" />
+        </GridMeasureColumn>
+        <GridDimensionColumn Name="Opis">
+          <Dimension DefaultId="DataItem11" />
+        </GridDimensionColumn>
+      </GridColumns>
+      <GridOptions EnableBandedRows="true" />
+    </Grid>
+  </Items>
+  <LayoutTree>
+    <LayoutGroup Orientation="Vertical">
+      <LayoutGroup Weight="1.0223880597014925">
+        <LayoutGroup Orientation="Vertical" Weight="0.34698395130049808">
+          <LayoutItem DashboardItem="dateFilterDashboardItem1" Weight="0.34698395130049808" />
+          <LayoutItem DashboardItem="listBoxDashboardItem1" Weight="0.34698395130049808" />
+        </LayoutGroup>
+        <LayoutItem DashboardItem="gridDashboardItem1" Weight="1.6530160486995018" />
+      </LayoutGroup>
+      <LayoutItem DashboardItem="gridDashboardItem2" Weight="0.97761194029850751" />
+    </LayoutGroup>
+  </LayoutTree>
+</Dashboard>

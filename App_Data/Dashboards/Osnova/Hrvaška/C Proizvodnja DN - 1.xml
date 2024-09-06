@@ -1,0 +1,296 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Dashboard>
+  <Title Text="C Proizvodnja RN - 1" />
+  <DataSources>
+    <SqlDataSource Name="uTN_DB_ProizvodnjaDN1" ComponentName="sqlDataSource1" DataProcessingMode="Client">
+      <Connection Name="Soltec" FromAppConfig="true" />
+      <Query Type="CustomSqlQuery" Name="uTN_DB_ProizvodnjaDN1">
+        <Sql>select * from dbo.uTN_DB_ProizvodnjaDN1;</Sql>
+      </Query>
+      <ConnectionOptions CloseConnection="true" />
+      <CalculatedFields>
+        <CalculatedField Name="ŠtveiloVsehNalogov" Expression="CountDistinct([DNPodrejenDN])" DataType="Auto" DataMember="uTN_DB_ProizvodnjaDN1" />
+        <CalculatedField Name="ŠteviloZaprtihNalogov" Expression="sum(Iif([DNPodrejenStatus]='Zaprt',1,0))" DataType="Auto" DataMember="uTN_DB_ProizvodnjaDN1" />
+        <CalculatedField Name="Količnik" Expression="[ŠteviloZaprtihNalogov]/[ŠtveiloVsehNalogov]" DataType="Auto" DataMember="uTN_DB_ProizvodnjaDN1" />
+      </CalculatedFields>
+    </SqlDataSource>
+  </DataSources>
+  <Items>
+    <ListBox ComponentName="listBoxDashboardItem1" Name="Projekt" DataSource="sqlDataSource1" DataMember="uTN_DB_ProizvodnjaDN1" IsMasterFilterCrossDataSource="true" EnableSearch="true">
+      <InteractivityOptions IgnoreMasterFilters="false" />
+      <DataItems>
+        <Dimension DataMember="DNStroškovniNosilec" Name="Nositelj troškova" DefaultId="DataItem0" />
+        <Dimension DataMember="DNStroškovniNosilecNaziv" Name="Naziv nositelja troškova" DefaultId="DataItem1" />
+      </DataItems>
+      <FilterDimensions>
+        <Dimension DefaultId="DataItem0" />
+        <Dimension DefaultId="DataItem1" />
+      </FilterDimensions>
+    </ListBox>
+    <ListBox ComponentName="listBoxDashboardItem2" Name="Status krovnog RD" DataSource="sqlDataSource1" DataMember="uTN_DB_ProizvodnjaDN1" IsMasterFilterCrossDataSource="true">
+      <DataItems>
+        <Dimension DataMember="DNNadrejenStatus" Name="Status krovnog RD" DefaultId="DataItem0" />
+      </DataItems>
+      <FilterDimensions>
+        <Dimension DefaultId="DataItem0" />
+      </FilterDimensions>
+    </ListBox>
+    <Grid ComponentName="gridDashboardItem1" Name="Svi podređeni radni nalozi" DataSource="sqlDataSource1" DataMember="uTN_DB_ProizvodnjaDN1">
+      <DataItems>
+        <Dimension DataMember="DNPodrejenDN" DefaultId="DataItem0" />
+        <Dimension DataMember="DNPodrejenIdent" DefaultId="DataItem1" />
+        <Dimension DataMember="DNPodrejenIdentNaziv" DefaultId="DataItem2" />
+        <Measure DataMember="DNPodrejenPlaniranaKoličina" DefaultId="DataItem3">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="DNPodrejenRealiziranaKoličina" DefaultId="DataItem4">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="DNPodrejenOdprtaKoličina" DefaultId="DataItem5">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Dimension DataMember="DNPodrejenStatus" DefaultId="DataItem6" />
+        <Dimension DataMember="DNNadrejenDN" DefaultId="DataItem7" />
+      </DataItems>
+      <FormatRules>
+        <GridItemFormatRule Name="Format Rule 1" DataItem="DataItem6" DataItemApplyTo="DataItem6">
+          <FormatConditionExpression Expression="[DataItem6] = 'Odprt'">
+            <AppearanceSettings AppearanceType="PaleGreen" />
+          </FormatConditionExpression>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 2" DataItem="DataItem6" DataItemApplyTo="DataItem6">
+          <FormatConditionExpression Expression="[DataItem6] = 'Zaprt'">
+            <AppearanceSettings AppearanceType="PaleRed" />
+          </FormatConditionExpression>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 3" DataItem="DataItem6" DataItemApplyTo="DataItem6">
+          <FormatConditionExpression Expression="[DataItem6] = 'v delu'">
+            <AppearanceSettings AppearanceType="PaleOrange" />
+          </FormatConditionExpression>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 4" DataItem="DataItem6" DataItemApplyTo="DataItem6">
+          <FormatConditionExpression Expression="[DataItem6] = 'Razpisan'">
+            <AppearanceSettings AppearanceType="PaleBlue" />
+          </FormatConditionExpression>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 5" DataItem="DataItem6" DataItemApplyTo="DataItem3">
+          <FormatConditionExpression Expression="[DataItem6] = 'Odprt'">
+            <AppearanceSettings AppearanceType="PaleGreen" />
+          </FormatConditionExpression>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 6" DataItem="DataItem6" DataItemApplyTo="DataItem3">
+          <FormatConditionExpression Expression="[DataItem6] = 'Zaprt'">
+            <AppearanceSettings AppearanceType="PaleRed" />
+          </FormatConditionExpression>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 7" DataItem="DataItem6" DataItemApplyTo="DataItem3">
+          <FormatConditionExpression Expression="[DataItem6] = 'v delu'">
+            <AppearanceSettings AppearanceType="PaleOrange" />
+          </FormatConditionExpression>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 8" DataItem="DataItem6" DataItemApplyTo="DataItem3">
+          <FormatConditionExpression Expression="[DataItem6] = 'Razpisan'">
+            <AppearanceSettings AppearanceType="PaleBlue" />
+          </FormatConditionExpression>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 9" DataItem="DataItem6" DataItemApplyTo="DataItem4">
+          <FormatConditionExpression Expression="[DataItem6] = 'Odprt'">
+            <AppearanceSettings AppearanceType="PaleGreen" />
+          </FormatConditionExpression>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 10" DataItem="DataItem6" DataItemApplyTo="DataItem4">
+          <FormatConditionExpression Expression="[DataItem6] = 'Zaprt'">
+            <AppearanceSettings AppearanceType="PaleRed" />
+          </FormatConditionExpression>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 11" DataItem="DataItem6" DataItemApplyTo="DataItem4">
+          <FormatConditionExpression Expression="[DataItem6] = 'v delu'">
+            <AppearanceSettings AppearanceType="PaleOrange" />
+          </FormatConditionExpression>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 12" DataItem="DataItem6" DataItemApplyTo="DataItem4">
+          <FormatConditionExpression Expression="[DataItem6] = 'Razpisan'">
+            <AppearanceSettings AppearanceType="PaleBlue" />
+          </FormatConditionExpression>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 13" DataItem="DataItem6" DataItemApplyTo="DataItem5">
+          <FormatConditionExpression Expression="[DataItem6] = 'Odprt'">
+            <AppearanceSettings AppearanceType="PaleGreen" />
+          </FormatConditionExpression>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 14" DataItem="DataItem6" DataItemApplyTo="DataItem5">
+          <FormatConditionExpression Expression="[DataItem6] = 'Zaprt'">
+            <AppearanceSettings AppearanceType="PaleRed" />
+          </FormatConditionExpression>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 15" DataItem="DataItem6" DataItemApplyTo="DataItem5">
+          <FormatConditionExpression Expression="[DataItem6] = 'v delu'">
+            <AppearanceSettings AppearanceType="PaleOrange" />
+          </FormatConditionExpression>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 16" DataItem="DataItem6" DataItemApplyTo="DataItem5">
+          <FormatConditionExpression Expression="[DataItem6] = 'Razpisan'">
+            <AppearanceSettings AppearanceType="PaleBlue" />
+          </FormatConditionExpression>
+        </GridItemFormatRule>
+      </FormatRules>
+      <GridColumns>
+        <GridDimensionColumn Name="Nadređeni RN">
+          <Dimension DefaultId="DataItem7" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Podređeni DN">
+          <Dimension DefaultId="DataItem0" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Ident">
+          <Dimension DefaultId="DataItem1" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Naziv identa">
+          <Dimension DefaultId="DataItem2" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Status">
+          <Dimension DefaultId="DataItem6" />
+        </GridDimensionColumn>
+        <GridMeasureColumn Name="Raspisana količina">
+          <Measure DefaultId="DataItem3" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Ostvarena količina">
+          <Measure DefaultId="DataItem4" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Otvorena količina">
+          <Measure DefaultId="DataItem5" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+      </GridColumns>
+      <GridOptions />
+    </Grid>
+    <Grid ComponentName="gridDashboardItem2" Name="Krovni radni nalozi" DataSource="sqlDataSource1" DataMember="uTN_DB_ProizvodnjaDN1">
+      <InteractivityOptions MasterFilterMode="Multiple" />
+      <DataItems>
+        <Dimension DataMember="DNNadrejenDN" DefaultId="DataItem0" />
+        <Dimension DataMember="DNŠtevilkaNaročila" DefaultId="DataItem1" />
+        <Dimension DataMember="DNStroškovniNosilecNaročnik" DefaultId="DataItem2" />
+        <Dimension DataMember="DNNadrejenStatus" DefaultId="DataItem3" />
+        <Measure DataMember="DNPodrejenStrošek" DefaultId="DataItem4">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="DNNadrejenVrednostNaročila" SummaryType="Max" DefaultId="DataItem5">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="DNPodrejenOdprtaKoličina" SummaryType="Count" FilterString="[DataItem9] &lt;&gt; 'Zaprt'" DefaultId="DataItem6">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="DNPodrejenRealiziranaKoličina" SummaryType="Count" FilterString="[DataItem9] = 'Zaprt'" DefaultId="DataItem7">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="DNNadrejenPlaniranaKoličina" SummaryType="Count" DefaultId="DataItem8">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Dimension DataMember="DNPodrejenStatus" DefaultId="DataItem9" />
+        <Measure DataMember="ŠteviloZaprtihNalogov" DefaultId="DataItem10" />
+        <Measure DataMember="ŠtveiloVsehNalogov" DefaultId="DataItem11" />
+        <Dimension DataMember="DNStroškovniNosilec" DefaultId="DataItem12" />
+        <Dimension DataMember="DNPlaniranDatumDostave" DateTimeGroupInterval="DayMonthYear" DefaultId="DataItem13" />
+      </DataItems>
+      <HiddenDimensions>
+        <Dimension DefaultId="DataItem9" />
+      </HiddenDimensions>
+      <GridColumns>
+        <GridDimensionColumn Name="Projekt">
+          <Dimension DefaultId="DataItem12" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Krovni RN">
+          <Dimension DefaultId="DataItem0" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Narudžba">
+          <Dimension DefaultId="DataItem1" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Naručitelj">
+          <Dimension DefaultId="DataItem2" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Status">
+          <Dimension DefaultId="DataItem3" />
+        </GridDimensionColumn>
+        <GridMeasureColumn Name="Raspisanih RN">
+          <Measure DefaultId="DataItem8" />
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Realiziranih DN">
+          <Measure DefaultId="DataItem7" />
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Otvorenih RN">
+          <Measure DefaultId="DataItem6" />
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Vrijednost narudžbe">
+          <Measure DefaultId="DataItem5" />
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Trošak">
+          <Measure DefaultId="DataItem4" />
+        </GridMeasureColumn>
+        <GridDeltaColumn Name="Izvršenje">
+          <ActualValue DefaultId="DataItem10" />
+          <TargetValue DefaultId="DataItem11" />
+          <DeltaOptions ResultIndicationMode="WarningIfLess" ValueType="PercentOfTarget" />
+        </GridDeltaColumn>
+        <GridDimensionColumn Name="Namjeravani zaključak">
+          <Dimension DefaultId="DataItem13" />
+        </GridDimensionColumn>
+      </GridColumns>
+      <GridOptions />
+    </Grid>
+    <ListBox ComponentName="listBoxDashboardItem4" Name="Naručitelji" DataSource="sqlDataSource1" DataMember="uTN_DB_ProizvodnjaDN1" IsMasterFilterCrossDataSource="true" EnableSearch="true">
+      <InteractivityOptions IgnoreMasterFilters="false" />
+      <DataItems>
+        <Dimension DataMember="DNStroškovniNosilecNaročnik" Name="Naručitelj" DefaultId="DataItem0" />
+      </DataItems>
+      <FilterDimensions>
+        <Dimension DefaultId="DataItem0" />
+      </FilterDimensions>
+    </ListBox>
+    <ListBox ComponentName="listBoxDashboardItem3" Name="Status podređenog RN" DataSource="sqlDataSource1" DataMember="uTN_DB_ProizvodnjaDN1">
+      <DataItems>
+        <Dimension DataMember="DNPodrejenStatus" Name="Status podređenog RN" DefaultId="DataItem0" />
+        <Dimension DataMember="DNNadrejenDN" DefaultId="DataItem1" />
+      </DataItems>
+      <HiddenDimensions>
+        <Dimension DefaultId="DataItem1" />
+      </HiddenDimensions>
+      <FilterDimensions>
+        <Dimension DefaultId="DataItem0" />
+      </FilterDimensions>
+    </ListBox>
+    <ListBox ComponentName="listBoxDashboardItem5" Name="Vrsta materijalnog sredstva" DataSource="sqlDataSource1" DataMember="uTN_DB_ProizvodnjaDN1">
+      <DataItems>
+        <Dimension DataMember="DNPodrejenVMS" Name="Vrsta materijalnog sredstva" DefaultId="DataItem0" />
+        <Dimension DataMember="DNPodrejenVMSNaziv" Name="Naziv VMS" DefaultId="DataItem1" />
+      </DataItems>
+      <FilterDimensions>
+        <Dimension DefaultId="DataItem0" />
+        <Dimension DefaultId="DataItem1" />
+      </FilterDimensions>
+    </ListBox>
+  </Items>
+  <LayoutTree>
+    <LayoutGroup Orientation="Vertical">
+      <LayoutGroup Weight="0.89513463567795415">
+        <LayoutGroup Orientation="Vertical" Weight="0.49719240206307963">
+          <LayoutItem DashboardItem="listBoxDashboardItem1" Weight="0.5162181085851949" />
+          <LayoutItem DashboardItem="listBoxDashboardItem4" Weight="0.53149520417123974" />
+        </LayoutGroup>
+        <LayoutGroup Orientation="Vertical" Weight="0.39143110651939778">
+          <LayoutItem DashboardItem="listBoxDashboardItem2" Weight="0.43266233056571279" />
+          <LayoutItem DashboardItem="listBoxDashboardItem3" Weight="0.56339309834326456" />
+          <LayoutItem DashboardItem="listBoxDashboardItem5" Weight="0.545546454482159" />
+        </LayoutGroup>
+        <LayoutItem DashboardItem="gridDashboardItem2" Weight="2.4135347647988175" />
+      </LayoutGroup>
+      <LayoutItem DashboardItem="gridDashboardItem1" Weight="1.1048653643220456" />
+    </LayoutGroup>
+  </LayoutTree>
+</Dashboard>

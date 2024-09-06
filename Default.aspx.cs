@@ -28,6 +28,7 @@ namespace peptak
        
             ASPxDashboard1.WorkingMode = WorkingMode.Viewer;
             ASPxDashboard1.DashboardAdding += ASPxDashboard1_DashboardAdding;
+            ASPxDashboard1.DashboardSaving += ASPxDashboard1_DashboardSaving;
             if (!IsPostBack)
             {
 
@@ -108,6 +109,11 @@ namespace peptak
             }
 
             rename();
+        }
+
+        private void ASPxDashboard1_DashboardSaving(object sender, DashboardSavingWebEventArgs e)
+        {
+           // Return control to the front end
         }
 
         private void ASPxDashboard1_DashboardAdding(object sender, DashboardAddingWebEventArgs e)

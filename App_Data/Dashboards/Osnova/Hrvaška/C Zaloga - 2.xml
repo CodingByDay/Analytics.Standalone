@@ -1,0 +1,193 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Dashboard>
+  <Title Text="C Zalihe - 2" />
+  <DataSources>
+    <SqlDataSource Name="CustomSqlQuery" ComponentName="sqlDataSource1" DataProcessingMode="Client">
+      <Connection Name="PetPak" FromAppConfig="true" />
+      <Query Type="CustomSqlQuery" Name="CustomSqlQuery">
+        <Sql>select * from dbo.uTN_DB_Zaloge;</Sql>
+      </Query>
+      <ConnectionOptions CloseConnection="true" />
+      <CalculatedFields>
+        <CalculatedField Name="ZalogaObratDni" Expression="iif((ZalogaKoličinaEM-ZalogaPrevzemKoličina+ZalogaIzdajaKoličina+ZalogaPrevzemKoličina)&lt;&gt;0,&#xD;&#xA;((ZalogaKoličinaEM-ZalogaPrevzemKoličina+ZalogaIzdajaKoličina)*365+ZalogaPrevzemDniDoDanes-ZalogaIzdajaDniDoDanes)/&#xD;&#xA;(ZalogaKoličinaEM-ZalogaPrevzemKoličina+ZalogaIzdajaKoličina+ZalogaPrevzemKoličina),0)" DataType="Auto" DataMember="CustomSqlQuery" />
+        <CalculatedField Name="ZalogaZadostujeDni" Expression="[ZalogaKoličinaEM]/&#xD;&#xA;(Iif([ZalogaIzdajaKoličina]=0,1,[ZalogaIzdajaKoličina])/&#xD;&#xA;Iif(([ZalogaKoličinaEM]-[ZalogaPrevzemKoličina]+[ZalogaIzdajaKoličina])=0,DateDiffDay([ZalogaDatumPrvegaPrevzema],LocalDateTimeNow()), 365))" DataType="Auto" DataMember="CustomSqlQuery" />
+        <CalculatedField Name="ZalogaObdobjeZaležanosti" Expression="Iif([ZalogaObratDni]&lt;15, 'Do  15 dni',&#xD;&#xA;Iif([ZalogaObratDni]&lt;30, 'Do  30 dni',&#xD;&#xA;Iif([ZalogaObratDni]&lt;45, 'Do  45 dni',&#xD;&#xA;Iif([ZalogaObratDni]&lt;60, 'Do  60 dni',&#xD;&#xA;Iif([ZalogaObratDni]&lt;90, 'Do  90 dni',&#xD;&#xA;Iif([ZalogaObratDni]&lt;180,'Do 180 dni','Nad 180 dni'))))))" DataType="Auto" DataMember="CustomSqlQuery" />
+        <CalculatedField Name="ZalogaZačetnoStanje" Expression="sum([ZalogaKoličinaEM])-sum([ZalogaPrevzemKoličina])+sum([ZalogaIzdajaKoličina])" DataType="Auto" DataMember="CustomSqlQuery" />
+      </CalculatedFields>
+    </SqlDataSource>
+  </DataSources>
+  <Items>
+    <Pie ComponentName="pieDashboardItem1" Name="Vrijednost tekućih zaliha po primarnoj klasifikaciji" ShowCaption="false" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" PieType="Donut" LabelContentType="ArgumentValueAndPercent">
+      <InteractivityOptions MasterFilterMode="Multiple" />
+      <DataItems>
+        <Measure DataMember="ZalogaVrednost" Name="Zalihe po primarnoj klasifikaciji" DefaultId="DataItem0">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Dimension DataMember="ZalogaPrimarnaKlasifikacijaNaziv" Name="Primarna klasifikacija" DefaultId="DataItem1" />
+      </DataItems>
+      <Arguments>
+        <Argument DefaultId="DataItem1" />
+      </Arguments>
+      <Values>
+        <Value DefaultId="DataItem0" />
+      </Values>
+    </Pie>
+    <Pie ComponentName="pieDashboardItem2" Name="Vrijednost trenutnih zaliha po dobavljačima" ShowCaption="false" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" PieType="Donut" LabelContentType="ArgumentValueAndPercent">
+      <InteractivityOptions MasterFilterMode="Multiple" />
+      <DataItems>
+        <Measure DataMember="ZalogaVrednost" Name="Zaliha po dobavljačima" DefaultId="DataItem0">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Dimension DataMember="ZalogaDobavitelj" Name="Dobavitelj" DefaultId="DataItem1" />
+      </DataItems>
+      <Arguments>
+        <Argument DefaultId="DataItem1" />
+      </Arguments>
+      <Values>
+        <Value DefaultId="DataItem0" />
+      </Values>
+    </Pie>
+    <Pie ComponentName="pieDashboardItem3" Name="Vrijednost tekućih zaliha po sekundarnoj klasifikaciji" ShowCaption="false" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" PieType="Donut" LabelContentType="ArgumentValueAndPercent">
+      <InteractivityOptions MasterFilterMode="Multiple" />
+      <DataItems>
+        <Measure DataMember="ZalogaVrednost" Name="Zaliha po sekundarnoj klasifikaciji" DefaultId="DataItem0">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Dimension DataMember="ZalogaSekundarnaKlasifikacija_naziv" Name="Sekundarna klasifikacija" DefaultId="DataItem1" />
+      </DataItems>
+      <Arguments>
+        <Argument DefaultId="DataItem1" />
+      </Arguments>
+      <Values>
+        <Value DefaultId="DataItem0" />
+      </Values>
+    </Pie>
+    <Grid ComponentName="gridDashboardItem1" Name="Pregled zalihe po identu" ShowCaption="false" DataSource="sqlDataSource1" DataMember="CustomSqlQuery">
+      <DataItems>
+        <Dimension DataMember="ZalogaIdent" DefaultId="DataItem0" />
+        <Dimension DataMember="ZalogaIdentNaziv" DefaultId="DataItem1" />
+        <Measure DataMember="ZalogaKoličinaEM" DefaultId="DataItem2">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Dimension DataMember="ZalogaEnotaMere" DefaultId="DataItem3" />
+        <Measure DataMember="ZalogaVrednost" DefaultId="DataItem4">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="ZalogaObratDni" DefaultId="DataItem5">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" />
+        </Measure>
+        <Dimension DataMember="ZalogaObdobjeZaležanosti" Name="Obrat dni" SortOrder="Descending" SortByMeasure="DataItem5" DefaultId="DataItem6" />
+        <Measure DataMember="ZalogaZadostujeDni" DefaultId="DataItem7">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" />
+        </Measure>
+        <Measure DataMember="ZalogaOdprtaKoličina" DefaultId="DataItem8">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+      </DataItems>
+      <HiddenDimensions>
+        <Dimension DefaultId="DataItem6" />
+      </HiddenDimensions>
+      <GridColumns>
+        <GridDimensionColumn Name="Ident" Weight="38.15139165871846">
+          <Dimension DefaultId="DataItem0" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Naziv identa" Weight="187.28864996098153">
+          <Dimension DefaultId="DataItem1" />
+        </GridDimensionColumn>
+        <GridMeasureColumn Name="Zaliha" Weight="72.256423596057687">
+          <Measure DefaultId="DataItem2" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridDimensionColumn Name="EM" Weight="28.902569438423075">
+          <Dimension DefaultId="DataItem3" />
+        </GridDimensionColumn>
+        <GridMeasureColumn Name="Vrijednost" Weight="78.0369374837423">
+          <Measure DefaultId="DataItem4" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Obrat (dana)" Weight="59.539293043151538" DisplayMode="Bar">
+          <Measure DefaultId="DataItem5" />
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Dovoljno (dana)" Weight="67.053961097141539">
+          <Measure DefaultId="DataItem7" />
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Otvorene narudžbe" Weight="68.770773721783883">
+          <Measure DefaultId="DataItem8" />
+        </GridMeasureColumn>
+      </GridColumns>
+      <GridOptions EnableBandedRows="true" />
+    </Grid>
+    <Pie ComponentName="pieDashboardItem4" Name="Vrijednost trenutne zalihe u odnosu na stopu prometa" ShowCaption="false" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" PieType="Donut" LabelContentType="ArgumentValueAndPercent">
+      <InteractivityOptions MasterFilterMode="Multiple" IsDrillDownEnabled="true" />
+      <DataItems>
+        <Measure DataMember="ZalogaVrednost" Name="Zaliha po prometu" DefaultId="DataItem0">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Dimension DataMember="ZalogaObdobjeZaležanosti" Name="Obrat zaloge " DefaultId="DataItem1" />
+        <Dimension DataMember="ZalogaDobavitelj" Name="Dobavitelj" DefaultId="DataItem2" />
+        <Dimension DataMember="ZalogaSekundarnaKlasifikacija_naziv" Name="Sekundarna klasifikacija" DefaultId="DataItem3" />
+      </DataItems>
+      <Arguments>
+        <Argument DefaultId="DataItem1" />
+        <Argument DefaultId="DataItem2" />
+        <Argument DefaultId="DataItem3" />
+      </Arguments>
+      <Values>
+        <Value DefaultId="DataItem0" />
+      </Values>
+    </Pie>
+    <ListBox ComponentName="listBoxDashboardItem1" Name="Skladište" DataSource="sqlDataSource1" DataMember="CustomSqlQuery">
+      <DataItems>
+        <Dimension DataMember="ZalogaSkladišče" Name="Skladišče" DefaultId="DataItem0" />
+      </DataItems>
+      <FilterDimensions>
+        <Dimension DefaultId="DataItem0" />
+      </FilterDimensions>
+    </ListBox>
+    <Image ComponentName="imageDashboardItem1" Name="Popunjenost skladišta" Url="http://wms-petpak.trendnet.si/Services/Image/?wh=Centralno%20skladi%C5%A1%C4%8De" SizeMode="Zoom" />
+    <ListBox ComponentName="listBoxDashboardItem2" Name="Ident" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" EnableSearch="true">
+      <InteractivityOptions IgnoreMasterFilters="false" />
+      <DataItems>
+        <Dimension DataMember="ZalogaIdent" Name="Ident" DefaultId="DataItem0" />
+        <Dimension DataMember="ZalogaIdentNaziv" Name="Naziv identa" DefaultId="DataItem1" />
+      </DataItems>
+      <FilterDimensions>
+        <Dimension DefaultId="DataItem0" />
+        <Dimension DefaultId="DataItem1" />
+      </FilterDimensions>
+    </ListBox>
+    <ListBox ComponentName="listBoxDashboardItem3" Name="Vrsta materijalnog sredstva" DataSource="sqlDataSource1" DataMember="CustomSqlQuery">
+      <DataItems>
+        <Dimension DataMember="ZalogaVrstaMS" Name="VMS" DefaultId="DataItem0" />
+        <Dimension DataMember="ZalogaVrstaMSNaziv" Name="Naziv VMS" DefaultId="DataItem1" />
+      </DataItems>
+      <FilterDimensions>
+        <Dimension DefaultId="DataItem0" />
+        <Dimension DefaultId="DataItem1" />
+      </FilterDimensions>
+    </ListBox>
+  </Items>
+  <LayoutTree>
+    <LayoutGroup Orientation="Vertical">
+      <LayoutGroup Weight="0.82276602954510059">
+        <LayoutGroup Orientation="Vertical" Weight="0.38825427222298653">
+          <LayoutItem DashboardItem="listBoxDashboardItem1" Weight="0.362826054497547" />
+          <LayoutItem DashboardItem="listBoxDashboardItem3" Weight="0.41368248994842605" />
+        </LayoutGroup>
+        <LayoutItem DashboardItem="listBoxDashboardItem2" Weight="0.84372974426778036" />
+        <LayoutItem DashboardItem="pieDashboardItem4" Weight="0.99665286403504849" />
+        <LayoutItem DashboardItem="pieDashboardItem2" Weight="1.0419990424812007" />
+        <LayoutItem DashboardItem="pieDashboardItem1" Weight="0.994572969205542" />
+        <LayoutItem DashboardItem="pieDashboardItem3" Weight="0.94860388928657258" />
+      </LayoutGroup>
+      <LayoutGroup Weight="1.1772339704548995">
+        <LayoutItem DashboardItem="gridDashboardItem1" Weight="1.4334704262213487" />
+        <LayoutItem DashboardItem="imageDashboardItem1" Weight="1.4334704262213487" />
+      </LayoutGroup>
+    </LayoutGroup>
+  </LayoutTree>
+</Dashboard>

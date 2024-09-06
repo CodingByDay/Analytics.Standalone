@@ -1,0 +1,255 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Dashboard>
+  <Title Text="C Izdobava - PRODAJA" />
+  <DataSources>
+    <SqlDataSource Name="CustomSqlQuery" ComponentName="sqlDataSource1" DataProcessingMode="Client">
+      <Connection Name="Metal product - produkcija" FromAppConfig="true" />
+      <Query Type="CustomSqlQuery" Name="CustomSqlQuery">
+        <Sql>SELECT * FROM dbo.uTN_DB_NaročilaIzdobavaZaloga
+WHERE NARTipNAročila='Izdaja';</Sql>
+      </Query>
+      <ConnectionOptions CloseConnection="true" />
+      <CalculatedFields>
+        <CalculatedField Name="NARRazhajanjeNaročiloIzdaja" Expression="iif(round([NARRealizacijaKoličina])-round([NARNaročiloKoličina])=0,'F','T')" DataType="Auto" DataMember="CustomSqlQuery" />
+        <CalculatedField Name="NARRazhajanjeIzdajaRačun" Expression="iif([NARRačunKoličina]-[NARRealizacijaKoličina]=0,'F','T')" DataType="Auto" DataMember="CustomSqlQuery" />
+        <CalculatedField Name="NARRazhajanjePrednaročiloNaročilo" Expression="iif([NARNaročiloKoličina]-[NARPrednaročiloKoličina]=0,'F','T')" DataType="Auto" DataMember="CustomSqlQuery" />
+        <CalculatedField Name="NARRazhajanjeVrednostno" Expression="iif([NARRealizacijaKoličina]-[NARNaročiloKoličina]=0,0,&#xD;&#xA;iif([NARZalogaEMNaDan]&gt;=abs([NARRealizacijaKoličina]-[NARNaročiloKoličina]),([NARRealizacijaKoličina]-[NARNaročiloKoličina])*[NARVrednostNaKos],&#xD;&#xA;[NARZalogaEMNaDan]*[NARVrednostNaKos]*(-1)))" DataType="Auto" DataMember="CustomSqlQuery" />
+      </CalculatedFields>
+    </SqlDataSource>
+  </DataSources>
+  <Items>
+    <Pie ComponentName="pieDashboardItem1" Name="Neisporučeno po kupcima" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" FilterString="[DataItem2] = 'T'" IsMasterFilterCrossDataSource="true" PieType="Donut">
+      <InteractivityOptions MasterFilterMode="Multiple" />
+      <DataItems>
+        <Dimension DataMember="NARDobaviteljAliPlačnik" Name="Kupec" DefaultId="DataItem0" />
+        <Measure DataMember="NARRealizacijaVrednost" Name="Prodajna vrijednost" DefaultId="DataItem1">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Dimension DataMember="NARRazhajanjeNaročiloIzdaja" Name="Razhajanje naročilo-izdobava" DefaultId="DataItem2" />
+      </DataItems>
+      <HiddenDimensions>
+        <Dimension DefaultId="DataItem2" />
+      </HiddenDimensions>
+      <Arguments>
+        <Argument DefaultId="DataItem0" />
+      </Arguments>
+      <Values>
+        <Value DefaultId="DataItem1" />
+      </Values>
+    </Pie>
+    <DateFilter ComponentName="dateFilterDashboardItem1" Name="Planirana isporuka" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" ArrangementMode="Vertical" SelectedDateTimePeriodIndex="Tekući mjesec">
+      <DataItems>
+        <Dimension DataMember="NARNaročiloDatumDostave" Name="Planiran datum dostave" DateTimeGroupInterval="DayMonthYear" DefaultId="DataItem0" />
+      </DataItems>
+      <Dimension DefaultId="DataItem0" />
+      <DateTimePeriods>
+        <DateTimePeriod Name="Tekući mjesec">
+          <StartLimit>
+            <FlowDateTimePeriodLimit Interval="Month" />
+          </StartLimit>
+          <EndLimit>
+            <FlowDateTimePeriodLimit Interval="Month" Offset="1" />
+          </EndLimit>
+        </DateTimePeriod>
+        <DateTimePeriod Name="Zadnja tri mjeseca">
+          <StartLimit>
+            <FlowDateTimePeriodLimit Interval="Month" Offset="-2" />
+          </StartLimit>
+          <EndLimit>
+            <FlowDateTimePeriodLimit Interval="Month" Offset="1" />
+          </EndLimit>
+        </DateTimePeriod>
+        <DateTimePeriod Name="Tekuća godina">
+          <StartLimit>
+            <FlowDateTimePeriodLimit />
+          </StartLimit>
+          <EndLimit>
+            <FlowDateTimePeriodLimit Offset="1" />
+          </EndLimit>
+        </DateTimePeriod>
+        <DateTimePeriod Name="Prošla godina">
+          <StartLimit>
+            <FlowDateTimePeriodLimit Offset="-1" />
+          </StartLimit>
+          <EndLimit>
+            <FlowDateTimePeriodLimit />
+          </EndLimit>
+        </DateTimePeriod>
+        <DateTimePeriod Name="Počevši od danas">
+          <StartLimit>
+            <FlowDateTimePeriodLimit Interval="Day" />
+          </StartLimit>
+        </DateTimePeriod>
+      </DateTimePeriods>
+    </DateFilter>
+    <Pie ComponentName="pieDashboardItem2" Name="Neisporuka po vrsti dokumenta" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" FilterString="[DataItem2] = 'T'" IsMasterFilterCrossDataSource="true" PieType="Donut">
+      <InteractivityOptions MasterFilterMode="Multiple" />
+      <DataItems>
+        <Dimension DataMember="NARNaročiloDokumentNaziv" Name="Vrsta dokumenta" DefaultId="DataItem0" />
+        <Measure DataMember="NARNaročiloVrednost" Name="Prodajna vrijednost" DefaultId="DataItem1">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Dimension DataMember="NARRazhajanjeNaročiloIzdaja" Name="Razhajanje med naročilom in izdajo" DefaultId="DataItem2" />
+      </DataItems>
+      <HiddenDimensions>
+        <Dimension DefaultId="DataItem2" />
+      </HiddenDimensions>
+      <Arguments>
+        <Argument DefaultId="DataItem0" />
+      </Arguments>
+      <Values>
+        <Value DefaultId="DataItem1" />
+      </Values>
+    </Pie>
+    <Grid ComponentName="gridDashboardItem1" Name="Detaljno prema narudžbi" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" FilterString="[DataItem3] = 'T'">
+      <DataItems>
+        <Dimension DataMember="NARIdent" DefaultId="DataItem1" />
+        <Dimension DataMember="NARNaročiloDokument" DefaultId="DataItem2" />
+        <Dimension DataMember="NARIdentNaziv" DefaultId="DataItem0" />
+        <Dimension DataMember="NARRazhajanjeNaročiloIzdaja" DefaultId="DataItem3" />
+        <Dimension DataMember="NARNaročiloDatumDokumenta" DateTimeGroupInterval="DayMonthYear" DefaultId="DataItem4" />
+        <Dimension DataMember="NARNaročiloDatumDostave" DateTimeGroupInterval="DayMonthYear" DefaultId="DataItem5" />
+        <Measure DataMember="NARNaročiloKoličina" DefaultId="DataItem6">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Dimension DataMember="NARRealizacijaDokument" DefaultId="DataItem7" />
+        <Dimension DataMember="NARRealizacijaDatumDokumenta" DateTimeGroupInterval="DayMonthYear" DefaultId="DataItem8" />
+        <Measure DataMember="NARRealizacijaKoličina" DefaultId="DataItem9">
+          <NumericFormat FormatType="Number" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="NARZalogaEMNaDan" DefaultId="DataItem10">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Dimension DataMember="NARDobaviteljAliPlačnik" DefaultId="DataItem11" />
+        <Measure DataMember="NARRazhajanjeVrednostno" DefaultId="DataItem12">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Dimension DataMember="NARNaročiloDatumDostave" DateTimeGroupInterval="DayMonthYear" DefaultId="DataItem13" />
+      </DataItems>
+      <HiddenDimensions>
+        <Dimension DefaultId="DataItem13" />
+        <Dimension DefaultId="DataItem3" />
+      </HiddenDimensions>
+      <FormatRules>
+        <GridItemFormatRule Name="Format Rule 1" DataItem="DataItem4" DataItemApplyTo="DataItem4">
+          <FormatConditionValue>
+            <AppearanceSettings AppearanceType="FontGrayed" />
+            <Value1 Type="System.DateTime" Value="1900-01-01T00:00:00.0000000" />
+          </FormatConditionValue>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 2" DataItem="DataItem5" DataItemApplyTo="DataItem5">
+          <FormatConditionValue>
+            <AppearanceSettings AppearanceType="FontGrayed" />
+            <Value1 Type="System.DateTime" Value="1900-01-01T00:00:00.0000000" />
+          </FormatConditionValue>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 3" DataItem="DataItem8" DataItemApplyTo="DataItem8">
+          <FormatConditionValue>
+            <AppearanceSettings AppearanceType="FontGrayed" />
+            <Value1 Type="System.DateTime" Value="1900-01-01T00:00:00.0000000" />
+          </FormatConditionValue>
+        </GridItemFormatRule>
+      </FormatRules>
+      <GridColumns>
+        <GridDimensionColumn Name="Kupac">
+          <Dimension DefaultId="DataItem11" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="ID narudžbe">
+          <Dimension DefaultId="DataItem2" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Ident">
+          <Dimension DefaultId="DataItem1" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Naziv">
+          <Dimension DefaultId="DataItem0" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Datum narudžbe">
+          <Dimension DefaultId="DataItem4" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Datum isporuke">
+          <Dimension DefaultId="DataItem5" />
+        </GridDimensionColumn>
+        <GridMeasureColumn Name="Naručena količina">
+          <Measure DefaultId="DataItem6" />
+        </GridMeasureColumn>
+        <GridDimensionColumn Name="Dokument o izdanju">
+          <Dimension DefaultId="DataItem7" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Datum izdavanja">
+          <Dimension DefaultId="DataItem8" />
+        </GridDimensionColumn>
+        <GridMeasureColumn Name="Izdana količina">
+          <Measure DefaultId="DataItem9" />
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Zaliha na dan isporuke">
+          <Measure DefaultId="DataItem10" />
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Izgubljena realizacija ">
+          <Measure DefaultId="DataItem12" />
+        </GridMeasureColumn>
+      </GridColumns>
+      <GridOptions EnableBandedRows="true" WordWrap="true" />
+    </Grid>
+    <Pie ComponentName="pieDashboardItem3" Name="Neisporučeno po dobavljačima" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" FilterString="[DataItem0] = 'T'" IsMasterFilterCrossDataSource="true" PieType="Donut">
+      <InteractivityOptions MasterFilterMode="Multiple" />
+      <DataItems>
+        <Dimension DataMember="NARRazhajanjeNaročiloIzdaja" DefaultId="DataItem0" />
+        <Measure DataMember="NARRealizacijaVrednost" Name="Prodajna vrijednost" DefaultId="DataItem1" />
+        <Dimension DataMember="NARDobavitelj" Name="Dobavljač" DefaultId="DataItem2" />
+      </DataItems>
+      <HiddenDimensions>
+        <Dimension DefaultId="DataItem0" />
+      </HiddenDimensions>
+      <Arguments>
+        <Argument DefaultId="DataItem2" />
+      </Arguments>
+      <Values>
+        <Value DefaultId="DataItem1" />
+      </Values>
+    </Pie>
+    <Pie ComponentName="pieDashboardItem4" Name="Neisporuka na temelju statusa narudžbe" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" FilterString="[DataItem2] = 'T'" IsMasterFilterCrossDataSource="true" PieType="Donut">
+      <InteractivityOptions MasterFilterMode="Multiple" />
+      <DataItems>
+        <Dimension DataMember="NARNaročiloStatus" Name="Status narudžbe" DefaultId="DataItem0" />
+        <Measure DataMember="NARNaročiloVrednost" Name="Prodajna vrijednost" DefaultId="DataItem1">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Dimension DataMember="NARRazhajanjeNaročiloIzdaja" DefaultId="DataItem2" />
+      </DataItems>
+      <HiddenDimensions>
+        <Dimension DefaultId="DataItem2" />
+      </HiddenDimensions>
+      <Arguments>
+        <Argument DefaultId="DataItem0" />
+      </Arguments>
+      <Values>
+        <Value DefaultId="DataItem1" />
+      </Values>
+    </Pie>
+    <ListBox ComponentName="listBoxDashboardItem1" Name="Vrsta materijalnog sredstva" DataSource="sqlDataSource1" DataMember="CustomSqlQuery">
+      <DataItems>
+        <Dimension DataMember="NARVrstaMS" Name="VMS" DefaultId="DataItem0" />
+        <Dimension DataMember="NARVrstaMSNaziv" Name="Naziv VMS" DefaultId="DataItem1" />
+      </DataItems>
+      <FilterDimensions>
+        <Dimension DefaultId="DataItem0" />
+        <Dimension DefaultId="DataItem1" />
+      </FilterDimensions>
+    </ListBox>
+  </Items>
+  <LayoutTree>
+    <LayoutGroup>
+      <LayoutGroup Orientation="Vertical">
+        <LayoutGroup Weight="0.76482038070702774">
+          <LayoutItem DashboardItem="dateFilterDashboardItem1" Weight="0.60435581577848152" />
+          <LayoutItem DashboardItem="listBoxDashboardItem1" Weight="0.83847847810854559" />
+          <LayoutItem DashboardItem="pieDashboardItem3" Weight="1.168143512339523" />
+          <LayoutItem DashboardItem="pieDashboardItem1" Weight="1.5942796610169492" />
+          <LayoutItem DashboardItem="pieDashboardItem4" />
+          <LayoutItem DashboardItem="pieDashboardItem2" />
+        </LayoutGroup>
+        <LayoutItem DashboardItem="gridDashboardItem1" Weight="1.2351796192929725" />
+      </LayoutGroup>
+    </LayoutGroup>
+  </LayoutTree>
+</Dashboard>

@@ -1,0 +1,171 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Dashboard>
+  <Title Text="20 Reklamacije kupaca" />
+  <DataSources>
+    <SqlDataSource Name="CustomSqlQuery" ComponentName="sqlDataSource1" DataProcessingMode="Client">
+      <Connection Name="Metal product - produkcija" FromAppConfig="true" />
+      <Query Type="CustomSqlQuery" Name="CustomSqlQuery">
+        <Sql>SELECT * FROM Reklamacije_Kupaca_PA</Sql>
+      </Query>
+      <ConnectionOptions CloseConnection="true" />
+    </SqlDataSource>
+  </DataSources>
+  <Items>
+    <Grid ComponentName="gridDashboardItem1" Name="Reklamacije - detalj" DataSource="sqlDataSource1" DataMember="CustomSqlQuery">
+      <DataItems>
+        <Dimension DataMember="Interni_broj_reklamacije" DefaultId="DataItem0" />
+        <Dimension DataMember="Broj_reklamacije" DefaultId="DataItem1" />
+        <Dimension DataMember="Datum" DateTimeGroupInterval="None" DefaultId="DataItem2" />
+        <Dimension DataMember="Kupac" DefaultId="DataItem3" />
+        <Dimension DataMember="MP_naziv_proizvoda" DefaultId="DataItem4" />
+        <Dimension DataMember="Proizvod" DefaultId="DataItem5" />
+        <Dimension DataMember="Broj_reklamiranih_komada" DefaultId="DataItem6" />
+        <Dimension DataMember="Opis" DefaultId="DataItem7" />
+        <Dimension DataMember="Status" DefaultId="DataItem8" />
+        <Dimension DataMember="Obradio" DefaultId="DataItem9" />
+        <Dimension DataMember="Poslan_8D" DefaultId="DataItem10" />
+      </DataItems>
+      <FormatRules>
+        <GridItemFormatRule Name="Format Rule 1" DataItem="DataItem10" DataItemApplyTo="DataItem10">
+          <FormatConditionValue>
+            <AppearanceSettings AppearanceType="Green" />
+            <Value1 Type="System.String" Value="DA" />
+          </FormatConditionValue>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 2" DataItem="DataItem10" DataItemApplyTo="DataItem10">
+          <FormatConditionValue>
+            <AppearanceSettings AppearanceType="Red" />
+            <Value1 Type="System.String" Value="NE" />
+          </FormatConditionValue>
+        </GridItemFormatRule>
+      </FormatRules>
+      <GridColumns>
+        <GridDimensionColumn Name="Interni broj">
+          <Dimension DefaultId="DataItem0" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Eksterni broj">
+          <Dimension DefaultId="DataItem1" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Datum">
+          <Dimension DefaultId="DataItem2" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Kupac">
+          <Dimension DefaultId="DataItem3" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="MP Ident">
+          <Dimension DefaultId="DataItem4" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Proizvod">
+          <Dimension DefaultId="DataItem5" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Količina">
+          <Dimension DefaultId="DataItem6" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Opis">
+          <Dimension DefaultId="DataItem7" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Status">
+          <Dimension DefaultId="DataItem8" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Obradio">
+          <Dimension DefaultId="DataItem9" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Odposlan">
+          <Dimension DefaultId="DataItem10" />
+        </GridDimensionColumn>
+      </GridColumns>
+      <GridOptions EnableBandedRows="true" />
+    </Grid>
+    <TreeView ComponentName="treeViewDashboardItem1" Name="Obdobje" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" AutoExpand="true">
+      <DataItems>
+        <Dimension DataMember="Datum" Name="Leto" DefaultId="DataItem0" />
+        <Dimension DataMember="Datum" Name="Kvartal" DateTimeGroupInterval="Quarter" DefaultId="DataItem1" />
+        <Dimension DataMember="Datum" Name="Mesec" DateTimeGroupInterval="Month" DefaultId="DataItem2" />
+      </DataItems>
+      <FilterDimensions>
+        <Dimension DefaultId="DataItem0" />
+        <Dimension DefaultId="DataItem1" />
+        <Dimension DefaultId="DataItem2" />
+      </FilterDimensions>
+    </TreeView>
+    <Chart ComponentName="chartDashboardItem1" Name="Pregled reklamacij po obdobjih in kupcih" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true">
+      <InteractivityOptions MasterFilterMode="Multiple" />
+      <DataItems>
+        <Measure DataMember="Interni_broj_reklamacije" SummaryType="Count" DefaultId="DataItem0">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Dimension DataMember="Datum" Name="Leto" DefaultId="DataItem1" />
+        <Dimension DataMember="Datum" Name="Kvartal" DateTimeGroupInterval="Quarter" DefaultId="DataItem2" />
+        <Dimension DataMember="Datum" Name="Mesec" DateTimeGroupInterval="Month" DefaultId="DataItem3" />
+        <Dimension DataMember="Kupac" Name="Kupac" DefaultId="DataItem4" />
+      </DataItems>
+      <SeriesDimensions>
+        <SeriesDimension DefaultId="DataItem4" />
+      </SeriesDimensions>
+      <Arguments>
+        <Argument DefaultId="DataItem1" />
+        <Argument DefaultId="DataItem2" />
+        <Argument DefaultId="DataItem3" />
+      </Arguments>
+      <Panes>
+        <Pane Name="Pane 1">
+          <Series>
+            <Simple Name="Število reklamacij" SeriesType="StackedBar">
+              <Value DefaultId="DataItem0" />
+            </Simple>
+          </Series>
+        </Pane>
+      </Panes>
+      <AxisX EnableZooming="true" LimitVisiblePoints="true" VisiblePointsCount="12" />
+    </Chart>
+    <Pie ComponentName="pieDashboardItem1" Name="Po kupcima" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" PieType="Donut" LabelContentType="ArgumentValueAndPercent">
+      <InteractivityOptions MasterFilterMode="Multiple" />
+      <DataItems>
+        <Measure DataMember="Interni_broj_reklamacije" Name="Število reklamacij" SummaryType="Count" DefaultId="DataItem0" />
+        <Dimension DataMember="Kupac" Name="Kupac" DefaultId="DataItem1" />
+      </DataItems>
+      <Arguments>
+        <Argument DefaultId="DataItem1" />
+      </Arguments>
+      <Values>
+        <Value DefaultId="DataItem0" />
+      </Values>
+    </Pie>
+    <ListBox ComponentName="listBoxDashboardItem1" Name="Obradio" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" EnableSearch="true">
+      <InteractivityOptions IgnoreMasterFilters="false" />
+      <DataItems>
+        <Dimension DataMember="Obradio" Name="Obradio" DefaultId="DataItem0" />
+      </DataItems>
+      <FilterDimensions>
+        <Dimension DefaultId="DataItem0" />
+      </FilterDimensions>
+    </ListBox>
+    <ListBox ComponentName="listBoxDashboardItem2" Name="Status" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" EnableSearch="true">
+      <InteractivityOptions IgnoreMasterFilters="false" />
+      <DataItems>
+        <Dimension DataMember="Status" Name="Status" DefaultId="DataItem0" />
+      </DataItems>
+      <FilterDimensions>
+        <Dimension DefaultId="DataItem0" />
+      </FilterDimensions>
+    </ListBox>
+  </Items>
+  <LayoutTree>
+    <LayoutGroup>
+      <LayoutGroup Orientation="Vertical" Weight="1.9186496956281129">
+        <LayoutGroup Weight="1.5329413748504936">
+          <LayoutGroup Orientation="Vertical" Weight="0.228619813348208">
+            <LayoutItem DashboardItem="treeViewDashboardItem1" Weight="0.228619813348208" />
+            <LayoutItem DashboardItem="listBoxDashboardItem1" Weight="0.228619813348208" />
+          </LayoutGroup>
+          <LayoutItem DashboardItem="chartDashboardItem1" Weight="0.88580804734830942" />
+          <LayoutItem DashboardItem="pieDashboardItem1" Weight="1.014209527900068" />
+        </LayoutGroup>
+        <LayoutGroup Weight="1.5374496143099576">
+          <LayoutItem DashboardItem="listBoxDashboardItem2" Weight="0.2152934134793793" />
+          <LayoutItem DashboardItem="gridDashboardItem1" Weight="1.7989917808453539" />
+        </LayoutGroup>
+      </LayoutGroup>
+    </LayoutGroup>
+  </LayoutTree>
+</Dashboard>

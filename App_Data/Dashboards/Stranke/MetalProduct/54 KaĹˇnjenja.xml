@@ -1,0 +1,329 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Dashboard>
+  <Title Text="54 Kašnjenja" />
+  <DataSources>
+    <SqlDataSource Name="PA_NarudžbeKupaca" ComponentName="sqlDataSource1" DataProcessingMode="Client">
+      <Connection Name="Metal product - produkcija" FromAppConfig="true" />
+      <Query Type="CustomSqlQuery" Name="PA_NarudžbeKupaca">
+        <Sql>SELECT	ordi.acKey	AS DokumentID, 
+				ord.acDocType	AS DokumentSifra, 
+				ordi.anNo	AS Pozicija, 
+				ord.acStatus	AS Status, 
+				ordi.acIdent	AS IdentSifra,
+				ordi.acname	AS IdentNaziv, 
+				ordi.acUM	AS MJ, 
+				ordi.anQty	AS KolicinaNarucena, 
+				ordi.anQtyDispDoc	AS KolicinaIsporucena,
+				ordi.anPVOCVATBase	AS VrijednostNarucenaPopustBezPDV, 
+				ordi.adTimeIns	AS DatumZadnjePromjene, -- to je datum vnosa ne zadnje spremembe 
+				ord.adDate	AS DatumKreiranjaNarudzbe,	-- tudi to ni datum kreiranja ampak datum dokumenta, ki se vnese 
+				ord.acConsignee	AS Kupac,
+				ordi.acDept	AS ProfitniCentar, 
+				ord.anDaysForValid	AS DaniValjanosti, 
+				ord.adDateValid	AS DatumUgovorniKrajnjRokRobaKodKupca, 
+				ord.anClerk	AS Referent,
+				ord.acWarehouse	AS Skladiste,
+				ord.acDoc1	AS NarudzbenicaKupca, 
+				ord.adDateDoc1	AS DatumNarudzbe, 
+				ord.acFieldSA	AS Sektor,
+				ordi.adDeliveryDeadline	AS DatumRokIsporukePotvrdaPP, 
+				ord.anFXRate	AS ZaglavljePretvorbaValute, 
+				ord.anValue	AS ZaglavljeVrijednost, 
+				ord.anDiscount	AS ZaglavljePopust,
+				ord.adDateDoc2	AS DatumPotvrdaodPP, 
+				ord.acNote		AS Biljeska, -- dbo.FPA_RTFTOANSI(ord.acNote)   
+				ord.acCurrency	AS Valuta, 
+				ordi.anPrice	AS Cijena1komBezRabata,
+				ord.acParity	AS Paritet, 
+				ordi.anDimWeight	AS TezinaNetoNAR, 
+				si.acCode	AS IdentSifraKupca, 
+				si.anDimWeight	AS TezinNetoIdent,
+				si.acDept	AS OdjelZaProizvod,
+				SUBSTRING(ordi.ackey,1,2)+'-'+SUBSTRING(ordi.acKey,3,4)+'-'+SUBSTRING(ordi.acKey,8,6)+'-'+CONVERT(char,ordi.anNo)	AS DokumentIDsPozicijom,
+				SUBSTRING(ordi.ackey,1,2)+'-'+SUBSTRING(ordi.acKey,3,4)+'-'+SUBSTRING(ordi.acKey,8,6)	AS DokumentIDsPozicijom,
+				CASE LEFT(ordi.acDept,2)
+						WHEN '31'	THEN 'Europska Unija'
+						WHEN '32'	THEN 'Svijet'
+						WHEN '33'	THEN 'Republika Hrvatska'
+											ELSE 'Krivi PC'
+				END AS ProfitniCentarGrupa
+/*				(ordi.anQty - ordi.anQtyDispDoc) AS KolicinaNeisporucena,
+				CASE
+						WHEN ord.acCurrency='HRK'					THEN ordi.anPVOCVATBase/7.5345
+						WHEN SUBSTRING(ordi.ackey,1,2)&lt;23	THEN ordi.anPVOCVATBase/7.5345
+																							ELSE ordi.anPVOCVATBase
+				END AS VrijednostNarucenaPNPDV_EUR,
+				CASE
+						WHEN ordi.anQty&gt;0	THEN 
+				AS Vrijednost1Kom_EUR 
+				*/
+FROM tHE_OrderItem ordi
+LEFT JOIN tHE_Order ord ON ord.acKey = ordi.acKey
+LEFT JOIN tHE_setItem si ON si.acIdent = ordi.acIdent
+WHERE ord.acDocType IN('0140', '0150', '0199')
+	AND SUBSTRING(ordi.acKey,1,2) IN ('23', '24')</Sql>
+      </Query>
+      <ConnectionOptions CloseConnection="true" />
+      <CalculatedFields>
+        <CalculatedField Name="KolicinaNeisporucena" Expression="([KolicinaNarucena]-[KolicinaIsporucena])" DataType="Auto" DataMember="PA_NarudžbeKupaca" />
+        <CalculatedField Name="VrijednostNarucenaPNPDV_EUR" Expression="iif([Valuta]='HRK',[VrijednostNarucenaPopustBezPDV]/7.5345,&#xD;&#xA;iif(substring([DokumentID],1,2)&lt;23,[VrijednostNarucenaPopustBezPDV]/7.5345,&#xD;&#xA;[VrijednostNarucenaPopustBezPDV]))" DataType="Auto" DataMember="PA_NarudžbeKupaca" />
+        <CalculatedField Name="Vrijednost1Kom_EUR" Expression="iif([KolicinaNarucena]&lt;&gt;0,[VrijednostNarucenaPNPDV_EUR]/[KolicinaNarucena],0)" DataType="Auto" DataMember="PA_NarudžbeKupaca" />
+        <CalculatedField Name="VrijednostNeisporucenaPBPDV_EUR" Expression="[KolicinaNeisporucena]*[Vrijednost1Kom_EUR]" DataType="Auto" DataMember="PA_NarudžbeKupaca" />
+        <CalculatedField Name="VrijednostIsporucenaPBPDV_EUR" Expression="[KolicinaIsporucena]*[Vrijednost1Kom_EUR]" DataType="Auto" DataMember="PA_NarudžbeKupaca" />
+        <CalculatedField Name="DatumIsporukaRazlika" Expression="iif([DatumRokIsporukePotvrdaPP]&lt;=LocalDateTimeNow(),DateDiffDay([DatumUgovorniKrajnjRokRobaKodKupca],LocalDateTimeNow()),&#xD;&#xA;DateDiffDay([DatumUgovorniKrajnjRokRobaKodKupca],[DatumRokIsporukePotvrdaPP]))" DataType="Auto" DataMember="PA_NarudžbeKupaca" />
+        <CalculatedField Name="KasnjenjeDatumIsporuke" Expression="DateDiffDay([DatumRokIsporukePotvrdaPP],LocalDateTimeNow())" DataType="Auto" DataMember="PA_NarudžbeKupaca" />
+        <CalculatedField Name="GrupaKasnjenja" Expression="iff(Substring([Biljeska],1,9)='materijal','Materijal','')&#xD;&#xA;" DataType="Auto" DataMember="PA_NarudžbeKupaca" />
+        <CalculatedField Name="TezinaNetoUkupnaIdent" Expression="[KolicinaNeisporucena]*[TezinNetoIdent]" DataType="Auto" DataMember="PA_NarudžbeKupaca" />
+        <CalculatedField Name="TekućiDatum" Expression="Today()" DataType="Auto" DataMember="PA_NarudžbeKupaca" />
+      </CalculatedFields>
+    </SqlDataSource>
+  </DataSources>
+  <Items>
+    <Grid ComponentName="gridDashboardItem1" Name="Grid 1" ShowCaption="false" DataSource="sqlDataSource1" DataMember="PA_NarudžbeKupaca" FilterString="[DataItem11] &lt; 0 And [DataItem10] = '0140'">
+      <DataItems>
+        <Dimension DataMember="DokumentID" DefaultId="DataItem0" />
+        <Dimension DataMember="Kupac" DefaultId="DataItem3" />
+        <Dimension DataMember="DatumRokIsporukePotvrdaPP" DateTimeGroupInterval="DayMonthYear" DefaultId="DataItem4" />
+        <Measure DataMember="KolicinaNarucena" DefaultId="DataItem5">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="KolicinaNeisporucena" DefaultId="DataItem6">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Measure DataMember="VrijednostNeisporucenaPBPDV_EUR" DefaultId="DataItem7">
+          <NumericFormat FormatType="Currency" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Dimension DataMember="IdentSifra" DefaultId="DataItem8" />
+        <Dimension DataMember="IdentNaziv" DefaultId="DataItem9" />
+        <Dimension DataMember="DatumIsporukaRazlika" DefaultId="DataItem11" />
+        <Dimension DataMember="DokumentSifra" DefaultId="DataItem10" />
+        <Dimension DataMember="KasnjenjeDatumIsporuke" DefaultId="DataItem1" />
+        <Dimension DataMember="DatumUgovorniKrajnjRokRobaKodKupca" DateTimeGroupInterval="None" DefaultId="DataItem2" />
+        <Dimension DataMember="OdjelZaProizvod" DefaultId="DataItem12" />
+      </DataItems>
+      <HiddenDimensions>
+        <Dimension DefaultId="DataItem11" />
+        <Dimension DefaultId="DataItem10" />
+      </HiddenDimensions>
+      <GridColumns>
+        <GridDimensionColumn Name="Nrudžba-St">
+          <Dimension DefaultId="DataItem0" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Kupac">
+          <Dimension DefaultId="DataItem3" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Rok">
+          <Dimension DefaultId="DataItem4" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Kasni">
+          <Dimension DefaultId="DataItem1" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Ugovoren rok">
+          <Dimension DefaultId="DataItem2" />
+        </GridDimensionColumn>
+        <GridMeasureColumn Name="Naručeno">
+          <Measure DefaultId="DataItem5" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Ostaje">
+          <Measure DefaultId="DataItem6" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridMeasureColumn Name="Vrijednost(neisp)">
+          <Measure DefaultId="DataItem7" />
+          <Totals>
+            <Total Type="Sum" />
+          </Totals>
+        </GridMeasureColumn>
+        <GridDimensionColumn Name="Ident">
+          <Dimension DefaultId="DataItem8" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Naziv identa">
+          <Dimension DefaultId="DataItem9" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Odjel">
+          <Dimension DefaultId="DataItem12" />
+        </GridDimensionColumn>
+      </GridColumns>
+      <GridOptions EnableBandedRows="true" />
+    </Grid>
+    <TextBox ComponentName="textBoxDashboardItem1" Name="Potvrđene narudžbe" DataSource="sqlDataSource1" DataMember="PA_NarudžbeKupaca" FilterString="[VrijednostNeisporucenaPBPDV_EUR] &gt; 0 And ([DataItem1] = '2' Or [DataItem1] = '3') And [DataItem2] = '0140'">
+      <DataItems>
+        <Measure DataMember="DokumentID" Name="Potvrđene narudžbe" SummaryType="Count" DefaultId="DataItem0">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Dimension DataMember="Status" DefaultId="DataItem1" />
+        <Dimension DataMember="DokumentSifra" DefaultId="DataItem2" />
+      </DataItems>
+      <HiddenDimensions>
+        <Dimension DefaultId="DataItem1" />
+        <Dimension DefaultId="DataItem2" />
+      </HiddenDimensions>
+      <Text>{\rtf1\deff0{\fonttbl{\f0 Calibri;}{\f1 Segoe UI;}}{\colortbl ;\red0\green0\blue255 ;}{\*\defchp \f1\fs22}{\stylesheet {\ql Normal;}{\*\cs1\f1\fs22 Default Paragraph Font;}{\*\cs2\ul\f1\fs22\cf1 Hyperlink;}{\*\ts3\tsrowd\fs22\ql\tsvertalt\cltxlrtb Normal Table;}}{\*\listoverridetable}{\info}\nouicompat\splytwnine\htmautsp\expshrtn\spltpgpar\deftab720\sectd\marglsxn1440\margrsxn1440\margtsxn1440\margbsxn1440\headery720\footery720\pgwsxn12240\pghsxn15840\cols1\colsx720\pard\plain\qc{\field\dxfldcodeview{\*\fldinst{\b\f1\fs96\cf0 docvariable DataItem0}}{\fldrslt{\b\f1\fs96\cf0 Potvr\u273\'c4ene narud\u382\'c5be}}}\b\f1\fs72\cf0\par}</Text>
+      <Values>
+        <Value DefaultId="DataItem0" />
+      </Values>
+    </TextBox>
+    <TextBox ComponentName="textBoxDashboardItem2" Name="Kašnjenje isporuka" DataSource="sqlDataSource1" DataMember="PA_NarudžbeKupaca" FilterString="[DatumIsporukaRazlika] &lt; 0 And [DokumentSifra] = '0140' And [DataItem3] &gt; 0 And ([DataItem1] = '2' Or [DataItem1] = '3') And [DataItem4] &lt;= [DataItem5]">
+      <DataItems>
+        <Measure DataMember="DokumentID" Name="Kašnjenje" SummaryType="Count" DefaultId="DataItem0">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Dimension DataMember="Status" DefaultId="DataItem1" />
+        <Dimension DataMember="DokumentSifra" DefaultId="DataItem2" />
+        <Dimension DataMember="VrijednostNeisporucenaPBPDV_EUR" DefaultId="DataItem3" />
+        <Dimension DataMember="DatumRokIsporukePotvrdaPP" DateTimeGroupInterval="None" DefaultId="DataItem4" />
+        <Dimension DataMember="TekućiDatum" DateTimeGroupInterval="None" DefaultId="DataItem5" />
+      </DataItems>
+      <HiddenDimensions>
+        <Dimension DefaultId="DataItem1" />
+        <Dimension DefaultId="DataItem2" />
+        <Dimension DefaultId="DataItem3" />
+        <Dimension DefaultId="DataItem4" />
+        <Dimension DefaultId="DataItem5" />
+      </HiddenDimensions>
+      <Text>{\rtf1\deff0{\fonttbl{\f0 Calibri;}{\f1 Segoe UI;}}{\colortbl ;\red0\green0\blue255 ;}{\*\defchp \f1\fs22}{\stylesheet {\ql Normal;}{\*\cs1\f1\fs22 Default Paragraph Font;}{\*\cs2\ul\f1\fs22\cf1 Hyperlink;}{\*\ts3\tsrowd\fs22\ql\tsvertalt\cltxlrtb Normal Table;}}{\*\listoverridetable}{\info}\nouicompat\splytwnine\htmautsp\expshrtn\spltpgpar\deftab720\sectd\marglsxn1440\margrsxn1440\margtsxn1440\margbsxn1440\headery720\footery720\pgwsxn12240\pghsxn15840\cols1\colsx720\pard\plain\qc{\field\dxfldcodeview{\*\fldinst{\b\f1\fs96\cf0 docvariable DataItem0}}{\fldrslt{\b\f1\fs96\cf0 Ka\u353\'c5njenje}}}\b\f1\fs22\cf0\par}</Text>
+      <Values>
+        <Value DefaultId="DataItem0" />
+      </Values>
+    </TextBox>
+    <ListBox ComponentName="listBoxDashboardItem1" Name="Vrsta prometa" DataSource="sqlDataSource1" DataMember="PA_NarudžbeKupaca" FilterString="[DataItem1] = '0140' And [DataItem3] &gt; 0 And ([DataItem2] = '2' Or [DataItem2] = '3')">
+      <DataItems>
+        <Dimension DataMember="ProfitniCentarGrupa" Name="Vrsta prometa" DefaultId="DataItem0" />
+        <Dimension DataMember="DokumentSifra" DefaultId="DataItem1" />
+        <Dimension DataMember="Status" DefaultId="DataItem2" />
+        <Dimension DataMember="VrijednostNarucenaPNPDV_EUR" DefaultId="DataItem3" />
+      </DataItems>
+      <HiddenDimensions>
+        <Dimension DefaultId="DataItem1" />
+        <Dimension DefaultId="DataItem2" />
+        <Dimension DefaultId="DataItem3" />
+      </HiddenDimensions>
+      <FilterDimensions>
+        <Dimension DefaultId="DataItem0" />
+      </FilterDimensions>
+    </ListBox>
+    <ListBox ComponentName="listBoxDashboardItem2" Name="Odjel nositelj" DataSource="sqlDataSource1" DataMember="PA_NarudžbeKupaca">
+      <DataItems>
+        <Dimension DataMember="OdjelZaProizvod" Name="Odjel nositelj" DefaultId="DataItem0" />
+      </DataItems>
+      <FilterDimensions>
+        <Dimension DefaultId="DataItem0" />
+      </FilterDimensions>
+    </ListBox>
+    <TextBox ComponentName="textBoxDashboardItem3" Name="Kašnjenje - ugovoreni rok" DataSource="sqlDataSource1" DataMember="PA_NarudžbeKupaca" FilterString="[DataItem3] &lt; 0 And [DataItem2] = '0140' And ([DataItem1] = '2' Or [DataItem1] = '3') And [DataItem4] &gt; 0">
+      <DataItems>
+        <Measure DataMember="DokumentID" Name="BrojNarudžbi" SummaryType="Count" DefaultId="DataItem0">
+          <NumericFormat FormatType="Number" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Dimension DataMember="Status" DefaultId="DataItem1" />
+        <Dimension DataMember="DokumentSifra" DefaultId="DataItem2" />
+        <Dimension DataMember="DatumIsporukaRazlika" DefaultId="DataItem3" />
+        <Dimension DataMember="VrijednostNeisporucenaPBPDV_EUR" DefaultId="DataItem4" />
+      </DataItems>
+      <HiddenDimensions>
+        <Dimension DefaultId="DataItem1" />
+        <Dimension DefaultId="DataItem2" />
+        <Dimension DefaultId="DataItem3" />
+        <Dimension DefaultId="DataItem4" />
+      </HiddenDimensions>
+      <Text>{\rtf1\deff0{\fonttbl{\f0 Calibri;}{\f1 Segoe UI;}}{\colortbl ;\red0\green0\blue255 ;}{\*\defchp \f1\fs22}{\stylesheet {\ql Normal;}{\*\cs1\f1\fs22 Default Paragraph Font;}{\*\cs2\ul\f1\fs22\cf1 Hyperlink;}{\*\ts3\tsrowd\fs22\ql\tsvertalt\cltxlrtb Normal Table;}}{\*\listoverridetable}{\info}\nouicompat\splytwnine\htmautsp\expshrtn\spltpgpar\deftab720\sectd\marglsxn1440\margrsxn1440\margtsxn1440\margbsxn1440\headery720\footery720\pgwsxn12240\pghsxn15840\cols1\colsx720\pard\plain\qc{\field\dxfldcodeview{\*\fldinst{\b\f1\fs96\cf0 docvariable DataItem0}}{\fldrslt{\b\f1\fs96\cf0 BrojNarud\u382\'c5bi}}}\f1\fs72\cf0\par}</Text>
+      <Values>
+        <Value DefaultId="DataItem0" />
+      </Values>
+    </TextBox>
+    <Chart ComponentName="chartDashboardItem1" Name="Neisporučene stavke narudžbi kupaca" DataSource="sqlDataSource1" DataMember="PA_NarudžbeKupaca" FilterString="([DataItem3] = '2' Or [DataItem3] = '3') And [DataItem7] &gt;= #2022-01-01# And [DataItem5] &lt;= 0 And [DataItem6] &gt; 0 And [DataItem4] = '0140'" IsMasterFilterCrossDataSource="true">
+      <InteractivityOptions MasterFilterMode="Multiple" />
+      <DataItems>
+        <Measure DataMember="VrijednostNeisporucenaPBPDV_EUR" DefaultId="DataItem0">
+          <NumericFormat FormatType="Currency" Precision="0" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Dimension DataMember="DatumUgovorniKrajnjRokRobaKodKupca" DateTimeGroupInterval="MonthYear" DefaultId="DataItem1" />
+        <Dimension DataMember="OdjelZaProizvod" Name="Odjel za proizvod" DefaultId="DataItem2" />
+        <Dimension DataMember="Status" DefaultId="DataItem3" />
+        <Dimension DataMember="DokumentSifra" DefaultId="DataItem4" />
+        <Dimension DataMember="DatumIsporukaRazlika" DefaultId="DataItem5" />
+        <Dimension DataMember="VrijednostNeisporucenaPBPDV_EUR" DefaultId="DataItem6" />
+        <Dimension DataMember="DatumUgovorniKrajnjRokRobaKodKupca" DateTimeGroupInterval="None" DefaultId="DataItem7" />
+      </DataItems>
+      <HiddenDimensions>
+        <Dimension DefaultId="DataItem3" />
+        <Dimension DefaultId="DataItem4" />
+        <Dimension DefaultId="DataItem5" />
+        <Dimension DefaultId="DataItem6" />
+        <Dimension DefaultId="DataItem7" />
+      </HiddenDimensions>
+      <SeriesDimensions>
+        <SeriesDimension DefaultId="DataItem2" />
+      </SeriesDimensions>
+      <Arguments>
+        <Argument DefaultId="DataItem1" />
+      </Arguments>
+      <Panes>
+        <Pane Name="Pane 1">
+          <Series>
+            <Simple Name="Vrijednost neizporučenih" SeriesType="StackedBar">
+              <Value DefaultId="DataItem0" />
+            </Simple>
+          </Series>
+        </Pane>
+      </Panes>
+    </Chart>
+    <Chart ComponentName="chartDashboardItem2" Name="Neisporučene stavke narudžbi kupaca" DataSource="sqlDataSource1" DataMember="PA_NarudžbeKupaca" FilterString="[DataItem3] = '0140' And [DataItem4] &gt; 2022 And [DataItem5] &lt;= 0 And [DataItem6] &gt; 0 And ([DataItem2] = '2' Or [DataItem2] = '3')" IsMasterFilterCrossDataSource="true" Rotated="true">
+      <InteractivityOptions MasterFilterMode="Multiple" />
+      <DataItems>
+        <Measure DataMember="VrijednostNeisporucenaPBPDV_EUR" DefaultId="DataItem0" />
+        <Dimension DataMember="OdjelZaProizvod" SortByMeasure="DataItem0" DefaultId="DataItem1" />
+        <Dimension DataMember="Status" DefaultId="DataItem2" />
+        <Dimension DataMember="DokumentSifra" DefaultId="DataItem3" />
+        <Dimension DataMember="DatumUgovorniKrajnjRokRobaKodKupca" DefaultId="DataItem4" />
+        <Dimension DataMember="DatumIsporukaRazlika" DefaultId="DataItem5" />
+        <Dimension DataMember="VrijednostNeisporucenaPBPDV_EUR" DefaultId="DataItem6" />
+      </DataItems>
+      <HiddenDimensions>
+        <Dimension DefaultId="DataItem2" />
+        <Dimension DefaultId="DataItem3" />
+        <Dimension DefaultId="DataItem4" />
+        <Dimension DefaultId="DataItem5" />
+        <Dimension DefaultId="DataItem6" />
+      </HiddenDimensions>
+      <Arguments>
+        <Argument DefaultId="DataItem1" />
+      </Arguments>
+      <Panes>
+        <Pane Name="Pane 1">
+          <Series>
+            <Simple Name="Vrijednost neisporučenih">
+              <Value DefaultId="DataItem0" />
+            </Simple>
+          </Series>
+        </Pane>
+      </Panes>
+      <AxisX EnableZooming="true" />
+    </Chart>
+  </Items>
+  <LayoutTree>
+    <LayoutGroup>
+      <LayoutGroup Orientation="Vertical" Weight="1.6448736112254967">
+        <LayoutGroup Weight="1.0195676902502033">
+          <LayoutItem DashboardItem="listBoxDashboardItem1" Weight="0.56581965834969949" />
+          <LayoutItem DashboardItem="listBoxDashboardItem2" Weight="0.87994447184544078" />
+          <LayoutGroup Weight="3.7144498515030868">
+            <LayoutItem DashboardItem="textBoxDashboardItem1" Weight="1.45388579941394" />
+            <LayoutItem DashboardItem="textBoxDashboardItem3" Weight="1.45388579941394" />
+            <LayoutItem DashboardItem="textBoxDashboardItem2" Weight="1.5073451016972048" />
+          </LayoutGroup>
+        </LayoutGroup>
+        <LayoutGroup Weight="2.8085715582084596">
+          <LayoutItem DashboardItem="chartDashboardItem1" Weight="2.8085715582084596" />
+          <LayoutItem DashboardItem="chartDashboardItem2" Weight="2.8085715582084596" />
+        </LayoutGroup>
+        <LayoutItem DashboardItem="gridDashboardItem1" Weight="2.8085715582084596" />
+      </LayoutGroup>
+    </LayoutGroup>
+  </LayoutTree>
+</Dashboard>

@@ -1,0 +1,184 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Dashboard>
+  <Title Text="Zaloge Metal-Product" />
+  <DataSources>
+    <SqlDataSource Name="CustomSqlQuery" ComponentName="sqlDataSource1" DataProcessingMode="Client">
+      <Connection Name="Metal product - produkcija" FromAppConfig="true" />
+      <Query Type="CustomSqlQuery" Name="CustomSqlQuery">
+        <Sql>SELECT	st.acIdent AS Ident,
+				si.acName AS NazivIdenta,
+				st.acIdent+' - '+si.acName AS IdentNazivIdenta,
+				SUM(st.anStock) AS Zaloga,
+				si.acUM AS EnotaMere,
+				si.anMinStock AS MinimalnZaloga,
+				si.anMaxStock AS MaksimalnaZaloga,
+				case
+						WHEN ISNULL(si.acFieldSG,'Nedefiniran')!='' THEN ISNULL(si.acFieldSG,'Nedefiniran')
+																												ELSE 'Nedefiniran'
+				END AS Sektor,
+				ISNULL(si.acClassif,'Nedefinirana') AS PrimarnaKlasifikacija,
+				ISNULL(sicp.acName,'Nedefinirana') AS PrimarnaKlasifikacijaNaziv,
+				ISNULL(si.acClassif2,'Nedefinirana') AS SekundarnaKlasifikacija,
+				ISNULL(sics.acName,'Nedefinirana') AS SekundarnaKlasifikacijaNaziv,
+				CASE
+						WHEN si.anMinStock=-1	THEN 'Nedefinirano'
+						WHEN SUM(st.anStock)&lt;si.anMinStock	THEN 'Ispod minimalne'
+						WHEN SUM(st.anStock)&gt;=si.anMinstock AND SUM(st.anStock)&lt;=si.anMaxStock	THEN 'Unutar limita'
+																																					ELSE 'Iznad maksimalne'
+				END AS StatusZaloge
+--	SELECT st.*
+FROM the_stock st
+LEFT JOIN the_setItem si ON si.acIdent=st.acIdent
+LEFT JOIN tHE_SetItemCateg sicp ON sicp.acClassif=si.acClassif
+LEFT JOIN tHE_SetItemCateg sics ON sics.acClassif=si.acClassif2
+WHERE si.acactive='t' --AND st.acident='Y241203-MAT'
+GROUP BY st.acIdent, si.acName, si.acUM, si.anMinStock, si.anMaxStock, si.acFieldSG, si.acClassif, sicp.acName,
+					si.acClassif2, sics.acName</Sql>
+      </Query>
+      <ConnectionOptions CloseConnection="true" />
+    </SqlDataSource>
+  </DataSources>
+  <Items>
+    <Grid ComponentName="gridDashboardItem1" Name="Trenutno stanje zalog" DataSource="sqlDataSource1" DataMember="CustomSqlQuery">
+      <DataItems>
+        <Dimension DataMember="Ident" DefaultId="DataItem0" />
+        <Dimension DataMember="NazivIdenta" DefaultId="DataItem1" />
+        <Measure DataMember="Zaloga" DefaultId="DataItem4">
+          <NumericFormat FormatType="Number" Unit="Ones" IncludeGroupSeparator="true" />
+        </Measure>
+        <Dimension DataMember="MaksimalnaZaloga" DefaultId="DataItem3">
+          <NumericFormat FormatType="Number" Unit="Ones" IncludeGroupSeparator="true" />
+        </Dimension>
+        <Dimension DataMember="MinimalnZaloga" DefaultId="DataItem2">
+          <NumericFormat FormatType="Number" Unit="Ones" IncludeGroupSeparator="true" />
+        </Dimension>
+        <Dimension DataMember="StatusZaloge" Name="StatusZaloge" DefaultId="DataItem5" />
+        <Dimension DataMember="EnotaMere" DefaultId="DataItem6" />
+      </DataItems>
+      <HiddenDimensions>
+        <Dimension DefaultId="DataItem5" />
+      </HiddenDimensions>
+      <FormatRules>
+        <GridItemFormatRule Name="Format Rule 1" DataItem="DataItem4" DataItemApplyTo="DataItem4">
+          <FormatConditionExpression Expression="[DataItem2] &lt;= 0">
+            <AppearanceSettings AppearanceType="PaleRed" />
+          </FormatConditionExpression>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 2" DataItem="DataItem4" DataItemApplyTo="DataItem4">
+          <FormatConditionExpression Expression="[DataItem4] &gt;= [DataItem2] And [DataItem4] &lt;= [DataItem3]">
+            <AppearanceSettings AppearanceType="Green" />
+          </FormatConditionExpression>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 3" DataItem="DataItem4" DataItemApplyTo="DataItem4">
+          <FormatConditionExpression Expression="[DataItem2] &gt; 0 And [DataItem4] &gt; [DataItem3]">
+            <AppearanceSettings AppearanceType="PaleGreen" />
+          </FormatConditionExpression>
+        </GridItemFormatRule>
+        <GridItemFormatRule Name="Format Rule 4" DataItem="DataItem4" DataItemApplyTo="DataItem4">
+          <FormatConditionExpression Expression="[DataItem2] &gt; 0 And [DataItem4] &lt; [DataItem2]">
+            <AppearanceSettings AppearanceType="Red" />
+          </FormatConditionExpression>
+        </GridItemFormatRule>
+      </FormatRules>
+      <GridColumns>
+        <GridDimensionColumn Name="Ident">
+          <Dimension DefaultId="DataItem0" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Naziv">
+          <Dimension DefaultId="DataItem1" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Minimalna zaloga">
+          <Dimension DefaultId="DataItem2" />
+        </GridDimensionColumn>
+        <GridDimensionColumn Name="Maksimalna zaloga">
+          <Dimension DefaultId="DataItem3" />
+        </GridDimensionColumn>
+        <GridMeasureColumn Name="Trenutna zaloga">
+          <Measure DefaultId="DataItem4" />
+        </GridMeasureColumn>
+        <GridDimensionColumn Name="Jedinica mere">
+          <Dimension DefaultId="DataItem6" />
+        </GridDimensionColumn>
+      </GridColumns>
+      <GridOptions EnableBandedRows="true" />
+    </Grid>
+    <ListBox ComponentName="listBoxDashboardItem3" Name="List Box 1" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" />
+    <ListBox ComponentName="listBoxDashboardItem4" Name="Ident" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" EnableSearch="true">
+      <InteractivityOptions IgnoreMasterFilters="false" />
+      <DataItems>
+        <Dimension DataMember="IdentNazivIdenta" Name="Ident" DefaultId="DataItem0" />
+      </DataItems>
+      <FilterDimensions>
+        <Dimension DefaultId="DataItem0" />
+      </FilterDimensions>
+    </ListBox>
+    <Pie ComponentName="pieDashboardItem1" Name="Pies 1" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" PieType="Donut">
+      <InteractivityOptions MasterFilterMode="Multiple" />
+      <DataItems>
+        <Measure DataMember="Zaloga" Name="Sektor" DefaultId="DataItem0" />
+        <Dimension DataMember="Sektor" Name="Sektor" DefaultId="DataItem1" />
+      </DataItems>
+      <Arguments>
+        <Argument DefaultId="DataItem1" />
+      </Arguments>
+      <Values>
+        <Value DefaultId="DataItem0" />
+      </Values>
+    </Pie>
+    <Pie ComponentName="pieDashboardItem2" Name="Primarna klasifikacija" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" PieType="Donut">
+      <InteractivityOptions MasterFilterMode="Multiple" />
+      <DataItems>
+        <Measure DataMember="Zaloga" Name="Zaloga" DefaultId="DataItem0" />
+        <Dimension DataMember="PrimarnaKlasifikacijaNaziv" DefaultId="DataItem1" />
+      </DataItems>
+      <Arguments>
+        <Argument DefaultId="DataItem1" />
+      </Arguments>
+      <Values>
+        <Value DefaultId="DataItem0" />
+      </Values>
+    </Pie>
+    <Pie ComponentName="pieDashboardItem3" Name="Sekundarna klasifikacija" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" PieType="Donut">
+      <InteractivityOptions MasterFilterMode="Multiple" />
+      <DataItems>
+        <Measure DataMember="Zaloga" Name="Zaloga" DefaultId="DataItem0" />
+        <Dimension DataMember="SekundarnaKlasifikacijaNaziv" Name="Sekundarna klasifikacija" DefaultId="DataItem1" />
+      </DataItems>
+      <Arguments>
+        <Argument DefaultId="DataItem1" />
+      </Arguments>
+      <Values>
+        <Value DefaultId="DataItem0" />
+      </Values>
+    </Pie>
+    <Pie ComponentName="pieDashboardItem4" Name="Status zaloge" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" PieType="Donut">
+      <InteractivityOptions MasterFilterMode="Multiple" />
+      <DataItems>
+        <Measure DataMember="Ident" Name="Status zaloge" SummaryType="Count" DefaultId="DataItem0" />
+        <Dimension DataMember="StatusZaloge" DefaultId="DataItem1" />
+      </DataItems>
+      <Arguments>
+        <Argument DefaultId="DataItem1" />
+      </Arguments>
+      <Values>
+        <Value DefaultId="DataItem0" />
+      </Values>
+    </Pie>
+  </Items>
+  <LayoutTree>
+    <LayoutGroup>
+      <LayoutGroup Orientation="Vertical" Weight="1.3764243410224026">
+        <LayoutGroup Weight="1.6729115821325626">
+          <LayoutItem DashboardItem="pieDashboardItem4" Weight="1.7127397348464581" />
+          <LayoutItem DashboardItem="pieDashboardItem2" Weight="1.7127397348464581" />
+          <LayoutItem DashboardItem="pieDashboardItem3" Weight="1.7127397348464581" />
+          <LayoutItem DashboardItem="pieDashboardItem1" Weight="1.7127397348464581" />
+        </LayoutGroup>
+        <LayoutGroup Weight="1.8850700603087946">
+          <LayoutItem DashboardItem="listBoxDashboardItem4" Weight="0.32407261954630151" />
+          <LayoutItem DashboardItem="gridDashboardItem1" Weight="1.8850700603087946" />
+        </LayoutGroup>
+      </LayoutGroup>
+    </LayoutGroup>
+  </LayoutTree>
+</Dashboard>

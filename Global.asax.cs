@@ -14,17 +14,17 @@ namespace peptak
 {
     public class Global : HttpApplication
     {
-        private static CustomDashboardFileStorage _newDashboardStorage;
+        private static CustomDashboardFileStorage _dashboardStorage;
 
-        public static CustomDashboardFileStorage NewDashboardStorage
+        public static CustomDashboardFileStorage DashboardStorage
         {
-            get { return _newDashboardStorage; }
+            get { return _dashboardStorage; }
         }
 
         void Application_Start(object sender, EventArgs e)
         {
-            _newDashboardStorage = new CustomDashboardFileStorage(@"~/App_Data/Dashboards");
-            DashboardConfigurator.Default.SetDashboardStorage(_newDashboardStorage);
+            _dashboardStorage = new CustomDashboardFileStorage(@"~/App_Data/Dashboards");
+            DashboardConfigurator.Default.SetDashboardStorage(_dashboardStorage);
 
             // Code that runs on application startup
             RouteConfig.RegisterRoutes(RouteTable.Routes);

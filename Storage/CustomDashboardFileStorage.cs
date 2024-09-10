@@ -19,10 +19,29 @@ namespace Storages {
 
 
         public Dashboard GetDashboardById(string dashboardId) {
-            Dashboard dashboard = new Dashboard();
-            dashboard.LoadFromXDocument(base.LoadDashboard(dashboardId));
-            return dashboard;
+            try
+            {
+                Dashboard dashboard = new Dashboard();
+                dashboard.LoadFromXDocument(base.LoadDashboard(dashboardId));
+                return dashboard;
+            } catch
+            {
+                return new Dashboard();
+            }
         }
-     
+
+        public void SaveToXMLFile(Dashboard dashboard)
+        {
+            try
+            {
+                string fileName = dashboard.CustomProperties.GetValue("DashboardFileName");
+                var dashboardPath = base.ResolveFileName(fileName);
+                dashboard.SaveToXml(dashboardPath);
+            } catch
+            {
+                return;
+            }
+        }
+
     }
 }

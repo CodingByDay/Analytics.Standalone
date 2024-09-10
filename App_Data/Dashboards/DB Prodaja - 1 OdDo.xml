@@ -122,7 +122,7 @@ GROUP BY ZalogaIdent, ZalogaSkladišče, ZalogaIdentNaziv;</Sql>
     <Parameter Name="DatumDo1" Type="System.DateTime" Value="2022-12-31T00:00:00" Description="Obdobje-2 Do" />
   </Parameters>
   <Items>
-    <PieMap ComponentName="pieMapDashboardItem1" Name="Prodaja v obdobju  01.01.2021-31.12.2021 po krajih v Sloveniji" ParentContainer="dashboardTabPage3" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" ShapefileArea="Europe" EnableClustering="true">
+    <PieMap ComponentName="pieMapDashboardItem1" Name="Prodaja v obdobju  #DatumOd-#DatumDo po krajih v Sloveniji" ParentContainer="dashboardTabPage3" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" ShapefileArea="Europe" EnableClustering="true">
       <InteractivityOptions MasterFilterMode="Multiple" />
       <DataItems>
         <Dimension DataMember="YTDProdajnaVrednost" DefaultId="DataItem0" />
@@ -156,7 +156,7 @@ GROUP BY ZalogaIdent, ZalogaSkladišče, ZalogaIdentNaziv;</Sql>
         <Value DefaultId="DataItem5" />
       </Values>
     </PieMap>
-    <Grid ComponentName="gridDashboardItem1" Name="Realizacija po identih primerjalno 01.01.2023 - 31.12.2023 vs 01.01.2022 - 31.12.2022" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true">
+    <Grid ComponentName="gridDashboardItem1" Name="Realizacija po identih primerjalno #DatumOd - #DatumDo vs #DatumOd1 - #DatumDo1" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true">
       <DataItems>
         <Dimension DataMember="ProdajaIdentNaziv" SortOrder="Descending" SortByMeasure="DataItem1" DefaultId="DataItem0" />
         <Measure DataMember="YTDProdajnaVrednost" DefaultId="DataItem1">
@@ -250,7 +250,7 @@ GROUP BY ZalogaIdent, ZalogaSkladišče, ZalogaIdentNaziv;</Sql>
       </GridColumns>
       <GridOptions EnableBandedRows="true" WordWrap="true" />
     </Grid>
-    <Pie ComponentName="pieDashboardItem2" Name="Prodaja po tipu kupca v obdobju  01.01.2021-31.12.2021" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" PieType="Donut" ShowPieCaptions="false">
+    <Pie ComponentName="pieDashboardItem2" Name="Prodaja po tipu kupca v obdobju  #DatumOd-#DatumDo" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" PieType="Donut" ShowPieCaptions="false">
       <InteractivityOptions MasterFilterMode="Multiple" TargetDimensions="Points" />
       <DataItems>
         <Dimension DataMember="ProdajaTipKupca" Name="Tip kupca" DefaultId="DataItem0" />
@@ -300,7 +300,7 @@ GROUP BY ZalogaIdent, ZalogaSkladišče, ZalogaIdentNaziv;</Sql>
       </Panes>
       <AxisX EnableZooming="true" />
     </Chart>
-    <Pie ComponentName="pieDashboardItem4" Name="Prodaja po dobaviteljih v obdobju  01.01.2021-31.12.2021" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" PieType="Donut" ShowPieCaptions="false">
+    <Pie ComponentName="pieDashboardItem4" Name="Prodaja po dobaviteljih v obdobju  #DatumOd-#DatumDo" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" PieType="Donut" ShowPieCaptions="false">
       <InteractivityOptions MasterFilterMode="Multiple" />
       <DataItems>
         <Dimension DataMember="ProdajaDobavitelj" Name="Dobavitelj" DefaultId="DataItem0" />
@@ -321,7 +321,7 @@ GROUP BY ZalogaIdent, ZalogaSkladišče, ZalogaIdentNaziv;</Sql>
         <Dimension DefaultId="DataItem0" />
       </FilterDimensions>
     </ListBox>
-    <PieMap ComponentName="pieMapDashboardItem2" Name="Prodaja v  obdobju  01.01.2021-31.12.2021 po Državah" ParentContainer="dashboardTabPage1" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" ShapefileArea="Europe" EnableClustering="true">
+    <PieMap ComponentName="pieMapDashboardItem2" Name="Prodaja v  obdobju  #DatumOd-#DatumDo po Državah" ParentContainer="dashboardTabPage1" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" ShapefileArea="Europe" EnableClustering="true">
       <InteractivityOptions MasterFilterMode="Multiple" />
       <DataItems>
         <Dimension DataMember="YTDProdajnaVrednost" DefaultId="DataItem0" />
@@ -362,7 +362,7 @@ GROUP BY ZalogaIdent, ZalogaSkladišče, ZalogaIdentNaziv;</Sql>
         <Page ComponentName="dashboardTabPage3" Name="Page 3" />
       </Pages>
     </TabContainer>
-    <PieMap ComponentName="pieMapDashboardItem3" Name="Prodaja v obdobju 01.01.2021-31.12.2021 po regijah v Sloveniji" ParentContainer="dashboardTabPage2" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" ShapefileArea="Europe" EnableClustering="true">
+    <PieMap ComponentName="pieMapDashboardItem3" Name="Prodaja v obdobju #DatumOd-#DatumDo po regijah v Sloveniji" ParentContainer="dashboardTabPage2" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true" ShapefileArea="Europe" EnableClustering="true">
       <InteractivityOptions MasterFilterMode="Multiple" />
       <DataItems>
         <Dimension DataMember="YTDProdajnaVrednost" DefaultId="DataItem0" />
@@ -402,7 +402,7 @@ GROUP BY ZalogaIdent, ZalogaSkladišče, ZalogaIdentNaziv;</Sql>
         <Page ComponentName="dashboardTabPage5" Name="Page 2" />
       </Pages>
     </TabContainer>
-    <Chart ComponentName="chartDashboardItem2" Name="Realizacija po mesecih -  01.01.2021-31.12.2021 vs 01.01.2021-31.12.2021" ParentContainer="dashboardTabPage4" DataSource="sqlDataSource1" DataMember="CustomSqlQuery">
+    <Chart ComponentName="chartDashboardItem2" Name="Realizacija po mesecih -  #DatumOd-#DatumDo vs #DatumOd1-#DatumDo1" ParentContainer="dashboardTabPage4" DataSource="sqlDataSource1" DataMember="CustomSqlQuery">
       <DataItems>
         <Dimension DataMember="ProdajaDatumDobavnice" Name="Mesec" DateTimeGroupInterval="Month" DefaultId="DataItem0">
           <DateTimeFormat MonthFormat="Abbreviated" />
@@ -499,13 +499,7 @@ GROUP BY ZalogaIdent, ZalogaSkladišče, ZalogaIdentNaziv;</Sql>
       </LayoutGroup>
     </LayoutGroup>
   </LayoutTree>
-
-
-
-<CustomProperties>
-        <DashboardFilePath>DB Prodaja - 1 OdDo</DashboardFilePath>
-</CustomProperties>
-
-
-
+  <CustomProperties>
+    <DashboardFileName>DB Prodaja - 1 OdDo</DashboardFileName>
+  </CustomProperties>
 </Dashboard>

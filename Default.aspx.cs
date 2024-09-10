@@ -115,23 +115,33 @@ namespace peptak
 
         private void ASPxDashboard1_DashboardSaving(object sender, DashboardSavingWebEventArgs e)
         {
-            // Way to do this compare the current dashboard ready for saving and the old one from a file system/sql. I
-            // If the new one has less # than the old one it wont allow the title change otherwise it will 10.september.2024 Janko Jovičić
-            e.Handled = true;
-            Dashboard DashboardNew = new Dashboard();
-            DashboardNew.LoadFromXDocument(e.DashboardXml);
-            Dashboard DashboardOld = Global.NewDashboardStorage.GetDashboardById(e.DashboardId);          
-            for(int i = 0;i<DashboardNew.Items.Count;i++)
+            try
             {
-                var CurrentItem = DashboardNew.Items[i];
-                var captionNew = DashboardNew.Items[i].Name;
-                var captionOld = DashboardOld.Items[i].Name;
-                int countNew = captionNew.Count(c => c == '#');
-                int countOld = captionOld.Count(c => c == '#');
-                if(countNew < countOld) { CurrentItem.Name = captionOld; }
-                DashboardNew.Items[i] = CurrentItem;
+                // Way to do this compare the current dashboard ready for saving and the old one from a file system/sql. I
+                // If the new one has less # than the old one it wont allow the title change otherwise it will 10.september.2024 Janko Jovičić
+                // TODO: Solve the issue of adding another item to the dashboard
+                e.Handled = true;
+                Dashboard DashboardNew = new Dashboard();
+                DashboardNew.LoadFromXDocument(e.DashboardXml);
+                Dashboard DashboardOld = Global.DashboardStorage.GetDashboardById(e.DashboardId);
+                for (int i = 0; i < DashboardNew.Items.Count; i++)
+                {
+                    var CurrentItem = DashboardNew.Items[i];
+
+                    var captionNew = CurrentItem.Name;
+                    var captionOld = DashboardOld.Items[i].Name;
+
+                    int countNew = captionNew.Count(c => c == '#');
+                    int countOld = captionOld.Count(c => c == '#');
+
+                    if (countNew < countOld) { CurrentItem.Name = captionOld; }
+
+                    DashboardNew.Items[i] = CurrentItem;
+                }
+                Global.DashboardStorage.SaveToXMLFile(DashboardNew);
+            } catch(Exception) {
+                return;
             }
-            DashboardNew.SaveToXDocument();
         }
 
 

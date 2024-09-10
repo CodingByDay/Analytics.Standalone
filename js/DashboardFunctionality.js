@@ -1,0 +1,3 @@
+﻿function correctNamesParameters() {
+    alert("ttt");
+}

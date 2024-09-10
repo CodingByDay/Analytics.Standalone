@@ -15,6 +15,8 @@ using DevExpress.DashboardCommon;
 using System.Web.Services;
 using System.Web.Script.Serialization;
 using Storages;
+using DevExpress.Utils.Extensions;
+using System.Xml.Linq;
 
 namespace peptak
 {
@@ -23,11 +25,11 @@ namespace peptak
         private string state;
         protected void Page_Load(object sender, EventArgs e)
         {
+
             ASPxDashboard1.DashboardLoading += ASPxDashboard1_DashboardLoading;
             ASPxDashboard1.SetConnectionStringsProvider(new DevExpress.DataAccess.Web.ConfigFileConnectionStringsProvider());
        
             ASPxDashboard1.WorkingMode = WorkingMode.Viewer;
-            ASPxDashboard1.DashboardAdding += ASPxDashboard1_DashboardAdding;
             ASPxDashboard1.DashboardSaving += ASPxDashboard1_DashboardSaving;
             if (!IsPostBack)
             {
@@ -113,13 +115,28 @@ namespace peptak
 
         private void ASPxDashboard1_DashboardSaving(object sender, DashboardSavingWebEventArgs e)
         {
-           // Return control to the front end
+            // Way to do this compare the current dashboard ready for saving and the old one from a file system/sql. I
+            // If the new one has less # than the old one it wont allow the title change otherwise it will 10.september.2024 Janko Jovičić
+            e.Handled = true;
+            Dashboard DashboardNew = new Dashboard();
+            DashboardNew.LoadFromXDocument(e.DashboardXml);
+            Dashboard DashboardOld = Global.NewDashboardStorage.GetDashboardById(e.DashboardId);          
+            for(int i = 0;i<DashboardNew.Items.Count;i++)
+            {
+                var CurrentItem = DashboardNew.Items[i];
+                var captionNew = DashboardNew.Items[i].Name;
+                var captionOld = DashboardOld.Items[i].Name;
+                int countNew = captionNew.Count(c => c == '#');
+                int countOld = captionOld.Count(c => c == '#');
+                if(countNew < countOld) { CurrentItem.Name = captionOld; }
+                DashboardNew.Items[i] = CurrentItem;
+            }
+            DashboardNew.SaveToXDocument();
         }
 
-        private void ASPxDashboard1_DashboardAdding(object sender, DashboardAddingWebEventArgs e)
-        {
-       
-        }
+
+
+
 
 
         [WebMethod]

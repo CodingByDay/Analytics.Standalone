@@ -1,5 +1,7 @@
-﻿using DevExpress.DashboardWeb;
+﻿using DevExpress.DashboardCommon;
+using DevExpress.DashboardWeb;
 using System.IO;
+using System.Xml.Linq;
 
 namespace Storages {
 
@@ -13,5 +15,14 @@ namespace Storages {
             if (File.Exists(dashboardPath))
                 File.Delete(dashboardPath);
         }
+
+
+
+        public Dashboard GetDashboardById(string dashboardId) {
+            Dashboard dashboard = new Dashboard();
+            dashboard.LoadFromXDocument(base.LoadDashboard(dashboardId));
+            return dashboard;
+        }
+     
     }
 }

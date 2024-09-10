@@ -14,10 +14,17 @@ namespace peptak
 {
     public class Global : HttpApplication
     {
+        private static CustomDashboardFileStorage _newDashboardStorage;
+
+        public static CustomDashboardFileStorage NewDashboardStorage
+        {
+            get { return _newDashboardStorage; }
+        }
+
         void Application_Start(object sender, EventArgs e)
         {
-            CustomDashboardFileStorage newDashboardStorage = new CustomDashboardFileStorage(@"~/App_Data/Dashboards");
-            DashboardConfigurator.Default.SetDashboardStorage(newDashboardStorage);
+            _newDashboardStorage = new CustomDashboardFileStorage(@"~/App_Data/Dashboards");
+            DashboardConfigurator.Default.SetDashboardStorage(_newDashboardStorage);
 
             // Code that runs on application startup
             RouteConfig.RegisterRoutes(RouteTable.Routes);
@@ -29,7 +36,6 @@ namespace peptak
         protected void Application_Error(object sender, EventArgs e)
         {
             Exception exception = HttpContext.Current.Server.GetLastError();
-            var stop = true;
         }
     }
 }

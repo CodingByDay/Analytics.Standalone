@@ -156,7 +156,7 @@ GROUP BY ZalogaIdent, ZalogaSkladišče, ZalogaIdentNaziv;</Sql>
         <Value DefaultId="DataItem5" />
       </Values>
     </PieMap>
-    <Grid ComponentName="gridDashboardItem1" Name="Realizacija po identih primerjalno 01.01.2021 - 31.12.2021 vs 01.01.2022 - 31.12.2022" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true">
+    <Grid ComponentName="gridDashboardItem1" Name="Realizacija po identih primerjalno 01.01.2023 - 31.12.2023 vs 01.01.2022 - 31.12.2022" DataSource="sqlDataSource1" DataMember="CustomSqlQuery" IsMasterFilterCrossDataSource="true">
       <DataItems>
         <Dimension DataMember="ProdajaIdentNaziv" SortOrder="Descending" SortByMeasure="DataItem1" DefaultId="DataItem0" />
         <Measure DataMember="YTDProdajnaVrednost" DefaultId="DataItem1">
@@ -499,4 +499,13 @@ GROUP BY ZalogaIdent, ZalogaSkladišče, ZalogaIdentNaziv;</Sql>
       </LayoutGroup>
     </LayoutGroup>
   </LayoutTree>
+
+
+
+<CustomProperties>
+        <DashboardFilePath>DB Prodaja - 1 OdDo</DashboardFilePath>
+</CustomProperties>
+
+
+
 </Dashboard>

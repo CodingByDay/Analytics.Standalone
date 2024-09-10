@@ -154,6 +154,7 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <Content Include="js\DashboardFunctionality.js" />
     <Content Include="js\DeleteExtension.js" />
     <Content Include="js\SaveAsExtension.js" />
     <Content Include="MobileDashboard.aspx" />

@@ -20,8 +20,12 @@
     font-size: 11px!important;  
 } 
 </style>
-        <script>
+<script type="text/javascript">
 
+
+            function refreshToolbar() {
+                alert("Working client code");
+            }
 
 
            
@@ -865,7 +869,7 @@ function regex_return(text_to_search) {
                 }
             }
 
-        </script>
+</script>
      <script type="text/html" id="dx-save-as-form">
 
         <div>Dashboard Name:</div>

@@ -123,18 +123,23 @@ namespace peptak
                 Dashboard DashboardNew = new Dashboard();
                 DashboardNew.LoadFromXDocument(e.DashboardXml);
                 Dashboard DashboardOld = Global.DashboardStorage.GetDashboardById(e.DashboardId);
+
+                // When adding a new element old name will be used regardless
+
+                if(DashboardOld.Items.Count != DashboardNew.Items.Count)
+                {
+                    Global.DashboardStorage.SaveToXMLFile(DashboardNew);
+                    return;
+                }
+
                 for (int i = 0; i < DashboardNew.Items.Count; i++)
                 {
                     var CurrentItem = DashboardNew.Items[i];
-
                     var captionNew = CurrentItem.Name;
                     var captionOld = DashboardOld.Items[i].Name;
-
                     int countNew = captionNew.Count(c => c == '#');
                     int countOld = captionOld.Count(c => c == '#');
-
                     if (countNew < countOld) { CurrentItem.Name = captionOld; }
-
                     DashboardNew.Items[i] = CurrentItem;
                 }
 

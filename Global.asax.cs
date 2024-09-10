@@ -25,7 +25,6 @@ namespace peptak
         {
             _dashboardStorage = new CustomDashboardFileStorage(@"~/App_Data/Dashboards");
             DashboardConfigurator.Default.SetDashboardStorage(_dashboardStorage);
-
             // Code that runs on application startup
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);

@@ -3,20 +3,24 @@
   "WorkspaceRootPath": "C:\\Users\\jankoj\\Desktop\\Analytics.Standalone\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{F261F01B-7819-436D-9CDD-6B49F8A2BC37}|peptak.csproj|C:\\Users\\jankoj\\Desktop\\Analytics.Standalone\\storage\\customdashboardfilestorage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F261F01B-7819-436D-9CDD-6B49F8A2BC37}|peptak.csproj|solutionrelative:storage\\customdashboardfilestorage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{F261F01B-7819-436D-9CDD-6B49F8A2BC37}|peptak.csproj|c:\\users\\jankoj\\desktop\\analytics.standalone\\global.asax.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F261F01B-7819-436D-9CDD-6B49F8A2BC37}|peptak.csproj|solutionrelative:global.asax.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{F261F01B-7819-436D-9CDD-6B49F8A2BC37}|peptak.csproj|C:\\Users\\jankoj\\Desktop\\Analytics.Standalone\\default.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F261F01B-7819-436D-9CDD-6B49F8A2BC37}|peptak.csproj|solutionrelative:default.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F261F01B-7819-436D-9CDD-6B49F8A2BC37}|peptak.csproj|C:\\Users\\jankoj\\Desktop\\Analytics.Standalone\\logon.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F261F01B-7819-436D-9CDD-6B49F8A2BC37}|peptak.csproj|solutionrelative:logon.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{F261F01B-7819-436D-9CDD-6B49F8A2BC37}|peptak.csproj|C:\\Users\\jankoj\\Desktop\\Analytics.Standalone\\default.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
+      "RelativeMoniker": "D:0:0:{F261F01B-7819-436D-9CDD-6B49F8A2BC37}|peptak.csproj|solutionrelative:default.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F261F01B-7819-436D-9CDD-6B49F8A2BC37}|peptak.csproj|c:\\users\\jankoj\\desktop\\analytics.standalone\\global.asax.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F261F01B-7819-436D-9CDD-6B49F8A2BC37}|peptak.csproj|solutionrelative:global.asax.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{F261F01B-7819-436D-9CDD-6B49F8A2BC37}|peptak.csproj|C:\\Users\\jankoj\\Desktop\\Analytics.Standalone\\storage\\customdashboardfilestorage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F261F01B-7819-436D-9CDD-6B49F8A2BC37}|peptak.csproj|solutionrelative:storage\\customdashboardfilestorage.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F261F01B-7819-436D-9CDD-6B49F8A2BC37}|peptak.csproj|C:\\Users\\jankoj\\Desktop\\Analytics.Standalone\\logon.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F261F01B-7819-436D-9CDD-6B49F8A2BC37}|peptak.csproj|solutionrelative:logon.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{F261F01B-7819-436D-9CDD-6B49F8A2BC37}|peptak.csproj|C:\\Users\\jankoj\\Desktop\\Analytics.Standalone\\site.master||{B30AFBFF-D992-43B7-B62D-2642580A2883}",
@@ -31,10 +35,6 @@
       "RelativeMoniker": "D:0:0:{F261F01B-7819-436D-9CDD-6B49F8A2BC37}|peptak.csproj|solutionrelative:site.master.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{F261F01B-7819-436D-9CDD-6B49F8A2BC37}|peptak.csproj|C:\\Users\\jankoj\\Desktop\\Analytics.Standalone\\default.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
-      "RelativeMoniker": "D:0:0:{F261F01B-7819-436D-9CDD-6B49F8A2BC37}|peptak.csproj|solutionrelative:default.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{F261F01B-7819-436D-9CDD-6B49F8A2BC37}|peptak.csproj|C:\\Users\\jankoj\\Desktop\\Analytics.Standalone\\web.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
       "RelativeMoniker": "D:0:0:{F261F01B-7819-436D-9CDD-6B49F8A2BC37}|peptak.csproj|solutionrelative:web.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
     }
@@ -46,7 +46,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 6,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Bookmark",
@@ -54,20 +54,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 0,
               "Title": "Global.asax.cs",
               "DocumentMoniker": "C:\\Users\\jankoj\\Desktop\\Analytics.Standalone\\Global.asax.cs",
               "RelativeDocumentMoniker": "Global.asax.cs",
-              "ToolTip": "C:\\Users\\jankoj\\Desktop\\Analytics.Standalone\\Global.asax.cs",
-              "RelativeToolTip": "Global.asax.cs",
-              "ViewState": "AQIAAA4AAAAAAAAAAAAywBMAAAAJAAAA",
+              "ToolTip": "C:\\Users\\jankoj\\Desktop\\Analytics.Standalone\\Global.asax.cs*",
+              "RelativeToolTip": "Global.asax.cs*",
+              "ViewState": "AQIAABcAAAAAAAAAAAAkwBsAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-09-10T11:07:10.78Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "Site.Master.cs",
               "DocumentMoniker": "C:\\Users\\jankoj\\Desktop\\Analytics.Standalone\\Site.Master.cs",
               "RelativeDocumentMoniker": "Site.Master.cs",
@@ -86,14 +86,14 @@
               "RelativeDocumentMoniker": "Default.aspx.cs",
               "ToolTip": "C:\\Users\\jankoj\\Desktop\\Analytics.Standalone\\Default.aspx.cs",
               "RelativeToolTip": "Default.aspx.cs",
-              "ViewState": "AQIAAHAAAAAAAAAAAAD4v4wAAAA1AAAA",
+              "ViewState": "AQIAAG0AAAAAAAAAAAAQwJsAAAAbAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-09-06T09:59:34.834Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "DashboardFunctionality.js",
               "DocumentMoniker": "C:\\Users\\jankoj\\Desktop\\Analytics.Standalone\\js\\DashboardFunctionality.js",
               "RelativeDocumentMoniker": "js\\DashboardFunctionality.js",
@@ -106,7 +106,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "Site.Master",
               "DocumentMoniker": "C:\\Users\\jankoj\\Desktop\\Analytics.Standalone\\Site.Master",
               "RelativeDocumentMoniker": "Site.Master",
@@ -119,20 +119,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 3,
               "Title": "CustomDashboardFileStorage.cs",
               "DocumentMoniker": "C:\\Users\\jankoj\\Desktop\\Analytics.Standalone\\Storage\\CustomDashboardFileStorage.cs",
               "RelativeDocumentMoniker": "Storage\\CustomDashboardFileStorage.cs",
               "ToolTip": "C:\\Users\\jankoj\\Desktop\\Analytics.Standalone\\Storage\\CustomDashboardFileStorage.cs",
               "RelativeToolTip": "Storage\\CustomDashboardFileStorage.cs",
-              "ViewState": "AQIAAA4AAAAAAAAAAAAgwBoAAAATAAAA",
+              "ViewState": "AQIAAAMAAAAAAAAAAAAAAC4AAAAIAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-09-06T09:59:56.89Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 2,
               "Title": "Default.aspx",
               "DocumentMoniker": "C:\\Users\\jankoj\\Desktop\\Analytics.Standalone\\Default.aspx",
               "RelativeDocumentMoniker": "Default.aspx",
@@ -140,11 +140,12 @@
               "RelativeToolTip": "Default.aspx",
               "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
-              "WhenOpened": "2024-09-06T09:59:34.81Z"
+              "WhenOpened": "2024-09-06T09:59:34.81Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 4,
               "Title": "Logon.aspx.cs",
               "DocumentMoniker": "C:\\Users\\jankoj\\Desktop\\Analytics.Standalone\\Logon.aspx.cs",
               "RelativeDocumentMoniker": "Logon.aspx.cs",

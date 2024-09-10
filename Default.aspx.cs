@@ -28,7 +28,6 @@ namespace peptak
 
             ASPxDashboard1.DashboardLoading += ASPxDashboard1_DashboardLoading;
             ASPxDashboard1.SetConnectionStringsProvider(new DevExpress.DataAccess.Web.ConfigFileConnectionStringsProvider());
-       
             ASPxDashboard1.WorkingMode = WorkingMode.Viewer;
             ASPxDashboard1.DashboardSaving += ASPxDashboard1_DashboardSaving;
             if (!IsPostBack)
@@ -138,7 +137,9 @@ namespace peptak
 
                     DashboardNew.Items[i] = CurrentItem;
                 }
+
                 Global.DashboardStorage.SaveToXMLFile(DashboardNew);
+
             } catch(Exception) {
                 return;
             }
@@ -152,9 +153,7 @@ namespace peptak
         [WebMethod]
         public static void DeleteItem(string id)
         {
-            string ID = id;
-           
-
+            string ID = id;        
         }
 
 

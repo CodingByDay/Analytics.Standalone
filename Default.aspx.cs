@@ -30,6 +30,7 @@ namespace peptak
             ASPxDashboard1.SetConnectionStringsProvider(new DevExpress.DataAccess.Web.ConfigFileConnectionStringsProvider());
             ASPxDashboard1.WorkingMode = WorkingMode.Viewer;
             ASPxDashboard1.DashboardSaving += ASPxDashboard1_DashboardSaving;
+
             if (!IsPostBack)
             {
 
@@ -128,6 +129,14 @@ namespace peptak
 
                 if(DashboardOld.Items.Count != DashboardNew.Items.Count)
                 {
+                    for (int i = 0; i < DashboardNew.Items.Count; i++)
+                    {
+                        var CurrentItem = DashboardNew.Items[i];
+                        var captionNew = CurrentItem.Name;
+                        var captionOld = DashboardOld.Items[i].Name;
+                        CurrentItem.Name = captionOld; 
+                        DashboardNew.Items[i] = CurrentItem;
+                    }
                     Global.DashboardStorage.SaveToXMLFile(DashboardNew);
                     return;
                 }
@@ -144,7 +153,6 @@ namespace peptak
                 }
 
                 Global.DashboardStorage.SaveToXMLFile(DashboardNew);
-
             } catch(Exception) {
                 return;
             }

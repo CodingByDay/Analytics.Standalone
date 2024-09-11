@@ -6,24 +6,25 @@
 <configuration>
   <configSections>
     <sectionGroup name="devExpress">
-      <section name="themes" type="DevExpress.Web.ThemesConfigurationSection, DevExpress.Web.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" requirePermission="false" />
-      <section name="compression" type="DevExpress.Web.CompressionConfigurationSection, DevExpress.Web.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" requirePermission="false" />
-      <section name="settings" type="DevExpress.Web.SettingsConfigurationSection, DevExpress.Web.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" requirePermission="false" />
-      <section name="errors" type="DevExpress.Web.ErrorsConfigurationSection, DevExpress.Web.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" requirePermission="false" />
-      <section name="resources" type="DevExpress.Web.ResourcesConfigurationSection, DevExpress.Web.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" requirePermission="false" />
+      <section name="themes" type="DevExpress.Web.ThemesConfigurationSection, DevExpress.Web.v21.1, Version=21.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" requirePermission="false" />
+      <section name="compression" type="DevExpress.Web.CompressionConfigurationSection, DevExpress.Web.v21.1, Version=21.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" requirePermission="false" />
+      <section name="settings" type="DevExpress.Web.SettingsConfigurationSection, DevExpress.Web.v21.1, Version=21.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" requirePermission="false" />
+      <section name="errors" type="DevExpress.Web.ErrorsConfigurationSection, DevExpress.Web.v21.1, Version=21.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" requirePermission="false" />
+      <section name="resources" type="DevExpress.Web.ResourcesConfigurationSection, DevExpress.Web.v21.1, Version=21.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" requirePermission="false" />
     </sectionGroup>
   </configSections>
   <system.web>
     <compilation targetFramework="4.7.2" debug="true">
       <assemblies>
-        <add assembly="DevExpress.Dashboard.v20.2.Web.WebForms, Version=20.2.5.0, Culture=neutral, PublicKeyToken=B88D1754D700E49A" />
-        <add assembly="DevExpress.Dashboard.v20.2.Core, Version=20.2.5.0, Culture=neutral, PublicKeyToken=B88D1754D700E49A" />
-        <add assembly="DevExpress.Data.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=B88D1754D700E49A" />
-        <add assembly="DevExpress.Web.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=B88D1754D700E49A" />
-        <add assembly="DevExpress.Dashboard.v20.2.Web, Version=20.2.5.0, Culture=neutral, PublicKeyToken=B88D1754D700E49A" />
-        <add assembly="DevExpress.DataAccess.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=B88D1754D700E49A" />
-        <add assembly="DevExpress.Web.Resources.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=B88D1754D700E49A" />
-        <add assembly="DevExpress.Web.ASPxThemes.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+        <add assembly="DevExpress.Dashboard.v21.1.Web.WebForms, Version=21.1.4.0, Culture=neutral, PublicKeyToken=B88D1754D700E49A" />
+        <add assembly="DevExpress.Dashboard.v21.1.Core, Version=21.1.4.0, Culture=neutral, PublicKeyToken=B88D1754D700E49A" />
+        <add assembly="DevExpress.Data.v21.1, Version=21.1.4.0, Culture=neutral, PublicKeyToken=B88D1754D700E49A" />
+        <add assembly="DevExpress.Web.v21.1, Version=21.1.4.0, Culture=neutral, PublicKeyToken=B88D1754D700E49A" />
+        <add assembly="DevExpress.RichEdit.v21.1.Core, Version=21.1.4.0, Culture=neutral, PublicKeyToken=B88D1754D700E49A" />
+        <add assembly="DevExpress.Dashboard.v21.1.Web, Version=21.1.4.0, Culture=neutral, PublicKeyToken=B88D1754D700E49A" />
+        <add assembly="DevExpress.DataAccess.v21.1, Version=21.1.4.0, Culture=neutral, PublicKeyToken=B88D1754D700E49A" />
+        <add assembly="DevExpress.Web.Resources.v21.1, Version=21.1.4.0, Culture=neutral, PublicKeyToken=B88D1754D700E49A" />
+        <add assembly="DevExpress.Web.ASPxThemes.v21.1, Version=21.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
       </assemblies>
     </compilation>
     <httpRuntime targetFramework="4.7.2" />
@@ -36,12 +37,12 @@
       </controls>
     </pages>
     <httpModules>
-      <add type="DevExpress.Web.ASPxHttpHandlerModule, DevExpress.Web.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" name="ASPxHttpHandlerModule" />
+      <add type="DevExpress.Web.ASPxHttpHandlerModule, DevExpress.Web.v21.1, Version=21.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" name="ASPxHttpHandlerModule" />
     </httpModules>
     <httpHandlers>
-      <add type="DevExpress.Web.ASPxHttpHandlerModule, DevExpress.Web.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" verb="GET" path="DX.ashx" validate="false" />
-      <add type="DevExpress.Web.ASPxUploadProgressHttpHandler, DevExpress.Web.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" verb="GET,POST" path="ASPxUploadProgressHandlerPage.ashx" validate="false" />
-      <add type="DevExpress.Web.ASPxHttpHandlerModule, DevExpress.Web.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" verb="GET,POST" path="DXDD.axd" validate="false" />
+      <add type="DevExpress.Web.ASPxHttpHandlerModule, DevExpress.Web.v21.1, Version=21.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" verb="GET,POST" path="DX.ashx" validate="false" />
+      <add type="DevExpress.Web.ASPxUploadProgressHttpHandler, DevExpress.Web.v21.1, Version=21.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" verb="GET,POST" path="ASPxUploadProgressHandlerPage.ashx" validate="false" />
+      <add type="DevExpress.Web.ASPxHttpHandlerModule, DevExpress.Web.v21.1, Version=21.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" verb="GET,POST" path="DXDD.axd" validate="false" />
     </httpHandlers>
     <authentication mode="Forms">
       <forms loginUrl="/Logon" name="petpak" path="/" protection="All" timeout="50000000" />
@@ -85,13 +86,13 @@
   </system.codedom>
   <system.webServer>
     <modules>
-      <add type="DevExpress.Web.ASPxHttpHandlerModule, DevExpress.Web.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" name="ASPxHttpHandlerModule" />
+      <add type="DevExpress.Web.ASPxHttpHandlerModule, DevExpress.Web.v21.1, Version=21.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" name="ASPxHttpHandlerModule" />
     </modules>
     <validation validateIntegratedModeConfiguration="false" />
     <handlers>
-      <add type="DevExpress.Web.ASPxHttpHandlerModule, DevExpress.Web.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" verb="GET" path="DX.ashx" name="ASPxHttpHandlerModule" preCondition="integratedMode" />
-      <add type="DevExpress.Web.ASPxUploadProgressHttpHandler, DevExpress.Web.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" verb="GET,POST" path="ASPxUploadProgressHandlerPage.ashx" name="ASPxUploadProgressHandler" preCondition="integratedMode" />
-      <add type="DevExpress.Web.ASPxHttpHandlerModule, DevExpress.Web.v20.2, Version=20.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" verb="GET,POST" path="DXDD.axd" name="WebDashboardHandler" preCondition="integratedMode" />
+      <add type="DevExpress.Web.ASPxHttpHandlerModule, DevExpress.Web.v21.1, Version=21.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" verb="GET,POST" path="DX.ashx" name="ASPxHttpHandlerModule" preCondition="integratedMode" />
+      <add type="DevExpress.Web.ASPxUploadProgressHttpHandler, DevExpress.Web.v21.1, Version=21.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" verb="GET,POST" path="ASPxUploadProgressHandlerPage.ashx" name="ASPxUploadProgressHandler" preCondition="integratedMode" />
+      <add type="DevExpress.Web.ASPxHttpHandlerModule, DevExpress.Web.v21.1, Version=21.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" verb="GET,POST" path="DXDD.axd" name="WebDashboardHandler" preCondition="integratedMode" />
     </handlers>
   </system.webServer>
   <devExpress>
@@ -106,9 +107,9 @@
   </devExpress>
   <connectionStrings>
    <add name="Skaza" connectionString="XpoProvider=MSSqlServer; Data Source=172.17.1.38\TNETTEST; Database=PA_PlastikaSkaza;Application Name=Dashboard;Integrated Security=false;User ID=dashboards;Password=Cporje?%ofgGHH$984d4L;" />
-  <add name="PetPak" connectionString="Data Source=10.100.100.25\SPLAHOST;Initial Catalog=PA_PetPak;Persist Security Info=True;User ID=petpakdash;Password=iamonlya8bitcpu:(123"  />
-  <add name="Skaza nova" connectionString="XpoProvider=MSSqlServer; Data Source=172.17.1.38\TNETTEST; Database=PA_PlastikaSkaza_1;Application Name=Dashboard;Integrated Security=false;User ID=dashboards;Password=Cporje?%ofgGHH$984d4L;"/>  
-  <add name="eHolding Centralna Baza" connectionString="XpoProvider=MSSqlServer; Data Source=172.17.1.38\TNETTEST; Database=PA_eHolding_Centralna_baza;Application Name=Dashboard;Integrated Security=false;User ID=dashboards;Password=Cporje?%ofgGHH$984d4L;"/>
+  <add name="PetPak" connectionString="Data Source=10.100.100.25\SPLAHOST;Initial Catalog=PA_PetPak;Persist Security Info=True;User ID=petpakdash;Password=iamonlya8bitcpu:(123" />
+  <add name="Skaza nova" connectionString="XpoProvider=MSSqlServer; Data Source=172.17.1.38\TNETTEST; Database=PA_PlastikaSkaza_1;Application Name=Dashboard;Integrated Security=false;User ID=dashboards;Password=Cporje?%ofgGHH$984d4L;" />  
+  <add name="eHolding Centralna Baza" connectionString="XpoProvider=MSSqlServer; Data Source=172.17.1.38\TNETTEST; Database=PA_eHolding_Centralna_baza;Application Name=Dashboard;Integrated Security=false;User ID=dashboards;Password=Cporje?%ofgGHH$984d4L;" />
   <add name="eHolding ERFA" connectionString="XpoProvider=MSSqlServer; Data Source=172.17.1.38\TNETTEST; Database=PA_eHolding_Efra_1;Application Name=Dashboard;Integrated Security=false;User ID=dashboards;Password=Cporje?%ofgGHH$984d4L;" />
   <add name="PetPakProdukcija" connectionString="Data Source=10.100.100.25\SPLAHOST;Initial Catalog=PA_PetPak;Persist Security Info=True;User ID=petpakdash;Password=iamonlya8bitcpu:(123" />
    <add name="PetPak Testna Baza" connectionString="Data Source=172.17.1.120\IN-SQLDEV;Initial Catalog=PA_PetPak;Persist Security Info=True;User ID=pettest;Password=net321tnet!" />

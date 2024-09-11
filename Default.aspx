@@ -1,8 +1,8 @@
 ﻿<%@ Page Title="Home Page" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="peptak._Default" %>
 
-<%@ Register assembly="DevExpress.Dashboard.v21.1.Web.WebForms, Version=21.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" namespace="DevExpress.DashboardWeb" tagprefix="dx" %>
+<%@ Register assembly="DevExpress.Dashboard.v23.2.Web.WebForms, Version=23.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" namespace="DevExpress.DashboardWeb" tagprefix="dx" %>
 
-<%@ Register assembly="DevExpress.Web.v21.1, Version=21.1.4.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" namespace="DevExpress.Web" tagprefix="dx" %>
+<%@ Register assembly="DevExpress.Web.v23.2, Version=23.2.3.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" namespace="DevExpress.Web" tagprefix="dx" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 
@@ -24,7 +24,6 @@
 
 
             function refreshToolbar() {
-                alert("Working client code");
             }
 
 
@@ -52,8 +51,7 @@
             }
 
 
-            function onItemCaptionToolbarUpdated(s, e) {
-
+    function onItemCaptionToolbarUpdated(s, e) {
                 var list = dashboard.GetParameters().GetParameterList();
                 setCookie("params", JSON.stringify(list), 365);
                 if (list.length > 0) {
@@ -201,7 +199,6 @@ function regex_return(text_to_search) {
 
             function show() {
                 $('.dx-overlay-content').show();
-                console.log("Show");
                 $(".dx-dashboard-surface").attr('style', 'left: 250px !important');
                 changePicStateHideIt(true);
 
@@ -210,7 +207,6 @@ function regex_return(text_to_search) {
 
             function hide() {
                 $('.dx-overlay-content').hide();
-                console.log("hide");
                 $(".dx-dashboard-surface").attr('style', 'left: 10px !important');
                 changePicStateHideIt(false);
              
@@ -285,7 +281,6 @@ function regex_return(text_to_search) {
                 return matches;
             }
             function customizeWidgets(sender, args) {
-
                 var parName = []
                 var collection = dashboard.GetParameters().GetParameterList();
                 if (args.ItemName.startsWith("gridDashboardItem") && collection.length > 0) {
@@ -350,7 +345,6 @@ function regex_return(text_to_search) {
                                                 text_replace = dashboard.GetParameters().GetParameterList()[indexOfElement].Value
                                             }
                                             window.item_caption = window.item_caption.replace(text_to_replace, text_replace);
-                                            console.log(window.item_caption);
 
                                         }
                                     })
@@ -392,7 +386,6 @@ function regex_return(text_to_search) {
                                             text_replace = dashboard.GetParameters().GetParameterList()[indexOfElement].Value
                                         }
                                         window.item_caption = window.item_caption.replace(text_to_replace, text_replace);
-                                        console.log(window.item_caption);
 
                                     }
                                 })
@@ -446,20 +439,22 @@ function regex_return(text_to_search) {
             }
 
             function removeItemOnce(arr) {
-                console.log(arr + "is array")
                 arr.splice(0, 1);
 
                 return arr;
             }
 
+            window.widget = []
+
             function updatecustomizeWidgets(sender, args) {
                 // update
-
+                // this runs when parameters are changed TODO
                 var parName = []
                 var collection = dashboard.GetParameters().GetParameterList();
 
                 setCookie('new', JSON.stringify(collection))
 
+                window.widget.push(args.GetWidget());
 
                 if (args.ItemName.startsWith("gridDashboardItem") && collection.length > 0) {
                     initialPayload = [];
@@ -495,12 +490,12 @@ function regex_return(text_to_search) {
                     grid.option("columns", columns);
                 }
                 var items = dashboard.GetDashboardControl().dashboard().items();
+                // here is the error
                 tabItems = []
                 window.counter = 0;
+
                 d_old = JSON.parse(getCookie('old'));
                 d_new = JSON.parse(getCookie('new'));
-                console.log(d_old);
-                console.log(d_new);
 
                 for (var i = 0; i < items.length; i++) {
                     var iCurrent = items[i];
@@ -527,6 +522,9 @@ function regex_return(text_to_search) {
                     }
                 }
 
+                // Now update the value of the old cookie so it works multiple times. 11.09.2024 Janko Jovičić
+                setCookie('old', getCookie("new"));
+
 
                 if (args.ItemName.startsWith("chart")) {
                     var chart = args.GetWidget();
@@ -551,7 +549,6 @@ function regex_return(text_to_search) {
                                             text_replace = dashboard.GetParameters().GetParameterList()[indexOfElement].Value
                                         }
                                         window.item_caption = window.item_caption.replace(text_to_replace, text_replace);
-                                        console.log(window.item_caption);
 
                                     }
                                 })
@@ -724,7 +721,6 @@ function regex_return(text_to_search) {
 
             function show() {
                 $('.dx-overlay-content').show();
-                console.log("Show");
                 $(".dx-dashboard-surface").attr('style', 'left: 250px !important');
                 changePicStateHideIt(true);
 
@@ -734,7 +730,6 @@ function regex_return(text_to_search) {
             function hide() {
 
                 $('.dx-overlay-content').hide();
-                console.log("hide");
                 $(".dx-dashboard-surface").attr('style', 'left: 10px !important');
                 changePicStateHideIt(false);
 
@@ -766,8 +761,6 @@ function regex_return(text_to_search) {
             }
 
             function correctTheLoadingState(s, e) {
-
-
            
                 var control = dashboard.GetDashboardControl();
 
@@ -837,7 +830,7 @@ function regex_return(text_to_search) {
             }
 
 
-            function onDashboardTitleToolbarUpdated(sender, e) {
+    function onDashboardTitleToolbarUpdated(sender, e) {
                 e.Options.actionItems.unshift({
                     type: "button",
                     icon: "dx-dashboard-clear-master-filter",
@@ -863,7 +856,7 @@ function regex_return(text_to_search) {
                 dashboard.SetDashboardState(newState);
             }
             var initialState = '';
-            function onDashboardEndUpdate(s, e) {
+    function onDashboardEndUpdate(s, e) {
                 if (initialState == '') {
                     initialState = s.GetDashboardState();
                 }

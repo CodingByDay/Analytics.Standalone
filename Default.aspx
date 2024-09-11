@@ -636,7 +636,7 @@ function regex_return(text_to_search) {
                 dashboardControl.registerExtension(extension);
                 dashboardControl.registerExtension(new SaveAsDashboardExtension(dashboardControl));
                 dashboardControl.registerExtension(new DeleteDashboardExtension(sender));
-
+                dashboardControl.unregisterExtension("designerToolbar");
                 controlMain = dashboardControl;
 
             }
